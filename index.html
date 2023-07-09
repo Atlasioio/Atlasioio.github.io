@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lukas Ahlse Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="header">
+    <div class="container">
+        <nav>
+            <img src="images/Atlas_Logo.png" class="logo">
+            <ul id="sidemenu">
+                <li><a href="#header">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <i class="fas fa-times" onclick="closemenu()"></i>
+            </ul>
+            <i class="fas fa-bars" onclick="openmenu()"></i>
+        </nav>
+        <div class="header-text">
+            <p>IxD Student & Web Developer</p>
+            <h1>Hi, I'm <span>Lukas</span>
+        </div>
+    </div>
+</div>
+<!-- -----------about---------- -->
+<div id="about">
+    <div class="container">
+        <div class="row">
+            <div class="about-col-1">
+                <img src="images/backgroundPic.jpg">
+            </div>
+            <div class="about-col-2">
+                <h1 class="sub-title">About Me</h1>
+                <p>Curious first year interaction design student at Malmö University.
+                    Interested in Interaction design, UX & UI, web design,
+                    technology, business and more! Please have a look around my portfolio site and
+                    feel free to contact me for more information, work, or a chat about all things
+                    interaction design and beyond!</p>
+
+                <div class="tab-titles">
+                    <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
+                    <p class="tab-links" onclick="opentab('experience')">Experience</p>
+                    <p class="tab-links" onclick="opentab('education')">Education</p>
+                </div>
+                <div class="tab-contents active-tab" id="skills">
+                    <ul>
+                        <li><span>IxD, UI/UX</span><br>Designing Web/App interfaces & interactions, logos and user flows</li>
+                        <li><span>Web Development</span><br>Developing intuitive, interactive and useful web applications</li>
+                        <li><span>UX & User Research</span><br>Conducting UX research and gathering and evaluating user data</li>
+                    </ul>
+                </div>
+                <div class="tab-contents" id="experience">
+                    <ul>
+                        <li><span>2021 - Current</span><br>Under construction</li>
+                        
+                    </ul>
+                </div>
+                <div class="tab-contents" id="education">
+                    <ul>
+                        <li><span>2021-2024</span><br>Bsc Interaction Design at Malmö University</li>
+                        <li><span>2020</span><br>Engineering courses at Linköping University</li>
+                        <li><span>2019</span><br>Economics and business courses at the University of Aberdeen</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ---------services---------------- -->
+<div id="services">
+    <div class="container">
+        <h1 class="sub-title">My Services</h1>
+        <div class="services-list">
+            <div>
+                <a href="#contact"><i class="fas fa-code"></i>
+                <h2>Web Design</h2>
+                <p>Create functional, responsive websites, custom made. Includes design, funcitonality and launching of the website. </p>
+                </a>
+            </div>
+            <div>
+                <a href="#contact">
+                <i class="fas fa-crop-alt"></i>
+                <h2>UI/UX Design</h2>
+                <p>Tailoring products to user needs in order to create intuitive, effective and meaningful experiences. Including focus on branding, design, usability and function.</p>
+                </a>
+            </div>
+            <div>
+                <a href="#contact">
+                <i class="fab fa-app-store"></i>
+                <h2>User Research</h2>
+            </a>
+            <p>learning what the end wants and needs, and leveraging those insights in the design process to create user centered design with a meaningful and effective user experience.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ----------portfolio------------ -->
+<div id="portfolio">
+    <div class="container">
+        <h1 class="sub-title">My Work</h1>
+        <div class="work-list">
+            <div class="work">
+                <img src="images/FrugalAI.png">
+                <div class="layer">
+                    <h3>Grocery Shopping Price Runner</h3>
+                    <p>Lets users find the cheapest grocery products on various Swedish grocery stores. Uses node js and various libraries.</p>
+                    <a href="https://www.youtube.com/watch?v=e5PXhn1zg7A&ab_channel=LukasA" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            <div class="work">
+                <img src="images/FinCharts.png">
+                <div class="layer">
+                    <h3>Financial Data Visualisation</h3>
+                    <p>Lets users better understand their financial investments by visualizing their savings. Uses chart js and other libraries.</p>
+                    <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            <div class="work">
+                <img src="images/Misc.png">
+                <div class="layer">
+                    <h3>Other Projects</h3>
+                    <p>Various other completed and ongoing projects.</p>
+                    <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+        </div>
+        <p class="inquiryMessage">Got any inquires about me, my work or what services I can provide? Contact me below!</p>
+    </div>
+</div>
+<!-- ----------contact------------- -->
+<div id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="contact-left">
+                <h1 class="sub-title">Contact</h1>
+                <p><i class="fas fa-paper-plane"></i> ahlselukas@gmail.com</p>
+                <p><i class="fas fa-phone-square-alt"></i> +46 706 17 98 98</p>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/lukas.ahlse/" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://github.com/lux98" target="_blank"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://www.instagram.com/lukasahlse/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/lukas-ahlse-a66a5414a/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <a href="CV_Lukas Ahlse.pdf" download class="btn btn2">Download CV</a>
+            </div>
+            <div class="contact-right">
+                <form name="submit-to-google-sheet">
+                    <input type="text" name="Name" placeholder="Name" required>
+                    <input type="email" name="Email" placeholder="Email" required>
+                    <textarea name="Message" rows="6" placeholder="Message/Inquiry"></textarea>
+                    <button type="submit" class="btn btn2">Submit</button>
+                </form>
+                <span id="msg"></span>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+
+<script>
+
+    var tablinks = document.getElementsByClassName("tab-links");
+    var tabcontents = document.getElementsByClassName("tab-contents");
+
+    function opentab(tabname){
+        for(tablink of tablinks){
+            tablink.classList.remove("active-link");
+        }
+        for(tabcontent of tabcontents){
+            tabcontent.classList.remove("active-tab");
+        }
+        event.currentTarget.classList.add("active-link");
+        document.getElementById(tabname).classList.add("active-tab");
+    }
+
+</script>
+
+<script>
+
+    var sidemeu = document.getElementById("sidemenu");
+
+    function openmenu(){
+        sidemeu.style.right = "0";
+    }
+    function closemenu(){
+        sidemeu.style.right = "-200px";
+    }
+
+</script>
+<script>
+    const scriptURL = '< add you own link here >' // add your own app script link here
+    const form = document.forms['submit-to-google-sheet']
+    const msg = document.getElementById("msg")
+  
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+            msg.innerHTML = "Message sent successfully"
+            setTimeout(function(){
+                msg.innerHTML = ""
+            },5000)
+            form.reset()
+        })
+        .catch(error => console.error('Error!', error.message))
+    })
+  </script>
+</body>
+</html>
