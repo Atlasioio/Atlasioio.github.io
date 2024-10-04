@@ -2,218 +2,429 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lukas Ahlse Portfolio</title>
+    <title></title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lemon&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lemon&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Caveat:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lemon&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Caveat:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lemon&display=swap" rel="stylesheet">
 </head>
-<body>
-<div id="header">
-    <div class="container">
-        <nav>
-            <img src="images/Atlas_Logo.png" class="logo">
-            <ul id="sidemenu">
-                <li><a href="#header">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <i class="fas fa-times" onclick="closemenu()"></i>
-            </ul>
-            <i class="fas fa-bars" onclick="openmenu()"></i>
-        </nav>
-        <div class="header-text">
-            <p>IxD Student & Web Developer</p>
-            <h1>Hi, I'm <span>Lukas</span>
-        </div>
-    </div>
-</div>
-<!-- -----------about---------- -->
-<div id="about">
-    <div class="container">
-        <div class="row">
-            <div class="about-col-1">
-                <img src="images/backgroundPic.jpg">
-            </div>
-            <div class="about-col-2">
-                <h1 class="sub-title">About Me</h1>
-                <p>Curious first year interaction design student at Malmö University.
-                    Interested in Interaction design, UX & UI, web design,
-                    technology, business and more! Please have a look around my portfolio site and
-                    feel free to contact me for more information, work, or a chat about all things
-                    interaction design and beyond!</p>
+<body >
 
-                <div class="tab-titles">
-                    <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
-                    <p class="tab-links" onclick="opentab('experience')">Experience</p>
-                    <p class="tab-links" onclick="opentab('education')">Education</p>
+    <!----------------------------- Landing ----------------------------->
+
+
+    <div id="landingPage">
+
+        <div id="textContent">
+
+            <div id="upperContent">
+                <h1 id="title">lukas ahlse</h1>
+                <div id="subtitleDiv">
+                    <a href="#aboutSection"><h2>about</h2></a>
+                    <a href="#projectSection"><h2>projects</h2></a>
+                    <a href="#contactSection"><h2>contact</h2></a>
                 </div>
-                <div class="tab-contents active-tab" id="skills">
-                    <ul>
-                        <li><span>IxD, UI/UX</span><br>Designing Web/App interfaces & interactions, logos and user flows</li>
-                        <li><span>Web Development</span><br>Developing intuitive, interactive and useful web applications</li>
-                        <li><span>UX & User Research</span><br>Conducting UX research and gathering and evaluating user data</li>
-                    </ul>
+                
+            </div>
+
+            <div id="startPrompt">
+                <div id="startPromptDiv">
+                    <img src="/media/enter.svg" id="enterImg">
+                    <img src="/media/scroll.svg" id="scrollImg">
                 </div>
-                <div class="tab-contents" id="experience">
-                    <ul>
-                        <li><span>2021 - Current</span><br>Under construction</li>
+                <br>
+                <p id="startPromptTop">Welcome</p>
+                
+
+            </div>
+
+            <div id="lowerContent">
+                <a href="https://www.linkedin.com/in/lukas-ahlse-a66a5414a/" target="_blank">
+                    <div>
+                        <img id="linkedinImg" src="/media/linkedin.svg">
+                        <p>linkedIn</p>
+                     </div>
+                </a>               
+                <a href="https://www.instagram.com/lukasahlse/" target="_blank">
+                    <div>
+                        <img id="instaImg" src="/media/instagram.svg">
+                        <p>instagram</p>
+                     </div>
+                </a> 
+                <a href="https://www.linkedin.com/in/lukas-ahlse-a66a5414a/" target="_blank">
+                    <div>
+                        <img id="gitImg" src="/media/github.svg">
+                        <p>github</p>
+                     </div>
+                </a> 
+                <a href="/media/CV_Lukas Ahlse.pdf" download="Lukas_Ahlse_Resume.pdf">
+                    <div>
+                        <img id="docImg" src="/media/document.svg">
+                        <p>resume</p>
+                    </div>
+                </a>
+                
+
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+        <!--------------------------- Main ---------------------------->
+
+
+    <div id="main">
+
+                <!--------------- left header ----------------->
+
+       <div id="nav">
+
+             <div id="navTop">
+                <p id="navTitle">lukas ahlse</p>
+                <p class="navSubtitle">Current Software Design Student.</p>
+                <p class="navSubtitle">Future Frontend Developer.</p>
+             </div>
+             <div id="navMiddle">
+                <p>ABOUT</p>
+                <p>PROJECTS</p>
+                <p>CONTACT</p>
+             </div>
+             <div id="navBottom">
+                <a href="https://www.linkedin.com/in/lukas-ahlse-a66a5414a/" target="_blank">
+                    <div>
+                        <img id="navImg1" src="/media/linkedin.svg">
+                     </div>
+                </a>               
+                <a href="https://www.instagram.com/lukasahlse/" target="_blank">
+                    <div>
+                        <img id="navImg2" src="/media/instagram.svg">
+                     </div>
+                </a> 
+                <a href="https://www.linkedin.com/in/lukas-ahlse-a66a5414a/" target="_blank">
+                    <div>
+                        <img id="navImg3" src="/media/github.svg">
+                     </div>
+                </a> 
+                <a href="/media/CV_Lukas Ahlse.pdf" download="Lukas_Ahlse_Resume.pdf">
+                    <div>
+                        <p id="navCVText">CV</p>
+                    </div>
+                </a>
+             </div>
+
+       </div>
+
+
+                 <!--------------- right content ----------------->
+
+       <div id="content">
+
+            <div id="about">
+
+                <div class="personalSection" id="aboutSection">
+                    <div class="line-separator">
+                        <hr class="left-line">
+                        <div class="icon">
+                            <img src="media/personal.svg" alt="Icon">
+                        </div>
+                        <hr class="right-line">
+                    </div>
+
+                    <h3>Hi There!</h3>
+                    <p>I’m currently pursuing a MSc in Software Design at the 
+                        IT University of Copenhagen.
+                         with the goal of becoming a Frontend Developer.                
+                        <br><br>
+                        My love of software comes from the mind boggling magic of creating something from
+                         seemingly nothing, and I’ve been captivated ever since. 
+                        <br><br>
+                        At heart, I’m a builder, a tinkerer, and forever curious,
+                        always eager to explore new ways to bring ideas and designs to life through code.
+                    ></p>
+                    <br>
+                </div>
+
+                <div class="subsection">
+                    <div class="line-separator">
+                        <hr class="left-line">
+                        <div class="icon">
+                            <img src="media/build.svg" alt="Icon">
+                        </div>
+                        <hr class="right-line">
+                    </div>
+
+                    <div class="subsection" id="skillSection">
+                        <h3>Programming</h3>
+                        <p>Thorough experience with HTML, CSS, and JavaScript, and a solid working knowledge
+                            of JavaScript APIs, Node.js, and Java. I’ve worked with APIs like Puppeteer and Maps
+                            to build dynamic web solutions.
+                        </p>
+                        <div class="skillImgDiv">
+                            <img src="media/html.svg" alt="Icon">
+                            <img src="media/css.svg" alt="Icon">
+                            <img src="media/js.svg" alt="Icon">
+                            <img src="media/java.svg" alt="Icon">
+                            <img src="media/api.svg" alt="Icon">
+
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3>UX & UI</h3>
+                        <p>Strong foundation in UX & UI design, using tools like Figma as my primary go-to,
+                            alongside experience with Adobe Illustrator, Physical Prototyping,
+                            and After Effects.
+                        </p>
+                            <div class="skillImgDiv">
+
+        
+                                <img src="media/figma.svg" alt="Icon">
+                                <img src="media/ae.svg" alt="Icon">
+                                <img src="media/ai.svg" alt="Icon">
+                               
+
+                        </div>
+                    </div>
+                    <div class="subsection"></div>
+                        <h3>Design Philosophy</h3>
+                        <p>I keep User-Centered Design at the heart of my work, 
+                            focusing on solving real user problems with intuitive, functional interfaces. 
+                            By combining UX research, prototyping, and frontend development, 
+                            I create seamless and accessible experiences that meet both user needs and technical constraints.
+
+
+                        </p>
+                    
+                    </div>
+
+
+
+            <div class="" id="uniSection">
+                    
+                    <div class="line-separator">
+                        <hr class="left-line">
+                        <div class="icon">
+                            <img src="media/build.svg" alt="Icon">
+                        </div>
+                        <hr class="right-line">
+                    </div>
+
+                    <div class="degreeDiv" id="degreeDiv1">
+                        <img class="degreeImg" src="media/externalLink.svg">
+                        <div id="degreeTextDiv">
+                            <h4 class="uniTitle">Msc Software Design</h4>
+                            <p id="uniSubtitle">IT University of Copenhagen</p>
+                            <ul id="uniList">
+                                <li>Grahical User Interfaces - Figma</li>
+                                <li>Algorithms, Data Structures & Discrete Mathematics</li>
+                                <li>Database Systems - SQL, DBMSs</li>
+                            </ul>
+
+                        </div>
+                        <div class="degreeDateDiv">
+                            <p>
+                                September 2024-
+                            </p>
+                            <p></p>
+                                June 2026  
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="degreeDiv" id="degreeDiv2">
+                        <img class="degreeImg" src="media/externalLink.svg">
+                        <div id="degreeTextDiv">
+                            <h4 class="uniTitle">BSc Interaction Design</h4>
+                            <p id="uniSubtitle">IT University of Copenhagen</p>
+                            <ul id="uniList">
+                                <li>Grahical User Interfaces - Figma</li>
+                                <li>Algorithms, Data Structures & Discrete Mathematics</li>
+                                <li>Database Systems - SQL, DBMSs</li>
+                            </ul>
+
+                        </div>
+                        <div class="degreeDateDiv">
+                            <p>
+                                September 2024-
+                            </p>
+                            <p></p>
+                                June 2026  
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+                       
+
+                <div class="personalSection" id="jobSection"></div>
+
+                    <div class="personalSection" id="aboutSection">
+                        <div class="line-separator">
+                            <hr class="left-line">
+                            <div class="icon">
+                                <img src="media/personal.svg" alt="Icon">
+                            </div>
+                            <hr class="right-line">
+                        </div>
+
+                        <div id="workHeader">
+                            <h3>Content Student Assistant</h3>
+                            <div class="degreeDateDiv">
+                                <p>
+                                    September 2024-
+                                </p>
+                                <p></p>
+                                    June 2026  
+                                </p>
+                            </div>
+                        </div>
+                        <p id=workSubtitle>Lenus eHealth, Copenhagen</p>
+                        <p>Worked with food recipe creation, review, and database management. 
+                            Served as a key account contact, collaborating closely with stakeholders.
+                             
+                            <br><br>
+                            Created and reviewed various content, including leaflets and infographics,
+                              to ensure clear and engaging communication.
+                        </p>
+                        <br>
+                    </div>
+
+                    <div class="line-separator">
+                        <hr class="left-line">
+                        <div class="icon">
+                            <img src="media/personal.svg" alt="Icon">
+                        </div>
+                        <hr class="right-line">
+                    </div>
+
+
+                    <div id="projectSection">
+
+                        <div class="degreeDiv" id="degreeDiv3">
+                            <img class="degreeImg" src="media/externalLink.svg">
+                            <div id="degreeTextDiv">
+                                <h4 class="uniTitle" id="frugaliTitle">Frugali</h4>
+                                <p>A web application that helps users find affordable groceries by comparing prices
+                                     across different grocery stores. Features a website scraper on the backend to ensure
+                                      up-to-date pricing information.</p>
+                                      
+                                      <div class="skillImgDiv">
+        
+                                        <img src="media/html.svg" alt="Icon">
+                                        <img src="media/css.svg" alt="Icon">
+                                        <img src="media/js.svg" alt="Icon">
+                                        <img src="media/puppeteer.svg" alt="Icon">
+                                        <img src="media/figma.svg" alt="Icon">
+        
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="degreeDiv" id="degreeDiv4">
+                            <img class="degreeImg" src="media/externalLink.svg">
+                            <div id="degreeTextDiv">
+                                <h4 class="uniTitle" id="mementoTitle">Memento</h4>
+                                <p>A digital photo album website that lets users create collections reminiscent of 
+                                    traditional printed albums. Enables users to enjoy a more memorable and tactile
+                                     viewing experience.
+
+                                </p>
+                                      
+                                      <div class="skillImgDiv">
+
+        
+                                        <img src="media/html.svg" alt="Icon">
+                                        <img src="media/css.svg" alt="Icon">
+                                        <img src="media/js.svg" alt="Icon">
+                                        <img src="media/figma.svg" alt="Icon">
+        
+                                </div>
+                            </div>
+                        </div>
+
                         
-                    </ul>
+
+                    </div>
+
+
+
+                    <div id="contactSection">
+                        <h3>shoot me a message!</h3>
+                    
+                        <!-- From Section -->
+                        <div class="contactField">
+                            <label for="contactFrom">from</label>
+                            <input type="email" id="contactFrom" placeholder="j.smith@gmail.com" />
+                        </div>
+                    
+                        <div class="contactField">
+                            <label for="contactAbout">about</label>
+                            <input type="text" id="contactAbout" placeholder="work/play/rock/paper/scissor/shoot" />
+                        </div>
+                    
+                        <!-- Message Section -->
+                        <div class="contactField">
+                            <label for="contactMessage">message</label>
+                            <textarea id="contactMessage" placeholder="Hi Lukas!/howdy Luke/hi there,/greetings/hej/xyz"></textarea>
+                        </div>
+                        
+                    
+                        <!-- Bottom Section with Phone and Button -->
+                        <div id="contactBottomDiv">
+                            <p></p>
+                            <button type="submit" id="sendButton">shoot</button>
+                        </div>
+                    </div>
+                    
+
+
+
+
                 </div>
-                <div class="tab-contents" id="education">
-                    <ul>
-                        <li><span>2021-2024</span><br>Bsc Interaction Design at Malmö University</li>
-                        <li><span>2020</span><br>Engineering courses at Linköping University</li>
-                        <li><span>2019</span><br>Economics and business courses at the University of Aberdeen</li>
-                    </ul>
+                
+                    
+                <div>
+
+                    
+
+
                 </div>
+
             </div>
-        </div>
+
+                
+
+            </div>
+
+            
+
+       </div>
+
     </div>
-</div>
-<!-- ---------services---------------- -->
-<div id="services">
-    <div class="container">
-        <h1 class="sub-title">My Services</h1>
-        <div class="services-list">
-            <div>
-                <a href="#contact"><i class="fas fa-code"></i>
-                <h2>Web Development</h2>
-                <p>Create functional, responsive websites, custom made. Includes design, funcitonality and launching of the website. </p>
-                </a>
-            </div>
-            <div>
-                <a href="#contact">
-                <i class="fas fa-pen-nib"></i>
-                <h2>UI/UX Design</h2>
-                <p>Tailoring products to user needs in order to create intuitive, effective and meaningful experiences. Including focus on branding, design, usability and function.</p>
-                </a>
-            </div>
-            <div>
-                <a href="#contact">
-                <i class="fab fa-wpexplorer"></i>
-                <h2>User Research</h2>
-            </a>
-            <p>learning what the end wants and needs, and leveraging those insights in the design process to create user centered design with a meaningful and effective user experience.</p>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- ----------portfolio------------ -->
-<div id="portfolio">
-    <div class="container">
-        <h1 class="sub-title">My Work</h1>
-        <div class="work-list">
-            <div class="work">
-                <img src="images/FrugalAI.png">
-                <div class="layer">
-                    <h3>Grocery Shopping Price Runner</h3>
-                    <p>Lets users find the cheapest grocery products on various Swedish grocery stores. Uses node js and various libraries.</p>
-                    <a href="https://www.youtube.com/watch?v=e5PXhn1zg7A&ab_channel=LukasA" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-            <div class="work">
-                <img src="images/FinCharts.png">
-                <div class="layer">
-                    <h3>Financial Data Visualisation</h3>
-                    <p>Lets users better understand their financial investments by visualizing their savings. Uses chart js and other libraries.</p>
-                    <a href="#"><i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-            <div class="work">
-                <img src="images/Misc.png">
-                <div class="layer">
-                    <h3>Other Projects</h3>
-                    <p>Various other completed and ongoing projects.</p>
-                    <a href="#"><i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-        </div>
-        <p class="inquiryMessage">Got any inquires about me, my work or what services I can provide? Contact me below!</p>
-    </div>
-</div>
-<!-- ----------contact------------- -->
-<div id="contact">
-    <div class="container">
-        <div class="row">
-            <div class="contact-left">
-                <h1 class="sub-title">Contact</h1>
-                <p><i class="fas fa-paper-plane"></i> ahlselukas@gmail.com</p>
-                <p><i class="fas fa-phone-square-alt"></i> +46 706 17 98 98</p>
-                <div class="social-icons">
-                    <a href="https://www.facebook.com/lukas.ahlse/" target="_blank"><i class="fab fa-facebook"></i></a>
-                    <a href="https://github.com/lux98" target="_blank"><i class="fa-brands fa-github"></i></a>
-                    <a href="https://github.com/Atlasioio" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.linkedin.com/in/lukas-ahlse-a66a5414a/" target="_blank"><i class="fab fa-linkedin"></i></a>
-                </div>
-                <a href="CV_Lukas Ahlse.pdf" download class="btn btn2">Download CV</a>
-            </div>
-            <div class="contact-right">
-                <form action="https://formsubmit.co/1600dc216f7fed0e74cef147c4ef429b" method="POST">
-                    <input type="text" name="Name" placeholder="Name" required>
-                    <input type="email" name="Email" placeholder="Email" required>
-                    <textarea name="Message" rows="6" placeholder="Message/Inquiry"></textarea>
-                    <button type="submit" class="btn btn2">Submit</button>
-                    <input type="text" name="_honey" style="display:none">
-                </form>
-                <span id="msg"></span>
-            </div>
-        </div>
-    </div>
-    
-</div>
 
 
 
-<script>
-
-    var tablinks = document.getElementsByClassName("tab-links");
-    var tabcontents = document.getElementsByClassName("tab-contents");
-
-    function opentab(tabname){
-        for(tablink of tablinks){
-            tablink.classList.remove("active-link");
-        }
-        for(tabcontent of tabcontents){
-            tabcontent.classList.remove("active-tab");
-        }
-        event.currentTarget.classList.add("active-link");
-        document.getElementById(tabname).classList.add("active-tab");
-    }
-
-</script>
-
-<script>
-
-    var sidemeu = document.getElementById("sidemenu");
-
-    function openmenu(){
-        sidemeu.style.right = "0";
-    }
-    function closemenu(){
-        sidemeu.style.right = "-200px";
-    }
-
-</script>
-<script>
-  /*  const scriptURL = '< fix >' // Add google form script here later
-    const form = document.forms['submit-to-google-sheet']
-    const msg = document.getElementById("msg")
-  
-    form.addEventListener('submit', e => {
-      e.preventDefault()
-      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => {
-            msg.innerHTML = "Message sent successfully"
-            setTimeout(function(){
-                msg.innerHTML = ""
-            },5000)
-            form.reset()
-        })
-        .catch(error => console.error('Error!', error.message))
-    })*/
-  </script>
+    <script src="script.js"></script>
 </body>
 </html>
