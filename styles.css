@@ -267,10 +267,34 @@ h4 {
 }
 
 .personalSection {
+    padding-bottom: 12px;
 }
 
 .personalSectionToggle {
 }
+
+#workImg{
+    width: 18px;
+}
+
+#personalImg{
+    width: 20px;
+}
+
+#buildImg{
+    width: 24px;
+}
+
+#educationImg{
+    width: 21px;
+}
+
+#projectImg{
+    width: 26px;
+}
+
+
+
 
 .projectsDiv {
     display: flex;
@@ -300,7 +324,7 @@ h4 {
 }
 
 #uniSection {
-    padding-bottom: 40px;
+    margin-bottom: -25px;
 }
 
 .degreeDiv {
@@ -380,7 +404,7 @@ h4 {
     justify-content: center;
     width: 100%; /* Ensure full width of the container */
     margin: 20px 0; /* Optional: add some space above and below */
-    margin-bottom: 50px;
+    margin-bottom: 40px;
 }
 
 #frugaliTitle {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Lukas Ahlse</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -144,7 +144,7 @@
                     <div class="line-separator">
                         <hr class="left-line">
                         <div class="icon">
-                            <img src="media/personal.svg" alt="Icon">
+                            <img id="personalImg" src="media/personal.svg" alt="Icon">
                         </div>
                         <hr class="right-line">
                     </div>
@@ -167,7 +167,7 @@
                     <div class="line-separator">
                         <hr class="left-line">
                         <div class="icon">
-                            <img src="media/build.svg" alt="Icon">
+                            <img id="buildImg" src="media/build.svg" alt="Icon">
                         </div>
                         <hr class="right-line">
                     </div>
@@ -223,7 +223,7 @@
                     <div class="line-separator">
                         <hr class="left-line">
                         <div class="icon">
-                            <img src="media/build.svg" alt="Icon">
+                            <img id="educationImg"src="media/education.svg" alt="Icon">
                         </div>
                         <hr class="right-line">
                     </div>
@@ -283,7 +283,7 @@
                         <div class="line-separator">
                             <hr class="left-line">
                             <div class="icon">
-                                <img src="media/personal.svg" alt="Icon">
+                                <img id="workImg" src="media/work.svg" alt="Icon">
                             </div>
                             <hr class="right-line">
                         </div>
@@ -313,7 +313,7 @@
                     <div class="line-separator">
                         <hr class="left-line">
                         <div class="icon">
-                            <img src="media/personal.svg" alt="Icon">
+                            <img id="projectImg"src="media/projects.svg" alt="Icon">
                         </div>
                         <hr class="right-line">
                     </div>
@@ -371,31 +371,27 @@
 
                     <div id="contactSection">
                         <h3>shoot me a message!</h3>
-                    
-                        <!-- From Section -->
-                        <div class="contactField">
-                            <label for="contactFrom">from</label>
-                            <input type="email" id="contactFrom" placeholder="j.smith@gmail.com" />
-                        </div>
-                    
-                        <div class="contactField">
-                            <label for="contactAbout">about</label>
-                            <input type="text" id="contactAbout" placeholder="work/play/rock/paper/scissor/shoot" />
-                        </div>
-                    
-                        <!-- Message Section -->
-                        <div class="contactField">
-                            <label for="contactMessage">message</label>
-                            <textarea id="contactMessage" placeholder="Hi Lukas!/howdy Luke/hi there,/greetings/hej/xyz"></textarea>
-                        </div>
+                        <form action="https://script.google.com/macros/s/AKfyc...ZxH63A/exec" method="POST">
+                            <div class="contactField">
+                                <label for="contactFrom">From</label>
+                                <input type="text" id="contactFrom" name="name" placeholder="Your Name" required />
+                            </div>
+                            
+                            <div class="contactField">
+                                <label for="contactEmail">Email</label>
+                                <input type="email" id="contactEmail" name="email" placeholder="Your Email" required />
+                            </div>
+                            
+                            <div class="contactField">
+                                <label for="contactMessage">Message</label>
+                                <textarea id="contactMessage" name="message" placeholder="Your Message" required></textarea>
+                            </div>
+                            
+                            <button type="submit">Send Message</button>
+                        </form>
                         
-                    
-                        <!-- Bottom Section with Phone and Button -->
-                        <div id="contactBottomDiv">
-                            <p></p>
-                            <button type="submit" id="sendButton">shoot</button>
-                        </div>
                     </div>
+                    
                     
 
 
