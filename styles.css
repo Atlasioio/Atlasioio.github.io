@@ -562,7 +562,7 @@ h4 {
     }
 
     .degreeDiv {
-        flex-direction: column;
+        flex-direction: row;
         align-items: flex-start;
     }
 
@@ -604,6 +604,10 @@ h4 {
 
     #docImg {
         width: 34px;
+    }
+
+    #nav{
+        display: none;
     }
 
 }
@@ -698,7 +702,7 @@ h4 {
 
     /* Adjust degrees and projects sections */
     .degreeDiv {
-        flex-direction: column;
+        flex-direction: row;
         align-items: flex-start;
         margin-left: 0;
         margin-right: 0;
@@ -728,7 +732,5 @@ h4 {
         margin-bottom: 30px;
     }
 
-    h3, h4 {
-        text-align: center;
-    }
+   
 }
