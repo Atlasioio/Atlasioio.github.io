@@ -74,7 +74,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-const totalTimePerWord = 800; // 2 seconds per word
+const totalTimePerWord = 800;
 
 const placeholderText = ["work", "play", "rock", "paper", "scissor", "shoot"];
 let currentWordIndex = 0;

@@ -3,7 +3,10 @@
     margin: 0;
     box-sizing: border-box;
     background-color: #0C2426;
-    color: #f0f7f9;
+    color: #8baeb8;
+}
+
+p{
 }
 
 body {
@@ -14,16 +17,19 @@ body {
 h1 {
     font-family: "Lemon", serif;
     font-size: 80px;
+    color: #f0f7f9;
 }
 
 h3 {
-    font-size: 22px;
+    font-size: 20px;
     padding-bottom: 8px;
+    color: #f0f7f9;
 }
 
 h4 {
-    font-size: 24px;
+    font-size: 20px;
     padding-bottom: 4px;
+    color: #f0f7f9;
 }
 
 /************  Effects   *************/
@@ -189,7 +195,7 @@ h4 {
     color: #56D5E0; /* Change color to the blue on hover */
 }
 
-#nav {
+#nav{
     position: sticky;
     top: 0;
     display: flex;
@@ -200,15 +206,19 @@ h4 {
     padding-top: 80px;
     padding-bottom: 80px;
     padding-left: 40px;
+    color: #f0f7f9;
 }
 
 #navTitle {
     font-family: "Lemon", serif;
     font-size: 50px;
+    color: #f0f7f9;
+
 }
 
 .navSubtitle {
     font-size: 22px;
+    
 }
 
 #navMiddle {
@@ -218,6 +228,8 @@ h4 {
     font-weight: 600;
     font-size: 22px;
     gap: 20px;
+    color: #f0f7f9;
+
 }
 
 #navBottom {
@@ -226,7 +238,16 @@ h4 {
     justify-content: space-between;
     padding-right: 280px;
     align-items: center;
+    color: #f0f7f9;
+
 }
+
+#navMiddle p{
+   
+
+}
+
+
 
 #navImg1 {
     width: 48px;
@@ -248,6 +269,8 @@ h4 {
     margin-right: -5px;
     font-family: "Barlow Condensed", sans-serif;
     font-weight: 800;
+    color: #f0f7f9;
+
 }
 
 #navBottom a {
@@ -349,6 +372,7 @@ h4 {
 .degreeDiv:hover {
     background-color: #132C2E;  
     border-radius: 10px; 
+    border-color: #f0f7f9;
     cursor: pointer;
 }
 
