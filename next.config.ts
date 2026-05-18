@@ -1,7 +1,7 @@
 import path from "node:path";
 import type { NextConfig } from "next";
 
-const nextConfig = {
+const nextConfig: NextConfig = {
   output: 'export',
   images: {
     unoptimized: true,
@@ -9,12 +9,13 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  // @ts-ignore - Bypassing strict type check for older ESLint config structure
   eslint: {
     ignoreDuringBuilds: true,
   },
   turbopack: {
     root: path.resolve(__dirname),
   },
-} as any; // <--- Adding "as any" tells TypeScript to allow the eslint property
+};
 
-export default nextConfig as NextConfig;
+export default nextConfig;
