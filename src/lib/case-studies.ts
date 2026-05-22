@@ -431,49 +431,34 @@ export const caseStudies: Record<string, CaseStudy> = {
   },
 
   "artist-website": {
+    mediaChrome: "browser",
+    heroImage: "/case-studies/artist/hero.png",
+    heroAspect: "aspect-[7/5]",
+    liveUrl: "https://cultural-try-908675.framer.app/",
+    displayUrl: "jlorin.com",
     summary:
-      "A portfolio concept for an imagined Stockholm painter — designing for someone else's voice, even one I invented.",
+      "An immersive artist showcase — large imagery, soft typography, motion that guides. The work and the artist, side by side.",
     meta: {
-      role: "Solo concept",
-      timeline: "4 weeks",
-      tools: "Figma",
+      role: "Solo, end-to-end",
+      timeline: "A couple of weeks",
+      tools: "Figma · Framer",
     },
     snapshot: {
       problem:
-        "Most artist sites are templated and identity-flat.",
-      role: "Solo — invented brief, designed identity, web flows.",
-      outcome: "An exercise in restraint and listening.",
+        "Artist sites either bury the work in chrome or strip it bare.",
+      role: "Solo end-to-end — concept, identity, web flows, build.",
+      outcome: "Live: an image-led site that lets the work breathe.",
     },
     problem: {
-      body: "Most painter portfolio sites use the same template — grid of work, about page, contact form. The art is what should set the site apart, but template defaults flatten everyone's identity. The brief: design as if I were translating a real artist's voice.",
-    },
-    approach: {
-      pullQuote: "Designing for someone is a different muscle than designing as yourself.",
-      blocks: [
-        {
-          heading: "Inventing the artist.",
-          body: "Wrote a personality and body of work first — the design followed from that, not the other way around.",
-        },
-        {
-          heading: "Identity translation.",
-          body: "Designed type, color, and layout that mirrored the (imagined) artist's voice.",
-        },
-        {
-          heading: "Web flows.",
-          body: "Designed home, work overview, single-piece detail, and contact flows.",
-        },
+      body: [
+        "Many artist websites struggle to balance aesthetics with usability — either feeling cluttered or so minimal they fail to communicate identity. The brief: design an experience that highlights the artist's visual work while keeping the navigation clear and the emotional register intact.",
+        "Built a calm, image-led experience in Framer — oversized visuals, subtle motion, generous white space. A responsive, scroll-first flow guides visitors naturally. Soft typography and a restrained monochrome palette, with modern animation and cursor details, add character without noise.",
       ],
     },
-    solutionShots: [
-      "Home — the painter's voice on first impression",
-      "Work index — the body of work, breathing",
-      "Single piece — context and craft",
-      "About — the artist's note",
-    ],
     outcome: {
-      body: "The piece taught me that identity translation is its own discipline. Designing for someone else's voice — even imagined — is a restraint exercise: listen first, then design.",
+      body: "Shipped a live concept site where the artwork is the loudest thing on every page. The interface is the picture frame, not the picture — exactly the brief.",
       reflection:
-        "I'd love to test the same process with a real artist, just to see how my approach holds up against actual identity briefing.",
+        "Fictional content made every taste call easier than reality. I'd love to test the same process with a real artist's actual work and voice — a real identity brief sharpens the trade-offs.",
     },
   },
 

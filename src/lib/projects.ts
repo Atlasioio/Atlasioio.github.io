@@ -66,18 +66,6 @@ export const projects: Project[] = [
     tags: ["app"],
   },
   {
-    slug: "reel",
-    name: "Reel",
-    year: "2025",
-    context: "Self-initiated concept",
-    category: "Website",
-    tagline:
-      "An architecture studio site that lets the work do the talking — clean, image-forward, no fluff.",
-    color: "#3B4A6B",
-    Icon: Buildings,
-    tags: ["webdesign"],
-  },
-  {
     slug: "teem",
     name: "Teem",
     year: "2023",
@@ -102,13 +90,25 @@ export const projects: Project[] = [
     tags: ["app"],
   },
   {
-    slug: "artist-website",
-    name: "Artist Website",
+    slug: "reel",
+    name: "Reel",
     year: "2025",
     context: "Self-initiated concept",
     category: "Website",
     tagline:
-      "A modern portfolio concept for a Stockholm painter — as expressive as the canvas.",
+      "An architecture studio site that lets the work do the talking — clean, image-forward, no fluff.",
+    color: "#3B4A6B",
+    Icon: Buildings,
+    tags: ["webdesign"],
+  },
+  {
+    slug: "artist-website",
+    name: "J Lorin",
+    year: "2025",
+    context: "Self-initiated concept",
+    category: "Website",
+    tagline:
+      "Immersive artist showcase — large imagery, soft typography, motion that guides.",
     color: "#C9A36B",
     Icon: PaintBrush,
     tags: ["webdesign"],

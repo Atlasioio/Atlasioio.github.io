@@ -16,7 +16,7 @@ const NAV_ICONS = {
 } as const;
 
 const COLLAPSE_TRANSITION =
-  "320ms cubic-bezier(0.65, 0, 0.35, 1)";
+  "500ms cubic-bezier(0.65, 0, 0.35, 1)";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -39,12 +39,29 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50">
+    <header className="sticky top-0 z-50 pt-5 md:pt-7 pointer-events-none">
       <div
-        className="mx-auto px-5 md:px-8 h-14 md:h-16 flex items-center justify-between gap-3"
+        className={`mx-auto px-5 md:px-8 ${
+          scrolled ? "h-12 md:h-14" : "h-14 md:h-16"
+        } flex items-center justify-between gap-3 pointer-events-auto`}
         style={{
-          maxWidth: scrolled ? "100vw" : "min(75vw, 1400px)",
-          transition: "max-width 500ms cubic-bezier(0.65, 0, 0.35, 1)",
+          maxWidth: scrolled ? "480px" : "min(75vw, 1400px)",
+          paddingLeft: scrolled ? "1.35rem" : undefined,
+          paddingRight: scrolled ? "1.5rem" : undefined,
+          background: scrolled
+            ? "color-mix(in oklab, var(--bg) 54%, transparent)"
+            : "transparent",
+          borderRadius: scrolled ? "9999px" : "0",
+          backdropFilter: scrolled ? "blur(12px) saturate(150%)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(12px) saturate(150%)" : "none",
+          border: scrolled
+            ? "1px solid color-mix(in oklab, var(--fg) 7%, transparent)"
+            : "1px solid transparent",
+          boxShadow: scrolled
+            ? "0 8px 22px -14px color-mix(in oklab, var(--fg) 14%, transparent)"
+            : "none",
+          transition:
+            "max-width 500ms cubic-bezier(0.65, 0, 0.35, 1), height 500ms cubic-bezier(0.65, 0, 0.35, 1), padding 500ms cubic-bezier(0.65, 0, 0.35, 1), background 380ms ease 60ms, border-color 380ms ease 60ms, border-radius 380ms ease 60ms, box-shadow 380ms ease 60ms, backdrop-filter 380ms ease 60ms",
         }}
       >
         <Link
@@ -117,70 +134,55 @@ export function Header() {
                 href={item.href}
                 onMouseEnter={item.href === "/work" ? () => setWorkHovered(true) : undefined}
                 onMouseLeave={item.href === "/work" ? () => setWorkHovered(false) : undefined}
-                className="group flex items-center py-1 text-[13px] text-fg-muted hover:text-fg transition-colors"
+                className={`group flex items-center py-1 text-[14px] transition-colors ${
+                  isActive
+                    ? "text-fg"
+                    : "text-fg-muted hover:text-fg"
+                }`}
                 style={{
                   gap: scrolled ? "0" : "0.5rem",
                   transition: `color 200ms, gap ${COLLAPSE_TRANSITION}`,
                 }}
               >
                 {Icon && (
-                  <span className="relative shrink-0">
-                    <span className="group/icon relative">
-                      <span className="flex size-7 items-center justify-center rounded-full bg-[var(--chip)] group-hover:bg-[var(--chip-hover)] transition-colors">
-                        <Icon weight="fill" className="size-3.5 opacity-80 group-hover:opacity-100 transition-opacity" />
-                      </span>
-                      {isActive ? (
-                        <>
-                          <motion.span
-                            layoutId="nav-active-dot"
-                            aria-hidden
-                            className="peer/active-dot absolute left-1/2 -bottom-3.5 size-1.5 -translate-x-1/2 rounded-full bg-accent transition-[filter] duration-200 hover:brightness-75"
-                            whileHover={{ scale: 1.6 }}
-                            transition={{ type: "spring", stiffness: 420, damping: 32 }}
-                          />
-                          {item.href === "/work" && (
-                            <span
-                              role="tooltip"
-                              className="pointer-events-none absolute left-1/2 -bottom-3.5 ml-3 px-2.5 py-1 -translate-y-1/2 rounded-md text-[10px] font-mono uppercase tracking-[0.14em] bg-[var(--fg)] text-[var(--bg)] whitespace-nowrap opacity-0 peer-hover/active-dot:opacity-100 transition-opacity duration-200 z-50"
-                            >
-                              All projects
-                            </span>
-                          )}
-                        </>
-                      ) : !scrolled ? (
-                        <span
-                          aria-hidden
-                          className={`pointer-events-none absolute left-1/2 -bottom-3.5 size-1.5 -translate-x-1/2 rounded-full opacity-0 transition-opacity duration-300 ease-out ${
-                            item.href === "/work"
-                              ? "bg-fg group-hover:opacity-80"
-                              : "bg-fg-muted group-hover:opacity-60"
+                  <span className="relative shrink-0 inline-block">
+                    <span className="group/icon relative inline-block">
+                      <span
+                        className={`flex size-8 items-center justify-center rounded-full transition-colors ${
+                          isActive
+                            ? "bg-accent text-white"
+                            : "bg-[var(--chip)] group-hover:bg-[var(--chip-hover)] text-fg"
+                        }`}
+                      >
+                        <Icon
+                          weight="fill"
+                          className={`size-4 transition-opacity ${
+                            isActive
+                              ? "opacity-100"
+                              : "opacity-80 group-hover:opacity-100"
                           }`}
                         />
-                      ) : null}
-                      {scrolled && item.href !== "/work" && (
-                        <span
-                          role="tooltip"
-                          className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-[0.14em] bg-[var(--fg)] text-[var(--bg)] whitespace-nowrap opacity-0 group-hover/icon:opacity-100 transition-opacity duration-200 z-50"
-                        >
-                          {item.label}
-                        </span>
+                      </span>
+                      {isActive && !scrolled && (
+                        <motion.span
+                          layoutId="nav-active-dot"
+                          aria-hidden
+                          className="absolute left-1/2 -bottom-3 size-1 -translate-x-1/2 rounded-full bg-accent"
+                          transition={{ type: "spring", stiffness: 420, damping: 32 }}
+                        />
                       )}
-                      {scrolled && item.href === "/work" && (
+                      {scrolled && !(item.href === "/work" && isActive) && (
                         <span
                           role="tooltip"
-                          className={`pointer-events-none absolute px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-[0.14em] bg-[var(--fg)] text-[var(--bg)] whitespace-nowrap opacity-0 group-hover/icon:opacity-100 transition-opacity duration-200 z-50 ${
-                            pathname === "/work" || pathname.startsWith("/work/")
-                              ? "left-full top-full ml-2 mt-1"
-                              : "left-1/2 top-full mt-2 -translate-x-1/2"
-                          }`}
+                          className="pointer-events-none absolute left-1/2 top-full mt-3 -translate-x-1/2 px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-[0.14em] bg-[var(--fg)] text-[var(--bg)] whitespace-nowrap opacity-0 group-hover/icon:opacity-100 transition-opacity duration-200 z-50"
                         >
-                          Selected work
+                          {item.href === "/work" ? "Selected work" : item.label}
                         </span>
                       )}
                     </span>
                     {item.href === "/work" &&
                       (pathname === "/work" || pathname.startsWith("/work/")) && (
-                        <ul className="hidden md:flex flex-col items-center absolute left-1/2 -translate-x-1/2 top-full pt-7 gap-3">
+                        <ul className="hidden md:flex flex-col items-center absolute left-1/2 -translate-x-1/2 top-full pt-5 gap-3">
                           {(currentProject
                             ? [
                                 currentProject,
