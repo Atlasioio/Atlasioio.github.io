@@ -4,14 +4,14 @@ import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 
 type Variant = "a" | "b" | "c";
-type Scheme = "recruiters" | "designers" | "developers";
+type Scheme = "everyone" | "designers" | "developers";
 
 type Shape = { rx: string; rotate: number; skewX: number; skewY: number };
 
 // Each tab uses a distinct family of shapes so the three audiences read as
 // visually different. Designers + developers are intentionally less slanted.
 const SHAPES: Record<Scheme, Record<Variant, Shape>> = {
-  recruiters: {
+  everyone: {
     a: {
       rx: "32% 6% 26% 8% / 6% 30% 8% 26%",
       rotate: -0.9,
@@ -76,7 +76,7 @@ const SHAPES: Record<Scheme, Record<Variant, Shape>> = {
 export function Highlight({
   children,
   variant = "a",
-  scheme = "recruiters",
+  scheme = "everyone",
   animate = false,
   delay = 0,
 }: {

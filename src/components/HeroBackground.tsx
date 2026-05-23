@@ -86,11 +86,11 @@ export function HeroBackground() {
           blur="80px"
           duration={32}
           path={[
-            { x: -6, y: -8, sx: 1.0, sy: 0.9, rot: 0, opacity: 0.5 },
-            { x: 8, y: 4, sx: 1.15, sy: 0.8, rot: 4, opacity: 0.6 },
-            { x: -4, y: 10, sx: 0.9, sy: 1.0, rot: -3, opacity: 0.4 },
-            { x: 4, y: -4, sx: 1.05, sy: 0.95, rot: 2, opacity: 0.55 },
-            { x: -6, y: -8, sx: 1.0, sy: 0.9, rot: 0, opacity: 0.5 },
+            { x: -18, y: -20, sx: 1.0, sy: 0.9, rot: 0, opacity: 0.5 },
+            { x: 10, y: 6, sx: 1.15, sy: 0.8, rot: 4, opacity: 0.6 },
+            { x: -22, y: 14, sx: 0.9, sy: 1.0, rot: -4, opacity: 0.4 },
+            { x: 4, y: -10, sx: 1.05, sy: 0.95, rot: 2, opacity: 0.55 },
+            { x: -18, y: -20, sx: 1.0, sy: 0.9, rot: 0, opacity: 0.5 },
           ]}
         />
 
@@ -104,11 +104,11 @@ export function HeroBackground() {
           duration={26}
           delay={3}
           path={[
-            { x: 4, y: 6, sx: 1.1, sy: 0.85, rot: 3, opacity: 0.45 },
-            { x: -8, y: -6, sx: 0.9, sy: 1.0, rot: -4, opacity: 0.3 },
-            { x: 6, y: 8, sx: 1.2, sy: 0.75, rot: 5, opacity: 0.5 },
-            { x: -2, y: -2, sx: 1.0, sy: 0.9, rot: -1, opacity: 0.4 },
-            { x: 4, y: 6, sx: 1.1, sy: 0.85, rot: 3, opacity: 0.45 },
+            { x: 6, y: 8, sx: 1.1, sy: 0.85, rot: 3, opacity: 0.45 },
+            { x: -20, y: -14, sx: 0.9, sy: 1.0, rot: -5, opacity: 0.3 },
+            { x: 8, y: 12, sx: 1.2, sy: 0.75, rot: 5, opacity: 0.5 },
+            { x: -14, y: -6, sx: 1.0, sy: 0.9, rot: -2, opacity: 0.4 },
+            { x: 6, y: 8, sx: 1.1, sy: 0.85, rot: 3, opacity: 0.45 },
           ]}
         />
 
@@ -122,11 +122,11 @@ export function HeroBackground() {
           duration={18}
           delay={1}
           path={[
-            { x: 2, y: 4, sx: 1.0, sy: 0.9, rot: 4, opacity: 0.35 },
-            { x: -8, y: -6, sx: 1.2, sy: 0.7, rot: -6, opacity: 0.5 },
-            { x: 4, y: 8, sx: 0.8, sy: 1.1, rot: 6, opacity: 0.25 },
-            { x: 0, y: -2, sx: 1.05, sy: 0.85, rot: -2, opacity: 0.4 },
-            { x: 2, y: 4, sx: 1.0, sy: 0.9, rot: 4, opacity: 0.35 },
+            { x: 4, y: 6, sx: 1.0, sy: 0.9, rot: 4, opacity: 0.35 },
+            { x: -22, y: -18, sx: 1.2, sy: 0.7, rot: -8, opacity: 0.5 },
+            { x: 6, y: 12, sx: 0.8, sy: 1.1, rot: 6, opacity: 0.25 },
+            { x: -8, y: -10, sx: 1.05, sy: 0.85, rot: -3, opacity: 0.4 },
+            { x: 4, y: 6, sx: 1.0, sy: 0.9, rot: 4, opacity: 0.35 },
           ]}
         />
       </div>

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Highlight } from "./Highlight";
 
-type AudienceKey = "recruiters" | "designers" | "developers";
+type AudienceKey = "everyone" | "designers" | "developers";
 type Variant = "a" | "b" | "c";
 
 type Segment =
@@ -16,33 +16,41 @@ type Atom =
   | { type: "highlight"; variant: Variant; content: string };
 
 const tabs: { key: AudienceKey; label: string }[] = [
-  { key: "recruiters", label: "For recruiters" },
+  { key: "everyone", label: "For everyone" },
   { key: "designers", label: "For designers" },
   { key: "developers", label: "For developers" },
 ];
 
 const VARIANTS: Record<AudienceKey, Segment[]> = {
-  recruiters: [
+  everyone: [
     { type: "highlight", variant: "a", content: "Product designer" },
     { type: "text", content: " at " },
     { type: "highlight", variant: "b", content: "Sony Nimway" },
     {
       type: "text",
       content:
-        " — smart office workplace tech used by enterprises across many countries. Based in Malmö, BSc in Interaction Design, open to relocate. ",
+        " — smart office workplace tech used by enterprises across many countries. Based in Malmö, BSc in Interaction Design. ",
     },
     { type: "highlight", variant: "c", content: "Available from June 2026" },
-    { type: "text", content: " for full-time, freelance, or a quick chat." },
+    {
+      type: "text",
+      content:
+        " for full-time, freelance, or a quick chat — open to relocate.",
+    },
   ],
   designers: [
-    { type: "text", content: "I keep an eye on " },
+    { type: "text", content: "Plugged into " },
     { type: "highlight", variant: "a", content: "where UX/UI is moving" },
-    { type: "text", content: " — not on every trend that crosses it. I sweat the " },
+    {
+      type: "text",
+      content:
+        ", selective about what's worth bringing along. I sweat the ",
+    },
     { type: "highlight", variant: "b", content: "small details when it matters" },
     {
       type: "text",
       content:
-        ". Drawn to tinkering in Figma, finding the why behind decisions, and taking projects ",
+        ". Enjoy tinkering in Figma, finding the why behind decisions, and taking projects ",
     },
     { type: "highlight", variant: "c", content: "from first sketch to ship" },
     { type: "text", content: "." },
@@ -54,7 +62,10 @@ const VARIANTS: Record<AudienceKey, Segment[]> = {
       variant: "a",
       content: "drawn to the tech behind every product",
     },
-    { type: "text", content: ". Foundations in HTML, CSS, and JS. I " },
+    {
+      type: "text",
+      content: ". Foundations in HTML, CSS, and JS, and I ",
+    },
     { type: "highlight", variant: "b", content: "code and use AI" },
     {
       type: "text",
@@ -92,7 +103,7 @@ const INITIAL_LOAD_DELAY_MS = 700;
 const SWITCH_DELAY_MS = 80;
 
 export function IntroSwitcher() {
-  const [active, setActive] = useState<AudienceKey>("recruiters");
+  const [active, setActive] = useState<AudienceKey>("everyone");
   const isInitialMountRef = useRef(true);
 
   // Only animate on the very first render of the page. Tab switches render instantly.
@@ -123,13 +134,24 @@ export function IntroSwitcher() {
               type="button"
               aria-selected={isActive}
               onClick={() => setActive(t.key)}
-              className={`cursor-pointer px-3 py-1.5 rounded-full font-mono text-[11px] uppercase tracking-[0.16em] transition-colors duration-300 ease-out ${
-                isActive
-                  ? "bg-[var(--chip-hover)] text-fg"
-                  : "text-fg-muted hover:text-fg"
+              className={`relative cursor-pointer px-3 py-1.5 rounded-full font-mono text-[11px] uppercase tracking-[0.16em] transition-colors duration-300 ease-out ${
+                isActive ? "text-fg" : "text-fg-muted hover:text-fg"
               }`}
             >
-              {t.label}
+              {isActive && (
+                <motion.span
+                  layoutId="active-tab-pill"
+                  aria-hidden
+                  className="absolute inset-0 -z-10 rounded-full bg-[var(--chip-hover)]"
+                  transition={{
+                    type: "spring",
+                    stiffness: 360,
+                    damping: 30,
+                    mass: 0.6,
+                  }}
+                />
+              )}
+              <span className="relative z-10">{t.label}</span>
             </button>
           );
         })}

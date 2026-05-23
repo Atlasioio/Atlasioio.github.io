@@ -59,13 +59,22 @@ const featuredProjects = [
     color: "#5DB075",
   },
   {
-    slug: "ecotrip",
-    name: "EcoTrip",
+    slug: "goodreads",
+    name: "Goodreads Redesign",
     year: "2024",
+    context: "Self-initiated redesign",
+    tagline:
+      "Rethinking how readers track and discover books — a focused redesign exercise.",
+    color: "#8B6F47",
+  },
+  {
+    slug: "teem",
+    name: "Teem",
+    year: "2023",
     context: "Course project, Malmö University",
     tagline:
-      "A bee-led travel companion that nudges greener trips and rewards better choices.",
-    color: "#F5B400",
+      "Brand identity, packaging, and leaflet for a cold-brew matcha latte — a break from screens.",
+    color: "#88A77A",
   },
   {
     slug: "reel",
@@ -75,15 +84,6 @@ const featuredProjects = [
     tagline:
       "An architecture studio site that lets the work do the talking — clean, image-forward, no fluff.",
     color: "#3B4A6B",
-  },
-  {
-    slug: "artist-website",
-    name: "Artist Website",
-    year: "2025",
-    context: "Client project, Stockholm",
-    tagline:
-      "A modern portfolio for a Stockholm painter — as expressive as the canvas.",
-    color: "#C9A36B",
   },
 ];
 
