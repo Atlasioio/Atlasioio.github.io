@@ -9,6 +9,7 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { MockupFrame } from "@/components/MockupFrame";
 import { PaperNote } from "@/components/PaperNote";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { getProject, projects, type Project } from "@/lib/projects";
 import { getCaseStudy, type CaseStudy, type Shot } from "@/lib/case-studies";
 import { CaseStudyToc, type TocSection } from "./case-study-toc";
@@ -76,7 +77,7 @@ export default async function CaseStudyPage({ params }: Params) {
       )}
 
       {/* Top nav row */}
-      <section className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pt-12 md:pt-16 pb-8 flex items-center justify-between gap-4">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pt-12 md:pt-16 pb-8 flex items-center justify-between gap-4">
         <Link
           href="/work"
           className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-hairline text-[12px] text-fg-muted hover:bg-[var(--chip)] hover:text-fg hover:border-[var(--chip)] transition-colors duration-300 ease-out"
@@ -94,10 +95,10 @@ export default async function CaseStudyPage({ params }: Params) {
             className="size-3 transition-transform group-hover:translate-x-0.5"
           />
         </Link>
-      </section>
+      </ScrollReveal>
 
       {/* Hero */}
-      <section className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pt-6 md:pt-10 pb-10">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pt-6 md:pt-10 pb-10">
         <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-fg-muted mb-6 flex items-center gap-2">
           <Briefcase weight="fill" className="size-3.5" /> Case study
         </p>
@@ -122,10 +123,10 @@ export default async function CaseStudyPage({ params }: Params) {
             />
           </a>
         )}
-      </section>
+      </ScrollReveal>
 
       {/* Hero mockup */}
-      <section className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-10 md:pb-12">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-10 md:pb-12">
         <MockupFrame
           image={study?.heroImage}
           mobileImage={study?.heroImageMobile}
@@ -140,10 +141,10 @@ export default async function CaseStudyPage({ params }: Params) {
           innerPadding="inset-8 md:inset-14"
           priority
         />
-      </section>
+      </ScrollReveal>
 
       {/* Metadata strip */}
-      <section className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-24">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-24">
         <dl className="grid grid-cols-2 md:grid-cols-5 gap-x-6 gap-y-6">
           <MetaItem label="Year" value={project.year} />
           <MetaItem label="Type" value={project.category} />
@@ -155,7 +156,7 @@ export default async function CaseStudyPage({ params }: Params) {
             <MetaItem label="Tools" value={study.meta.tools} />
           )}
         </dl>
-      </section>
+      </ScrollReveal>
 
       {study && (
         <>
@@ -214,7 +215,7 @@ export default async function CaseStudyPage({ params }: Params) {
       )}
 
       {/* Next case study */}
-      <section className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-24 md:pb-32">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-24 md:pb-32">
         <Link
           href={`/work/${next.slug}`}
           className="group flex items-center justify-between gap-6 py-8 md:py-10 border-t border-hairline hover:border-fg transition-colors"
@@ -235,7 +236,7 @@ export default async function CaseStudyPage({ params }: Params) {
             />
           </span>
         </Link>
-      </section>
+      </ScrollReveal>
     </>
   );
 }
@@ -274,7 +275,7 @@ function SnapshotSection({
   color: string;
 }) {
   return (
-    <section
+    <ScrollReveal
       id="snapshot"
       className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-24 scroll-mt-24"
     >
@@ -282,7 +283,7 @@ function SnapshotSection({
         <SnapshotCell label="The problem" color={color} body={study.snapshot.problem} />
         <SnapshotCell label="The outcome" color={color} body={study.snapshot.outcome} />
       </div>
-    </section>
+    </ScrollReveal>
   );
 }
 
@@ -321,7 +322,7 @@ function ProblemSection({
     ? study.problem.body
     : [study.problem.body];
   return (
-    <section
+    <ScrollReveal
       id="problem"
       className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
     >
@@ -333,7 +334,7 @@ function ProblemSection({
           </p>
         ))}
       </div>
-    </section>
+    </ScrollReveal>
   );
 }
 
@@ -347,7 +348,7 @@ function ApproachSection({
   project: { name: string; color: string };
 }) {
   return (
-    <section
+    <ScrollReveal
       id="approach"
       className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
     >
@@ -428,7 +429,7 @@ function ApproachSection({
           </p>
         </blockquote>
       )}
-    </section>
+    </ScrollReveal>
   );
 }
 
@@ -446,7 +447,7 @@ function SolutionSection({
   url?: string;
 }) {
   return (
-    <section
+    <ScrollReveal
       id="solution"
       className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
     >
@@ -484,7 +485,7 @@ function SolutionSection({
           );
         })}
       </div>
-    </section>
+    </ScrollReveal>
   );
 }
 
@@ -508,7 +509,7 @@ function OutcomeSection({
   const [headlineStat, ...remainingStats] = outcome.stats ?? [];
 
   return (
-    <section
+    <ScrollReveal
       id="outcome"
       className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
     >
@@ -565,7 +566,7 @@ function OutcomeSection({
           </p>
         </div>
       )}
-    </section>
+    </ScrollReveal>
   );
 }
 
@@ -583,7 +584,7 @@ function HighlightsSection({
   url?: string;
 }) {
   return (
-    <section
+    <ScrollReveal
       id="highlights"
       className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-20 md:pb-24 scroll-mt-24"
     >
@@ -622,7 +623,7 @@ function HighlightsSection({
           );
         })}
       </ul>
-    </section>
+    </ScrollReveal>
   );
 }
 
@@ -634,7 +635,7 @@ function SurfacesSection({
   color: string;
 }) {
   return (
-    <section
+    <ScrollReveal
       id="surfaces"
       className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
     >
@@ -654,13 +655,13 @@ function SurfacesSection({
           </li>
         ))}
       </ul>
-    </section>
+    </ScrollReveal>
   );
 }
 
 function CallToActionSection({ text }: { text: string }) {
   return (
-    <section
+    <ScrollReveal
       id="contact"
       className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
     >
@@ -680,7 +681,7 @@ function CallToActionSection({ text }: { text: string }) {
           </Link>
         </div>
       </div>
-    </section>
+    </ScrollReveal>
   );
 }
 
@@ -733,7 +734,7 @@ function ArtistWebsiteCaseStudy({
       <CaseStudyToc sections={tocSections} color={project.color} />
 
       {/* Top nav row */}
-      <section className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-12 md:pt-16 pb-8 flex items-center justify-between gap-4">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-12 md:pt-16 pb-8 flex items-center justify-between gap-4">
         <Link
           href="/work"
           className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-hairline text-[12px] text-fg-muted hover:bg-[var(--chip)] hover:text-fg hover:border-[var(--chip)] transition-colors duration-300 ease-out"
@@ -751,10 +752,10 @@ function ArtistWebsiteCaseStudy({
             className="size-3 transition-transform group-hover:translate-x-0.5"
           />
         </Link>
-      </section>
+      </ScrollReveal>
 
       {/* Title */}
-      <section className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-6 md:pt-10 pb-10 md:pb-14">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-6 md:pt-10 pb-10 md:pb-14">
         <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-fg-muted mb-6 flex items-center gap-2">
           <Briefcase weight="fill" className="size-3.5" /> Case study
         </p>
@@ -776,10 +777,10 @@ function ArtistWebsiteCaseStudy({
             .filter(Boolean)
             .join(" · ")}
         </p>
-      </section>
+      </ScrollReveal>
 
       {/* Massive live-site CTA */}
-      <section className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-16 md:pb-24">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-16 md:pb-24">
         <a
           href={liveUrl}
           target="_blank"
@@ -817,7 +818,7 @@ function ArtistWebsiteCaseStudy({
             />
           </h2>
         </a>
-      </section>
+      </ScrollReveal>
 
       {/* Snapshot — TL;DR */}
       <SnapshotSection study={study} color={project.color} />
@@ -826,7 +827,7 @@ function ArtistWebsiteCaseStudy({
       <ProblemSection study={study} color={project.color} />
 
       {/* Three full-width browser-framed shots */}
-      <section
+      <ScrollReveal
         id="shots"
         className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-12 md:pb-16 flex flex-col gap-10 md:gap-14 scroll-mt-24"
       >
@@ -849,7 +850,7 @@ function ArtistWebsiteCaseStudy({
             </figcaption>
           </figure>
         ))}
-      </section>
+      </ScrollReveal>
 
       {/* Outcome */}
       {study.outcome && (
@@ -857,7 +858,7 @@ function ArtistWebsiteCaseStudy({
       )}
 
       {/* Next case study */}
-      <section className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-24 md:pb-32">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-24 md:pb-32">
         <Link
           href={`/work/${next.slug}`}
           className="group flex items-center justify-between gap-6 py-8 md:py-10 border-t border-hairline hover:border-fg transition-colors"
@@ -878,7 +879,7 @@ function ArtistWebsiteCaseStudy({
             />
           </span>
         </Link>
-      </section>
+      </ScrollReveal>
     </>
   );
 }
@@ -908,7 +909,7 @@ function ReelCaseStudy({
       <CaseStudyToc sections={tocSections} color={project.color} />
 
       {/* Top nav row */}
-      <section className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-12 md:pt-16 pb-8 flex items-center justify-between gap-4">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-12 md:pt-16 pb-8 flex items-center justify-between gap-4">
         <Link
           href="/work"
           className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-hairline text-[12px] text-fg-muted hover:bg-[var(--chip)] hover:text-fg hover:border-[var(--chip)] transition-colors duration-300 ease-out"
@@ -926,10 +927,10 @@ function ReelCaseStudy({
             className="size-3 transition-transform group-hover:translate-x-0.5"
           />
         </Link>
-      </section>
+      </ScrollReveal>
 
       {/* Title */}
-      <section className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-6 md:pt-10 pb-10 md:pb-14">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-6 md:pt-10 pb-10 md:pb-14">
         <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-fg-muted mb-6 flex items-center gap-2">
           <Briefcase weight="fill" className="size-3.5" /> Case study
         </p>
@@ -951,10 +952,10 @@ function ReelCaseStudy({
             .filter(Boolean)
             .join(" · ")}
         </p>
-      </section>
+      </ScrollReveal>
 
       {/* Massive live-site CTA */}
-      <section className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-16 md:pb-24">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-16 md:pb-24">
         <a
           href={liveUrl}
           target="_blank"
@@ -992,7 +993,7 @@ function ReelCaseStudy({
             />
           </h2>
         </a>
-      </section>
+      </ScrollReveal>
 
       {/* Snapshot — TL;DR */}
       <SnapshotSection study={study} color={project.color} />
@@ -1026,7 +1027,7 @@ function ReelCaseStudy({
       )}
 
       {/* Next case study */}
-      <section className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-24 md:pb-32">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-24 md:pb-32">
         <Link
           href={`/work/${next.slug}`}
           className="group flex items-center justify-between gap-6 py-8 md:py-10 border-t border-hairline hover:border-fg transition-colors"
@@ -1047,7 +1048,7 @@ function ReelCaseStudy({
             />
           </span>
         </Link>
-      </section>
+      </ScrollReveal>
     </>
   );
 }

@@ -25,10 +25,11 @@ export function PlaygroundList() {
           return (
             <motion.li
               key={e.slug}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px 0px" }}
               transition={{
-                duration: 0.3,
+                duration: 0.5,
                 delay: i * 0.05,
                 ease: [0.22, 1, 0.36, 1],
               }}

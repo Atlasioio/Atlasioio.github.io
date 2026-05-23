@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Flask } from "@phosphor-icons/react/dist/ssr";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { experiments, getExperiment } from "@/lib/experiments";
 import { KineticTypeFull } from "@/components/experiments/KineticType";
 import { ClickSymphonyFull } from "@/components/experiments/ClickSymphony";
@@ -37,7 +38,7 @@ export default async function ExperimentPage({ params }: Params) {
 
   return (
     <>
-      <section className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-12 md:pt-16 pb-8 flex items-center justify-between gap-4">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-12 md:pt-16 pb-8 flex items-center justify-between gap-4">
         <Link
           href="/playground"
           className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-hairline text-[12px] text-fg-muted hover:bg-[var(--chip)] hover:text-fg hover:border-[var(--chip)] transition-colors duration-300 ease-out"
@@ -55,9 +56,9 @@ export default async function ExperimentPage({ params }: Params) {
             className="size-3 transition-transform group-hover:translate-x-0.5"
           />
         </Link>
-      </section>
+      </ScrollReveal>
 
-      <section className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-2 md:pt-4 pb-10">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-2 md:pt-4 pb-10">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-subtle flex flex-wrap items-center gap-x-2 gap-y-1">
           <Flask weight="fill" className="size-3.5" />
           <span>{experiment.category}</span>
@@ -83,9 +84,9 @@ export default async function ExperimentPage({ params }: Params) {
         <p className="mt-6 max-w-[58ch] text-lg text-fg-muted leading-relaxed">
           {experiment.description}
         </p>
-      </section>
+      </ScrollReveal>
 
-      <section
+      <ScrollReveal
         className="mx-auto max-w-full md:max-w-[min(86vw,1500px)] w-full px-5 md:px-8 pb-12"
         style={{ ["--card-accent" as string]: experiment.color }}
       >
@@ -97,9 +98,9 @@ export default async function ExperimentPage({ params }: Params) {
         >
           {Full ? <Full /> : null}
         </div>
-      </section>
+      </ScrollReveal>
 
-      <section className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pb-24 md:pb-32">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pb-24 md:pb-32">
         <Link
           href={`/playground/${next.slug}`}
           className="group flex items-center justify-between gap-6 py-8 md:py-10 border-t border-hairline hover:border-fg transition-colors"
@@ -120,7 +121,7 @@ export default async function ExperimentPage({ params }: Params) {
             />
           </span>
         </Link>
-      </section>
+      </ScrollReveal>
     </>
   );
 }

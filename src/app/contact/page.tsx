@@ -13,6 +13,7 @@ import {
 import { InstagramIcon, LinkedInIcon } from "@/components/BrandIcons";
 import { ContactForm } from "@/components/ContactForm";
 import { CopyEmailButton } from "@/components/CopyEmailButton";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { WhereToNext } from "@/components/WhereToNext";
 import { site } from "@/lib/site";
 
@@ -94,7 +95,7 @@ export default function ContactPage() {
   return (
     <section className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 py-14 md:py-20">
       {/* Hero row */}
-      <div className="grid grid-cols-12 gap-x-6 gap-y-10 items-end">
+      <ScrollReveal as="div" className="grid grid-cols-12 gap-x-6 gap-y-10 items-end">
         <div className="col-span-12 md:col-span-7">
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-subtle mb-6 flex items-center gap-2">
             <Envelope weight="fill" className="size-3.5" /> Contact
@@ -152,10 +153,10 @@ export default function ContactPage() {
             </div>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* Contact form */}
-      <div id="message" className="mt-16 md:mt-24 grid grid-cols-12 gap-x-6 gap-y-8 scroll-mt-24">
+      <ScrollReveal as="div" id="message" className="mt-16 md:mt-24 grid grid-cols-12 gap-x-6 gap-y-8 scroll-mt-24">
         <div className="col-span-12 md:col-span-5">
           <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-fg-muted mb-5 flex items-center gap-2">
             <PencilLine weight="fill" className="size-3.5" /> Or write
@@ -172,10 +173,10 @@ export default function ContactPage() {
         <div className="col-span-12 md:col-span-7 md:pt-[38px]">
           <ContactForm />
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* Contact cards grid */}
-      <div className="mt-16 md:mt-24">
+      <ScrollReveal as="div" className="mt-16 md:mt-24">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-subtle mb-6 flex items-center gap-2">
           <ArrowUpRight className="size-3" /> All channels
         </p>
@@ -201,7 +202,7 @@ export default function ContactPage() {
             )
           )}
         </div>
-      </div>
+      </ScrollReveal>
 
       <WhereToNext
         links={[
