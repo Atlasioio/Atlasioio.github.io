@@ -15,10 +15,10 @@ type Atom =
   | { type: "word"; content: string }
   | { type: "highlight"; variant: Variant; content: string };
 
-const tabs: { key: AudienceKey; label: string }[] = [
-  { key: "recruiters", label: "For recruiters" },
-  { key: "designers", label: "For designers" },
-  { key: "developers", label: "For developers" },
+const tabs: { key: AudienceKey; label: string; shortLabel: string }[] = [
+  { key: "recruiters", label: "For recruiters", shortLabel: "Recruiters" },
+  { key: "designers", label: "For designers", shortLabel: "Designers" },
+  { key: "developers", label: "For developers", shortLabel: "Devs" },
 ];
 
 const VARIANTS: Record<AudienceKey, Segment[]> = {
@@ -29,13 +29,12 @@ const VARIANTS: Record<AudienceKey, Segment[]> = {
     {
       type: "text",
       content:
-        " — smart office workplace tech used by enterprises across many countries. Based in Malmö, BSc in Interaction Design. ",
+        " — smart office tech used across many countries. Based in Malmö. ",
     },
     { type: "highlight", variant: "c", content: "Available from June 2026" },
     {
       type: "text",
-      content:
-        " for full-time, freelance, or a quick chat — open to relocate.",
+      content: " for full-time, freelance, or a chat — open to relocate.",
     },
   ],
   designers: [
@@ -46,12 +45,8 @@ const VARIANTS: Record<AudienceKey, Segment[]> = {
       content:
         ", selective about what's worth bringing along. I sweat the ",
     },
-    { type: "highlight", variant: "b", content: "small details when it matters" },
-    {
-      type: "text",
-      content:
-        ". Enjoy tinkering in Figma, finding the why behind decisions, and taking projects ",
-    },
+    { type: "highlight", variant: "b", content: "small details" },
+    { type: "text", content: " and take projects " },
     { type: "highlight", variant: "c", content: "from first sketch to ship" },
     { type: "text", content: "." },
   ],
@@ -64,16 +59,15 @@ const VARIANTS: Record<AudienceKey, Segment[]> = {
     },
     {
       type: "text",
-      content: ". Foundations in HTML, CSS, and JS, and I ",
+      content: ". Foundations in HTML, CSS, JS — I ",
     },
     { type: "highlight", variant: "b", content: "code and use AI" },
     {
       type: "text",
-      content:
-        " to take an idea from sketch to working prototype fast. The right design ",
+      content: " to go from sketch to working prototype fast. The right design ",
     },
     { type: "highlight", variant: "c", content: "lets the tech underneath shine" },
-    { type: "text", content: ", and quietly facilitates the build itself." },
+    { type: "text", content: "." },
   ],
 };
 
@@ -101,13 +95,17 @@ const STAGGER_PER_ATOM_MS = 42;
 const ATOM_DURATION_S = 0.5;
 const INITIAL_LOAD_DELAY_MS = 700;
 const SWITCH_DELAY_MS = 80;
+const AUTO_CYCLE_MS = 6500;
 
 export function IntroSwitcher() {
   const [active, setActive] = useState<AudienceKey>("recruiters");
+  const [hasInteracted, setHasInteracted] = useState(false);
   const isInitialMountRef = useRef(true);
 
-  // Only animate on the very first render of the page. Tab switches render instantly.
-  const shouldAnimate = isInitialMountRef.current;
+  // Animate on initial mount, manual clicks, and auto-cycles. The original
+  // logic skipped animation on manual clicks — but with auto-cycling, the
+  // word-by-word reveal is the showcase, so we keep it for every switch.
+  const shouldAnimate = true;
   const startDelayMs = isInitialMountRef.current
     ? INITIAL_LOAD_DELAY_MS
     : SWITCH_DELAY_MS;
@@ -115,6 +113,23 @@ export function IntroSwitcher() {
   useEffect(() => {
     isInitialMountRef.current = false;
   }, []);
+
+  // Auto-cycle through variants until the visitor manually picks one.
+  useEffect(() => {
+    if (hasInteracted) return;
+    const id = setInterval(() => {
+      setActive((curr) => {
+        const idx = tabs.findIndex((t) => t.key === curr);
+        return tabs[(idx + 1) % tabs.length].key;
+      });
+    }, AUTO_CYCLE_MS);
+    return () => clearInterval(id);
+  }, [hasInteracted]);
+
+  const handleTabClick = (key: AudienceKey) => {
+    setActive(key);
+    setHasInteracted(true);
+  };
 
   return (
     <>
@@ -133,7 +148,7 @@ export function IntroSwitcher() {
               role="tab"
               type="button"
               aria-selected={isActive}
-              onClick={() => setActive(t.key)}
+              onClick={() => handleTabClick(t.key)}
               className={`relative cursor-pointer px-3 py-1.5 rounded-full font-mono text-[11px] uppercase tracking-[0.16em] transition-colors duration-300 ease-out ${
                 isActive ? "text-fg" : "text-fg-muted hover:text-fg"
               }`}
@@ -151,7 +166,8 @@ export function IntroSwitcher() {
                   }}
                 />
               )}
-              <span className="relative z-10">{t.label}</span>
+              <span className="relative z-10 md:hidden">{t.shortLabel}</span>
+              <span className="relative z-10 hidden md:inline">{t.label}</span>
             </button>
           );
         })}

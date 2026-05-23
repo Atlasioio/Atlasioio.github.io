@@ -26,13 +26,13 @@ export function CopyEmailButton() {
         type="button"
         onClick={handleCopy}
         aria-label={`Copy ${site.email}`}
-        className="group inline-flex items-center gap-3 px-5 py-3.5 rounded-full bg-[var(--fg)] text-[var(--bg)] hover:bg-accent hover:text-[var(--bg)] transition-colors duration-300 ease-out text-lg md:text-xl cursor-pointer"
+        className="group inline-flex items-center gap-2 md:gap-3 px-3.5 md:px-5 py-2.5 md:py-3.5 rounded-full bg-[var(--fg)] text-[var(--bg)] hover:bg-accent hover:text-[var(--bg)] transition-colors duration-300 ease-out text-[13px] md:text-xl cursor-pointer"
       >
-        <Envelope weight="fill" className="row-icon size-5 translate-y-[1px]" />
+        <Envelope weight="fill" className="row-icon size-[14px] md:size-5 translate-y-[1px] shrink-0" />
         {site.email}
         <Copy
           weight="regular"
-          className="size-5 translate-y-[1px] transition-transform duration-300 ease-out group-hover:scale-110"
+          className="size-[14px] md:size-5 translate-y-[1px] transition-transform duration-300 ease-out group-hover:scale-110 shrink-0"
         />
       </button>
 

@@ -595,7 +595,7 @@ function HighlightsSection({
         />
         Highlights
       </p>
-      <ul className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
+      <ul className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-5">
         {highlights.map((shot, i) => {
           const data = typeof shot === "string" ? { caption: shot } : shot;
           const aspect =
@@ -610,12 +610,12 @@ function HighlightsSection({
                 chrome={chrome}
                 intensity="subtle"
                 rounded="rounded-2xl"
-                innerPadding="inset-3 md:inset-4"
+                innerPadding="inset-5 md:inset-4"
                 fallbackLabel={`${project.name} · ${String(i + 1).padStart(2, "0")}`}
                 objectFit={data.objectFit}
                 url={url}
               />
-              <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-muted line-clamp-2">
+              <p className="font-mono text-[11px] md:text-[10px] uppercase tracking-[0.16em] text-fg-muted md:line-clamp-2">
                 {data.caption}
               </p>
             </li>

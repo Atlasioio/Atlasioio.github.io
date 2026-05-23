@@ -100,19 +100,19 @@ export default function HomePage() {
     <>
       <div className="relative isolate overflow-hidden">
         <HeroBackground />
-      <section className="relative mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-12 md:pt-20 pb-10 md:pb-16">
-        <div className="grid grid-cols-12 gap-x-6 gap-y-6">
+      <section className="relative mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-8 md:pt-20 pb-8 md:pb-16">
+        <div className="grid grid-cols-12 gap-x-3 md:gap-x-6 gap-y-5 md:gap-y-6 items-center md:items-stretch">
           <div
-            className="col-span-12 md:col-span-3 md:order-2 flex flex-col items-center md:items-end md:pt-[20px] hero-fade-up"
+            className="col-span-4 md:col-span-3 order-2 flex flex-col items-end justify-center md:pt-[20px] hero-fade-up"
             style={{ animationDelay: "0.35s" }}
           >
             <div className="relative isolate shrink-0 md:translate-x-3">
               <span
                 aria-hidden
-                className="absolute -inset-3 md:-inset-5 bg-bg-elevated blob-morph -z-10"
+                className="absolute -inset-2 md:-inset-5 bg-bg-elevated blob-morph -z-10"
               />
               <div
-                className="relative size-32 md:size-72 overflow-hidden border border-hairline"
+                className="relative size-24 md:size-72 overflow-hidden border border-hairline"
                 style={{
                   borderRadius: "82% 32% 52% 66% / 56% 72% 38% 60%",
                 }}
@@ -121,7 +121,7 @@ export default function HomePage() {
                   src="/photo.jpg"
                   alt="Lukas Ahlse"
                   fill
-                  sizes="(min-width: 768px) 288px, 128px"
+                  sizes="(min-width: 768px) 288px, 96px"
                   className="object-cover"
                   priority
                 />
@@ -129,15 +129,15 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="col-span-12 md:col-span-9 md:order-1">
+          <div className="col-span-8 md:col-span-9 order-1">
             <p
-              className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-subtle mb-6 flex items-center gap-2 hero-fade-up"
+              className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-subtle mb-4 md:mb-6 flex items-center gap-2 hero-fade-up"
               style={{ animationDelay: "0.05s" }}
             >
               <span className="size-1.5 rounded-full bg-accent" /> Portfolio · 2026
             </p>
             <h1
-              className="display-tight text-display-xl leading-[0.86] hero-fade-up"
+              className="display-tight text-[2.5rem] md:text-display-xl leading-[0.86] hero-fade-up"
               style={{ animationDelay: "0.18s" }}
             >
               Lukas
@@ -150,10 +150,10 @@ export default function HomePage() {
         <div className="mt-14 md:mt-24 grid grid-cols-12 gap-x-6 gap-y-4 md:gap-y-5 items-start">
           <IntroSwitcher />
 
-          <div className="col-span-12 md:col-span-3 md:col-start-10 md:row-start-1 md:row-span-2 grid grid-cols-2 gap-2.5 md:gap-3 content-start">
-            {/* Primary tile — full width, hero CTA */}
+          <div className="col-span-12 md:col-span-3 md:col-start-10 md:row-start-1 md:row-span-2 flex md:grid md:grid-cols-2 gap-2.5 md:gap-3 content-start">
+            {/* Primary tile — full width on desktop, rightmost wide pill on mobile */}
             <div
-              className="col-span-2 hero-tile-in"
+              className="flex-1 md:flex-none md:col-span-2 order-3 md:order-none hero-tile-in"
               style={
                 {
                   animationDelay: "0.7s",
@@ -166,28 +166,46 @@ export default function HomePage() {
               <Magnetic strength={0.12} className="w-full">
                 <Link
                   href="/work"
-                  className="group w-full flex flex-col gap-4 md:gap-5 rounded-2xl bg-[var(--fg)] text-[var(--bg)] hover:bg-accent transition-colors duration-300 ease-out px-5 py-4 md:px-6 md:py-5"
+                  className="group block w-full rounded-2xl bg-[var(--fg)] text-[var(--bg)] hover:bg-accent transition-colors duration-300 ease-out"
                 >
-                  <div className="flex items-start justify-between">
+                  {/* Mobile: inline row, matches icon-tile height */}
+                  <span className="md:hidden h-11 flex items-center justify-between gap-2 px-3">
                     <Briefcase
                       weight="fill"
-                      className="row-icon size-4 translate-y-[1px]"
+                      className="row-icon size-[14px] shrink-0"
                     />
+                    <span className="text-[13px] font-medium leading-snug flex-1 text-center">
+                      See selected work
+                    </span>
                     <ArrowRight
                       weight="bold"
-                      className="row-icon size-4 transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      className="row-icon size-[14px] shrink-0 transition-transform duration-300 ease-out group-hover:translate-x-0.5"
                     />
-                  </div>
-                  <span className="text-[15px] md:text-base font-medium leading-snug">
-                    See selected work
+                  </span>
+
+                  {/* Desktop: stacked layout (icon row on top, label below) */}
+                  <span className="hidden md:flex md:flex-col md:gap-5 md:px-6 md:py-5">
+                    <span className="flex items-start justify-between">
+                      <Briefcase
+                        weight="fill"
+                        className="row-icon size-4 translate-y-[1px]"
+                      />
+                      <ArrowRight
+                        weight="bold"
+                        className="row-icon size-4 transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      />
+                    </span>
+                    <span className="text-base font-medium leading-snug">
+                      See selected work
+                    </span>
                   </span>
                 </Link>
               </Magnetic>
             </div>
 
-            {/* Secondary tile — get in touch, icon only */}
+            {/* Secondary tile — email, icon only */}
             <div
-              className="hero-tile-in"
+              className="w-11 md:w-auto order-1 md:order-none hero-tile-in"
               style={
                 {
                   animationDelay: "1.04s",
@@ -201,11 +219,11 @@ export default function HomePage() {
                 <Link
                   href="/contact#message"
                   aria-label="Send a message"
-                  className="group w-full flex items-center justify-center rounded-2xl bg-[var(--chip)] hover:bg-[color-mix(in_oklab,var(--fg)_22%,transparent)] transition-colors duration-300 ease-out h-14 md:h-16 text-fg-muted hover:text-fg"
+                  className="group w-full flex items-center justify-center rounded-2xl bg-[var(--chip)] hover:bg-[color-mix(in_oklab,var(--fg)_22%,transparent)] transition-colors duration-300 ease-out h-11 md:h-16 text-fg-muted hover:text-fg"
                 >
                   <Envelope
                     weight="fill"
-                    className="row-icon size-[20px] md:size-[22px] opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                    className="row-icon size-[18px] md:size-[22px] opacity-80 group-hover:opacity-100 transition-opacity duration-300"
                   />
                 </Link>
               </Magnetic>
@@ -213,7 +231,7 @@ export default function HomePage() {
 
             {/* Secondary tile — LinkedIn, icon only */}
             <div
-              className="hero-tile-in"
+              className="w-11 md:w-auto order-2 md:order-none hero-tile-in"
               style={
                 {
                   animationDelay: "0.88s",
@@ -229,9 +247,9 @@ export default function HomePage() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="LinkedIn"
-                  className="group w-full flex items-center justify-center rounded-2xl bg-[var(--chip)] hover:bg-[color-mix(in_oklab,var(--fg)_22%,transparent)] transition-colors duration-300 ease-out h-14 md:h-16 text-fg-muted hover:text-fg"
+                  className="group w-full flex items-center justify-center rounded-2xl bg-[var(--chip)] hover:bg-[color-mix(in_oklab,var(--fg)_22%,transparent)] transition-colors duration-300 ease-out h-11 md:h-16 text-fg-muted hover:text-fg"
                 >
-                  <LinkedInIcon className="row-icon size-4 md:size-[18px] opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
+                  <LinkedInIcon className="row-icon size-[15px] md:size-[18px] opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
                 </a>
               </Magnetic>
             </div>
@@ -414,28 +432,28 @@ export default function HomePage() {
             className="group inline-flex items-center gap-2.5 pl-5 pr-4 py-3 rounded-full bg-[var(--fg)] text-[var(--bg)] hover:bg-accent hover:text-[var(--bg)] transition-colors duration-300 ease-out text-[14px]"
           >
             <Briefcase weight="fill" className="row-icon size-4 translate-y-[1px]" />
-            See all case studies
+            All work
           </Link>
           <Link
             href="/about"
             className="group inline-flex items-center gap-2 px-4 py-3 rounded-full border border-hairline text-[13px] text-fg-muted hover:bg-[var(--chip)] hover:text-fg hover:border-[var(--chip)] transition-colors duration-300 ease-out"
           >
             <User weight="fill" className="row-icon size-3.5" />
-            Get to know me
+            About me
           </Link>
           <Link
             href="/contact"
             className="group inline-flex items-center gap-2 px-4 py-3 rounded-full border border-hairline text-[13px] text-fg-muted hover:bg-[var(--chip)] hover:text-fg hover:border-[var(--chip)] transition-colors duration-300 ease-out"
           >
             <Envelope weight="fill" className="row-icon size-3.5" />
-            Get in touch
+            Say hello
           </Link>
           <Link
             href="/playground"
             className="group inline-flex items-center gap-2 px-4 py-3 rounded-full border border-hairline text-[13px] text-fg-muted hover:bg-[var(--chip)] hover:text-fg hover:border-[var(--chip)] transition-colors duration-300 ease-out"
           >
             <Flask weight="fill" className="row-icon size-3.5" />
-            Laboratory
+            Lab
           </Link>
         </div>
       </section>

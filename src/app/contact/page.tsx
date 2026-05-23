@@ -106,7 +106,7 @@ export default function ContactPage() {
             Open to product-design roles, freelance, and good design &amp;
             tech conversations. Replies usually within a day.
           </p>
-          <div className="mt-10 flex flex-wrap items-center gap-3">
+          <div className="mt-8 md:mt-10 flex flex-nowrap md:flex-wrap items-center gap-2 md:gap-3">
             <CopyEmailButton />
 
             <a
@@ -114,17 +114,17 @@ export default function ContactPage() {
               target="_blank"
               rel="noreferrer"
               aria-label="LinkedIn"
-              className="group flex size-14 items-center justify-center rounded-full bg-[var(--chip)] hover:bg-[var(--chip-hover)] text-fg-muted hover:text-fg transition-colors duration-300 ease-out"
+              className="group flex size-10 md:size-14 items-center justify-center rounded-full bg-[var(--chip)] hover:bg-[var(--chip-hover)] text-fg-muted hover:text-fg transition-colors duration-300 ease-out shrink-0"
             >
-              <LinkedInIcon className="row-icon size-5 opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
+              <LinkedInIcon className="row-icon size-[15px] md:size-5 opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
             </a>
 
             <a
               href={`tel:${site.phone}`}
               aria-label="Call"
-              className="group flex size-14 items-center justify-center rounded-full bg-[var(--chip)] hover:bg-[var(--chip-hover)] text-fg-muted hover:text-fg transition-colors duration-300 ease-out"
+              className="group flex size-10 md:size-14 items-center justify-center rounded-full bg-[var(--chip)] hover:bg-[var(--chip-hover)] text-fg-muted hover:text-fg transition-colors duration-300 ease-out shrink-0"
             >
-              <Phone weight="fill" className="row-icon size-5 opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
+              <Phone weight="fill" className="row-icon size-[15px] md:size-5 opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
             </a>
           </div>
         </div>

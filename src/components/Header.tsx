@@ -98,9 +98,9 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 pt-5 md:pt-7 px-3 md:px-0 pointer-events-none">
+      <header className="sticky top-0 z-50 pt-5 md:pt-7 px-[clamp(10px,3vw,16px)] md:px-0 pointer-events-none">
         <div
-          className={`mx-auto w-full px-4 md:px-8 ${
+          className={`mx-auto w-full px-[clamp(14px,4vw,20px)] md:px-8 ${
             scrolled ? "h-12 md:h-14" : "h-14 md:h-16"
           } flex items-center justify-between gap-3 pointer-events-auto`}
           style={{
@@ -154,7 +154,9 @@ export function Header() {
 
           <nav
             className={`flex items-center transition-[gap] duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] ${
-              scrolled ? "gap-4 md:gap-5" : "gap-5 md:gap-7"
+              scrolled
+                ? "gap-[clamp(14px,3.5vw,20px)] md:gap-5"
+                : "gap-[clamp(18px,5vw,28px)] md:gap-7"
             }`}
             aria-label="Primary"
           >
