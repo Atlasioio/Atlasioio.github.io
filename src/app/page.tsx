@@ -18,7 +18,11 @@ import { IntroSwitcher } from "@/components/IntroSwitcher";
 import { Magnetic } from "@/components/Magnetic";
 import { Marquee } from "@/components/Marquee";
 import { MockupFrame } from "@/components/MockupFrame";
+import { ProjectCarousel } from "@/components/ProjectCarousel";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { getCaseStudy } from "@/lib/case-studies";
+import { experiments } from "@/lib/experiments";
+import { projects as allProjects } from "@/lib/projects";
 import { site } from "@/lib/site";
 
 const intro = [
@@ -150,7 +154,7 @@ export default function HomePage() {
         <div className="mt-14 md:mt-24 grid grid-cols-12 gap-x-6 gap-y-4 md:gap-y-5 items-start">
           <IntroSwitcher />
 
-          <div className="col-span-12 md:col-span-3 md:col-start-10 md:row-start-1 md:row-span-2 flex md:grid md:grid-cols-2 gap-2.5 md:gap-3 content-start">
+          <div className="hidden md:grid md:col-span-3 md:col-start-10 md:row-start-1 md:row-span-2 md:grid-cols-2 md:gap-3 content-start">
             {/* Primary tile — full width on desktop, rightmost wide pill on mobile */}
             <div
               className="flex-1 md:flex-none md:col-span-2 order-3 md:order-none hero-tile-in"
@@ -260,7 +264,7 @@ export default function HomePage() {
       <Marquee items={ticker} className="mt-16 md:mt-24" />
       </div>
 
-      <section className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-16 md:pt-24">
+      <ScrollReveal className="hidden md:block mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-16 md:pt-24">
         <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
           {intro.map(({ Icon, HoverIcon, label, value, href, external }) => {
             const cardClass =
@@ -305,17 +309,68 @@ export default function HomePage() {
             );
           })}
         </ul>
-      </section>
+      </ScrollReveal>
 
-      <section className="mx-auto max-w-full md:max-w-[min(86vw,1500px)] w-full px-5 md:px-8 pt-20 md:pt-24 pb-20 md:pb-28">
-        <div className="flex items-center gap-3 mb-10 md:mb-14">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(86vw,1500px)] w-full px-5 md:px-8 pt-12 md:pt-24 pb-20 md:pb-28">
+        <div className="flex items-center gap-3 mb-8 md:mb-14">
           <ArrowDownRight weight="bold" className="size-4 text-accent" />
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-subtle">
             Selected work · 2024–2025
           </p>
         </div>
 
-        <ul className="flex flex-col gap-6 md:gap-8">
+        {/* Mobile: horizontal-swipe carousel */}
+        <ProjectCarousel
+          projects={featuredProjects.map((p) => {
+            const study = getCaseStudy(p.slug);
+            return {
+              slug: p.slug,
+              name: p.name,
+              year: p.year,
+              context: p.context,
+              tagline: p.tagline,
+              color: p.color,
+              heroImage: study?.heroImage,
+              heroObjectFit: study?.heroObjectFit,
+            };
+          })}
+          tails={[
+            {
+              key: "all-work",
+              href: "/work",
+              accentColor: "var(--accent)",
+              kickerLabel: "The full set",
+              heading: "See all",
+              headingSuffix: String(allProjects.length),
+              tagline:
+                "Case studies, deep dives, and side projects — every piece in one place.",
+              thumbs: allProjects.map((p) => {
+                const study = getCaseStudy(p.slug);
+                return {
+                  color: p.color,
+                  heroImage: study?.heroImage,
+                };
+              }),
+              thumbCols: 4,
+              ctaLabel: "Visit work index",
+            },
+            {
+              key: "lab",
+              href: "/playground",
+              accentColor: "#6B5DB0",
+              kickerLabel: "The lab",
+              heading: "Side experiments",
+              tagline:
+                "Generative, kinetic, audio, ambient — small toys that test ideas.",
+              thumbs: experiments.map((e) => ({ color: e.color })),
+              thumbCols: experiments.length,
+              ctaLabel: `${experiments.length} live experiments`,
+            },
+          ]}
+        />
+
+        {/* Desktop: vertical stack */}
+        <ul className="hidden md:flex flex-col gap-6 md:gap-8">
           {featuredProjects.map((p, i) => (
             <li key={p.slug}>
               <Link
@@ -417,46 +472,101 @@ export default function HomePage() {
             </li>
           ))}
         </ul>
-      </section>
+      </ScrollReveal>
 
-      <section className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pb-20 md:pb-28">
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pb-20 md:pb-28">
         <div className="flex items-center gap-3 mb-8 md:mb-10">
           <ArrowDownRight weight="bold" className="size-4 text-accent" />
           <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-fg-muted">
             Where to next
           </p>
         </div>
-        <div className="flex flex-wrap gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           <Link
             href="/work"
-            className="group inline-flex items-center gap-2.5 pl-5 pr-4 py-3 rounded-full bg-[var(--fg)] text-[var(--bg)] hover:bg-accent hover:text-[var(--bg)] transition-colors duration-300 ease-out text-[14px]"
+            className="group flex flex-col rounded-2xl bg-[var(--fg)] text-[var(--bg)] p-5 md:p-6 min-h-[120px] md:min-h-[160px] hover:bg-accent transition-colors duration-300 ease-out"
           >
-            <Briefcase weight="fill" className="row-icon size-4 translate-y-[1px]" />
-            All work
+            <div className="flex items-start justify-between">
+              <Briefcase weight="fill" className="row-icon size-5" />
+              <ArrowRight
+                weight="bold"
+                className="row-icon size-4 transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
+            </div>
+            <div className="mt-8 md:mt-12">
+              <p className="display-tight text-[18px] md:text-[20px] leading-[1] mb-1">
+                All work
+              </p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] opacity-60">
+                8 projects
+              </p>
+            </div>
           </Link>
+
           <Link
             href="/about"
-            className="group inline-flex items-center gap-2 px-4 py-3 rounded-full border border-hairline text-[13px] text-fg-muted hover:bg-[var(--chip)] hover:text-fg hover:border-[var(--chip)] transition-colors duration-300 ease-out"
+            className="group flex flex-col rounded-2xl border border-hairline bg-bg-elevated p-5 md:p-6 min-h-[120px] md:min-h-[160px] hover:border-fg transition-colors duration-300 ease-out"
           >
-            <User weight="fill" className="row-icon size-3.5" />
-            About me
+            <div className="flex items-start justify-between">
+              <User weight="fill" className="row-icon size-5 text-fg" />
+              <ArrowUpRight
+                weight="bold"
+                className="row-icon size-4 text-fg-subtle group-hover:text-fg transition-colors duration-300 ease-out"
+              />
+            </div>
+            <div className="mt-8 md:mt-12">
+              <p className="display-tight text-[18px] md:text-[20px] leading-[1] mb-1">
+                About me
+              </p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-subtle">
+                Story · climbing · food
+              </p>
+            </div>
           </Link>
+
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-2 px-4 py-3 rounded-full border border-hairline text-[13px] text-fg-muted hover:bg-[var(--chip)] hover:text-fg hover:border-[var(--chip)] transition-colors duration-300 ease-out"
+            className="group flex flex-col rounded-2xl border border-hairline bg-bg-elevated p-5 md:p-6 min-h-[120px] md:min-h-[160px] hover:border-fg transition-colors duration-300 ease-out"
           >
-            <Envelope weight="fill" className="row-icon size-3.5" />
-            Say hello
+            <div className="flex items-start justify-between">
+              <Envelope weight="fill" className="row-icon size-5 text-fg" />
+              <ArrowUpRight
+                weight="bold"
+                className="row-icon size-4 text-fg-subtle group-hover:text-fg transition-colors duration-300 ease-out"
+              />
+            </div>
+            <div className="mt-8 md:mt-12">
+              <p className="display-tight text-[18px] md:text-[20px] leading-[1] mb-1">
+                Say hello
+              </p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-subtle">
+                Email · LinkedIn · phone
+              </p>
+            </div>
           </Link>
+
           <Link
             href="/playground"
-            className="group inline-flex items-center gap-2 px-4 py-3 rounded-full border border-hairline text-[13px] text-fg-muted hover:bg-[var(--chip)] hover:text-fg hover:border-[var(--chip)] transition-colors duration-300 ease-out"
+            className="group flex flex-col rounded-2xl border border-hairline bg-bg-elevated p-5 md:p-6 min-h-[120px] md:min-h-[160px] hover:border-fg transition-colors duration-300 ease-out"
           >
-            <Flask weight="fill" className="row-icon size-3.5" />
-            Lab
+            <div className="flex items-start justify-between">
+              <Flask weight="fill" className="row-icon size-5 text-fg" />
+              <ArrowUpRight
+                weight="bold"
+                className="row-icon size-4 text-fg-subtle group-hover:text-fg transition-colors duration-300 ease-out"
+              />
+            </div>
+            <div className="mt-8 md:mt-12">
+              <p className="display-tight text-[18px] md:text-[20px] leading-[1] mb-1">
+                Lab
+              </p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-subtle">
+                Experiments &amp; notes
+              </p>
+            </div>
           </Link>
         </div>
-      </section>
+      </ScrollReveal>
     </>
   );
 }
