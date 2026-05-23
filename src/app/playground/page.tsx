@@ -1,4 +1,10 @@
-import { Flask } from "@phosphor-icons/react/dist/ssr";
+import {
+  Briefcase,
+  Envelope,
+  Flask,
+  User,
+} from "@phosphor-icons/react/dist/ssr";
+import { WhereToNext } from "@/components/WhereToNext";
 import { PlaygroundList } from "./playground-list";
 
 export const metadata = { title: "Playground" };
@@ -23,6 +29,14 @@ export default function PlaygroundPage() {
       </section>
 
       <PlaygroundList />
+
+      <WhereToNext
+        links={[
+          { href: "/work", label: "See selected work", Icon: Briefcase },
+          { href: "/about", label: "Learn more about me", Icon: User },
+          { href: "/contact", label: "Get in touch", Icon: Envelope },
+        ]}
+      />
     </>
   );
 }

@@ -60,8 +60,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ vibe: "neutral" });
   }
 
-  const apiKey =
-    process.env.OPENAI_API_KEY ?? process.env.EXPO_PUBLIC_OPENAI_API_KEY;
+  const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
     return NextResponse.json({ vibe: null, fallback: true });
   }

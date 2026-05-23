@@ -2,7 +2,8 @@ import path from "node:path";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
+  // Removed `output: 'export'` since we migrated to Vercel — static export
+  // disables API routes (needed for /api/chat to talk to Claude).
   images: {
     unoptimized: true,
   },

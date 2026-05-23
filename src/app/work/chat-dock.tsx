@@ -94,7 +94,7 @@ export function ChatDock() {
   };
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
+    <AnimatePresence mode="wait">
       {isDismissed ? (
         <motion.button
           key="mini"
@@ -120,12 +120,50 @@ export function ChatDock() {
       ) : (
         <motion.div
           key="dock"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 16 }}
-          transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-          className={`fixed left-0 right-0 bottom-0 md:left-1/2 md:-translate-x-1/2 md:bottom-4 md:max-w-[440px] z-40 transition-[height] duration-300 ease-out ${
-            isOpen ? "h-[100dvh] md:h-[520px]" : "h-14"
+          initial={{
+            opacity: 0,
+            y: 80,
+            scale: 0.6,
+            filter: "blur(10px)",
+            boxShadow: "0 0 0 0 rgba(255, 106, 61, 0)",
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            scale: [0.6, 1.14, 0.96, 1.04, 1],
+            filter: "blur(0px)",
+            boxShadow: [
+              "0 0 0 0 rgba(255, 106, 61, 0)",
+              "0 0 80px 14px rgba(255, 106, 61, 0.55)",
+              "0 0 36px 4px rgba(255, 106, 61, 0.2)",
+              "0 0 0 0 rgba(255, 106, 61, 0)",
+            ],
+          }}
+          exit={{ opacity: 0, y: 16, scale: 0.96 }}
+          transition={{
+            opacity: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+            y: {
+              type: "spring",
+              stiffness: 180,
+              damping: 14,
+              mass: 0.95,
+            },
+            scale: {
+              duration: 1.45,
+              times: [0, 0.4, 0.6, 0.8, 1],
+              ease: [0.22, 1, 0.36, 1],
+            },
+            filter: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+            boxShadow: {
+              duration: 1.5,
+              times: [0, 0.3, 0.65, 1],
+              ease: [0.22, 1, 0.36, 1],
+            },
+          }}
+          className={`fixed left-0 right-0 bottom-0 md:left-1/2 md:-translate-x-1/2 md:bottom-4 md:rounded-3xl z-40 transition-[max-width,height] duration-300 ease-out ${
+            isOpen
+              ? "h-[100dvh] md:h-[600px] md:max-w-[520px]"
+              : "h-14 md:max-w-[440px]"
           }`}
         ><div className="h-full bg-bg-elevated border-t border-hairline md:border md:rounded-3xl overflow-hidden flex flex-col shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.18)] md:shadow-[0_18px_36px_-20px_rgba(0,0,0,0.25)]">
         {/* Header */}
@@ -255,9 +293,6 @@ function ExpandedView({
         ))}
         {isThinking && <ThinkingIndicator />}
         <div ref={lastMessageRef} />
-        {messages.length > 0 && (
-          <div className="grow shrink-0 min-h-[55vh] md:min-h-[280px]" aria-hidden />
-        )}
         <div ref={messagesEndRef} />
       </div>
 
@@ -345,7 +380,7 @@ function ChatMessage({ message }: { message: Message }) {
         </span>
         Assistant
       </p>
-      <p className="text-[14px] text-fg leading-relaxed">{message.text}</p>
+      <MessageText text={message.text} />
       {message.references && message.references.length > 0 && (
         <div className="flex flex-wrap gap-2 mt-1">
           {message.references.map((ref) => (
@@ -385,4 +420,109 @@ function ThinkingIndicator() {
       />
     </motion.div>
   );
+}
+
+/**
+ * Tiny markdown-ish renderer for assistant messages. Handles:
+ *   - `**bold**`
+ *   - lines starting with `- ` as bullet items
+ *   - blank lines as paragraph breaks
+ * Anything else renders as plain text. Deliberately minimal — no deps.
+ */
+function MessageText({ text }: { text: string }) {
+  // Group lines into blocks separated by blank lines.
+  const blocks: string[][] = [];
+  let current: string[] = [];
+  for (const line of text.split("\n")) {
+    if (line.trim() === "") {
+      if (current.length > 0) {
+        blocks.push(current);
+        current = [];
+      }
+    } else {
+      current.push(line);
+    }
+  }
+  if (current.length > 0) blocks.push(current);
+
+  return (
+    <div className="text-[14px] text-fg leading-relaxed flex flex-col gap-2.5">
+      {blocks.map((block, bi) => {
+        const allBullets = block.every((l) => /^\s*-\s+/.test(l));
+        if (allBullets && block.length > 1) {
+          return (
+            <ul key={bi} className="flex flex-col gap-1.5 list-none">
+              {block.map((line, li) => (
+                <li key={li} className="flex gap-2 items-start">
+                  <span className="text-fg-muted mt-[0.45em] size-1 rounded-full bg-fg-muted shrink-0" aria-hidden />
+                  <span>{renderInline(line.replace(/^\s*-\s+/, ""))}</span>
+                </li>
+              ))}
+            </ul>
+          );
+        }
+        return (
+          <p key={bi}>
+            {block.map((line, li) => (
+              <span key={li}>
+                {renderInline(line)}
+                {li < block.length - 1 && <br />}
+              </span>
+            ))}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
+// Matches either a **bold** span (handled first so bolded names still link)
+// or a bare project-name mention. Aliases listed long-form first so the
+// regex picks the most specific phrase at any given position.
+const INLINE_SPLIT_RE =
+  /(\*\*[^*\n]+\*\*|\bSony\s*\/\s*Nimway\b|\bSony\s+Nimway\b|\bSony\b|\bSherry\b|\bEcoTrip\b|\bEco\s+Trip\b|\bTeem\b|\bGoodreads\s+Redesign\b|\bGoodreads\b|\bReel\b|\bJ\s+Lorin\b|\bArtist\s+Website\b|\bThis\s+Portfolio\b)/g;
+
+function slugForName(raw: string): string | null {
+  const t = raw.trim();
+  if (/^sony(\s*\/\s*nimway|\s+nimway)?$/i.test(t)) return "sony";
+  if (/^sherry$/i.test(t)) return "sherry";
+  if (/^eco\s*trip$/i.test(t)) return "ecotrip";
+  if (/^teem$/i.test(t)) return "teem";
+  if (/^goodreads(\s+redesign)?$/i.test(t)) return "goodreads";
+  if (/^reel$/i.test(t)) return "reel";
+  if (/^j\s+lorin$/i.test(t)) return "artist-website";
+  if (/^artist\s+website$/i.test(t)) return "artist-website";
+  if (/^this\s+portfolio$/i.test(t)) return "portfolio";
+  return null;
+}
+
+function ProjectLink({ slug, label }: { slug: string; label: string }) {
+  return (
+    <Link
+      href={`/work/${slug}`}
+      className="group/proj inline-flex items-center gap-1 px-2 py-[1px] rounded-full bg-[var(--chip)] hover:bg-[var(--chip-hover)] text-fg font-medium align-middle transition-colors no-underline"
+    >
+      {label}
+      <ArrowRight
+        weight="bold"
+        className="size-2.5 text-fg-subtle group-hover/proj:text-fg group-hover/proj:translate-x-0.5 transition-all"
+      />
+    </Link>
+  );
+}
+
+function renderInline(text: string): React.ReactNode[] {
+  const parts = text.split(INLINE_SPLIT_RE);
+  return parts.map((part, i) => {
+    if (!part) return null;
+    if (part.startsWith("**") && part.endsWith("**") && part.length > 4) {
+      const inner = part.slice(2, -2);
+      const slug = slugForName(inner);
+      if (slug) return <ProjectLink key={i} slug={slug} label={inner} />;
+      return <strong key={i}>{inner}</strong>;
+    }
+    const slug = slugForName(part);
+    if (slug) return <ProjectLink key={i} slug={slug} label={part} />;
+    return <span key={i}>{part}</span>;
+  });
 }

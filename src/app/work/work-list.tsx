@@ -39,16 +39,17 @@ export function WorkList() {
 
   return (
     <section className="mx-auto max-w-[min(86vw,1500px)] w-full px-5 md:px-8 pb-20 md:pb-28">
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-6 md:mb-8">
-        <div className="flex items-center gap-3">
-          <ArrowDownRight weight="bold" className="size-4 text-accent" />
-          <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-fg-muted">
-            Case studies · {filteredProjects.length}
-          </p>
+      <div className="mx-auto max-w-[min(75vw,1400px)] w-full">
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6 md:mb-8">
+          <div className="flex items-center gap-3">
+            <ArrowDownRight weight="bold" className="size-4 text-accent" />
+            <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-fg-muted">
+              Case studies · {filteredProjects.length}
+            </p>
+          </div>
         </div>
-      </div>
 
-      <ul className="flex flex-wrap gap-2 mb-8 md:mb-10">
+        <ul className="flex flex-wrap gap-2 mb-8 md:mb-10">
         {TAG_OPTIONS.map(({ id, label, Icon }) => {
           const selected = selectedTag === id;
           return (
@@ -69,7 +70,8 @@ export function WorkList() {
             </li>
           );
         })}
-      </ul>
+        </ul>
+      </div>
 
       <motion.ul layout className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
         <AnimatePresence mode="popLayout">

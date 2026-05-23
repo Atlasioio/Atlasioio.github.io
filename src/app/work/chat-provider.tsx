@@ -10,7 +10,6 @@ import {
   type ReactNode,
 } from "react";
 import { usePathname } from "next/navigation";
-import { getMockResponse, type MockResponse } from "./chat-data";
 
 export type Message = {
   id: string;
@@ -18,6 +17,50 @@ export type Message = {
   text: string;
   references?: { name: string; slug: string }[];
 };
+
+async function streamChatResponse(
+  payload: { messages: { role: "user" | "assistant"; content: string }[]; currentSlug: string | null },
+  onChunk: (accumulated: string) => void,
+  signal?: AbortSignal,
+): Promise<string> {
+  const res = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(payload),
+    signal,
+  });
+
+  if (!res.ok) {
+    let message = `Request failed (${res.status})`;
+    try {
+      const data = (await res.json()) as { error?: string };
+      if (data?.error) message = data.error;
+    } catch {
+      /* ignore */
+    }
+    throw new Error(message);
+  }
+
+  if (!res.body) {
+    throw new Error("No response body from the server.");
+  }
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let accumulated = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    accumulated += decoder.decode(value, { stream: true });
+    onChunk(accumulated);
+  }
+
+  accumulated += decoder.decode();
+  if (accumulated.length > 0) onChunk(accumulated);
+
+  return accumulated;
+}
 
 type ChatContextValue = {
   messages: Message[];
@@ -34,7 +77,7 @@ type ChatContextValue = {
 
 const ChatContext = createContext<ChatContextValue | null>(null);
 
-const STORAGE_KEY = "lukas-portfolio-chat-v1";
+const STORAGE_KEY = "lukas-portfolio-chat-v2";
 
 type StoredState = {
   messages: Message[];
@@ -73,6 +116,13 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const [isThinking, setIsThinking] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   const thinkingTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Mirror of `messages` so `send` can read the latest value synchronously
+  // without depending on the setState updater (which doesn't always fire
+  // before the next line — especially under React Strict Mode in dev).
+  const messagesRef = useRef<Message[]>([]);
+  useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
 
   // Hydrate from sessionStorage
   useEffect(() => {
@@ -115,30 +165,59 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const send = useCallback(
-    (text: string) => {
+    async (text: string) => {
       const trimmed = text.trim();
       if (!trimmed || isThinking) return;
 
-      setMessages((prev) => [
-        ...prev,
-        { id: newId(), role: "user", text: trimmed },
-      ]);
+      const assistantId = newId();
+      const userMessage: Message = {
+        id: newId(),
+        role: "user",
+        text: trimmed,
+      };
+      const assistantPlaceholder: Message = {
+        id: assistantId,
+        role: "assistant",
+        text: "",
+      };
+
+      const prev = messagesRef.current;
+      const payloadMessages = [...prev, userMessage]
+        .filter((m) => m.text.length > 0)
+        .map((m) => ({ role: m.role, content: m.text }));
+      setMessages([...prev, userMessage, assistantPlaceholder]);
+
       setIsThinking(true);
 
-      const delay = 500 + Math.random() * 500;
-      thinkingTimeout.current = setTimeout(() => {
-        const response: MockResponse = getMockResponse(trimmed, currentSlug);
-        setMessages((prev) => [
-          ...prev,
+      try {
+        await streamChatResponse(
           {
-            id: newId(),
-            role: "assistant",
-            text: response.text,
-            references: response.references,
+            messages: payloadMessages,
+            currentSlug,
           },
-        ]);
+          (accumulated) => {
+            setMessages((prev) =>
+              prev.map((m) =>
+                m.id === assistantId ? { ...m, text: accumulated } : m,
+              ),
+            );
+          },
+        );
+      } catch (err) {
+        const message =
+          err instanceof Error
+            ? err.message
+            : "Sorry — something went wrong on my end. Try again in a moment.";
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === assistantId
+              ? { ...m, text: message }
+              : m,
+          ),
+        );
+      } finally {
         setIsThinking(false);
-      }, delay);
+      }
     },
     [currentSlug, isThinking],
   );

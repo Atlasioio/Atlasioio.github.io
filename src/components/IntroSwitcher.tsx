@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Highlight } from "./Highlight";
 
-type AudienceKey = "everyone" | "designers" | "developers";
+type AudienceKey = "recruiters" | "designers" | "developers";
 type Variant = "a" | "b" | "c";
 
 type Segment =
@@ -16,13 +16,13 @@ type Atom =
   | { type: "highlight"; variant: Variant; content: string };
 
 const tabs: { key: AudienceKey; label: string }[] = [
-  { key: "everyone", label: "For everyone" },
+  { key: "recruiters", label: "For recruiters" },
   { key: "designers", label: "For designers" },
   { key: "developers", label: "For developers" },
 ];
 
 const VARIANTS: Record<AudienceKey, Segment[]> = {
-  everyone: [
+  recruiters: [
     { type: "highlight", variant: "a", content: "Product designer" },
     { type: "text", content: " at " },
     { type: "highlight", variant: "b", content: "Sony Nimway" },
@@ -103,7 +103,7 @@ const INITIAL_LOAD_DELAY_MS = 700;
 const SWITCH_DELAY_MS = 80;
 
 export function IntroSwitcher() {
-  const [active, setActive] = useState<AudienceKey>("everyone");
+  const [active, setActive] = useState<AudienceKey>("recruiters");
   const isInitialMountRef = useRef(true);
 
   // Only animate on the very first render of the page. Tab switches render instantly.

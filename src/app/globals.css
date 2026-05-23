@@ -288,7 +288,6 @@ body.experiment-takeover > footer {
 .thinking-dot:nth-child(3) { animation-delay: 0.36s; }
 
 .nav-text {
-  display: inline-block;
   white-space: nowrap;
   overflow: hidden;
   transition:

@@ -2,7 +2,10 @@ import Image from "next/image";
 import {
   ArrowDownRight,
   BookOpen,
+  Briefcase,
   CookingPot,
+  Envelope,
+  Flask,
   MapPin,
   Mountains,
   MusicNote,
@@ -10,6 +13,7 @@ import {
   User,
   Wrench,
 } from "@phosphor-icons/react/dist/ssr";
+import { WhereToNext } from "@/components/WhereToNext";
 import {
   ClaudeIcon,
   CursorIcon,
@@ -532,6 +536,14 @@ export default function AboutPage() {
         </ul>
       </div>
       </section>
+
+      <WhereToNext
+        links={[
+          { href: "/work", label: "See selected work", Icon: Briefcase },
+          { href: "/playground", label: "Laboratory", Icon: Flask },
+          { href: "/contact", label: "Get in touch", Icon: Envelope },
+        ]}
+      />
     </>
   );
 }

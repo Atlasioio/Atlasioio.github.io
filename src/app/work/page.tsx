@@ -1,4 +1,10 @@
-import { Briefcase } from "@phosphor-icons/react/dist/ssr";
+import {
+  Briefcase,
+  Envelope,
+  Flask,
+  User,
+} from "@phosphor-icons/react/dist/ssr";
+import { WhereToNext } from "@/components/WhereToNext";
 import { WorkList } from "./work-list";
 
 export const metadata = { title: "Work" };
@@ -11,9 +17,9 @@ export default function WorkPage() {
           <Briefcase weight="fill" className="size-3.5" /> Selected work
         </p>
         <h1 className="display-tight text-display-lg leading-[0.92]">
-          Six projects,
+          Apps, websites
           <br />
-          three years<span className="text-accent">.</span>
+          &amp; brands<span className="text-accent">.</span>
         </h1>
         <p className="mt-8 max-w-[60ch] text-lg text-fg-muted leading-relaxed">
           A mix of coursework, self-initiated concepts, and one paid client
@@ -22,6 +28,14 @@ export default function WorkPage() {
       </section>
 
       <WorkList />
+
+      <WhereToNext
+        links={[
+          { href: "/contact", label: "Get in touch", Icon: Envelope },
+          { href: "/about", label: "Learn more about me", Icon: User },
+          { href: "/playground", label: "Laboratory", Icon: Flask },
+        ]}
+      />
     </>
   );
 }

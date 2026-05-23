@@ -1,15 +1,19 @@
 import Image from "next/image";
 import {
   ArrowUpRight,
+  Briefcase,
   FileArrowDown,
   Envelope,
+  Flask,
   MapPin,
   Phone,
   PencilLine,
+  User,
 } from "@phosphor-icons/react/dist/ssr";
 import { InstagramIcon, LinkedInIcon } from "@/components/BrandIcons";
 import { ContactForm } from "@/components/ContactForm";
 import { CopyEmailButton } from "@/components/CopyEmailButton";
+import { WhereToNext } from "@/components/WhereToNext";
 import { site } from "@/lib/site";
 
 export const metadata = { title: "Contact" };
@@ -198,6 +202,14 @@ export default function ContactPage() {
           )}
         </div>
       </div>
+
+      <WhereToNext
+        links={[
+          { href: "/work", label: "See selected work", Icon: Briefcase },
+          { href: "/about", label: "Learn more about me", Icon: User },
+          { href: "/playground", label: "Laboratory", Icon: Flask },
+        ]}
+      />
     </section>
   );
 }
