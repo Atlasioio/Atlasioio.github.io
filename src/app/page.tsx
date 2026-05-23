@@ -104,7 +104,7 @@ export default function HomePage() {
     <>
       <div className="relative isolate overflow-hidden">
         <HeroBackground />
-      <section className="relative mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-8 md:pt-20 pb-8 md:pb-16">
+      <section className="relative mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-14 md:pt-20 pb-8 md:pb-16">
         <div className="grid grid-cols-12 gap-x-3 md:gap-x-6 gap-y-5 md:gap-y-6 items-center md:items-stretch">
           <div
             className="col-span-4 md:col-span-3 order-2 flex flex-col items-end justify-center md:pt-[20px] hero-fade-up"
@@ -113,10 +113,10 @@ export default function HomePage() {
             <div className="relative isolate shrink-0 md:translate-x-3">
               <span
                 aria-hidden
-                className="absolute -inset-2 md:-inset-5 bg-bg-elevated blob-morph -z-10"
+                className="absolute -inset-3 md:-inset-5 bg-bg-elevated blob-morph -z-10"
               />
               <div
-                className="relative size-24 md:size-72 overflow-hidden border border-hairline"
+                className="relative size-28 md:size-72 overflow-hidden border border-hairline"
                 style={{
                   borderRadius: "82% 32% 52% 66% / 56% 72% 38% 60%",
                 }}
@@ -125,7 +125,7 @@ export default function HomePage() {
                   src="/photo.jpg"
                   alt="Lukas Ahlse"
                   fill
-                  sizes="(min-width: 768px) 288px, 96px"
+                  sizes="(min-width: 768px) 288px, 112px"
                   className="object-cover"
                   priority
                 />
@@ -141,7 +141,7 @@ export default function HomePage() {
               <span className="size-1.5 rounded-full bg-accent" /> Portfolio · 2026
             </p>
             <h1
-              className="display-tight text-[2.5rem] md:text-display-xl leading-[0.86] hero-fade-up"
+              className="display-tight text-[3rem] md:text-display-xl leading-[0.86] hero-fade-up"
               style={{ animationDelay: "0.18s" }}
             >
               Lukas
