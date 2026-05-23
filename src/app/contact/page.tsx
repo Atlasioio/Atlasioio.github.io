@@ -92,7 +92,7 @@ function CardContent({ card }: { card: Card }) {
 
 export default function ContactPage() {
   return (
-    <section className="mx-auto max-w-[min(75vw,1400px)] w-full px-5 md:px-8 py-14 md:py-20">
+    <section className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 py-14 md:py-20">
       {/* Hero row */}
       <div className="grid grid-cols-12 gap-x-6 gap-y-10 items-end">
         <div className="col-span-12 md:col-span-7">

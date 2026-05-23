@@ -38,8 +38,8 @@ export function WorkList() {
   };
 
   return (
-    <section className="mx-auto max-w-[min(86vw,1500px)] w-full px-5 md:px-8 pb-20 md:pb-28">
-      <div className="mx-auto max-w-[min(75vw,1400px)] w-full">
+    <section className="mx-auto max-w-full md:max-w-[min(86vw,1500px)] w-full px-5 md:px-8 pb-20 md:pb-28">
+      <div className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6 md:mb-8">
           <div className="flex items-center gap-3">
             <ArrowDownRight weight="bold" className="size-4 text-accent" />

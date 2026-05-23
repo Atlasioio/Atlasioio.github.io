@@ -18,7 +18,7 @@ const PREVIEWS: Record<string, () => React.ReactElement> = {
 
 export function PlaygroundList() {
   return (
-    <section className="mx-auto max-w-[min(86vw,1500px)] w-full px-5 md:px-8 pb-20 md:pb-28">
+    <section className="mx-auto max-w-full md:max-w-[min(86vw,1500px)] w-full px-5 md:px-8 pb-20 md:pb-28">
       <ul className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
         {experiments.map((e, i) => {
           const Preview = PREVIEWS[e.slug];

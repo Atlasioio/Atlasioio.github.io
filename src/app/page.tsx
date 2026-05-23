@@ -100,7 +100,7 @@ export default function HomePage() {
     <>
       <div className="relative isolate overflow-hidden">
         <HeroBackground />
-      <section className="relative mx-auto max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-12 md:pt-20 pb-10 md:pb-16">
+      <section className="relative mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-12 md:pt-20 pb-10 md:pb-16">
         <div className="grid grid-cols-12 gap-x-6 gap-y-6">
           <div
             className="col-span-12 md:col-span-3 md:order-2 flex flex-col items-center md:items-end md:pt-[20px] hero-fade-up"
@@ -242,7 +242,7 @@ export default function HomePage() {
       <Marquee items={ticker} className="mt-16 md:mt-24" />
       </div>
 
-      <section className="mx-auto max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-16 md:pt-24">
+      <section className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-16 md:pt-24">
         <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
           {intro.map(({ Icon, HoverIcon, label, value, href, external }) => {
             const cardClass =
@@ -289,7 +289,7 @@ export default function HomePage() {
         </ul>
       </section>
 
-      <section className="mx-auto max-w-[min(86vw,1500px)] w-full px-5 md:px-8 pt-20 md:pt-24 pb-20 md:pb-28">
+      <section className="mx-auto max-w-full md:max-w-[min(86vw,1500px)] w-full px-5 md:px-8 pt-20 md:pt-24 pb-20 md:pb-28">
         <div className="flex items-center gap-3 mb-10 md:mb-14">
           <ArrowDownRight weight="bold" className="size-4 text-accent" />
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-subtle">
@@ -401,7 +401,7 @@ export default function HomePage() {
         </ul>
       </section>
 
-      <section className="mx-auto max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pb-20 md:pb-28">
+      <section className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pb-20 md:pb-28">
         <div className="flex items-center gap-3 mb-8 md:mb-10">
           <ArrowDownRight weight="bold" className="size-4 text-accent" />
           <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-fg-muted">

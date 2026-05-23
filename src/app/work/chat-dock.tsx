@@ -160,10 +160,10 @@ export function ChatDock() {
               ease: [0.22, 1, 0.36, 1],
             },
           }}
-          className={`fixed left-0 right-0 bottom-0 md:left-1/2 md:-translate-x-1/2 md:bottom-4 md:rounded-3xl z-40 transition-[max-width,height] duration-300 ease-out ${
+          className={`fixed left-0 right-0 bottom-0 md:left-1/2 md:-translate-x-1/2 md:bottom-4 md:rounded-3xl transition-[max-width,height] duration-300 ease-out ${
             isOpen
-              ? "h-[100dvh] md:h-[600px] md:max-w-[520px]"
-              : "h-14 md:max-w-[440px]"
+              ? "z-[60] h-[100dvh] md:h-[600px] md:max-w-[520px]"
+              : "z-40 h-14 md:max-w-[440px]"
           }`}
         ><div className="h-full bg-bg-elevated border-t border-hairline md:border md:rounded-3xl overflow-hidden flex flex-col shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.18)] md:shadow-[0_18px_36px_-20px_rgba(0,0,0,0.25)]">
         {/* Header */}

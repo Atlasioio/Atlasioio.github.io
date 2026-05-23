@@ -23,6 +23,13 @@ const NAV_ICONS = {
   "/contact": Envelope,
 } as const;
 
+// Mobile uses shorter labels for the longest names so adjacent icons don't
+// need extra spacing to keep their labels from colliding. Desktop keeps the
+// full names.
+const MOBILE_LABEL_OVERRIDES: Record<string, string> = {
+  "/playground": "Lab",
+};
+
 const COLLAPSE_TRANSITION = "500ms cubic-bezier(0.65, 0, 0.35, 1)";
 
 export function Header() {
@@ -91,9 +98,9 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 pt-5 md:pt-7 pointer-events-none">
+      <header className="sticky top-0 z-50 pt-5 md:pt-7 px-3 md:px-0 pointer-events-none">
         <div
-          className={`mx-auto w-full px-5 md:px-8 ${
+          className={`mx-auto w-full px-4 md:px-8 ${
             scrolled ? "h-12 md:h-14" : "h-14 md:h-16"
           } flex items-center justify-between gap-3 pointer-events-auto`}
           style={{
@@ -133,13 +140,13 @@ export function Header() {
             <span className="engulf-dot" aria-hidden />
             <span className="relative z-10 display-tight text-[19px] md:text-[20px] leading-none hidden md:inline-block transition-colors duration-300 ease-out delay-100 group-hover:text-[var(--bg)]">
               Lukas Ahlse
-              <span className="text-accent transition-colors duration-300 delay-100 group-hover:text-[var(--bg)]">
+              <span className="text-accent transition-colors duration-300 delay-100 group-hover:text-[var(--bg)] inline-block text-[0.9em] align-baseline">
                 .
               </span>
             </span>
             <span className="relative z-10 display-tight text-[19px] leading-none md:hidden inline-block transition-colors duration-300 ease-out delay-100 group-hover:text-[var(--bg)]">
               LA
-              <span className="text-accent transition-colors duration-300 delay-100 group-hover:text-[var(--bg)]">
+              <span className="text-accent transition-colors duration-300 delay-100 group-hover:text-[var(--bg)] inline-block text-[0.9em] align-baseline">
                 .
               </span>
             </span>
@@ -147,7 +154,7 @@ export function Header() {
 
           <nav
             className={`flex items-center transition-[gap] duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] ${
-              scrolled ? "gap-2.5 md:gap-5" : "gap-3 md:gap-7"
+              scrolled ? "gap-4 md:gap-5" : "gap-5 md:gap-7"
             }`}
             aria-label="Primary"
           >
@@ -194,11 +201,14 @@ export function Header() {
                   onClick={item.href === "/work" ? handleWorkClick : undefined}
                   onMouseEnter={item.href === "/work" ? () => setWorkHovered(true) : undefined}
                   onMouseLeave={item.href === "/work" ? () => setWorkHovered(false) : undefined}
-                  className={`group flex flex-col md:flex-row items-center py-1 text-[14px] transition-colors ${
+                  className={`group relative flex items-center py-1 text-[14px] transition-colors ${
                     isActive ? "text-fg" : "text-fg-muted hover:text-fg"
                   }`}
                   style={{
-                    gap: scrolled ? "0" : "0.4rem",
+                    // Gap only matters on desktop where the label sits inline
+                    // next to the icon. Mobile label is absolutely positioned
+                    // so it doesn't push the icon around.
+                    gap: isDesktop ? (scrolled ? "0" : "0.4rem") : 0,
                     transition: `color 200ms, gap ${COLLAPSE_TRANSITION}`,
                   }}
                   aria-current={isRouteActive ? "page" : undefined}
@@ -222,7 +232,7 @@ export function Header() {
                             }`}
                           />
                         </span>
-                        {isActive && !scrolled && (
+                        {isActive && !scrolled && isDesktop && (
                           <motion.span
                             layoutId="nav-active-dot"
                             aria-hidden
@@ -312,30 +322,34 @@ export function Header() {
                     </span>
                   )}
 
-                  {/* Mobile: label below the icon, collapses on scroll. */}
-                  <span
-                    className="md:hidden block font-mono uppercase leading-none overflow-hidden text-center"
-                    style={{
-                      fontSize: "9px",
-                      letterSpacing: "0.14em",
-                      maxHeight: scrolled ? "0px" : "11px",
-                      opacity: scrolled ? 0 : 1,
-                      transition: `max-height ${COLLAPSE_TRANSITION}, opacity 280ms ease`,
-                    }}
-                  >
-                    {item.label}
-                  </span>
-
-                  {/* Desktop: label beside the icon, collapses on scroll. */}
-                  <span
-                    className="nav-text hidden md:inline-block"
-                    style={{
-                      maxWidth: scrolled ? "0px" : "120px",
-                      opacity: scrolled ? 0 : 1,
-                    }}
-                  >
-                    {item.label}
-                  </span>
+                  {/* Conditionally render one label or the other based on
+                      viewport. Mobile uses absolute positioning so the label
+                      width never affects icon spacing. */}
+                  {isDesktop ? (
+                    <span
+                      className="nav-text inline-block"
+                      style={{
+                        maxWidth: scrolled ? "0px" : "120px",
+                        opacity: scrolled ? 0 : 1,
+                      }}
+                    >
+                      {item.label}
+                    </span>
+                  ) : (
+                    <span
+                      className="absolute left-1/2 font-mono uppercase leading-none whitespace-nowrap pointer-events-none text-center"
+                      style={{
+                        top: "calc(100% - 2px)",
+                        transform: "translateX(-50%)",
+                        fontSize: "9px",
+                        letterSpacing: "0.12em",
+                        opacity: scrolled ? 0 : 1,
+                        transition: `opacity 280ms ease`,
+                      }}
+                    >
+                      {MOBILE_LABEL_OVERRIDES[item.href] ?? item.label}
+                    </span>
+                  )}
                 </Link>
               );
             })}

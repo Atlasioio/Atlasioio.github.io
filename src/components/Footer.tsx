@@ -20,7 +20,7 @@ export function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="mt-16">
-      <div className="mx-auto max-w-[min(75vw,1400px)] px-5 md:px-8 py-12 md:py-16">
+      <div className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] px-5 md:px-8 py-12 md:py-16">
         <div className="grid gap-16 md:grid-cols-12">
           <div className="md:col-span-7">
             <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-subtle mb-6 flex items-center gap-2">

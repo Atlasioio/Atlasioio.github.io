@@ -76,7 +76,7 @@ export default async function CaseStudyPage({ params }: Params) {
       )}
 
       {/* Top nav row */}
-      <section className="mx-auto max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pt-12 md:pt-16 pb-8 flex items-center justify-between gap-4">
+      <section className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pt-12 md:pt-16 pb-8 flex items-center justify-between gap-4">
         <Link
           href="/work"
           className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-hairline text-[12px] text-fg-muted hover:bg-[var(--chip)] hover:text-fg hover:border-[var(--chip)] transition-colors duration-300 ease-out"
@@ -97,7 +97,7 @@ export default async function CaseStudyPage({ params }: Params) {
       </section>
 
       {/* Hero */}
-      <section className="mx-auto max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pt-6 md:pt-10 pb-10">
+      <section className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pt-6 md:pt-10 pb-10">
         <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-fg-muted mb-6 flex items-center gap-2">
           <Briefcase weight="fill" className="size-3.5" /> Case study
         </p>
@@ -125,7 +125,7 @@ export default async function CaseStudyPage({ params }: Params) {
       </section>
 
       {/* Hero mockup */}
-      <section className="mx-auto max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-10 md:pb-12">
+      <section className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-10 md:pb-12">
         <MockupFrame
           image={study?.heroImage}
           mobileImage={study?.heroImageMobile}
@@ -143,7 +143,7 @@ export default async function CaseStudyPage({ params }: Params) {
       </section>
 
       {/* Metadata strip */}
-      <section className="mx-auto max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-24">
+      <section className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-24">
         <dl className="grid grid-cols-2 md:grid-cols-5 gap-x-6 gap-y-6">
           <MetaItem label="Year" value={project.year} />
           <MetaItem label="Type" value={project.category} />
@@ -214,7 +214,7 @@ export default async function CaseStudyPage({ params }: Params) {
       )}
 
       {/* Next case study */}
-      <section className="mx-auto max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-24 md:pb-32">
+      <section className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-24 md:pb-32">
         <Link
           href={`/work/${next.slug}`}
           className="group flex items-center justify-between gap-6 py-8 md:py-10 border-t border-hairline hover:border-fg transition-colors"
@@ -276,7 +276,7 @@ function SnapshotSection({
   return (
     <section
       id="snapshot"
-      className="mx-auto max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-24 scroll-mt-24"
+      className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-24 scroll-mt-24"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
         <SnapshotCell label="The problem" color={color} body={study.snapshot.problem} />
@@ -323,7 +323,7 @@ function ProblemSection({
   return (
     <section
       id="problem"
-      className="mx-auto max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
+      className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
     >
       <SectionHeader label="The problem" color={color} />
       <div className="max-w-[68ch] flex flex-col gap-5 md:gap-6">
@@ -349,7 +349,7 @@ function ApproachSection({
   return (
     <section
       id="approach"
-      className="mx-auto max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
+      className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
     >
       <SectionHeader label="The approach" color={color} />
       <ul className="flex flex-col gap-12 md:gap-16">
@@ -448,9 +448,9 @@ function SolutionSection({
   return (
     <section
       id="solution"
-      className="mx-auto max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
+      className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
     >
-      <div className="max-w-[min(67vw,1200px)] mx-auto">
+      <div className="max-w-full md:max-w-[min(67vw,1200px)] mx-auto">
         <SectionHeader label="The solution" color={color} />
       </div>
       <div className="grid grid-cols-12 gap-5 md:gap-6">
@@ -510,7 +510,7 @@ function OutcomeSection({
   return (
     <section
       id="outcome"
-      className="mx-auto max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
+      className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
     >
       <SectionHeader label="The outcome" color={color} />
 
@@ -585,7 +585,7 @@ function HighlightsSection({
   return (
     <section
       id="highlights"
-      className="mx-auto max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-20 md:pb-24 scroll-mt-24"
+      className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-20 md:pb-24 scroll-mt-24"
     >
       <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted mb-6 flex items-center gap-2">
         <span
@@ -636,7 +636,7 @@ function SurfacesSection({
   return (
     <section
       id="surfaces"
-      className="mx-auto max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
+      className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
     >
       <SectionHeader label="What I worked on" color={color} />
       <ul className="flex flex-col gap-3 max-w-[68ch]">
@@ -662,7 +662,7 @@ function CallToActionSection({ text }: { text: string }) {
   return (
     <section
       id="contact"
-      className="mx-auto max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
+      className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
     >
       <div className="rounded-3xl border border-hairline bg-bg-elevated p-8 md:p-12 flex flex-col gap-6 max-w-[68ch]">
         <p className="text-lg md:text-xl text-fg leading-relaxed">{text}</p>
@@ -733,7 +733,7 @@ function ArtistWebsiteCaseStudy({
       <CaseStudyToc sections={tocSections} color={project.color} />
 
       {/* Top nav row */}
-      <section className="mx-auto max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-12 md:pt-16 pb-8 flex items-center justify-between gap-4">
+      <section className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-12 md:pt-16 pb-8 flex items-center justify-between gap-4">
         <Link
           href="/work"
           className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-hairline text-[12px] text-fg-muted hover:bg-[var(--chip)] hover:text-fg hover:border-[var(--chip)] transition-colors duration-300 ease-out"
@@ -754,7 +754,7 @@ function ArtistWebsiteCaseStudy({
       </section>
 
       {/* Title */}
-      <section className="mx-auto max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-6 md:pt-10 pb-10 md:pb-14">
+      <section className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-6 md:pt-10 pb-10 md:pb-14">
         <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-fg-muted mb-6 flex items-center gap-2">
           <Briefcase weight="fill" className="size-3.5" /> Case study
         </p>
@@ -779,7 +779,7 @@ function ArtistWebsiteCaseStudy({
       </section>
 
       {/* Massive live-site CTA */}
-      <section className="mx-auto max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-16 md:pb-24">
+      <section className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-16 md:pb-24">
         <a
           href={liveUrl}
           target="_blank"
@@ -828,7 +828,7 @@ function ArtistWebsiteCaseStudy({
       {/* Three full-width browser-framed shots */}
       <section
         id="shots"
-        className="mx-auto max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-12 md:pb-16 flex flex-col gap-10 md:gap-14 scroll-mt-24"
+        className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-12 md:pb-16 flex flex-col gap-10 md:gap-14 scroll-mt-24"
       >
         {shots.map((shot) => (
           <figure key={shot.src} className="flex flex-col gap-3">
@@ -857,7 +857,7 @@ function ArtistWebsiteCaseStudy({
       )}
 
       {/* Next case study */}
-      <section className="mx-auto max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-24 md:pb-32">
+      <section className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-24 md:pb-32">
         <Link
           href={`/work/${next.slug}`}
           className="group flex items-center justify-between gap-6 py-8 md:py-10 border-t border-hairline hover:border-fg transition-colors"
@@ -908,7 +908,7 @@ function ReelCaseStudy({
       <CaseStudyToc sections={tocSections} color={project.color} />
 
       {/* Top nav row */}
-      <section className="mx-auto max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-12 md:pt-16 pb-8 flex items-center justify-between gap-4">
+      <section className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-12 md:pt-16 pb-8 flex items-center justify-between gap-4">
         <Link
           href="/work"
           className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-hairline text-[12px] text-fg-muted hover:bg-[var(--chip)] hover:text-fg hover:border-[var(--chip)] transition-colors duration-300 ease-out"
@@ -929,7 +929,7 @@ function ReelCaseStudy({
       </section>
 
       {/* Title */}
-      <section className="mx-auto max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-6 md:pt-10 pb-10 md:pb-14">
+      <section className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-6 md:pt-10 pb-10 md:pb-14">
         <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-fg-muted mb-6 flex items-center gap-2">
           <Briefcase weight="fill" className="size-3.5" /> Case study
         </p>
@@ -954,7 +954,7 @@ function ReelCaseStudy({
       </section>
 
       {/* Massive live-site CTA */}
-      <section className="mx-auto max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-16 md:pb-24">
+      <section className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-16 md:pb-24">
         <a
           href={liveUrl}
           target="_blank"
@@ -1026,7 +1026,7 @@ function ReelCaseStudy({
       )}
 
       {/* Next case study */}
-      <section className="mx-auto max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-24 md:pb-32">
+      <section className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-24 md:pb-32">
         <Link
           href={`/work/${next.slug}`}
           className="group flex items-center justify-between gap-6 py-8 md:py-10 border-t border-hairline hover:border-fg transition-colors"

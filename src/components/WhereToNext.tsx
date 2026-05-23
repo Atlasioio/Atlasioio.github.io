@@ -13,7 +13,7 @@ export type WhereToNextLink = {
 
 export function WhereToNext({ links }: { links: WhereToNextLink[] }) {
   return (
-    <section className="mx-auto max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pb-20 md:pb-28">
+    <section className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pb-20 md:pb-28">
       <div className="flex items-center gap-3 mb-8 md:mb-10">
         <ArrowDownRight weight="bold" className="size-4 text-accent" />
         <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-fg-muted">

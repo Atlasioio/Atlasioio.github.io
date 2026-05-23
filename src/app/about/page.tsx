@@ -188,7 +188,7 @@ const books: Book[] = [
 export default function AboutPage() {
   return (
     <>
-      <section className="mx-auto max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-14 md:pt-20">
+      <section className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-14 md:pt-20">
       {/* Hero */}
       <div className="grid grid-cols-12 gap-x-6 gap-y-8 items-start">
         <div className="col-span-12 md:col-span-9 md:order-1 order-2">
@@ -273,7 +273,7 @@ export default function AboutPage() {
       </section>
 
       {/* Currently — wider */}
-      <section className="mx-auto max-w-[min(86vw,1500px)] w-full px-5 md:px-8">
+      <section className="mx-auto max-w-full md:max-w-[min(86vw,1500px)] w-full px-5 md:px-8">
       <div className="mt-20 md:mt-28" id="currently">
         <div className="flex items-baseline justify-between gap-4 mb-8">
           <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-fg-muted flex items-center gap-2">
@@ -494,7 +494,7 @@ export default function AboutPage() {
       </section>
 
       {/* Footer location strip */}
-      <section className="mx-auto max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pb-14 md:pb-20">
+      <section className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pb-14 md:pb-20">
       <div className="mt-20 md:mt-28">
         <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-fg-muted mb-6 flex items-center gap-2">
           <MapPin weight="fill" className="size-3.5" /> Location
