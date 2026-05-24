@@ -15,6 +15,7 @@ import {
   Audiowide,
   MedievalSharp,
   Cinzel_Decorative,
+  Inter,
 } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -125,6 +126,13 @@ const cinzelDecorative = Cinzel_Decorative({
   display: "swap",
 });
 
+const inter = Inter({
+  variable: "--font-inter",
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://lukasahlse.com"),
   title: {
@@ -166,7 +174,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} ${playfair.variable} ${bebas.variable} ${cinzel.variable} ${orbitron.variable} ${monoton.variable} ${uncial.variable} ${majorMono.variable} ${codystar.variable} ${unifraktur.variable} ${audiowide.variable} ${medievalSharp.variable} ${cinzelDecorative.variable} antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} ${playfair.variable} ${bebas.variable} ${cinzel.variable} ${orbitron.variable} ${monoton.variable} ${uncial.variable} ${majorMono.variable} ${codystar.variable} ${unifraktur.variable} ${audiowide.variable} ${medievalSharp.variable} ${cinzelDecorative.variable} ${inter.variable} antialiased`}
     >
       <body className="bg-bg text-fg min-h-screen flex flex-col">
         <Header />

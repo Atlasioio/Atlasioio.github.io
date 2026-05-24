@@ -8,7 +8,7 @@ export const site = {
   links: {
     linkedin: "https://www.linkedin.com/in/lukas-ahlse-a66a5414a/",
     instagram: "https://www.instagram.com/lukasahlse/",
-    cv: "/lukas-ahlse-cv.pdf",
+    cv: "/cv",
   },
   nav: [
     { label: "About", href: "/about" },

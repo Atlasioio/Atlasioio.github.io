@@ -508,3 +508,557 @@ body.experiment-takeover > footer {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────
+ * CV page — print-optimised. The .cv-paper element is an A4 sheet with
+ * its own internal layout; on screen it's wrapped in .cv-shell which
+ * adds a backdrop. On print, the shell collapses to nothing and the
+ * paper fills a single A4 page.
+ * ──────────────────────────────────────────────────────────────────── */
+
+/* Hide site chrome (nav + footer) when CV is the active route. */
+body:has(.cv-shell) > header,
+body:has(.cv-shell) > footer {
+  display: none !important;
+}
+body:has(.cv-shell) > main {
+  flex: 1;
+}
+
+.cv-shell {
+  min-height: 100dvh;
+  background: color-mix(in oklab, var(--fg) 4%, var(--bg));
+  padding: 40px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.cv-paper {
+  --cv-fg: var(--fg);
+  --cv-fg-muted: var(--fg-muted);
+  --cv-fg-subtle: var(--fg-subtle);
+  --cv-hairline: color-mix(in oklab, var(--fg) 14%, transparent);
+  --cv-pad-x: 16mm;
+  --cv-pad-y: 14mm;
+  width: 210mm;
+  min-height: 297mm;
+  background: var(--bg);
+  color: var(--cv-fg);
+  padding: var(--cv-pad-y) var(--cv-pad-x);
+  box-shadow: 0 16px 50px -18px color-mix(in oklab, var(--fg) 20%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 9mm;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 10pt;
+  line-height: 1.45;
+}
+
+/* Header */
+.cv-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10mm;
+}
+
+.cv-header-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.cv-name {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: 40pt;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.cv-role {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 12pt;
+  color: var(--cv-fg);
+  font-weight: 500;
+  margin: 4mm 0 0 0;
+  line-height: 1.2;
+}
+
+.cv-tagline {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 10.5pt;
+  color: var(--cv-fg-muted);
+  font-style: italic;
+  margin: 2.5mm 0 0 0;
+  line-height: 1.4;
+  max-width: 26em;
+}
+
+.cv-header-photo {
+  flex-shrink: 0;
+}
+
+.cv-photo {
+  position: relative;
+  width: 44mm;
+  height: 44mm;
+  overflow: hidden;
+  border-radius: 5mm;
+  border: 1px solid var(--cv-hairline);
+  transform: translateY(-2mm);
+}
+
+.cv-photo img {
+  object-fit: cover;
+}
+
+/* Contact strip — icons sit tight against their text; items spread across
+ * the row via justify-content: space-between (so visual gap between items
+ * is always larger than the gap inside an item). */
+.cv-contact {
+  list-style: none;
+  margin: 0;
+  padding: 4mm 0;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 4mm;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 9pt;
+  color: var(--cv-fg-muted);
+  border-top: 1px solid var(--cv-hairline);
+  border-bottom: 1px solid var(--cv-hairline);
+}
+
+.cv-contact > li {
+  display: flex;
+  align-items: center;
+}
+
+.cv-contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5mm;
+  color: var(--cv-fg);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.cv-contact-item:hover {
+  color: var(--accent);
+}
+
+.cv-contact-icon {
+  width: 11pt;
+  height: 11pt;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* Body grid */
+.cv-body {
+  display: grid;
+  grid-template-columns: 1.85fr 1fr;
+  gap: 10mm;
+  flex: 1;
+}
+
+.cv-main,
+.cv-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 12mm;
+}
+
+/* Section */
+.cv-section {
+  display: flex;
+  flex-direction: column;
+  gap: 5mm;
+}
+
+.cv-section-title {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 10pt;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--cv-fg);
+  margin: 0;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 2.5mm;
+}
+
+.cv-section-icon {
+  width: 11pt;
+  height: 11pt;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.cv-job-dot {
+  color: var(--accent);
+  opacity: 0.6;
+}
+
+/* Experience */
+.cv-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 5mm;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cv-stack-compact {
+  gap: 4mm;
+}
+
+.cv-job-head {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3mm;
+  gap: 1mm;
+}
+
+.cv-job-company {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: 14pt;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 0;
+}
+
+.cv-job-role {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 10.5pt;
+  font-weight: 600;
+  color: var(--cv-fg);
+  margin: 0.5mm 0 0 0;
+  line-height: 1.2;
+}
+
+.cv-job-meta {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 8.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--cv-fg-muted);
+  margin: 1.5mm 0 0 0;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0 2mm;
+}
+
+.cv-bullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5mm;
+}
+
+.cv-bullets li {
+  position: relative;
+  padding-left: 5mm;
+  font-size: 10pt;
+  color: var(--cv-fg);
+  line-height: 1.5;
+}
+
+.cv-bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 2mm;
+  height: 2mm;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.85;
+}
+
+/* Education */
+.cv-edu {
+  display: flex;
+  flex-direction: column;
+  gap: 1mm;
+}
+
+.cv-edu-school {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: 14pt;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.cv-edu-qual {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 10.5pt;
+  color: var(--cv-fg);
+  margin: 0.5mm 0 0 0;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.cv-edu-dates {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 8.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--cv-fg-muted);
+  margin: 1mm 0 0 0;
+  font-weight: 600;
+}
+
+.cv-edu-note {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 8.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--cv-fg-muted);
+  margin: 1.5mm 0 0 0;
+  font-weight: 600;
+}
+
+/* Aside — Tools */
+.cv-tools {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5mm;
+}
+
+.cv-tools-title {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 8.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--cv-fg-muted);
+  margin: 0 0 1mm 0;
+  font-weight: 600;
+}
+
+.cv-tools-items {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 9.5pt;
+  color: var(--cv-fg);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Aside — Languages */
+.cv-langs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2mm;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 10pt;
+}
+
+.cv-langs li {
+  display: flex;
+  align-items: baseline;
+  gap: 2mm;
+}
+
+.cv-lang-name {
+  font-weight: 600;
+  color: var(--cv-fg);
+}
+
+.cv-lang-level {
+  color: var(--cv-fg-muted);
+}
+
+/* Aside — Availability */
+.cv-avail {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5mm;
+}
+
+.cv-avail-line {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 10.5pt;
+  color: var(--cv-fg);
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 2mm;
+  line-height: 1.3;
+}
+
+.cv-avail-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--status-available, #5db075);
+  flex-shrink: 0;
+}
+
+.cv-avail-strong {
+  font-weight: 600;
+}
+
+.cv-avail-note {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 8.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--cv-fg-muted);
+  margin: 0;
+  font-weight: 600;
+  padding-left: calc(8px + 2mm);
+}
+
+/* Aside — Portfolio QR (sits below Availability, pushed to bottom of aside) */
+.cv-qr-section {
+  margin-top: auto;
+}
+
+.cv-qr-row {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+}
+
+.cv-qr {
+  width: 22mm;
+  height: 22mm;
+  padding: 1.5mm;
+  border: 1px solid var(--cv-hairline);
+  border-radius: 2mm;
+  color: var(--cv-fg);
+  flex-shrink: 0;
+  background: var(--bg);
+}
+
+.cv-qr svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.cv-qr-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1mm;
+  min-width: 0;
+}
+
+.cv-qr-kicker {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 8.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--cv-fg-muted);
+  margin: 0;
+  font-weight: 600;
+}
+
+.cv-qr-url {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: 12pt;
+  letter-spacing: -0.02em;
+  color: var(--cv-fg);
+  margin: 0;
+  line-height: 1;
+}
+
+/* Screen download button */
+.cv-download-btn {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--bg);
+  background: var(--fg);
+  border: 1px solid var(--fg);
+  padding: 12px 22px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition:
+    background-color 280ms ease,
+    border-color 280ms ease,
+    color 280ms ease,
+    transform 200ms ease;
+}
+
+.cv-download-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.cv-download-btn:active {
+  transform: translateY(0);
+}
+
+.cv-download-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ─────── Print rules ─────── */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body {
+    background: white !important;
+    margin: 0;
+    padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .cv-shell {
+    background: white;
+    min-height: auto;
+    padding: 0;
+    gap: 0;
+  }
+  .cv-paper {
+    box-shadow: none;
+    width: 210mm;
+    min-height: 297mm;
+    max-height: 297mm;
+    padding: var(--cv-pad-y) var(--cv-pad-x);
+    page-break-after: avoid;
+  }
+  .cv-download-btn {
+    display: none !important;
+  }
+  header[class*="sticky"],
+  .marquee-track,
+  footer {
+    display: none !important;
+  }
+}

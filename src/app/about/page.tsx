@@ -139,11 +139,11 @@ const skillGroups: { title: string; items: string[] }[] = [
   },
   {
     title: "Code",
-    items: ["HTML", "CSS", "JavaScript", "WordPress"],
+    items: ["HTML", "CSS", "JavaScript"],
   },
   {
     title: "AI",
-    items: ["Claude Code", "ChatGPT", "Cursor", "v0"],
+    items: ["Claude Code", "Lovable", "ChatGPT", "Cursor", "v0"],
   },
   {
     title: "Workflow",
