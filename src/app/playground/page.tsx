@@ -2,6 +2,7 @@ import {
   Briefcase,
   Envelope,
   Flask,
+  House,
   User,
 } from "@phosphor-icons/react/dist/ssr";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -33,9 +34,30 @@ export default function PlaygroundPage() {
 
       <WhereToNext
         links={[
-          { href: "/work", label: "See selected work", Icon: Briefcase },
-          { href: "/about", label: "Learn more about me", Icon: User },
-          { href: "/contact", label: "Get in touch", Icon: Envelope },
+          {
+            href: "/work",
+            label: "All work",
+            descriptor: "8 projects",
+            Icon: Briefcase,
+          },
+          {
+            href: "/about",
+            label: "About me",
+            descriptor: "Story · climbing · food",
+            Icon: User,
+          },
+          {
+            href: "/contact",
+            label: "Say hello",
+            descriptor: "Email · LinkedIn · phone",
+            Icon: Envelope,
+          },
+          {
+            href: "/",
+            label: "Home",
+            descriptor: "Back to the start",
+            Icon: House,
+          },
         ]}
       />
     </>

@@ -6,6 +6,7 @@ import {
   CookingPot,
   Envelope,
   Flask,
+  House,
   MapPin,
   Mountains,
   MusicNote,
@@ -781,9 +782,30 @@ export default function AboutPage() {
 
       <WhereToNext
         links={[
-          { href: "/work", label: "See selected work", Icon: Briefcase },
-          { href: "/playground", label: "Laboratory", Icon: Flask },
-          { href: "/contact", label: "Get in touch", Icon: Envelope },
+          {
+            href: "/work",
+            label: "All work",
+            descriptor: "8 projects",
+            Icon: Briefcase,
+          },
+          {
+            href: "/contact",
+            label: "Say hello",
+            descriptor: "Email · LinkedIn · phone",
+            Icon: Envelope,
+          },
+          {
+            href: "/playground",
+            label: "Lab",
+            descriptor: "Experiments & notes",
+            Icon: Flask,
+          },
+          {
+            href: "/",
+            label: "Home",
+            descriptor: "Back to the start",
+            Icon: House,
+          },
         ]}
       />
     </>

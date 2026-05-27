@@ -1,6 +1,10 @@
 import Link from "next/link";
 import type { ComponentType, SVGProps } from "react";
-import { ArrowDownRight } from "@phosphor-icons/react/dist/ssr";
+import {
+  ArrowDownRight,
+  ArrowRight,
+  ArrowUpRight,
+} from "@phosphor-icons/react/dist/ssr";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 type IconProps = SVGProps<SVGSVGElement> & { weight?: string };
@@ -9,6 +13,7 @@ type IconComponent = ComponentType<IconProps>;
 export type WhereToNextLink = {
   href: string;
   label: string;
+  descriptor?: string;
   Icon: IconComponent;
 };
 
@@ -21,7 +26,7 @@ export function WhereToNext({ links }: { links: WhereToNextLink[] }) {
           Where to next
         </p>
       </div>
-      <div className="flex flex-wrap gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {links.map((link, i) => {
           const isPrimary = i === 0;
           return (
@@ -30,19 +35,45 @@ export function WhereToNext({ links }: { links: WhereToNextLink[] }) {
               href={link.href}
               className={
                 isPrimary
-                  ? "group inline-flex items-center gap-2.5 pl-5 pr-4 py-3 rounded-full bg-[var(--fg)] text-[var(--bg)] hover:bg-accent hover:text-[var(--bg)] transition-colors duration-300 ease-out text-[14px]"
-                  : "group inline-flex items-center gap-2 px-4 py-3 rounded-full border border-hairline text-[13px] text-fg-muted hover:bg-[var(--chip)] hover:text-fg hover:border-[var(--chip)] transition-colors duration-300 ease-out"
+                  ? "group flex flex-col rounded-2xl bg-[var(--fg)] text-[var(--bg)] p-5 md:p-6 min-h-[120px] md:min-h-[160px] hover:bg-accent transition-colors duration-300 ease-out"
+                  : "group flex flex-col rounded-2xl border border-hairline bg-bg-elevated p-5 md:p-6 min-h-[120px] md:min-h-[160px] hover:border-fg transition-colors duration-300 ease-out"
               }
             >
-              <link.Icon
-                weight="fill"
-                className={
-                  isPrimary
-                    ? "row-icon size-4 translate-y-[1px]"
-                    : "row-icon size-3.5"
-                }
-              />
-              {link.label}
+              <div className="flex items-start justify-between">
+                <link.Icon
+                  weight="fill"
+                  className={
+                    isPrimary
+                      ? "row-icon size-5"
+                      : "row-icon size-5 text-fg"
+                  }
+                />
+                {isPrimary ? (
+                  <ArrowRight
+                    weight="bold"
+                    className="row-icon size-4 transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                ) : (
+                  <ArrowUpRight
+                    weight="bold"
+                    className="row-icon size-4 text-fg-subtle group-hover:text-fg transition-colors duration-300 ease-out"
+                  />
+                )}
+              </div>
+              <div className="mt-8 md:mt-12">
+                <p className="display-tight text-[18px] md:text-[20px] leading-[1] mb-1">
+                  {link.label}
+                </p>
+                {link.descriptor && (
+                  <p
+                    className={`font-mono text-[10px] uppercase tracking-[0.18em] ${
+                      isPrimary ? "opacity-60" : "text-fg-subtle"
+                    }`}
+                  >
+                    {link.descriptor}
+                  </p>
+                )}
+              </div>
             </Link>
           );
         })}

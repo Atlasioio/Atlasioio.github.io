@@ -5,6 +5,7 @@ import {
   FileArrowDown,
   Envelope,
   Flask,
+  House,
   MapPin,
   Phone,
   PencilLine,
@@ -206,9 +207,30 @@ export default function ContactPage() {
 
       <WhereToNext
         links={[
-          { href: "/work", label: "See selected work", Icon: Briefcase },
-          { href: "/about", label: "Learn more about me", Icon: User },
-          { href: "/playground", label: "Laboratory", Icon: Flask },
+          {
+            href: "/work",
+            label: "All work",
+            descriptor: "8 projects",
+            Icon: Briefcase,
+          },
+          {
+            href: "/about",
+            label: "About me",
+            descriptor: "Story · climbing · food",
+            Icon: User,
+          },
+          {
+            href: "/playground",
+            label: "Lab",
+            descriptor: "Experiments & notes",
+            Icon: Flask,
+          },
+          {
+            href: "/",
+            label: "Home",
+            descriptor: "Back to the start",
+            Icon: House,
+          },
         ]}
       />
     </section>
