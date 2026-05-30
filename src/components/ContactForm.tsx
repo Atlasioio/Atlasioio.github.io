@@ -28,6 +28,8 @@ export function ContactForm() {
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const [website, setWebsite] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [textareaFocused, setTextareaFocused] = useState(false);
   const [displayedText, setDisplayedText] = useState("");
@@ -86,23 +88,46 @@ export function ContactForm() {
     return () => clearTimeout(timeout!);
   }, [phase, displayedText, placeholderIndex, showPlaceholder]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (submitting) return;
+    setSubmitting(true);
     try {
-      // TODO: wire to real email service (Resend / Formspree / Next API route)
-      showToast("Message sent successfully", "success");
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ name, email, subject, message, website }),
+      });
+      if (!res.ok) {
+        const data = (await res.json().catch(() => ({}))) as { error?: string };
+        showToast(data.error ?? "Message failed to send", "error");
+        return;
+      }
+      showToast("Message sent — I'll get back to you soon.", "success");
       setName("");
       setEmail("");
       setSubject("");
       setMessage("");
     } catch {
-      showToast("Message failed to send", "error");
+      showToast("Network error — try again?", "error");
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
     <>
     <form onSubmit={handleSubmit} className="space-y-5">
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        value={website}
+        onChange={(e) => setWebsite(e.target.value)}
+        className="absolute left-[-9999px] size-0"
+        aria-hidden
+      />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field
           label="Name"
@@ -186,10 +211,11 @@ export function ContactForm() {
         </button>
         <button
           type="submit"
-          className="group inline-flex items-center gap-2.5 pl-4 pr-3 py-2.5 rounded-full bg-[var(--fg)] text-[var(--bg)] hover:bg-accent hover:text-[var(--bg)] transition-colors duration-300 ease-out text-[14px]"
+          disabled={submitting}
+          className="group inline-flex items-center gap-2.5 pl-4 pr-3 py-2.5 rounded-full bg-[var(--fg)] text-[var(--bg)] hover:bg-accent hover:text-[var(--bg)] transition-colors duration-300 ease-out text-[14px] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-[var(--fg)]"
         >
           <PaperPlaneRight weight="fill" className="row-icon size-3.5 translate-y-[1px]" />
-          Send message
+          {submitting ? "Sending…" : "Send message"}
           <ArrowUpRight className="size-3.5 translate-y-[1px] group-hover:-translate-y-px group-hover:translate-x-px transition-transform" />
         </button>
       </div>
