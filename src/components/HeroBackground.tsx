@@ -79,7 +79,7 @@ export function HeroBackground() {
       >
         {/* Primary warm core */}
         <Ray
-          color="#c45e2d"
+          color="#0d5d5d"
           left="72%"
           top="68%"
           size="30vw"
@@ -96,7 +96,7 @@ export function HeroBackground() {
 
         {/* Amber halo — slightly offset, slower */}
         <Ray
-          color="#e6822d"
+          color="#3aa8a3"
           left="78%"
           top="74%"
           size="24vw"
@@ -114,7 +114,7 @@ export function HeroBackground() {
 
         {/* Bright spark — small, slightly faster */}
         <Ray
-          color="#ff9050"
+          color="#5dc4be"
           left="74%"
           top="70%"
           size="14vw"

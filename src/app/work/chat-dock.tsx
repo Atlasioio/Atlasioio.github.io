@@ -94,7 +94,7 @@ export function ChatDock() {
   };
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence>
       {isDismissed ? (
         <motion.button
           key="mini"
@@ -104,7 +104,7 @@ export function ChatDock() {
           initial={{ opacity: 0, scale: 0.6, y: 16 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.6, y: 16 }}
-          transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ scale: 1.08 }}
           className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-40 size-12 overflow-hidden border border-hairline bg-bg-elevated shadow-[0_8px_24px_-8px_rgba(0,0,0,0.25)] cursor-pointer"
           style={{ borderRadius: "70% 30% 56% 44% / 40% 64% 50% 60%" }}
@@ -125,7 +125,7 @@ export function ChatDock() {
             y: 80,
             scale: 0.6,
             filter: "blur(10px)",
-            boxShadow: "0 0 0 0 rgba(255, 106, 61, 0)",
+            boxShadow: "0 0 0 0 rgba(58, 168, 163, 0)",
           }}
           animate={{
             opacity: 1,
@@ -133,10 +133,10 @@ export function ChatDock() {
             scale: [0.6, 1.14, 0.96, 1.04, 1],
             filter: "blur(0px)",
             boxShadow: [
-              "0 0 0 0 rgba(255, 106, 61, 0)",
-              "0 0 80px 14px rgba(255, 106, 61, 0.55)",
-              "0 0 36px 4px rgba(255, 106, 61, 0.2)",
-              "0 0 0 0 rgba(255, 106, 61, 0)",
+              "0 0 0 0 rgba(58, 168, 163, 0)",
+              "0 0 80px 14px rgba(58, 168, 163, 0.55)",
+              "0 0 36px 4px rgba(58, 168, 163, 0.2)",
+              "0 0 0 0 rgba(58, 168, 163, 0)",
             ],
           }}
           exit={{ opacity: 0, y: 16, scale: 0.96 }}
@@ -480,7 +480,7 @@ function MessageText({ text }: { text: string }) {
 // or a bare project-name mention. Aliases listed long-form first so the
 // regex picks the most specific phrase at any given position.
 const INLINE_SPLIT_RE =
-  /(\*\*[^*\n]+\*\*|\bSony\s*\/\s*Nimway\b|\bSony\s+Nimway\b|\bSony\b|\bSherry\b|\bEcoTrip\b|\bEco\s+Trip\b|\bTeem\b|\bGoodreads\s+Redesign\b|\bGoodreads\b|\bReel\b|\bJ\s+Lorin\b|\bArtist\s+Website\b|\bThis\s+Portfolio\b)/g;
+  /(\*\*[^*\n]+\*\*|\bSony\s*\/\s*Nimway\b|\bSony\s+Nimway\b|\bSony\b|\bSherry\b|\bEcoTrip\b|\bEco\s+Trip\b|\bTeem\b|\bGoodreads\s+Redesign\b|\bGoodreads\b|\bReel\b|\bJobquest\b)/g;
 
 function slugForName(raw: string): string | null {
   const t = raw.trim();
@@ -490,9 +490,7 @@ function slugForName(raw: string): string | null {
   if (/^teem$/i.test(t)) return "teem";
   if (/^goodreads(\s+redesign)?$/i.test(t)) return "goodreads";
   if (/^reel$/i.test(t)) return "reel";
-  if (/^j\s+lorin$/i.test(t)) return "artist-website";
-  if (/^artist\s+website$/i.test(t)) return "artist-website";
-  if (/^this\s+portfolio$/i.test(t)) return "portfolio";
+  if (/^jobquest$/i.test(t)) return "jobquest";
   return null;
 }
 

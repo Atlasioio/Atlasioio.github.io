@@ -1,11 +1,10 @@
 import {
   BookOpen,
   Buildings,
-  Code,
   Coffee,
   DeviceTabletSpeaker,
   Leaf,
-  PaintBrush,
+  ListChecks,
   Wrench,
 } from "@phosphor-icons/react/dist/ssr";
 import type { ComponentType, SVGProps } from "react";
@@ -42,6 +41,18 @@ export const projects: Project[] = [
     tags: ["app", "webdesign"],
   },
   {
+    slug: "jobquest",
+    name: "Jobquest",
+    year: "2026",
+    context: "Self-initiated · personal tool",
+    category: "Web app",
+    tagline:
+      "A personal job-search tracker. One user. Designed for my workflow, shipped to use daily.",
+    color: "#3D7A8A",
+    Icon: ListChecks,
+    tags: ["app", "webdesign"],
+  },
+  {
     slug: "sherry",
     name: "Sherry",
     year: "2024",
@@ -73,7 +84,7 @@ export const projects: Project[] = [
     category: "Brand & packaging",
     tagline:
       "Brand identity, packaging, and leaflet for a cold-brew matcha latte — a break from screens.",
-    color: "#88A77A",
+    color: "#6e8e60",
     Icon: Coffee,
     tags: ["graphic-design"],
   },
@@ -99,30 +110,6 @@ export const projects: Project[] = [
       "An architecture studio site that lets the work do the talking — clean, image-forward, no fluff.",
     color: "#3B4A6B",
     Icon: Buildings,
-    tags: ["webdesign"],
-  },
-  {
-    slug: "artist-website",
-    name: "J Lorin",
-    year: "2025",
-    context: "Self-initiated concept",
-    category: "Website",
-    tagline:
-      "Immersive artist showcase — large imagery, soft typography, motion that guides.",
-    color: "#C9A36B",
-    Icon: PaintBrush,
-    tags: ["webdesign"],
-  },
-  {
-    slug: "portfolio",
-    name: "This Portfolio",
-    year: "2026",
-    context: "Self-initiated",
-    category: "Website",
-    tagline:
-      "The very site you're reading — designed, written, and vibe-coded end-to-end. Every detail is open to inspect.",
-    color: "#C45E2D",
-    Icon: Code,
     tags: ["webdesign"],
   },
 ];

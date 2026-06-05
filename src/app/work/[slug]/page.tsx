@@ -7,9 +7,12 @@ import {
   Briefcase,
   Envelope,
 } from "@phosphor-icons/react/dist/ssr";
+import { CaseStudyVideo } from "@/components/CaseStudyVideo";
+import { ImageZoomHover } from "@/components/ImageZoomHover";
 import { MockupFrame } from "@/components/MockupFrame";
 import { PaperNote } from "@/components/PaperNote";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { Zoomable } from "@/components/Zoomable";
 import { getProject, projects, type Project } from "@/lib/projects";
 import { getCaseStudy, type CaseStudy, type Shot } from "@/lib/case-studies";
 import { CaseStudyToc, type TocSection } from "./case-study-toc";
@@ -39,13 +42,6 @@ export default async function CaseStudyPage({ params }: Params) {
   // Reel uses a bespoke image-forward layout — the live site is the work.
   if (project.slug === "reel" && study) {
     return <ReelCaseStudy project={project} study={study} next={next} />;
-  }
-
-  // J Lorin (artist-website) follows Reel's image-led pattern, lighter on process.
-  if (project.slug === "artist-website" && study) {
-    return (
-      <ArtistWebsiteCaseStudy project={project} study={study} next={next} />
-    );
   }
 
   const highlights: Shot[] =
@@ -127,20 +123,24 @@ export default async function CaseStudyPage({ params }: Params) {
 
       {/* Hero mockup */}
       <ScrollReveal className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-10 md:pb-12">
-        <MockupFrame
-          image={study?.heroImage}
-          mobileImage={study?.heroImageMobile}
-          alt={`${project.name} — hero`}
-          aspect={study?.heroAspect ?? "aspect-[16/9]"}
-          tint={project.color}
-          chrome={study?.mediaChrome ?? "browser"}
-          intensity="strong"
-          fallbackLabel={`Hero mockup placeholder · ${project.name}`}
-          url={resolveDisplayUrl(study)}
-          objectFit={study?.heroObjectFit}
-          innerPadding="inset-8 md:inset-14"
-          priority
-        />
+        <Zoomable src={study?.heroImage} alt={`${project.name} — hero`} accentColor={project.color}>
+          <MockupFrame
+            image={study?.heroImage}
+            mobileImage={study?.heroImageMobile}
+            alt={`${project.name} — hero`}
+            aspect={study?.heroAspect ?? "aspect-[16/9]"}
+            tint={project.color}
+            chrome={study?.mediaChrome ?? "browser"}
+            intensity="strong"
+            fallbackLabel={`Hero mockup placeholder · ${project.name}`}
+            url={resolveDisplayUrl(study)}
+            objectFit={study?.heroObjectFit}
+            screenAspect={study?.laptopScreenAspect}
+            screenBg={study?.laptopScreenBg}
+            innerPadding="inset-8 md:inset-14"
+            priority
+          />
+        </Zoomable>
       </ScrollReveal>
 
       {/* Metadata strip */}
@@ -169,8 +169,14 @@ export default async function CaseStudyPage({ params }: Params) {
               highlights={highlights}
               color={project.color}
               project={project}
-              chrome={study.shotChrome ?? study.mediaChrome ?? "browser"}
+              chrome={
+                (study.shotChrome ?? study.mediaChrome ?? "browser") as
+                  | "browser"
+                  | "none"
+                  | "phone"
+              }
               url={resolveDisplayUrl(study)}
+              cols={study.highlightsCols}
             />
           )}
 
@@ -347,6 +353,14 @@ function ApproachSection({
   color: string;
   project: { name: string; color: string };
 }) {
+  // Gather all approach block images into one gallery for prev/next nav.
+  const gallery = approach.blocks
+    .filter((b) => !!b.image)
+    .map((b) => ({
+      src: b.image!,
+      alt: `${project.name} — ${b.heading}`,
+    }));
+
   return (
     <ScrollReveal
       id="approach"
@@ -357,6 +371,9 @@ function ApproachSection({
         {approach.blocks.map((block, i) => {
           const hasArtefact = !!block.image || !!block.note;
           const tilt = [-1.4, 0.9, -0.6][i % 3];
+          const galleryIndex = block.image
+            ? gallery.findIndex((g) => g.src === block.image)
+            : -1;
           return (
             <li
               key={block.heading}
@@ -401,18 +418,26 @@ function ApproachSection({
                       tilt={tilt}
                     />
                   ) : (
-                    <MockupFrame
-                      image={block.image}
+                    <Zoomable
+                      src={block.image}
                       alt={`${project.name} — ${block.heading}`}
-                      aspect="aspect-[4/3]"
-                      tint={color}
-                      chrome="paper"
-                      intensity="subtle"
-                      rounded="rounded-2xl"
-                      tilt={tilt}
-                      fallbackLabel={`Process artefact · ${project.name}`}
-                      sizes="(min-width: 1200px) 700px, 100vw"
-                    />
+                      accentColor={color}
+                      gallery={gallery}
+                      index={galleryIndex >= 0 ? galleryIndex : 0}
+                    >
+                      <MockupFrame
+                        image={block.image}
+                        alt={`${project.name} — ${block.heading}`}
+                        aspect="aspect-[4/3]"
+                        tint={color}
+                        chrome="paper"
+                        intensity="subtle"
+                        rounded="rounded-2xl"
+                        tilt={tilt}
+                        fallbackLabel={`Process artefact · ${project.name}`}
+                        sizes="(min-width: 1200px) 700px, 100vw"
+                      />
+                    </Zoomable>
                   )}
                 </div>
               )}
@@ -446,6 +471,16 @@ function SolutionSection({
   chrome: "browser" | "none" | "phone";
   url?: string;
 }) {
+  // Build a gallery of image shots only (videos use their own player).
+  const gallery = shots
+    .map((shot) => {
+      const data = typeof shot === "string" ? { caption: shot } : shot;
+      return data.image && !data.video
+        ? { src: data.image, alt: `${project.name} — ${data.caption}` }
+        : null;
+    })
+    .filter((g): g is { src: string; alt: string } => g !== null);
+
   return (
     <ScrollReveal
       id="solution"
@@ -460,24 +495,43 @@ function SolutionSection({
           const layout = layoutFor(i, shots.length);
           const span = data.span ?? layout.col;
           const aspect = data.aspect ?? layout.aspect;
+          const galleryIndex = data.image
+            ? gallery.findIndex((g) => g.src === data.image)
+            : -1;
           return (
             <figure
               key={data.caption}
               className={`${span} flex flex-col gap-3`}
             >
-              <MockupFrame
-                image={data.image}
-                alt={`${project.name} — ${data.caption}`}
-                aspect={aspect}
-                tint={color}
-                chrome={chrome}
-                intensity="subtle"
-                rounded="rounded-2xl"
-                innerPadding="inset-6 md:inset-10"
-                fallbackLabel={`${project.name} · ${String(i + 1).padStart(2, "0")}`}
-                objectFit={data.objectFit}
-                url={url}
-              />
+              {data.video ? (
+                <CaseStudyVideo
+                  src={data.video}
+                  aspect={aspect}
+                  rounded="rounded-2xl"
+                />
+              ) : (
+                <Zoomable
+                  src={data.image}
+                  alt={`${project.name} — ${data.caption}`}
+                  gallery={gallery}
+                  index={galleryIndex >= 0 ? galleryIndex : 0}
+                  accentColor={color}
+                >
+                  <MockupFrame
+                    image={data.image}
+                    alt={`${project.name} — ${data.caption}`}
+                    aspect={aspect}
+                    tint={color}
+                    chrome={chrome}
+                    intensity="subtle"
+                    rounded="rounded-2xl"
+                    innerPadding="inset-6 md:inset-10"
+                    fallbackLabel={`${project.name} · ${String(i + 1).padStart(2, "0")}`}
+                    objectFit={data.objectFit}
+                    url={url}
+                  />
+                </Zoomable>
+              )}
               <figcaption className="font-mono text-[11px] uppercase tracking-[0.16em] text-fg-muted">
                 {data.caption}
               </figcaption>
@@ -576,13 +630,32 @@ function HighlightsSection({
   project,
   chrome,
   url,
+  cols = 4,
 }: {
   highlights: Shot[];
   color: string;
   project: { name: string };
   chrome: "browser" | "none" | "phone";
   url?: string;
+  cols?: 2 | 3 | 4;
 }) {
+  const colsClass =
+    cols === 2
+      ? "grid-cols-1 md:grid-cols-2"
+      : cols === 3
+        ? "grid-cols-1 md:grid-cols-3"
+        : "grid-cols-1 md:grid-cols-4";
+
+  // Build a gallery of image-bearing highlights for prev/next nav.
+  const gallery = highlights
+    .map((shot) => {
+      const data = typeof shot === "string" ? { caption: shot } : shot;
+      return data.image && !data.video
+        ? { src: data.image, alt: `${project.name} — ${data.caption}` }
+        : null;
+    })
+    .filter((g): g is { src: string; alt: string } => g !== null);
+
   return (
     <ScrollReveal
       id="highlights"
@@ -596,26 +669,45 @@ function HighlightsSection({
         />
         Highlights
       </p>
-      <ul className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-5">
+      <ul className={`grid ${colsClass} gap-6 md:gap-5`}>
         {highlights.map((shot, i) => {
           const data = typeof shot === "string" ? { caption: shot } : shot;
           const aspect =
             data.aspect ?? (chrome === "phone" ? "aspect-[3/4]" : "aspect-[4/3]");
+          const galleryIndex = data.image
+            ? gallery.findIndex((g) => g.src === data.image)
+            : -1;
           return (
             <li key={data.caption} className="flex flex-col gap-2.5">
-              <MockupFrame
-                image={data.image}
-                alt={`${project.name} — ${data.caption}`}
-                aspect={aspect}
-                tint={color}
-                chrome={chrome}
-                intensity="subtle"
-                rounded="rounded-2xl"
-                innerPadding="inset-5 md:inset-4"
-                fallbackLabel={`${project.name} · ${String(i + 1).padStart(2, "0")}`}
-                objectFit={data.objectFit}
-                url={url}
-              />
+              {data.video ? (
+                <CaseStudyVideo
+                  src={data.video}
+                  aspect={aspect}
+                  rounded="rounded-2xl"
+                />
+              ) : (
+                <Zoomable
+                  src={data.image}
+                  alt={`${project.name} — ${data.caption}`}
+                  gallery={gallery}
+                  index={galleryIndex >= 0 ? galleryIndex : 0}
+                  accentColor={color}
+                >
+                  <MockupFrame
+                    image={data.image}
+                    alt={`${project.name} — ${data.caption}`}
+                    aspect={aspect}
+                    tint={color}
+                    chrome={chrome}
+                    intensity="subtle"
+                    rounded="rounded-2xl"
+                    innerPadding="inset-5 md:inset-4"
+                    fallbackLabel={`${project.name} · ${String(i + 1).padStart(2, "0")}`}
+                    objectFit={data.objectFit}
+                    url={url}
+                  />
+                </Zoomable>
+              )}
               <p className="font-mono text-[11px] md:text-[10px] uppercase tracking-[0.16em] text-fg-muted md:line-clamp-2">
                 {data.caption}
               </p>
@@ -694,194 +786,6 @@ function resolveDisplayUrl(study: CaseStudy | undefined): string | undefined {
   if (study.displayUrl) return study.displayUrl;
   if (study.liveUrl) return stripProtocol(study.liveUrl);
   return undefined;
-}
-
-function ArtistWebsiteCaseStudy({
-  project,
-  study,
-  next,
-}: {
-  project: Project;
-  study: CaseStudy;
-  next: Project;
-}) {
-  const liveUrl = study.liveUrl ?? "#";
-  const displayUrl = resolveDisplayUrl(study) ?? "jlorin.com";
-  const shots = [
-    {
-      src: "/case-studies/artist/hero.png",
-      caption: "Home — the work, oversized and centred",
-    },
-    {
-      src: "/case-studies/artist/latest-work.png",
-      caption: "Latest work — scroll-first, image-led",
-    },
-    {
-      src: "/case-studies/artist/contact.png",
-      caption: "Contact — the artist's note, plainly",
-    },
-  ];
-
-  const tocSections: TocSection[] = [
-    { id: "snapshot", label: "Snapshot" },
-    { id: "problem", label: "Problem" },
-    { id: "shots", label: "The site" },
-  ];
-  if (study.outcome) tocSections.push({ id: "outcome", label: "Outcome" });
-
-  return (
-    <>
-      <CaseStudyToc sections={tocSections} color={project.color} />
-
-      {/* Top nav row */}
-      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-12 md:pt-16 pb-8 flex items-center justify-between gap-4">
-        <Link
-          href="/work"
-          className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-hairline text-[12px] text-fg-muted hover:bg-[var(--chip)] hover:text-fg hover:border-[var(--chip)] transition-colors duration-300 ease-out"
-        >
-          <ArrowLeft weight="bold" className="size-3" />
-          All case studies
-        </Link>
-        <Link
-          href={`/work/${next.slug}`}
-          className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-hairline text-[12px] text-fg-muted hover:bg-[var(--chip)] hover:text-fg hover:border-[var(--chip)] transition-colors duration-300 ease-out"
-        >
-          Next: {next.name}
-          <ArrowRight
-            weight="bold"
-            className="size-3 transition-transform group-hover:translate-x-0.5"
-          />
-        </Link>
-      </ScrollReveal>
-
-      {/* Title */}
-      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pt-6 md:pt-10 pb-10 md:pb-14">
-        <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-fg-muted mb-6 flex items-center gap-2">
-          <Briefcase weight="fill" className="size-3.5" /> Case study
-        </p>
-        <h1 className="display-tight text-display-md leading-[0.95]">
-          {project.name}
-          <span style={{ color: project.color }}>.</span>
-        </h1>
-        <p className="mt-6 max-w-[60ch] text-lg md:text-xl text-fg-muted leading-relaxed">
-          {project.tagline}
-        </p>
-        <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.16em] text-fg-muted">
-          {[
-            project.year,
-            project.category,
-            study.meta?.role,
-            study.meta?.timeline,
-            study.meta?.tools,
-          ]
-            .filter(Boolean)
-            .join(" · ")}
-        </p>
-      </ScrollReveal>
-
-      {/* Massive live-site CTA */}
-      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-16 md:pb-24">
-        <a
-          href={liveUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group block"
-        >
-          <p className="font-mono text-[11px] md:text-[12px] uppercase tracking-[0.18em] text-fg-muted mb-5 md:mb-8 flex items-center gap-2">
-            <span
-              className="size-1.5 rounded-full shrink-0"
-              style={{ background: project.color }}
-              aria-hidden
-            />
-            See it live
-          </p>
-          <h2
-            className="display-tight leading-[0.9] flex items-start gap-4 md:gap-8"
-            style={{ fontSize: "clamp(3rem, 11vw, 9rem)" }}
-          >
-            <span className="relative inline-block">
-              {displayUrl}
-              <span
-                className="absolute left-0 right-0 bottom-[0.08em] h-[0.06em] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out"
-                style={{ background: project.color }}
-                aria-hidden
-              />
-            </span>
-            <ArrowUpRight
-              weight="bold"
-              className="shrink-0 transition-transform duration-500 ease-out group-hover:translate-x-2 group-hover:-translate-y-2"
-              style={{
-                color: project.color,
-                width: "clamp(2.5rem, 8vw, 6rem)",
-                height: "clamp(2.5rem, 8vw, 6rem)",
-              }}
-            />
-          </h2>
-        </a>
-      </ScrollReveal>
-
-      {/* Snapshot — TL;DR */}
-      <SnapshotSection study={study} color={project.color} />
-
-      {/* Problem */}
-      <ProblemSection study={study} color={project.color} />
-
-      {/* Three full-width browser-framed shots */}
-      <ScrollReveal
-        id="shots"
-        className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-12 md:pb-16 flex flex-col gap-10 md:gap-14 scroll-mt-24"
-      >
-        {shots.map((shot) => (
-          <figure key={shot.src} className="flex flex-col gap-3">
-            <MockupFrame
-              image={shot.src}
-              alt={`${project.name} — ${shot.caption}`}
-              aspect="aspect-[7/5]"
-              tint={project.color}
-              chrome="browser"
-              intensity="subtle"
-              url={displayUrl}
-              innerPadding="inset-6 md:inset-10"
-              objectFit="contain"
-              sizes="(min-width: 1400px) 1340px, 100vw"
-            />
-            <figcaption className="font-mono text-[11px] uppercase tracking-[0.16em] text-fg-muted">
-              {shot.caption}
-            </figcaption>
-          </figure>
-        ))}
-      </ScrollReveal>
-
-      {/* Outcome */}
-      {study.outcome && (
-        <OutcomeSection outcome={study.outcome} color={project.color} />
-      )}
-
-      {/* Next case study */}
-      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-24 md:pb-32">
-        <Link
-          href={`/work/${next.slug}`}
-          className="group flex items-center justify-between gap-6 py-8 md:py-10 border-t border-hairline hover:border-fg transition-colors"
-        >
-          <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-fg-muted mb-2">
-              Next case study
-            </p>
-            <h3 className="display-tight text-3xl md:text-5xl leading-[0.95]">
-              {next.name}
-              <span style={{ color: next.color }}>.</span>
-            </h3>
-          </div>
-          <span className="flex size-12 items-center justify-center rounded-full bg-[var(--chip)] group-hover:bg-fg text-fg-muted group-hover:text-bg transition-colors shrink-0">
-            <ArrowRight
-              weight="bold"
-              className="size-5 transition-transform group-hover:translate-x-0.5"
-            />
-          </span>
-        </Link>
-      </ScrollReveal>
-    </>
-  );
 }
 
 function ReelCaseStudy({

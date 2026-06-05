@@ -3,6 +3,9 @@ export type Shot =
   | {
       caption: string;
       image?: string;
+      // Optional video clip (mp4). When set, renders as an autoplaying muted
+      // looping video with custom controls instead of a static image.
+      video?: string;
       // Override the auto-laid-out aspect (e.g. "aspect-[3/4]" for portrait).
       aspect?: string;
       // Override the auto-laid-out column span (e.g. "col-span-12" for full-width).
@@ -36,6 +39,16 @@ export type CaseStudy = {
   // "contain" letterboxes the hero image instead of cropping — use when the
   // screenshot aspect doesn't match the frame aspect. Defaults to "cover".
   heroObjectFit?: "cover" | "contain";
+
+  // Override for the laptop chrome's inner screen aspect (defaults to 16/10).
+  // Set when the screenshot is wider (e.g. "aspect-[16/9]") to eliminate
+  // top/bottom letterboxing inside the laptop screen.
+  laptopScreenAspect?: string;
+
+  // Override for the laptop chrome's inner screen background colour (defaults
+  // to var(--bg)). Set to the screenshot's own bg colour so any letterbox
+  // strips blend with the image instead of showing the page sage.
+  laptopScreenBg?: string;
 
   // Optional live-site URL. When set, renders a CTA below the tagline and
   // populates the browser-chrome URL bar on the hero.
@@ -85,6 +98,11 @@ export type CaseStudy = {
   // Defaults to the first 4 solution shots if not provided.
   highlights?: Shot[];
 
+  // Override number of columns for the Highlights grid. Default 4. Use 2 for
+  // case studies where each highlight benefits from more screen real estate
+  // (wider screenshots, fewer items).
+  highlightsCols?: 2 | 3 | 4;
+
   // The solution — array of caption strings or { caption, image } objects.
   solutionShots?: Shot[];
 
@@ -101,59 +119,146 @@ export type CaseStudy = {
 };
 
 export const caseStudies: Record<string, CaseStudy> = {
-  portfolio: {
+  jobquest: {
+    mediaChrome: "laptop",
+    shotChrome: "bleed",
+    laptopScreenAspect: "aspect-[16/10]",
+    laptopScreenBg: "#ffffff",
     summary:
-      "The very site you're reading — designed and vibe-coded end-to-end as a working showcase of how I want to make things now.",
-    heroImage: "/case-studies/portfolio/hero.png",
+      "A personal job-search tracker — bento dashboard, three list views, daily driver. Single user, local persistence, designed for one workflow.",
+    heroImage: "/case-studies/jobquest/bento-home.png",
+    heroAspect: "aspect-[16/10]",
+    heroObjectFit: "contain",
     meta: {
-      role: "Solo, end-to-end",
-      timeline: "Started 2026, still iterating",
-      tools: "Next.js · Tailwind · Framer Motion · Figma · Cursor + Claude Code",
+      role: "Solo — designed, directed, shipped",
+      timeline: "Built across ~3 weeks · in daily use since",
+      tools: "Vite · React · TypeScript · Zustand · pair-built with Claude Code",
     },
     snapshot: {
       problem:
-        "Designer portfolios usually compromise on design or build quality. I wanted both.",
-      role: "Solo end-to-end — concept, identity, every component.",
+        "Tracking a job search in a spreadsheet means typing the same fields five different ways and never seeing the shape of the pipeline. Tracking it in a SaaS tracker means using someone else's defaults.",
+      role: "Solo end-to-end — design direction, decisions, daily user.",
       outcome:
-        "Live and self-iterating — the case study and the artefact are the same thing.",
+        "A personal web app, used daily. Bento dashboard with five tiles. Three list views (Board · Grid · Map). Shipped local-first, single-user — the radical scope cut is the point.",
     },
     problem: {
-      body: "Designer portfolios sit on a tradeoff: tool-perfect mockups that feel sterile, or developer-built sites that compromise on craft. I wanted to test if a vibe-coding workflow could collapse the gap — designing and building at the same speed.",
+      body: [
+        "Job-tracking is the kind of task that ends up in either a spreadsheet or a SaaS tool I outgrow in a week. I'd looked at both — and had specific opinions about what to do differently.",
+        "Huntr uses color for individual jobs; I wanted color for status, so a glance at the Board tells me how the pipeline is shaped, not whose listing is whose. Notion's grid is close to what I wanted but felt dense, dated, and visually noisy. No tool I tried offered a Map view, which I didn't realise I wanted until I built one.",
+        "So I built it. Single user. Local persistence. No auth. No multi-tenancy. The scope cuts are the point.",
+      ],
     },
     approach: {
-      pullQuote: "Design and build collapsed into one motion.",
+      pullQuote: "Status is the color, not the noise.",
       blocks: [
         {
-          heading: "Identity first.",
-          hook: "Build the system before any page existed.",
-          body: "Display font, accent color, blob shapes, dot motif — locked in before a single component shipped.",
+          heading: "Multiple views, each answering a different question.",
+          hook: "Board for daily check-in. Grid for compare-and-edit. Map for the geographic question I didn't know I had.",
+          body: "None of these is 'the right view.' Each earns its place by being the best answer to a specific question — what's moving today, how does this offer compare to the others, where am I actually applying. Board became the daily driver inside a week.",
+          image: "/case-studies/jobquest/sketch-board.png",
         },
         {
-          heading: "Vibe-coded pipeline.",
-          hook: "Designed in Figma, built in Cursor with Claude Code as the pair.",
-          body: "Next.js + Tailwind + Framer Motion. The same idea moved from sketch to live in minutes, not days.",
+          heading: "Bento dashboard over a giant table.",
+          hook: "Each tile owns one question.",
+          body: "What needs me today. What's my pipeline shape. Am I keeping rhythm. Where am I applying. The bento gives different questions different volume, and the eye knows where to look. A table puts everything at the same priority.",
+          image: "/case-studies/jobquest/design-notes.png",
         },
         {
-          heading: "Real-time feedback.",
-          hook: "No more handoff gap.",
-          body: "Changes happened during design itself. The loop ran tight enough to test five variations of the same component without losing a day.",
+          heading: "Earn before polish.",
+          body: "First pass shipped without animations, without a theme system. Earned those later, once daily use proved the underlying decisions held up. Premature polish on a feature that gets cut is just wasted craft.",
+        },
+        {
+          heading: "What didn't survive.",
+          hook: "Most of the work in a personal tool is the work you throw away.",
+          body: "The bento went through five configurations before the layout settled. The Salary tile alone cycled through four visual treatments. Add Job started as a modal, became a full-page route once auto-fill needed real screen room — the route swap broke React Router's useBlocker, I bailed and used beforeunload. The Board uses a custom drag because the HTML5 API's cursor inconsistencies broke the feel. One feature is diagnosed but not removed: Daily Goals duplicates Habits — they're due for a merge in v2, fixing it standalone would be doing the same work twice. Built with Claude Code as the implementer; I directed and designed. The iteration speed is mostly the dividend of that pairing.",
+          image: "/case-studies/jobquest/sketch-grid.png",
         },
       ],
     },
+    highlightsCols: 2,
+    highlights: [
+      {
+        caption: "Board — the daily driver",
+        image: "/case-studies/jobquest/board-final.png",
+        aspect: "aspect-[19/10]",
+      },
+      {
+        caption: "Grid — compare & bulk-edit",
+        image: "/case-studies/jobquest/grid-final.png",
+        aspect: "aspect-[19/10]",
+      },
+      {
+        caption: "Map — the question I didn't know I had",
+        image: "/case-studies/jobquest/map-final.png",
+        aspect: "aspect-[19/10]",
+      },
+      {
+        caption: "Offer — the late-stage workflow",
+        image: "/case-studies/jobquest/job-offer.png",
+        aspect: "aspect-[19/10]",
+      },
+    ],
     solutionShots: [
-      "Home — selected work and personality at a glance",
-      "About — the longer-form context",
-      "Work index — all case studies, filterable",
-      "AI assistant — context-aware project chat",
+      {
+        caption:
+          "Home — hover to dig, tick dailies, watch the streak. Pipeline and what's next, in one view.",
+        video: "/case-studies/jobquest/home-recording.mp4",
+        span: "col-span-12",
+        aspect: "aspect-[19/10]",
+      },
+      {
+        caption: "Board — status is the color, not the noise",
+        image: "/case-studies/jobquest/board-final.png",
+        span: "col-span-12",
+        aspect: "aspect-[19/10]",
+      },
+      {
+        caption: "Swapping between views at speed",
+        video: "/case-studies/jobquest/swapping-between.mp4",
+        span: "col-span-12",
+        aspect: "aspect-[19/10]",
+      },
+      {
+        caption: "Grid — sortable, bulk-selectable",
+        image: "/case-studies/jobquest/grid-final.png",
+        span: "col-span-12",
+        aspect: "aspect-[19/10]",
+      },
+      {
+        caption: "Grid — sorted by salary",
+        image: "/case-studies/jobquest/grid-final-sorted.png",
+        span: "col-span-12",
+        aspect: "aspect-[19/10]",
+      },
+      {
+        caption: "Map — cities rail expanded",
+        image: "/case-studies/jobquest/map-final.png",
+        span: "col-span-12",
+        aspect: "aspect-[19/10]",
+      },
+      {
+        caption: "Map — fly-to per job",
+        video: "/case-studies/jobquest/map-recording.mp4",
+        span: "col-span-12",
+        aspect: "aspect-[19/10]",
+      },
+      {
+        caption: "Offer — the negotiate view",
+        image: "/case-studies/jobquest/job-offer.png",
+        span: "col-span-12",
+        aspect: "aspect-[19/10]",
+      },
+      {
+        caption: "Offer flow in action",
+        video: "/case-studies/jobquest/job-offer.mp4",
+        span: "col-span-12",
+        aspect: "aspect-[19/10]",
+      },
     ],
     outcome: {
-      body: "The site you're standing on. Built from scratch with a mid-design feedback loop I'd never had before. The biggest result: the gap between idea and working prototype is essentially gone.",
-      stats: [
-        { value: "8", label: "Case studies in scope" },
-        { value: "Live", label: "Current state" },
-      ],
+      body: "Three claims held up after weeks of daily use. Variable density beats one big table — the bento gives different questions different volume, and the eye knows where to look. Three views with distinct jobs beat one view that does everything — Board for the daily check-in, Grid for compare-and-edit, Map for the geographic question I didn't know I had. Local-first lets the scope cuts stand — no auth, no sync, no defensive code for users who don't exist.",
       reflection:
-        "I'd love to A/B test individual choices — dot motif, blob shapes, typography — against more conventional alternatives, to see which decisions actually carry weight.",
+        "If I were to generalise this for other people — multi-user accounts, real persistence (not localStorage), a sharing model. The bento and multi-view philosophy would transfer; the radical defaults (one opinion, no preferences pane) would have to soften. What I'd undo: Daily Goals in a Habits merge, the HTML5 drag detour, and the equivalent-polish-on-Grid before knowing Board would be the daily driver.",
     },
   },
 
@@ -363,9 +468,14 @@ export const caseStudies: Record<string, CaseStudy> = {
   },
 
   reel: {
+    mediaChrome: "laptop",
+    shotChrome: "browser",
+    laptopScreenAspect: "aspect-[16/10]",
+    laptopScreenBg: "#ffffff",
     summary:
       "A self-initiated concept site for a fictional architecture studio, designed around restraint and image-forward storytelling.",
     heroImage: "/case-studies/reel/projects.png",
+    heroObjectFit: "contain",
     liveUrl: "https://goodness-jargon-613166.framer.app/",
     displayUrl: "reel.com",
     meta: {
@@ -427,38 +537,6 @@ export const caseStudies: Record<string, CaseStudy> = {
       body: "Shipped a live concept site that does what it set out to: the work leads, the words follow. The constraint of fictional content actually sharpened the brief — without a real client's promotional pressure, I could keep cutting until only the necessary remained.",
       reflection:
         "Without a real client the brief was easier than reality. I'd push harder on edge cases — slow connections, image-heavy pages, real content variability — and pressure-test the type system at scale before calling it done.",
-    },
-  },
-
-  "artist-website": {
-    mediaChrome: "browser",
-    heroImage: "/case-studies/artist/hero.png",
-    heroAspect: "aspect-[7/5]",
-    liveUrl: "https://cultural-try-908675.framer.app/",
-    displayUrl: "jlorin.com",
-    summary:
-      "An immersive artist showcase — large imagery, soft typography, motion that guides. The work and the artist, side by side.",
-    meta: {
-      role: "Solo, end-to-end",
-      timeline: "A couple of weeks",
-      tools: "Figma · Framer",
-    },
-    snapshot: {
-      problem:
-        "Artist sites either bury the work in chrome or strip it bare.",
-      role: "Solo end-to-end — concept, identity, web flows, build.",
-      outcome: "Live: an image-led site that lets the work breathe.",
-    },
-    problem: {
-      body: [
-        "Many artist websites struggle to balance aesthetics with usability — either feeling cluttered or so minimal they fail to communicate identity. The brief: design an experience that highlights the artist's visual work while keeping the navigation clear and the emotional register intact.",
-        "Built a calm, image-led experience in Framer — oversized visuals, subtle motion, generous white space. A responsive, scroll-first flow guides visitors naturally. Soft typography and a restrained monochrome palette, with modern animation and cursor details, add character without noise.",
-      ],
-    },
-    outcome: {
-      body: "Shipped a live concept site where the artwork is the loudest thing on every page. The interface is the picture frame, not the picture — exactly the brief.",
-      reflection:
-        "Fictional content made every taste call easier than reality. I'd love to test the same process with a real artist's actual work and voice — a real identity brief sharpens the trade-offs.",
     },
   },
 

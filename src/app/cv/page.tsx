@@ -1,6 +1,7 @@
-import Image from "next/image";
+import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
 import {
+  ArrowLeft,
   Briefcase,
   CalendarCheck,
   Envelope,
@@ -14,6 +15,7 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { site } from "@/lib/site";
 import { DownloadCVButton } from "./DownloadCVButton";
+import { ShareCVButton } from "./ShareCVButton";
 
 export const metadata = { title: "CV — Lukas Ahlse" };
 
@@ -30,7 +32,7 @@ const experience: {
     dates: "2025 — 2026",
     location: "Malmö, Sweden",
     bullets: [
-      "Designed UX across the smart-office product line — meeting room panels, booking app, web, and large-format wayfinding maps — used across enterprises in multiple countries.",
+      "Designed UX/UI across the smart-office product line — meeting room panels, booking app, web, and large-format wayfinding maps — used across enterprises in multiple countries.",
       "Led several end-to-end product flows — research, IA, high-fidelity UI, and testing on actual hardware in real office spaces.",
       "Worked closely with PMs and engineers — aligning design intent with build constraints.",
     ],
@@ -72,7 +74,7 @@ const education: {
 const toolGroups: { title: string; items: string }[] = [
   { title: "Design", items: "Figma · Framer · Adobe Suite · Photo & video" },
   { title: "Code", items: "HTML · CSS · JavaScript" },
-  { title: "AI", items: "Claude Code · Lovable · ChatGPT · Cursor · v0" },
+  { title: "AI", items: "Claude Code · Lovable · Midjourney · Cursor · v0" },
   { title: "Workflow", items: "Notion · Miro · FigJam · Slack" },
 ];
 
@@ -84,6 +86,10 @@ const languages: { name: string; level: string }[] = [
 export default function CVPage() {
   return (
     <div className="cv-shell">
+      <Link href="/" className="cv-back-link">
+        <ArrowLeft weight="bold" className="cv-back-icon" />
+        Back to portfolio
+      </Link>
       <div className="cv-paper">
         {/* Header */}
         <header className="cv-header">
@@ -93,23 +99,14 @@ export default function CVPage() {
               <br />
               Ahlse<span className="text-accent">.</span>
             </h1>
+          </div>
+
+          <div className="cv-header-meta">
             <p className="cv-role">Product Designer · Malmö, Sweden</p>
             <p className="cv-tagline">
               Curious by default — happiest where craft, the why&rsquo;s, and
               problem-solving overlap.
             </p>
-          </div>
-
-          <div className="cv-header-photo">
-            <div className="cv-photo">
-              <Image
-                src="/photo.jpg"
-                alt="Lukas Ahlse"
-                fill
-                sizes="140px"
-                priority
-              />
-            </div>
           </div>
         </header>
 
@@ -251,7 +248,7 @@ export default function CVPage() {
               <div className="cv-avail">
                 <p className="cv-avail-line">
                   <span className="cv-avail-dot" aria-hidden />
-                  <span className="cv-avail-strong">From June 2026</span>
+                  <span className="cv-avail-strong">Available now</span>
                 </p>
                 <p className="cv-avail-note">
                   Full-time or freelance · Open to relocate
@@ -282,7 +279,10 @@ export default function CVPage() {
         </main>
       </div>
 
-      <DownloadCVButton />
+      <div className="cv-actions">
+        <DownloadCVButton />
+        <ShareCVButton />
+      </div>
     </div>
   );
 }

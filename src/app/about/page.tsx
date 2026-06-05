@@ -14,13 +14,11 @@ import {
   User,
   Wrench,
 } from "@phosphor-icons/react/dist/ssr";
-import { WhereToNext } from "@/components/WhereToNext";
 import {
   ClaudeIcon,
   CursorIcon,
   FigmaIcon,
   MidjourneyIcon,
-  OpenAIIcon,
   V0Icon,
 } from "@/components/BrandIcons";
 import { PathRoadmap, type Chapter } from "@/components/PathRoadmap";
@@ -30,7 +28,6 @@ import { SwipeCarousel } from "@/components/SwipeCarousel";
 
 const aiBrands = [
   { Icon: ClaudeIcon, name: "Claude" },
-  { Icon: OpenAIIcon, name: "ChatGPT" },
   { Icon: FigmaIcon, name: "Figma" },
   { Icon: V0Icon, name: "v0" },
   { Icon: CursorIcon, name: "Cursor" },
@@ -144,7 +141,7 @@ const skillGroups: { title: string; items: string[] }[] = [
   },
   {
     title: "AI",
-    items: ["Claude Code", "Lovable", "ChatGPT", "Cursor", "v0"],
+    items: ["Claude Code", "Lovable", "Midjourney", "Cursor", "v0"],
   },
   {
     title: "Workflow",
@@ -743,11 +740,11 @@ export default function AboutPage() {
           <MapPin weight="fill" className="size-3.5" /> Location
         </p>
         <p className="max-w-[100ch] text-base md:text-lg text-fg-muted leading-relaxed">
-          Based in Malmö, with Copenhagen a short commute away. I&rsquo;m
-          comfortable working further afield too: I went to international
-          schools growing up, and have since lived for stretches in Scotland
-          and China. Swedish is my first language, and most of my studying
-          and working has been in English.
+          Based in Malmö, with Copenhagen a short commute away — and happy
+          to relocate for the right team. I went to international schools
+          growing up and have lived for stretches in Scotland and China,
+          so a new city isn&rsquo;t a hurdle. Swedish is my first language,
+          and most of my studying and working has been in English.
         </p>
         <ul className="mt-8 md:mt-12 grid grid-cols-2 md:grid-cols-4 gap-x-3 md:gap-x-6 gap-y-6 md:gap-y-8 items-start justify-items-center md:justify-items-start">
           {places.map((p) => (
@@ -780,34 +777,6 @@ export default function AboutPage() {
       </ScrollReveal>
       </section>
 
-      <WhereToNext
-        links={[
-          {
-            href: "/work",
-            label: "All work",
-            descriptor: "8 projects",
-            Icon: Briefcase,
-          },
-          {
-            href: "/contact",
-            label: "Say hello",
-            descriptor: "Email · LinkedIn · phone",
-            Icon: Envelope,
-          },
-          {
-            href: "/playground",
-            label: "Lab",
-            descriptor: "Experiments & notes",
-            Icon: Flask,
-          },
-          {
-            href: "/",
-            label: "Home",
-            descriptor: "Back to the start",
-            Icon: House,
-          },
-        ]}
-      />
     </>
   );
 }

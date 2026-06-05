@@ -14,11 +14,11 @@ function buildStaticContext(): string {
     "Product designer based in Malmö, Sweden — open to relocate.",
   );
   lines.push(
-    "Currently UX at Sony Nimway (smart office workplace tech used by enterprises across many countries).",
+    "Most recently UX at Sony Nimway (smart office workplace tech used by enterprises across many countries) — wrapped early 2026, traveling since, now looking for the next role.",
   );
   lines.push("BSc in Interaction Design from Malmö University.");
   lines.push(
-    "Available from June 2026 — full-time, freelance, or quick chats.",
+    "Available now — full-time, freelance, or quick chats.",
   );
   lines.push("Email: lukas.ahlse@gmail.com");
   lines.push("");

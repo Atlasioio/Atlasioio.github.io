@@ -15,7 +15,6 @@ import { InstagramIcon, LinkedInIcon } from "@/components/BrandIcons";
 import { ContactForm } from "@/components/ContactForm";
 import { CopyEmailButton } from "@/components/CopyEmailButton";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { WhereToNext } from "@/components/WhereToNext";
 import { site } from "@/lib/site";
 
 export const metadata = { title: "Contact" };
@@ -205,34 +204,6 @@ export default function ContactPage() {
         </div>
       </ScrollReveal>
 
-      <WhereToNext
-        links={[
-          {
-            href: "/work",
-            label: "All work",
-            descriptor: "8 projects",
-            Icon: Briefcase,
-          },
-          {
-            href: "/about",
-            label: "About me",
-            descriptor: "Story · climbing · food",
-            Icon: User,
-          },
-          {
-            href: "/playground",
-            label: "Lab",
-            descriptor: "Experiments & notes",
-            Icon: Flask,
-          },
-          {
-            href: "/",
-            label: "Home",
-            descriptor: "Back to the start",
-            Icon: House,
-          },
-        ]}
-      />
     </section>
   );
 }

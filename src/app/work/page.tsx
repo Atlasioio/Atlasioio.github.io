@@ -1,12 +1,5 @@
-import {
-  Briefcase,
-  Envelope,
-  Flask,
-  House,
-  User,
-} from "@phosphor-icons/react/dist/ssr";
+import { Briefcase } from "@phosphor-icons/react/dist/ssr";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { WhereToNext } from "@/components/WhereToNext";
 import { WorkList } from "./work-list";
 
 export const metadata = { title: "Work" };
@@ -30,35 +23,6 @@ export default function WorkPage() {
       </ScrollReveal>
 
       <WorkList />
-
-      <WhereToNext
-        links={[
-          {
-            href: "/about",
-            label: "About me",
-            descriptor: "Story · climbing · food",
-            Icon: User,
-          },
-          {
-            href: "/contact",
-            label: "Say hello",
-            descriptor: "Email · LinkedIn · phone",
-            Icon: Envelope,
-          },
-          {
-            href: "/playground",
-            label: "Lab",
-            descriptor: "Experiments & notes",
-            Icon: Flask,
-          },
-          {
-            href: "/",
-            label: "Home",
-            descriptor: "Back to the start",
-            Icon: House,
-          },
-        ]}
-      />
     </>
   );
 }

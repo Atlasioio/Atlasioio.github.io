@@ -23,15 +23,16 @@ const tabs: { key: AudienceKey; label: string; shortLabel: string }[] = [
 
 const VARIANTS: Record<AudienceKey, Segment[]> = {
   recruiters: [
-    { type: "highlight", variant: "a", content: "Product designer" },
+    { type: "text", content: "Most recently a " },
+    { type: "highlight", variant: "a", content: "product designer" },
     { type: "text", content: " at " },
     { type: "highlight", variant: "b", content: "Sony Nimway" },
     {
       type: "text",
       content:
-        " — smart office tech used across many countries. Based in Malmö. ",
+        " — smart office tech used across many countries. Based in Malmö and Stockholm. ",
     },
-    { type: "highlight", variant: "c", content: "Available from June 2026" },
+    { type: "highlight", variant: "c", content: "Available now" },
     {
       type: "text",
       content: " for full-time, freelance, or a chat — open to relocate.",
@@ -46,7 +47,7 @@ const VARIANTS: Record<AudienceKey, Segment[]> = {
         ", selective about what's worth bringing along. I sweat the ",
     },
     { type: "highlight", variant: "b", content: "small details" },
-    { type: "text", content: " and take projects " },
+    { type: "text", content: ", when it matters, and take projects " },
     { type: "highlight", variant: "c", content: "from first sketch to ship" },
     { type: "text", content: "." },
   ],
@@ -95,16 +96,11 @@ const STAGGER_PER_ATOM_MS = 42;
 const ATOM_DURATION_S = 0.5;
 const INITIAL_LOAD_DELAY_MS = 700;
 const SWITCH_DELAY_MS = 80;
-const AUTO_CYCLE_MS = 6500;
 
 export function IntroSwitcher() {
   const [active, setActive] = useState<AudienceKey>("recruiters");
-  const [hasInteracted, setHasInteracted] = useState(false);
   const isInitialMountRef = useRef(true);
 
-  // Animate on initial mount, manual clicks, and auto-cycles. The original
-  // logic skipped animation on manual clicks — but with auto-cycling, the
-  // word-by-word reveal is the showcase, so we keep it for every switch.
   const shouldAnimate = true;
   const startDelayMs = isInitialMountRef.current
     ? INITIAL_LOAD_DELAY_MS
@@ -113,23 +109,6 @@ export function IntroSwitcher() {
   useEffect(() => {
     isInitialMountRef.current = false;
   }, []);
-
-  // Auto-cycle through variants until the visitor manually picks one.
-  useEffect(() => {
-    if (hasInteracted) return;
-    const id = setInterval(() => {
-      setActive((curr) => {
-        const idx = tabs.findIndex((t) => t.key === curr);
-        return tabs[(idx + 1) % tabs.length].key;
-      });
-    }, AUTO_CYCLE_MS);
-    return () => clearInterval(id);
-  }, [hasInteracted]);
-
-  const handleTabClick = (key: AudienceKey) => {
-    setActive(key);
-    setHasInteracted(true);
-  };
 
   return (
     <>
@@ -148,7 +127,7 @@ export function IntroSwitcher() {
               role="tab"
               type="button"
               aria-selected={isActive}
-              onClick={() => handleTabClick(t.key)}
+              onClick={() => setActive(t.key)}
               className={`relative cursor-pointer px-3 py-1.5 rounded-full font-mono text-[11px] uppercase tracking-[0.16em] transition-colors duration-300 ease-out ${
                 isActive ? "text-fg" : "text-fg-muted hover:text-fg"
               }`}

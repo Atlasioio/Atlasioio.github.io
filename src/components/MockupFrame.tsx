@@ -6,7 +6,7 @@ type Props = {
   alt: string;
   aspect?: string;
   tint: string;
-  chrome?: "browser" | "none" | "phone" | "paper" | "bleed";
+  chrome?: "browser" | "none" | "phone" | "paper" | "bleed" | "laptop";
   url?: string;
   intensity?: "subtle" | "strong";
   fallbackLabel?: string;
@@ -20,6 +20,19 @@ type Props = {
   // area and may crop; "contain" letterboxes so the full image is always visible —
   // use this when the screenshot aspect doesn't match the frame aspect.
   objectFit?: "cover" | "contain";
+  // Override the laptop chrome's inner screen aspect. Defaults to 16/10.
+  // Set "aspect-[16/9]" or similar when the screenshot is wider than 16/10
+  // to eliminate top/bottom letterboxing inside the laptop screen.
+  screenAspect?: string;
+  // Override the laptop chrome's inner screen background colour. Defaults to
+  // var(--bg). Set to the screenshot's own background colour (e.g. "#ffffff")
+  // so any letterbox strips inside the screen blend with the image.
+  screenBg?: string;
+  // When true, the laptop chrome fills its container width fully (no inner
+  // padding). Use for full-bleed hero contexts. Default: false (~86% width
+  // with breathing room — used in the bento where edges shouldn't touch the
+  // card border).
+  chromeFill?: boolean;
 };
 
 export function MockupFrame({
@@ -38,6 +51,9 @@ export function MockupFrame({
   sizes = "(min-width: 1400px) 1340px, 100vw",
   tilt,
   objectFit = "cover",
+  screenAspect = "aspect-[16/10]",
+  screenBg,
+  chromeFill = false,
 }: Props) {
   const imageObjectClass =
     objectFit === "contain" ? "object-contain" : "object-cover object-top";
@@ -134,6 +150,65 @@ export function MockupFrame({
                   "linear-gradient(180deg, rgba(255,228,158,0.65) 0%, rgba(238,205,128,0.5) 100%)",
                 boxShadow: "0 1px 3px rgba(40,30,20,0.14)",
               }}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (chrome === "laptop") {
+    return (
+      <div
+        className={`relative ${aspect} ${rounded} overflow-hidden border border-hairline flex items-center justify-center`}
+        style={{ background: tintBg }}
+      >
+        <div className={`relative ${chromeFill ? "w-full" : "w-[90%] md:w-[86%]"}`}>
+          {/* Lid + screen */}
+          <div
+            className={`relative w-full ${screenAspect} rounded-[10px] md:rounded-[14px] p-[6px] md:p-[10px] shadow-[0_22px_50px_-22px_rgba(0,0,0,0.4)]`}
+            style={{
+              background:
+                "linear-gradient(180deg, #1d1d20 0%, #0a0a0c 100%)",
+            }}
+          >
+            {/* Camera dot */}
+            <span
+              aria-hidden
+              className="absolute top-[3px] left-1/2 -translate-x-1/2 size-[3px] rounded-full bg-black/95 z-10"
+            />
+            {/* Screen surface */}
+            <div
+              className="relative h-full w-full rounded-[5px] md:rounded-[8px] overflow-hidden"
+              style={{ background: screenBg ?? "var(--bg)" }}
+            >
+              <Image
+                src={image}
+                alt={alt}
+                fill
+                sizes={sizes}
+                className={imageObjectClass}
+                priority={priority}
+              />
+            </div>
+          </div>
+
+          {/* Keyboard base — slightly wider than screen for the laptop silhouette,
+            * unless chromeFill is true where it matches container width. */}
+          <div
+            className="relative h-[10px] md:h-[14px] mt-[2px] md:mt-[3px] rounded-b-[6px] md:rounded-b-[10px] shadow-[0_8px_18px_-10px_rgba(0,0,0,0.25)]"
+            style={{
+              width: chromeFill ? "100%" : "106%",
+              marginLeft: chromeFill ? "0" : "-3%",
+              background:
+                "linear-gradient(180deg, #d8dadd 0%, #a4a8ac 60%, #6e7378 100%)",
+            }}
+          >
+            {/* Hinge notch */}
+            <span
+              aria-hidden
+              className="absolute top-0 left-1/2 -translate-x-1/2 w-[14%] h-[3px] rounded-b-[3px]"
+              style={{ background: "rgba(0,0,0,0.35)" }}
             />
           </div>
         </div>

@@ -1,32 +1,32 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #faf9f5;
-  --bg-elevated: #ffffff;
-  --fg: #0f0f0e;
-  --fg-muted: #6b6760;
-  --fg-subtle: #9a958c;
-  --border: #e8e3d6;
-  --accent: #c1421c;
-  --accent-hover: #a8351a;
+  --bg: #eef0e8;
+  --bg-elevated: #f7f8f3;
+  --fg: #14171a;
+  --fg-muted: #5d6660;
+  --fg-subtle: #8d9590;
+  --border: #d6dad2;
+  --accent: #0d5d5d;
+  --accent-hover: #094848;
   --status-available: #16a34a;
-  --hairline: rgba(15, 15, 14, 0.08);
+  --hairline: rgba(20, 23, 26, 0.08);
   --chip: color-mix(in oklab, var(--fg) 6%, transparent);
   --chip-hover: color-mix(in oklab, var(--fg) 12%, transparent);
 }
 
 .dark,
 :root[data-theme="dark"] {
-  --bg: #0f0e0c;
-  --bg-elevated: #1a1916;
-  --fg: #faf9f5;
-  --fg-muted: #a8a39a;
-  --fg-subtle: #6b665e;
-  --border: #2a2824;
-  --accent: #ff6a3d;
-  --accent-hover: #ff8359;
+  --bg: #121613;
+  --bg-elevated: #1a1d1a;
+  --fg: #eef0e8;
+  --fg-muted: #a8b0aa;
+  --fg-subtle: #6d756f;
+  --border: #262a26;
+  --accent: #3aa8a3;
+  --accent-hover: #4ec9c2;
   --status-available: #22c55e;
-  --hairline: rgba(250, 249, 245, 0.1);
+  --hairline: rgba(238, 240, 232, 0.1);
   --chip: color-mix(in oklab, var(--fg) 8%, transparent);
   --chip-hover: color-mix(in oklab, var(--fg) 16%, transparent);
 }
@@ -312,6 +312,23 @@ body.experiment-takeover > footer {
   display: none;
 }
 
+/* Bento tile hover — lift + project-color-tinted shadow + accent border.
+ * Set --card-accent on the element via inline style (per-project colour). */
+.bento-card {
+  transition:
+    transform 380ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 380ms cubic-bezier(0.65, 0, 0.35, 1),
+    box-shadow 380ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.bento-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in oklab, var(--card-accent) 55%, var(--border));
+  box-shadow:
+    0 22px 44px -14px color-mix(in oklab, var(--card-accent) 32%, transparent),
+    0 8px 18px -8px color-mix(in oklab, var(--card-accent) 18%, transparent);
+}
+
 .project-card {
   transition: border-color 500ms cubic-bezier(0.65, 0, 0.35, 1);
 }
@@ -544,7 +561,7 @@ body:has(.cv-shell) > main {
   --cv-pad-y: 14mm;
   width: 210mm;
   min-height: 297mm;
-  background: var(--bg);
+  background: #fafbf7;
   color: var(--cv-fg);
   padding: var(--cv-pad-y) var(--cv-pad-x);
   box-shadow: 0 16px 50px -18px color-mix(in oklab, var(--fg) 20%, transparent);
@@ -601,6 +618,24 @@ body:has(.cv-shell) > main {
 
 .cv-header-photo {
   flex-shrink: 0;
+}
+
+/* Right column of the header — role + tagline, replacing the photo. */
+.cv-header-meta {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  max-width: 26em;
+  text-align: right;
+}
+
+.cv-header-meta .cv-role {
+  margin: 0;
+}
+
+.cv-header-meta .cv-tagline {
+  margin: 2mm 0 0 0;
+  max-width: none;
 }
 
 .cv-photo {
@@ -951,7 +986,7 @@ body:has(.cv-shell) > main {
   border-radius: 2mm;
   color: var(--cv-fg);
   flex-shrink: 0;
-  background: var(--bg);
+  background: #fafbf7;
 }
 
 .cv-qr svg {
@@ -987,7 +1022,45 @@ body:has(.cv-shell) > main {
   line-height: 1;
 }
 
-/* Screen download button */
+/* Screen-only back link (CV page hides the global header). */
+.cv-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in oklab, var(--fg) 8%, transparent);
+  background: var(--bg-elevated);
+  color: var(--fg-muted);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 12px;
+  text-decoration: none;
+  transition:
+    background-color 280ms ease,
+    color 280ms ease,
+    border-color 280ms ease;
+}
+
+.cv-back-link:hover {
+  color: var(--fg);
+  background: color-mix(in oklab, var(--fg) 6%, var(--bg-elevated));
+  border-color: color-mix(in oklab, var(--fg) 16%, transparent);
+}
+
+.cv-back-icon {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+/* Screen action buttons (Download · Share) */
+.cv-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
 .cv-download-btn {
   font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 14px;
@@ -1053,7 +1126,9 @@ body:has(.cv-shell) > main {
     padding: var(--cv-pad-y) var(--cv-pad-x);
     page-break-after: avoid;
   }
-  .cv-download-btn {
+  .cv-download-btn,
+  .cv-actions,
+  .cv-back-link {
     display: none !important;
   }
   header[class*="sticky"],

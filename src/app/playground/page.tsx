@@ -1,12 +1,5 @@
-import {
-  Briefcase,
-  Envelope,
-  Flask,
-  House,
-  User,
-} from "@phosphor-icons/react/dist/ssr";
+import { Flask } from "@phosphor-icons/react/dist/ssr";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { WhereToNext } from "@/components/WhereToNext";
 import { PlaygroundList } from "./playground-list";
 
 export const metadata = { title: "Playground" };
@@ -31,35 +24,6 @@ export default function PlaygroundPage() {
       </ScrollReveal>
 
       <PlaygroundList />
-
-      <WhereToNext
-        links={[
-          {
-            href: "/work",
-            label: "All work",
-            descriptor: "8 projects",
-            Icon: Briefcase,
-          },
-          {
-            href: "/about",
-            label: "About me",
-            descriptor: "Story · climbing · food",
-            Icon: User,
-          },
-          {
-            href: "/contact",
-            label: "Say hello",
-            descriptor: "Email · LinkedIn · phone",
-            Icon: Envelope,
-          },
-          {
-            href: "/",
-            label: "Home",
-            descriptor: "Back to the start",
-            Icon: House,
-          },
-        ]}
-      />
     </>
   );
 }

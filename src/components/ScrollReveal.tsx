@@ -32,9 +32,9 @@ export function ScrollReveal({
         className={className}
         initial={reduceMotion ? false : { opacity: 0, y }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.08 }}
         transition={{
-          duration: 0.7,
+          duration: 1.0,
           delay,
           ease: [0.22, 1, 0.36, 1] as const,
         }}
@@ -50,9 +50,9 @@ export function ScrollReveal({
       className={className}
       initial={reduceMotion ? false : { opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.08 }}
       transition={{
-        duration: 0.7,
+        duration: 1.0,
         delay,
         ease: [0.22, 1, 0.36, 1] as const,
       }}
