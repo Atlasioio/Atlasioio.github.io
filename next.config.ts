@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   // disables API routes (needed for /api/chat to talk to Claude).
   images: {
     unoptimized: true,
+    qualities: [75, 95, 100],
   },
   typescript: {
     ignoreBuildErrors: true,

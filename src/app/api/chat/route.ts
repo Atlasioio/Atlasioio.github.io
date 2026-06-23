@@ -5,7 +5,15 @@ import { buildSystemPrompt } from "@/lib/chat-context";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const client = new Anthropic(); // reads ANTHROPIC_API_KEY from env
+// Lazy-init: instantiating at module scope throws during Vercel's static
+// analysis when ANTHROPIC_API_KEY isn't injected yet at build time.
+let anthropicClient: Anthropic | null = null;
+function getClient(): Anthropic {
+  if (!anthropicClient) {
+    anthropicClient = new Anthropic(); // reads ANTHROPIC_API_KEY from env
+  }
+  return anthropicClient;
+}
 
 // Per-IP rate limit (in-memory — fine for low-traffic portfolio, resets on cold start)
 const RATE_LIMIT_MAX = 30;
@@ -134,7 +142,7 @@ export async function POST(req: NextRequest) {
   const { cached, pageContext } = buildSystemPrompt(slug);
 
   try {
-    const stream = client.messages.stream({
+    const stream = getClient().messages.stream({
       model: "claude-haiku-4-5",
       max_tokens: MAX_OUTPUT_TOKENS,
       system: [

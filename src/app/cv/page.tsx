@@ -102,7 +102,7 @@ export default function CVPage() {
           </div>
 
           <div className="cv-header-meta">
-            <p className="cv-role">Product Designer · Malmö, Sweden</p>
+            <p className="cv-role">Product Designer · Stockholm, Sweden</p>
             <p className="cv-tagline">
               Curious by default — happiest where craft, the why&rsquo;s, and
               problem-solving overlap.
@@ -149,7 +149,7 @@ export default function CVPage() {
           <li>
             <span className="cv-contact-item">
               <MapPin weight="fill" className="cv-contact-icon" />
-              Malmö, SE
+              Stockholm, SE
             </span>
           </li>
         </ul>

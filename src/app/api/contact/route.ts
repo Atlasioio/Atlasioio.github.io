@@ -4,7 +4,15 @@ import type { NextRequest } from "next/server";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy-init: instantiating at module scope throws during Vercel's static
+// analysis of route handlers when env vars aren't injected yet.
+let resendClient: Resend | null = null;
+function getResend(): Resend {
+  if (!resendClient) {
+    resendClient = new Resend(process.env.RESEND_API_KEY);
+  }
+  return resendClient;
+}
 
 // Per-IP rate limit (in-memory — fine for low-traffic portfolio, resets on cold start).
 // Stricter than /api/chat since the form is an easier abuse target.
@@ -110,7 +118,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { error } = await resend.emails.send({
+    const { error } = await getResend().emails.send({
       from: `Portfolio <${from}>`,
       to,
       replyTo: email,

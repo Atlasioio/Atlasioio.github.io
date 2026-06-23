@@ -197,8 +197,8 @@ export function Header() {
                     )
                   : null;
               return (
+                <div key={item.href} className="relative">
                 <Link
-                  key={item.href}
                   href={item.href}
                   onClick={item.href === "/work" ? handleWorkClick : undefined}
                   onMouseEnter={item.href === "/work" ? () => setWorkHovered(true) : undefined}
@@ -251,76 +251,6 @@ export function Header() {
                           </span>
                         )}
                       </span>
-                      {item.href === "/work" &&
-                        (pathname === "/work" || pathname.startsWith("/work/")) && (
-                          <ul className="hidden md:flex flex-col items-center absolute left-1/2 -translate-x-1/2 top-full pt-5 gap-3">
-                            {(currentProject
-                              ? [
-                                  currentProject,
-                                  ...projects.filter(
-                                    (p) => p.slug !== currentProject.slug,
-                                  ),
-                                ]
-                              : projects
-                            ).map((p, i) => {
-                              const isCurrent = currentProject?.slug === p.slug;
-                              const visible = isCurrent || workHovered;
-                              return (
-                                <motion.li
-                                  key={p.slug}
-                                  layoutId={`work-sub-dot-${p.slug}`}
-                                  initial={false}
-                                  animate={{
-                                    opacity: visible ? 1 : 0,
-                                    scale: visible ? 1 : 0.6,
-                                  }}
-                                  transition={{
-                                    opacity: {
-                                      duration: 0.2,
-                                      delay:
-                                        workHovered && !isCurrent ? i * 0.04 : 0,
-                                      ease: [0.22, 1, 0.36, 1],
-                                    },
-                                    scale: {
-                                      duration: 0.25,
-                                      delay:
-                                        workHovered && !isCurrent ? i * 0.04 : 0,
-                                      ease: [0.22, 1, 0.36, 1],
-                                    },
-                                    layout: {
-                                      type: "spring",
-                                      stiffness: 380,
-                                      damping: 28,
-                                    },
-                                  }}
-                                  className={
-                                    visible ? "" : "pointer-events-none"
-                                  }
-                                >
-                                  <Link
-                                    href={`/work/${p.slug}`}
-                                    aria-label={p.name}
-                                    aria-current={isCurrent ? "page" : undefined}
-                                    title={p.name}
-                                    className="group/dot relative flex items-center justify-center size-3"
-                                  >
-                                    <span
-                                      className={`size-1.5 rounded-full transition-[colors,transform] duration-200 group-hover/dot:scale-125 ${
-                                        isCurrent
-                                          ? "bg-fg"
-                                          : "bg-fg-muted group-hover/dot:bg-accent"
-                                      }`}
-                                    />
-                                    <span className="pointer-events-none absolute left-full ml-2 px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-[0.14em] bg-[var(--fg)] text-[var(--bg)] whitespace-nowrap opacity-0 group-hover/dot:opacity-100 transition-opacity duration-150 z-50 inline-flex items-center gap-1.5">
-                                      <p.Icon weight="regular" className="size-3" />
-                                      {p.name}
-                                    </span>
-                                  </Link>
-                                </motion.li>
-                              );
-                            })}
-                          </ul>
-                        )}
                     </span>
                   )}
 
@@ -353,6 +283,75 @@ export function Header() {
                     </span>
                   )}
                 </Link>
+                {item.href === "/work" &&
+                  (pathname === "/work" || pathname.startsWith("/work/")) && (
+                    <ul className="hidden md:flex flex-col items-center absolute left-4 -translate-x-1/2 top-full pt-5 gap-3">
+                      {(currentProject
+                        ? [
+                            currentProject,
+                            ...projects.filter(
+                              (p) => p.slug !== currentProject.slug,
+                            ),
+                          ]
+                        : projects
+                      ).map((p, i) => {
+                        const isCurrent = currentProject?.slug === p.slug;
+                        const visible = isCurrent || workHovered;
+                        return (
+                          <motion.li
+                            key={p.slug}
+                            layoutId={`work-sub-dot-${p.slug}`}
+                            initial={false}
+                            animate={{
+                              opacity: visible ? 1 : 0,
+                              scale: visible ? 1 : 0.6,
+                            }}
+                            transition={{
+                              opacity: {
+                                duration: 0.2,
+                                delay:
+                                  workHovered && !isCurrent ? i * 0.04 : 0,
+                                ease: [0.22, 1, 0.36, 1],
+                              },
+                              scale: {
+                                duration: 0.25,
+                                delay:
+                                  workHovered && !isCurrent ? i * 0.04 : 0,
+                                ease: [0.22, 1, 0.36, 1],
+                              },
+                              layout: {
+                                type: "spring",
+                                stiffness: 380,
+                                damping: 28,
+                              },
+                            }}
+                            className={visible ? "" : "pointer-events-none"}
+                          >
+                            <Link
+                              href={`/work/${p.slug}`}
+                              aria-label={p.name}
+                              aria-current={isCurrent ? "page" : undefined}
+                              title={p.name}
+                              className="group/dot relative flex items-center justify-center size-3"
+                            >
+                              <span
+                                className={`size-1.5 rounded-full transition-[colors,transform] duration-200 group-hover/dot:scale-125 ${
+                                  isCurrent
+                                    ? "bg-fg"
+                                    : "bg-fg-muted group-hover/dot:bg-accent"
+                                }`}
+                              />
+                              <span className="pointer-events-none absolute left-full ml-2 px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-[0.14em] bg-[var(--fg)] text-[var(--bg)] whitespace-nowrap opacity-0 group-hover/dot:opacity-100 transition-opacity duration-150 z-50 inline-flex items-center gap-1.5">
+                                <p.Icon weight="regular" className="size-3" />
+                                {p.name}
+                              </span>
+                            </Link>
+                          </motion.li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </div>
               );
             })}
           </nav>

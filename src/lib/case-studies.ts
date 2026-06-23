@@ -103,6 +103,12 @@ export type CaseStudy = {
   // (wider screenshots, fewer items).
   highlightsCols?: 2 | 3 | 4;
 
+  // When true, the Highlights grid drops the tinted background card entirely
+  // and renders each image bare on the page. Use this when the screenshots
+  // are pre-rendered phone mockups with transparent backgrounds — the chrome
+  // becomes redundant and steals display area from the phone itself.
+  highlightsBare?: boolean;
+
   // The solution — array of caption strings or { caption, image } objects.
   solutionShots?: Shot[];
 
@@ -376,8 +382,9 @@ export const caseStudies: Record<string, CaseStudy> = {
 
   ecotrip: {
     mediaChrome: "none",
-    shotChrome: "phone",
-    heroImage: "/case-studies/ecotrip/hero.png",
+    shotChrome: "none",
+    highlightsBare: true,
+    heroImage: "/case-studies/ecotrip/explore.png",
     summary:
       "A bee-themed travel companion that nudges sustainable choices through collective behaviour cues, not guilt.",
     meta: {
@@ -423,37 +430,37 @@ export const caseStudies: Record<string, CaseStudy> = {
         caption: "Onboarding — setting the posture before the first trip",
         image: "/case-studies/ecotrip/onboarding.png",
         aspect: "aspect-[3/4]",
-        span: "col-span-12 md:col-span-4",
+        span: "col-span-12 md:col-span-6",
       },
       {
         caption: "Start — explore others' trips or build your own",
         image: "/case-studies/ecotrip/explore.png",
         aspect: "aspect-[3/4]",
-        span: "col-span-12 md:col-span-4",
+        span: "col-span-12 md:col-span-6",
       },
       {
         caption: "Explore — filter trips by preference and sustainability",
         image: "/case-studies/ecotrip/explore-trips.png",
         aspect: "aspect-[3/4]",
-        span: "col-span-12 md:col-span-4",
+        span: "col-span-12 md:col-span-6",
       },
       {
         caption: "Community — see what others did, and how it scored",
         image: "/case-studies/ecotrip/community.png",
         aspect: "aspect-[3/4]",
-        span: "col-span-12 md:col-span-4",
+        span: "col-span-12 md:col-span-6",
       },
       {
         caption: "Create — destination, transport, stay, activities",
         image: "/case-studies/ecotrip/create.png",
         aspect: "aspect-[3/4]",
-        span: "col-span-12 md:col-span-4",
+        span: "col-span-12 md:col-span-6",
       },
       {
         caption: "Profile — impact surfaced ahead of stats",
         image: "/case-studies/ecotrip/profile.png",
         aspect: "aspect-[3/4]",
-        span: "col-span-12 md:col-span-4",
+        span: "col-span-12 md:col-span-6",
       },
     ],
     outcome: {
@@ -743,49 +750,49 @@ export const caseStudies: Record<string, CaseStudy> = {
         caption: "Before — My Books, current",
         image: "/case-studies/goodreads/old-my-books.png",
         aspect: "aspect-[3/4]",
-        span: "col-span-12 md:col-span-6",
+        span: "col-span-12 md:col-span-4",
       },
       {
         caption: "After — current read leads, FAB to add, TBR and recent one tap away",
         image: "/case-studies/goodreads/my-books.png",
         aspect: "aspect-[3/4]",
-        span: "col-span-12 md:col-span-6",
+        span: "col-span-12 md:col-span-4",
       },
       {
         caption: "Before — Social, current",
         image: "/case-studies/goodreads/social-old.png",
         aspect: "aspect-[3/4]",
-        span: "col-span-12 md:col-span-6",
+        span: "col-span-12 md:col-span-4",
       },
       {
         caption: "After — inline like + comment, add the book straight from the feed",
         image: "/case-studies/goodreads/social.png",
         aspect: "aspect-[3/4]",
-        span: "col-span-12 md:col-span-6",
+        span: "col-span-12 md:col-span-4",
       },
       {
         caption: "Home — what you're reading, who you follow",
         image: "/case-studies/goodreads/home.png",
         aspect: "aspect-[3/4]",
-        span: "col-span-12 md:col-span-6",
+        span: "col-span-12 md:col-span-4",
       },
       {
         caption: "Review — half stars, plus quotes and notes",
         image: "/case-studies/goodreads/review.png",
         aspect: "aspect-[3/4]",
-        span: "col-span-12 md:col-span-6",
+        span: "col-span-12 md:col-span-4",
       },
       {
         caption: "Explore — by recommendation",
         image: "/case-studies/goodreads/explore.png",
         aspect: "aspect-[3/4]",
-        span: "col-span-12 md:col-span-6",
+        span: "col-span-12 md:col-span-4",
       },
       {
         caption: "Explore — by category",
         image: "/case-studies/goodreads/explore2.png",
         aspect: "aspect-[3/4]",
-        span: "col-span-12 md:col-span-6",
+        span: "col-span-12 md:col-span-4",
       },
     ],
     outcome: {

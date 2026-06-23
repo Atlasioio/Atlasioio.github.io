@@ -33,18 +33,18 @@ const bentoProjects: {
   {
     slug: "jobquest",
     span: "col-span-12 md:col-span-8",
-    aspect: "aspect-[3/2]",
+    aspect: "aspect-[4/3] md:aspect-[3/2]",
     hero: true,
   },
   {
     slug: "sony",
     span: "col-span-12 md:col-span-4",
-    aspect: "aspect-[14/19]",
+    aspect: "aspect-[4/3] md:aspect-[14/19]",
     imageMask:
       "linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06))",
   },
   {
-    slug: "sherry",
+    slug: "ecotrip",
     span: "col-span-12 md:col-span-4",
     aspect: "aspect-[4/3]",
   },
@@ -272,7 +272,7 @@ export default function HomePage() {
       <Marquee items={ticker} className="mt-16 md:mt-24" />
       </div>
 
-      <section className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-14 md:pt-20 pb-20 md:pb-28">
+      <section className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] w-full px-5 md:px-8 pt-14 md:pt-20 pb-0">
         <ScrollReveal as="div">
           <div className="flex items-end justify-between gap-4 mb-8 md:mb-12 flex-wrap">
             <div>
@@ -286,12 +286,12 @@ export default function HomePage() {
             </div>
             <Link
               href="/work"
-              className="group inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-hairline text-[13px] text-fg-muted hover:border-accent hover:text-fg transition-colors"
+              className="group inline-flex items-center gap-2.5 pl-5 pr-4 py-3 rounded-full bg-fg text-bg hover:bg-accent transition-colors text-[14px] font-medium"
             >
               See all projects
               <ArrowRight
                 weight="bold"
-                className="size-3.5 transition-transform group-hover:translate-x-0.5"
+                className="size-4 transition-transform group-hover:translate-x-0.5"
               />
             </Link>
           </div>
@@ -333,6 +333,35 @@ export default function HomePage() {
                           : "(min-width: 1400px) 700px, 50vw"
                       }
                     />
+                  ) : b.slug === "ecotrip" && heroImage ? (
+                    <div
+                      className={`relative ${b.aspect} overflow-hidden flex items-center justify-center`}
+                      style={{
+                        background: `linear-gradient(135deg, color-mix(in oklab, ${project.color} 18%, var(--bg-elevated)), color-mix(in oklab, ${project.color} 42%, var(--bg-elevated)))`,
+                      }}
+                    >
+                      <div
+                        className="relative h-[86%] aspect-[1020/1928] drop-shadow-[0_18px_36px_rgba(0,0,0,0.18)]"
+                        style={{ transform: "rotate(-3deg)" }}
+                      >
+                        <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-[1.03]">
+                          <Image
+                            src={heroImage}
+                            alt={project.name}
+                            fill
+                            sizes="(min-width: 1400px) 1020px, 50vw"
+                            quality={100}
+                            className="object-contain"
+                            style={{
+                              maskImage:
+                                "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
+                              WebkitMaskImage:
+                                "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
                   ) : (
                     <div
                       className={`relative ${b.aspect} overflow-hidden`}

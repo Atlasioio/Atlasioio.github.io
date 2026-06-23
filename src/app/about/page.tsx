@@ -37,28 +37,28 @@ const aiBrands = [
 const places: { label: string; src: string; radius: string; size: string; offset: string }[] = [
   {
     label: "Malmö",
-    src: "https://picsum.photos/seed/malmo-city/600/600",
+    src: "/about/malmo.jpg",
     radius: "70% 30% 56% 44% / 40% 64% 50% 60%",
     size: "size-32 md:size-36",
     offset: "",
   },
   {
     label: "Copenhagen",
-    src: "https://picsum.photos/seed/copenhagen-harbour/600/600",
+    src: "/about/copenhagen.jpg",
     radius: "82% 32% 52% 66% / 56% 72% 38% 60%",
     size: "size-36 md:size-44",
     offset: "md:mt-10",
   },
   {
     label: "Stockholm",
-    src: "https://picsum.photos/seed/stockholm-old/600/600",
+    src: "/about/stockholm.jpg",
     radius: "30% 70% 44% 56% / 64% 40% 60% 50%",
     size: "size-28 md:size-32",
     offset: "md:mt-2",
   },
   {
     label: "Beyond",
-    src: "https://picsum.photos/seed/world-map/600/600",
+    src: "/about/beyond.jpg",
     radius: "42% 58% 38% 62% / 56% 44% 60% 40%",
     size: "size-32 md:size-40",
     offset: "md:mt-16",

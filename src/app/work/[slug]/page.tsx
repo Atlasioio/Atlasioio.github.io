@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -123,24 +124,28 @@ export default async function CaseStudyPage({ params }: Params) {
 
       {/* Hero mockup */}
       <ScrollReveal className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-10 md:pb-12">
-        <Zoomable src={study?.heroImage} alt={`${project.name} — hero`} accentColor={project.color}>
-          <MockupFrame
-            image={study?.heroImage}
-            mobileImage={study?.heroImageMobile}
-            alt={`${project.name} — hero`}
-            aspect={study?.heroAspect ?? "aspect-[16/9]"}
-            tint={project.color}
-            chrome={study?.mediaChrome ?? "browser"}
-            intensity="strong"
-            fallbackLabel={`Hero mockup placeholder · ${project.name}`}
-            url={resolveDisplayUrl(study)}
-            objectFit={study?.heroObjectFit}
-            screenAspect={study?.laptopScreenAspect}
-            screenBg={study?.laptopScreenBg}
-            innerPadding="inset-8 md:inset-14"
-            priority
-          />
-        </Zoomable>
+        {project.slug === "ecotrip" ? (
+          <EcotripHero color={project.color} projectName={project.name} />
+        ) : (
+          <Zoomable src={study?.heroImage} alt={`${project.name} — hero`} accentColor={project.color}>
+            <MockupFrame
+              image={study?.heroImage}
+              mobileImage={study?.heroImageMobile}
+              alt={`${project.name} — hero`}
+              aspect={study?.heroAspect ?? "aspect-[16/9]"}
+              tint={project.color}
+              chrome={study?.mediaChrome ?? "browser"}
+              intensity="strong"
+              fallbackLabel={`Hero mockup placeholder · ${project.name}`}
+              url={resolveDisplayUrl(study)}
+              objectFit={study?.heroObjectFit}
+              screenAspect={study?.laptopScreenAspect}
+              screenBg={study?.laptopScreenBg}
+              innerPadding="inset-8 md:inset-14"
+              priority
+            />
+          </Zoomable>
+        )}
       </ScrollReveal>
 
       {/* Metadata strip */}
@@ -177,6 +182,7 @@ export default async function CaseStudyPage({ params }: Params) {
               }
               url={resolveDisplayUrl(study)}
               cols={study.highlightsCols}
+              bare={study.highlightsBare}
             />
           )}
 
@@ -529,6 +535,7 @@ function SolutionSection({
                     fallbackLabel={`${project.name} · ${String(i + 1).padStart(2, "0")}`}
                     objectFit={data.objectFit}
                     url={url}
+                    quality={chrome === "none" ? 100 : undefined}
                   />
                 </Zoomable>
               )}
@@ -631,6 +638,7 @@ function HighlightsSection({
   chrome,
   url,
   cols = 4,
+  bare = false,
 }: {
   highlights: Shot[];
   color: string;
@@ -638,6 +646,7 @@ function HighlightsSection({
   chrome: "browser" | "none" | "phone";
   url?: string;
   cols?: 2 | 3 | 4;
+  bare?: boolean;
 }) {
   const colsClass =
     cols === 2
@@ -693,19 +702,39 @@ function HighlightsSection({
                   index={galleryIndex >= 0 ? galleryIndex : 0}
                   accentColor={color}
                 >
-                  <MockupFrame
-                    image={data.image}
-                    alt={`${project.name} — ${data.caption}`}
-                    aspect={aspect}
-                    tint={color}
-                    chrome={chrome}
-                    intensity="subtle"
-                    rounded="rounded-2xl"
-                    innerPadding="inset-5 md:inset-4"
-                    fallbackLabel={`${project.name} · ${String(i + 1).padStart(2, "0")}`}
-                    objectFit={data.objectFit}
-                    url={url}
-                  />
+                  {bare && data.image ? (
+                    <div className="relative aspect-[1020/1928] flex items-center justify-center">
+                      <Image
+                        src={data.image}
+                        alt={`${project.name} — ${data.caption}`}
+                        fill
+                        sizes="(min-width: 1400px) 320px, 25vw"
+                        quality={100}
+                        className="object-contain"
+                        style={{
+                          maskImage:
+                            "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
+                          WebkitMaskImage:
+                            "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <MockupFrame
+                      image={data.image}
+                      alt={`${project.name} — ${data.caption}`}
+                      aspect={aspect}
+                      tint={color}
+                      chrome={chrome}
+                      intensity="subtle"
+                      rounded="rounded-2xl"
+                      innerPadding="inset-5 md:inset-4"
+                      fallbackLabel={`${project.name} · ${String(i + 1).padStart(2, "0")}`}
+                      objectFit={data.objectFit}
+                      url={url}
+                      quality={chrome === "none" ? 100 : undefined}
+                    />
+                  )}
                 </Zoomable>
               )}
               <p className="font-mono text-[11px] md:text-[10px] uppercase tracking-[0.16em] text-fg-muted md:line-clamp-2">
@@ -954,5 +983,68 @@ function ReelCaseStudy({
         </Link>
       </ScrollReveal>
     </>
+  );
+}
+
+/**
+ * Custom ecotrip hero — onboarding + explore phone mockups side-by-side with
+ * slight opposing tilts on a tinted background. The PNGs already include
+ * phone-mockup chrome, so we render them as plain images.
+ */
+function EcotripHero({
+  color,
+  projectName,
+}: {
+  color: string;
+  projectName: string;
+}) {
+  return (
+    <div
+      className="relative aspect-[16/9] rounded-3xl overflow-hidden border border-hairline flex items-center justify-center gap-4 md:gap-8 px-2 md:px-4"
+      style={{
+        background: `linear-gradient(135deg, color-mix(in oklab, ${color} 14%, var(--bg)), color-mix(in oklab, ${color} 30%, var(--bg)))`,
+      }}
+    >
+      <div
+        className="relative h-[82%] md:h-[88%] aspect-[1020/1928] drop-shadow-[0_22px_44px_rgba(0,0,0,0.18)]"
+        style={{ transform: "rotate(-3deg)" }}
+      >
+        <Image
+          src="/case-studies/ecotrip/onboarding.png"
+          alt={`${projectName} — onboarding`}
+          fill
+          sizes="(min-width: 1400px) 1020px, 50vw"
+          quality={100}
+          className="object-contain"
+          style={{
+            maskImage:
+              "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
+          }}
+          priority
+        />
+      </div>
+      <div
+        className="relative h-[88%] md:h-[94%] aspect-[1020/1928] drop-shadow-[0_22px_44px_rgba(0,0,0,0.18)]"
+        style={{ transform: "rotate(3deg)" }}
+      >
+        <Image
+          src="/case-studies/ecotrip/explore.png"
+          alt={`${projectName} — explore`}
+          fill
+          sizes="(min-width: 1400px) 1020px, 50vw"
+          quality={100}
+          className="object-contain"
+          style={{
+            maskImage:
+              "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
+          }}
+          priority
+        />
+      </div>
+    </div>
   );
 }

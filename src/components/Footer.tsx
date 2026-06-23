@@ -92,8 +92,8 @@ export function Footer() {
     : ALL_KEYS.filter((k) => k !== primary);
 
   return (
-    <footer className="mt-16">
-      <ScrollReveal as="div" className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] px-5 md:px-8 py-12 md:py-16">
+    <footer className="mt-0">
+      <ScrollReveal as="div" className="mx-auto max-w-full md:max-w-[min(75vw,1400px)] px-5 md:px-8 pt-8 md:pt-10 pb-12 md:pb-16">
         <h2 className="display-tight text-5xl md:text-7xl leading-[0.92] mb-10 md:mb-14">
           Let&rsquo;s build
           <br />
@@ -133,7 +133,7 @@ export function Footer() {
           </Link>
           <span className="flex items-center gap-1.5">
             <MapPin weight="fill" className="size-3.5" />
-            Malmö, Sweden
+            Stockholm, Sweden
           </span>
         </div>
       </ScrollReveal>

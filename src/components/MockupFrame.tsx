@@ -33,6 +33,9 @@ type Props = {
   // with breathing room — used in the bento where edges shouldn't touch the
   // card border).
   chromeFill?: boolean;
+  // Override the next/image quality (1-100). Default 75. Bump to 95-100 for
+  // mockups with small UI text that must stay legible.
+  quality?: number;
 };
 
 export function MockupFrame({
@@ -54,6 +57,7 @@ export function MockupFrame({
   screenAspect = "aspect-[16/10]",
   screenBg,
   chromeFill = false,
+  quality,
 }: Props) {
   const imageObjectClass =
     objectFit === "contain" ? "object-contain" : "object-cover object-top";
@@ -242,6 +246,37 @@ export function MockupFrame({
               priority={priority}
             />
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (chrome === "none") {
+    // Centered inner wrapper at a fixed phone aspect, sized smaller than the
+    // tinted container so the visible phone always has even breathing room top
+    // and bottom (compensates for asymmetric transparent margins inside phone
+    // PNGs without needing to re-export them).
+    return (
+      <div
+        className={`relative ${aspect} ${rounded} overflow-hidden border border-hairline flex items-center justify-center`}
+        style={{ background: tintBg }}
+      >
+        <div className="relative h-[84%] md:h-[90%] aspect-[1020/1928]">
+          <Image
+            src={image}
+            alt={alt}
+            fill
+            sizes={sizes}
+            quality={quality}
+            className={objectFit === "cover" ? "object-cover object-top" : "object-contain"}
+            style={{
+              maskImage:
+                "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
+            }}
+            priority={priority}
+          />
         </div>
       </div>
     );
