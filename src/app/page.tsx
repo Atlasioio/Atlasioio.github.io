@@ -9,6 +9,7 @@ import {
 import { LinkedInIcon } from "@/components/BrandIcons";
 import { HeroBackground } from "@/components/HeroBackground";
 import { IntroSwitcher } from "@/components/IntroSwitcher";
+import { JobquestLogin } from "@/components/JobquestLogin";
 import { Magnetic } from "@/components/Magnetic";
 import { Marquee } from "@/components/Marquee";
 import { MockupFrame } from "@/components/MockupFrame";
@@ -314,9 +315,12 @@ export default function HomePage() {
                   className="bento-card group flex flex-col h-full rounded-3xl border border-hairline bg-bg-elevated overflow-hidden"
                   style={{ ["--card-accent" as string]: project.color }}
                 >
-                  {study?.mediaChrome === "laptop" && heroImage ? (
+                  {study?.mediaChrome === "laptop" ? (
                     <MockupFrame
-                      image={heroImage}
+                      image={b.slug === "jobquest" ? undefined : heroImage}
+                      screenContent={
+                        b.slug === "jobquest" ? <JobquestLogin /> : undefined
+                      }
                       alt={project.name}
                       aspect={b.aspect}
                       tint={project.color}
@@ -341,25 +345,17 @@ export default function HomePage() {
                       }}
                     >
                       <div
-                        className="relative h-[86%] aspect-[1020/1928] drop-shadow-[0_18px_36px_rgba(0,0,0,0.18)]"
-                        style={{ transform: "rotate(-3deg)" }}
+                        className="relative h-[86%] aspect-[1020/1902] overflow-hidden"
+                        style={{ transform: "rotate(-3deg) translateZ(0)", willChange: "transform" }}
                       >
-                        <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-[1.03]">
-                          <Image
-                            src={heroImage}
-                            alt={project.name}
-                            fill
-                            sizes="(min-width: 1400px) 1020px, 50vw"
-                            quality={100}
-                            className="object-contain"
-                            style={{
-                              maskImage:
-                                "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
-                              WebkitMaskImage:
-                                "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
-                            }}
-                          />
-                        </div>
+                        <Image
+                          src={heroImage}
+                          alt={project.name}
+                          fill
+                          sizes="(min-width: 1400px) 1020px, 50vw"
+                          quality={100}
+                          className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                        />
                       </div>
                     </div>
                   ) : (

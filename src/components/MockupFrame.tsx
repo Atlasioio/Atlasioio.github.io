@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { ReactNode } from "react";
 
 type Props = {
   image?: string;
@@ -36,6 +37,14 @@ type Props = {
   // Override the next/image quality (1-100). Default 75. Bump to 95-100 for
   // mockups with small UI text that must stay legible.
   quality?: number;
+  // For chrome="paper": override the inner image-area background colour so it
+  // blends with the screenshot's own background (default #efeadc — paper grain
+  // tone). Set to e.g. "#ffffff" when the artwork inside has a white canvas.
+  paperInnerBg?: string;
+  // For chrome="laptop": render custom JSX inside the laptop screen instead
+  // of an image. Takes priority over `image` when both are supplied. Use for
+  // stylised mock UI that's authored as React, not exported as a PNG.
+  screenContent?: ReactNode;
 };
 
 export function MockupFrame({
@@ -58,6 +67,8 @@ export function MockupFrame({
   screenBg,
   chromeFill = false,
   quality,
+  paperInnerBg,
+  screenContent,
 }: Props) {
   const imageObjectClass =
     objectFit === "contain" ? "object-contain" : "object-cover object-top";
@@ -66,8 +77,8 @@ export function MockupFrame({
   const tintTo = intensity === "strong" ? "26%" : "12%";
   const tintBg = `linear-gradient(135deg, color-mix(in oklab, ${tint} ${tintFrom}, var(--bg)), color-mix(in oklab, ${tint} ${tintTo}, var(--bg)))`;
 
-  // No image → keep the existing colored placeholder treatment
-  if (!image) {
+  // No image (and no JSX content) → keep the existing colored placeholder treatment
+  if (!image && !screenContent) {
     const placeholderBg = `linear-gradient(135deg, color-mix(in oklab, ${tint} 38%, var(--bg)), color-mix(in oklab, ${tint} 60%, var(--bg)))`;
     return (
       <div
@@ -101,15 +112,16 @@ export function MockupFrame({
 
   if (chrome === "paper") {
     const tiltDeg = tilt ?? 0;
+    const innerBg = paperInnerBg ?? "#efeadc";
     return (
-      <div
-        className={`relative ${aspect} ${rounded} overflow-hidden border border-hairline`}
-        style={{ background: tintBg }}
-      >
+      <div className={`relative ${aspect} flex items-center justify-center`}>
         <div className="absolute inset-6 md:inset-10 flex items-center justify-center">
           <div
             className="relative h-full w-full"
-            style={{ transform: `rotate(${tiltDeg}deg)` }}
+            style={{
+              transform: `rotate(${tiltDeg}deg) translateZ(0)`,
+              willChange: "transform",
+            }}
           >
             {/* paper card */}
             <div
@@ -123,7 +135,7 @@ export function MockupFrame({
             >
               <div
                 className="relative h-full w-full overflow-hidden rounded-[2px]"
-                style={{ background: "#efeadc" }}
+                style={{ background: innerBg }}
               >
                 <Image
                   src={image}
@@ -184,16 +196,23 @@ export function MockupFrame({
             {/* Screen surface */}
             <div
               className="relative h-full w-full rounded-[5px] md:rounded-[8px] overflow-hidden"
-              style={{ background: screenBg ?? "var(--bg)" }}
+              style={{
+                background: screenBg ?? "var(--bg)",
+                containerType: "inline-size",
+              }}
             >
-              <Image
-                src={image}
-                alt={alt}
-                fill
-                sizes={sizes}
-                className={imageObjectClass}
-                priority={priority}
-              />
+              {screenContent ? (
+                screenContent
+              ) : image ? (
+                <Image
+                  src={image}
+                  alt={alt}
+                  fill
+                  sizes={sizes}
+                  className={imageObjectClass}
+                  priority={priority}
+                />
+              ) : null}
             </div>
           </div>
 
@@ -261,20 +280,14 @@ export function MockupFrame({
         className={`relative ${aspect} ${rounded} overflow-hidden border border-hairline flex items-center justify-center`}
         style={{ background: tintBg }}
       >
-        <div className="relative h-[84%] md:h-[90%] aspect-[1020/1928]">
+        <div className="relative h-[84%] md:h-[90%] aspect-[1020/1902] overflow-hidden">
           <Image
             src={image}
             alt={alt}
             fill
             sizes={sizes}
             quality={quality}
-            className={objectFit === "cover" ? "object-cover object-top" : "object-contain"}
-            style={{
-              maskImage:
-                "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
-              WebkitMaskImage:
-                "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
-            }}
+            className="object-cover object-top"
             priority={priority}
           />
         </div>

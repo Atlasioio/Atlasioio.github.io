@@ -12,8 +12,6 @@ import {
   ArrowsOut,
   Pause,
   Play,
-  SpeakerHigh,
-  SpeakerSlash,
 } from "@phosphor-icons/react";
 
 type Props = {
@@ -24,6 +22,14 @@ type Props = {
   aspect?: string;
   /** Tailwind rounded class. Default rounded-2xl. */
   rounded?: string;
+  /** When true, drop the bg-elevated card, border, and rounding. Use when
+   * the video is already its own visual surface (e.g. a phone screen recording
+   * with the device frame baked in) and should sit on the page bg. */
+  bare?: boolean;
+  /** Override the container background colour. Useful when the video has a
+   * specific bg (e.g. a white-canvas app recording) — set bg="#fff" to keep
+   * the surface visually continuous around any aspect-mismatch letterbox. */
+  bg?: string;
 };
 
 /**
@@ -41,11 +47,12 @@ export function CaseStudyVideo({
   caption,
   aspect = "aspect-[16/9]",
   rounded = "rounded-2xl",
+  bare = false,
+  bg,
 }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
   const [progress, setProgress] = useState(0);
   const [hovered, setHovered] = useState(false);
   const [seeking, setSeeking] = useState(false);
@@ -93,17 +100,6 @@ export function CaseStudyVideo({
       video.pause();
     }
   }, []);
-
-  const toggleMute = useCallback(
-    (e: React.MouseEvent) => {
-      e.stopPropagation();
-      const video = videoRef.current;
-      if (!video) return;
-      video.muted = !video.muted;
-      setIsMuted(video.muted);
-    },
-    [],
-  );
 
   // Track fullscreen state so the icon can flip and so we re-render when the
   // user exits via ESC.
@@ -165,7 +161,10 @@ export function CaseStudyVideo({
 
   const videoBlock = (
     <div
-      className={`relative ${aspect} ${rounded} overflow-hidden border border-hairline bg-bg-elevated group cursor-pointer`}
+      className={`relative ${aspect} ${rounded} overflow-hidden group cursor-pointer ${
+        bare ? "" : bg ? "border border-hairline" : "border border-hairline bg-bg-elevated"
+      }`}
+      style={bg ? { background: bg } : undefined}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={togglePlay}
@@ -179,7 +178,7 @@ export function CaseStudyVideo({
           muted
           playsInline
           preload="metadata"
-          className="block w-full h-full object-cover"
+          className="block w-full h-full object-contain"
         />
 
         {/* Gradient veil — only when controls are visible */}
@@ -257,19 +256,6 @@ export function CaseStudyVideo({
             )}
           </button>
 
-          {/* Mute toggle */}
-          <button
-            type="button"
-            onClick={toggleMute}
-            className="flex size-7 items-center justify-center rounded-full bg-white/95 text-fg shadow-[0_2px_10px_rgba(0,0,0,0.45)] ring-1 ring-black/10 hover:scale-105 transition-transform"
-            aria-label={isMuted ? "Unmute" : "Mute"}
-          >
-            {isMuted ? (
-              <SpeakerSlash weight="fill" className="size-3" />
-            ) : (
-              <SpeakerHigh weight="fill" className="size-3" />
-            )}
-          </button>
         </div>
     </div>
   );

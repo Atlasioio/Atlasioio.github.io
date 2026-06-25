@@ -238,7 +238,7 @@ export function Header() {
                           <motion.span
                             layoutId="nav-active-dot"
                             aria-hidden
-                            className="absolute left-1/2 -bottom-3 size-1 -translate-x-1/2 rounded-full bg-accent"
+                            className="absolute left-1/2 -bottom-3 size-1.5 -translate-x-1/2 rounded-full bg-accent"
                             transition={{ type: "spring", stiffness: 420, damping: 32 }}
                           />
                         )}

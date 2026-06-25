@@ -13,6 +13,10 @@ export type Shot =
       // "contain" letterboxes the image instead of cropping — use when the screenshot
       // aspect ratio doesn't match the frame aspect (e.g. tall pages in 16/9 frames).
       objectFit?: "cover" | "contain";
+      // Override the shot container background (CSS color). For videos: replaces
+      // the bg-bg-elevated fallback that shows during load and around any
+      // aspect-mismatch letterbox.
+      bg?: string;
     };
 
 export type CaseStudy = {
@@ -86,11 +90,27 @@ export type CaseStudy = {
       hook?: string;
       body: string;
       image?: string;
+      // Alternative to `image`: an autoplaying muted video.
+      video?: string;
+      // Override the artefact aspect ratio (default aspect-[4/3] for images,
+      // aspect-[16/9] for videos).
+      mediaAspect?: string;
+      // For chrome="paper" images: override the inner paper bg colour to match
+      // the screenshot's own background so they blend instead of seam.
+      paperInnerBg?: string;
+      // Override the paper-chrome tilt (default cycles -1.4 / 0.9 / -0.6 by
+      // index). Set 0 for images with fine detail (small text, 1px borders)
+      // where the rotation-induced anti-aliasing softens the pixels.
+      tilt?: number;
       // Alternative to `image`: a stylized paper note rendered with proper typography.
       note?: {
         title: string;
         items: (string | { text: string; sub?: string[] })[];
       };
+      // When true, render this block at the wider section width with a
+      // larger heading. Use sparingly — for a "why this big decision" block
+      // that earns extra weight.
+      prominent?: boolean;
     }[];
   };
 
@@ -223,6 +243,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         video: "/case-studies/jobquest/swapping-between.mp4",
         span: "col-span-12",
         aspect: "aspect-[19/10]",
+        bg: "#ffffff",
       },
       {
         caption: "Grid — sortable, bulk-selectable",
@@ -385,6 +406,7 @@ export const caseStudies: Record<string, CaseStudy> = {
     shotChrome: "none",
     highlightsBare: true,
     heroImage: "/case-studies/ecotrip/explore.png",
+    heroObjectFit: "contain",
     summary:
       "A bee-themed travel companion that nudges sustainable choices through collective behaviour cues, not guilt.",
     meta: {
@@ -403,25 +425,37 @@ export const caseStudies: Record<string, CaseStudy> = {
       body: "Travel apps that push 'green' choices either moralise or feel like a sticker. I wanted a different tone — collective progress over individual sacrifice. Bees became the metaphor: a hive working together, small contributions visible at scale. This was a concept piece — the brief was a credible model, two personas, and an identity that didn't fall into the eco-green or SaaS-clean defaults. Production UI fidelity was deliberately out of scope.",
     },
     approach: {
-      pullQuote: "Reward without moralising.",
       blocks: [
         {
           heading: "Designing for the activist.",
           hook: "Jane optimises every choice for footprint.",
           body: "Jane — Edinburgh, lower budget, climate activist. Her mindset: reduce carbon at every step, even at the expense of comfort or the trip itself. Her journey told me where friction needed to live (on the unsustainable options) and where it had to disappear (on the sustainable ones).",
           image: "/case-studies/ecotrip/process-user-journey1.png",
+          paperInnerBg: "#FDF9ED",
         },
         {
           heading: "Designing for the casual.",
           hook: "John wants peripheral awareness, not a lecture.",
           body: "John — 43, bigger trips abroad, integrated payments, minimal customisation. He'll reduce his footprint where it doesn't take too much from the journey, and is willing to pay more rather than sacrifice convenience. His journey set the ceiling on friction: surface the green option, never block the path.",
           image: "/case-studies/ecotrip/process-user-journey2.png",
+          paperInnerBg: "#FDF9ED",
         },
         {
-          heading: "Neither SaaS-plain nor eco-green.",
-          hook: "The visual category was a trap.",
-          body: "Travel apps default to SaaS-clean white and blue. Environmental apps default to green — virtue signalled at the palette level. Both felt off. The bees came out of that: warm, collective, focused on the hive's progress rather than any one person's halo. Honey gold and earthy tones replaced the predictable green; a rounded display family replaced corporate sans.",
+          heading: "A system that earns the metaphor.",
+          hook: "Off-the-shelf eco-green wasn't an option.",
+          body: "Travel apps default to SaaS-clean white and blue. Environmental apps default to green — virtue signalled at the palette level. Both felt off. Honey gold and earthy tones replaced the predictable green; a rounded display family replaced corporate sans. The hexagon shows up subtly across the system — badges, rewards, completion states — a quiet repeating motif that ties the identity to the metaphor without ever lecturing.",
           image: "/case-studies/ecotrip/components.png",
+          paperInnerBg: "#E7E1D3",
+          mediaAspect: "aspect-[17/10]",
+          tilt: 0,
+        },
+        {
+          heading: "Why bees.",
+          hook: "Collective progress, backed by a 5% pledge.",
+          body: "The bees came out of all of the above: warm, collective, focused on the hive's progress rather than any one person's halo. Onboarding sets the posture — you join a hive, not a leaderboard; impact is shared, not scored. And it isn't just metaphor: EcoTrip commits 5% of every trip's revenue to bee conservation, and users can top that up — anything they add goes 100% to the foundation. The metaphor pays back the species it borrows from.",
+          video: "/case-studies/ecotrip/why-bees.webm",
+          mediaAspect: "aspect-[1148/1456]",
+          prominent: true,
         },
       ],
     },
@@ -451,6 +485,12 @@ export const caseStudies: Record<string, CaseStudy> = {
         span: "col-span-12 md:col-span-6",
       },
       {
+        caption: "Community trip — tap into a posted trip to see the full breakdown",
+        image: "/case-studies/ecotrip/community-trip.png",
+        aspect: "aspect-[3/4]",
+        span: "col-span-12 md:col-span-6",
+      },
+      {
         caption: "Create — destination, transport, stay, activities",
         image: "/case-studies/ecotrip/create.png",
         aspect: "aspect-[3/4]",
@@ -470,7 +510,7 @@ export const caseStudies: Record<string, CaseStudy> = {
         { value: "3", label: "Concept directions tested" },
       ],
       reflection:
-        "The bee theme is strong but might alienate users who don't connect with it — I'd test a more neutral identity in parallel to compare adoption. The screens stop at concept fidelity too: a next pass would tighten interaction states, motion, and the visual hierarchy on the denser flows like Create and Profile.",
+        "The screens stop at concept fidelity — a next pass would tighten interaction states, motion, and the visual hierarchy on the denser flows like Create and Profile. The 5% pledge mechanic deserves a real working prototype too — testing how prominent to surface it during checkout without making the contribution feel transactional.",
     },
   },
 

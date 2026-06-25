@@ -10,6 +10,7 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { CaseStudyVideo } from "@/components/CaseStudyVideo";
 import { ImageZoomHover } from "@/components/ImageZoomHover";
+import { JobquestLogin } from "@/components/JobquestLogin";
 import { MockupFrame } from "@/components/MockupFrame";
 import { PaperNote } from "@/components/PaperNote";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -126,6 +127,20 @@ export default async function CaseStudyPage({ params }: Params) {
       <ScrollReveal className="mx-auto max-w-full md:max-w-[min(76vw,1400px)] w-full px-5 md:px-8 pb-10 md:pb-12">
         {project.slug === "ecotrip" ? (
           <EcotripHero color={project.color} projectName={project.name} />
+        ) : project.slug === "jobquest" ? (
+          <MockupFrame
+            screenContent={<JobquestLogin />}
+            alt={`${project.name} — hero`}
+            aspect={study?.heroAspect ?? "aspect-[16/9]"}
+            tint={project.color}
+            chrome="laptop"
+            intensity="strong"
+            fallbackLabel={`Hero mockup placeholder · ${project.name}`}
+            screenAspect={study?.laptopScreenAspect}
+            screenBg={study?.laptopScreenBg}
+            innerPadding="inset-8 md:inset-14"
+            priority
+          />
         ) : (
           <Zoomable src={study?.heroImage} alt={`${project.name} — hero`} accentColor={project.color}>
             <MockupFrame
@@ -367,20 +382,25 @@ function ApproachSection({
       alt: `${project.name} — ${b.heading}`,
     }));
 
+  const hasProminent = approach.blocks.some((b) => b.prominent);
   return (
-    <ScrollReveal
+    <section
       id="approach"
-      className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 pb-20 md:pb-28 scroll-mt-24"
+      className="pb-20 md:pb-28 scroll-mt-24"
     >
-      <SectionHeader label="The approach" color={color} />
-      <ul className="flex flex-col gap-12 md:gap-16">
-        {approach.blocks.map((block, i) => {
-          const hasArtefact = !!block.image || !!block.note;
-          const tilt = [-1.4, 0.9, -0.6][i % 3];
-          const galleryIndex = block.image
-            ? gallery.findIndex((g) => g.src === block.image)
-            : -1;
-          return (
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8">
+        <SectionHeader label="The approach" color={color} />
+      </ScrollReveal>
+      <ScrollReveal className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8">
+        <ul className="flex flex-col gap-12 md:gap-16">
+          {approach.blocks.map((block, i) => {
+            if (block.prominent) return null;
+            const hasArtefact = !!block.image || !!block.note;
+            const tilt = block.tilt ?? [-1.4, 0.9, -0.6][i % 3];
+            const galleryIndex = block.image
+              ? gallery.findIndex((g) => g.src === block.image)
+              : -1;
+            return (
             <li
               key={block.heading}
               className="grid grid-cols-12 gap-x-6 md:gap-x-10 gap-y-5 items-start"
@@ -434,7 +454,7 @@ function ApproachSection({
                       <MockupFrame
                         image={block.image}
                         alt={`${project.name} — ${block.heading}`}
-                        aspect="aspect-[4/3]"
+                        aspect={block.mediaAspect ?? "aspect-[4/3]"}
                         tint={color}
                         chrome="paper"
                         intensity="subtle"
@@ -442,6 +462,7 @@ function ApproachSection({
                         tilt={tilt}
                         fallbackLabel={`Process artefact · ${project.name}`}
                         sizes="(min-width: 1200px) 700px, 100vw"
+                        paperInnerBg={block.paperInnerBg}
                       />
                     </Zoomable>
                   )}
@@ -449,18 +470,108 @@ function ApproachSection({
               )}
             </li>
           );
-        })}
-      </ul>
+          })}
+        </ul>
+      </ScrollReveal>
+
+      {hasProminent && (
+        <ScrollReveal className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 mt-12 md:mt-16">
+          <ul className="flex flex-col gap-12 md:gap-16">
+            {approach.blocks.map((block, i) => {
+              if (!block.prominent) return null;
+              const tilt = [-1.4, 0.9, -0.6][i % 3];
+              const galleryIndex = block.image
+                ? gallery.findIndex((g) => g.src === block.image)
+                : -1;
+              const hasMedia =
+                !!block.video || !!block.image || !!block.note;
+              const mediaAspect =
+                block.mediaAspect ?? (block.video ? "aspect-[16/9]" : "aspect-[4/3]");
+              return (
+                <li
+                  key={block.heading}
+                  className="grid grid-cols-12 gap-x-6 md:gap-x-10 gap-y-8 items-start"
+                >
+                  <div className="col-span-12 md:col-span-7">
+                    <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-fg-muted mb-4 flex items-center gap-2">
+                      <span
+                        className="size-1.5 rounded-full shrink-0"
+                        style={{ background: color }}
+                        aria-hidden
+                      />
+                      Step {String(i + 1).padStart(2, "0")}
+                    </p>
+                    <h3 className="display-tight text-4xl md:text-6xl leading-[0.95] mb-5">
+                      {block.heading.replace(/\.$/, "")}
+                      <span style={{ color }}>.</span>
+                    </h3>
+                    {block.hook && (
+                      <p className="text-lg md:text-xl mb-5 leading-snug text-fg max-w-[34ch]">
+                        {block.hook}
+                      </p>
+                    )}
+                    <p className="text-[15px] md:text-base text-fg-muted leading-relaxed max-w-[52ch]">
+                      {block.body}
+                    </p>
+                  </div>
+                  {hasMedia && (
+                    <div className="col-span-12 md:col-span-5">
+                      {block.video ? (
+                        <CaseStudyVideo
+                          src={block.video}
+                          aspect={mediaAspect}
+                          bare
+                        />
+                      ) : block.note ? (
+                        <PaperNote
+                          title={block.note.title}
+                          items={block.note.items}
+                          tint={color}
+                          tilt={tilt}
+                        />
+                      ) : (
+                        <Zoomable
+                          src={block.image}
+                          alt={`${project.name} — ${block.heading}`}
+                          accentColor={color}
+                          gallery={gallery}
+                          index={galleryIndex >= 0 ? galleryIndex : 0}
+                        >
+                          <MockupFrame
+                            image={block.image}
+                            alt={`${project.name} — ${block.heading}`}
+                            aspect={mediaAspect}
+                            tint={color}
+                            chrome="paper"
+                            intensity="subtle"
+                            rounded="rounded-2xl"
+                            tilt={tilt}
+                            fallbackLabel={`Process artefact · ${project.name}`}
+                            sizes="(min-width: 1200px) 500px, 100vw"
+                            paperInnerBg={block.paperInnerBg}
+                          />
+                        </Zoomable>
+                      )}
+                    </div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </ScrollReveal>
+      )}
 
       {approach.pullQuote && (
-        <blockquote className="mt-20 md:mt-24 max-w-[40ch]">
-          <p className="display-tight text-3xl md:text-5xl leading-[1.05]">
-            &ldquo;{approach.pullQuote}
-            <span style={{ color }}>&rdquo;</span>
-          </p>
-        </blockquote>
+        <ScrollReveal className="mx-auto max-w-full md:max-w-[min(67vw,1200px)] w-full px-5 md:px-8 mt-20 md:mt-24">
+          <blockquote className="max-w-[40ch]">
+            <p className="display-tight text-3xl md:text-5xl leading-[1.05]">
+              &ldquo;{approach.pullQuote}
+              <span style={{ color }}>&rdquo;</span>
+            </p>
+          </blockquote>
+        </ScrollReveal>
       )}
-    </ScrollReveal>
+    </section>
   );
 }
 
@@ -514,6 +625,7 @@ function SolutionSection({
                   src={data.video}
                   aspect={aspect}
                   rounded="rounded-2xl"
+                  bg={data.bg}
                 />
               ) : (
                 <Zoomable
@@ -693,6 +805,7 @@ function HighlightsSection({
                   src={data.video}
                   aspect={aspect}
                   rounded="rounded-2xl"
+                  bg={data.bg}
                 />
               ) : (
                 <Zoomable
@@ -703,20 +816,14 @@ function HighlightsSection({
                   accentColor={color}
                 >
                   {bare && data.image ? (
-                    <div className="relative aspect-[1020/1928] flex items-center justify-center">
+                    <div className="relative aspect-[1020/1902] overflow-hidden">
                       <Image
                         src={data.image}
                         alt={`${project.name} — ${data.caption}`}
                         fill
                         sizes="(min-width: 1400px) 320px, 25vw"
                         quality={100}
-                        className="object-contain"
-                        style={{
-                          maskImage:
-                            "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
-                          WebkitMaskImage:
-                            "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
-                        }}
+                        className="object-cover object-top"
                       />
                     </div>
                   ) : (
@@ -1006,8 +1113,8 @@ function EcotripHero({
       }}
     >
       <div
-        className="relative h-[82%] md:h-[88%] aspect-[1020/1928] drop-shadow-[0_22px_44px_rgba(0,0,0,0.18)]"
-        style={{ transform: "rotate(-3deg)" }}
+        className="relative h-[82%] md:h-[88%] aspect-[1020/1902] overflow-hidden"
+        style={{ transform: "rotate(-3deg) translateZ(0)", willChange: "transform" }}
       >
         <Image
           src="/case-studies/ecotrip/onboarding.png"
@@ -1015,19 +1122,13 @@ function EcotripHero({
           fill
           sizes="(min-width: 1400px) 1020px, 50vw"
           quality={100}
-          className="object-contain"
-          style={{
-            maskImage:
-              "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
-            WebkitMaskImage:
-              "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
-          }}
+          className="object-cover object-top"
           priority
         />
       </div>
       <div
-        className="relative h-[88%] md:h-[94%] aspect-[1020/1928] drop-shadow-[0_22px_44px_rgba(0,0,0,0.18)]"
-        style={{ transform: "rotate(3deg)" }}
+        className="relative h-[88%] md:h-[94%] aspect-[1020/1902] overflow-hidden"
+        style={{ transform: "rotate(3deg) translateZ(0)", willChange: "transform" }}
       >
         <Image
           src="/case-studies/ecotrip/explore.png"
@@ -1035,13 +1136,7 @@ function EcotripHero({
           fill
           sizes="(min-width: 1400px) 1020px, 50vw"
           quality={100}
-          className="object-contain"
-          style={{
-            maskImage:
-              "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
-            WebkitMaskImage:
-              "linear-gradient(to bottom, black 0%, black 98%, transparent 100%)",
-          }}
+          className="object-cover object-top"
           priority
         />
       </div>
