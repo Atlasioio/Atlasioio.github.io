@@ -78,19 +78,26 @@
   justify-content: center;
   gap: clamp(28px, 4vw, 48px);
 }
-/* Hand-scribbled closing note — beside the headline (top-right), so it tracks
-   the headline at every screen height and never collides with the fixed nav. */
+/* Hand-scribbled closing note + a little self-portrait — beside the headline
+   (top-right), so it tracks the headline at every screen height and never
+   collides with the fixed nav. */
 .headWrap { position: relative; }
-.scribble {
+.cornerNote {
   position: absolute;
   top: 0.15em;
   right: clamp(4px, 4vw, 64px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(14px, 1.6vw, 22px);
+  pointer-events: none;
+}
+.scribble {
   transform: rotate(-6deg);
   font-family: var(--font-hand);
   font-size: clamp(30px, 3.2vw, 48px);
   line-height: 0.9;
   color: rgba(246, 244, 241, 0.92);
-  pointer-events: none;
 }
 .scribbleLine {
   display: block;
@@ -98,8 +105,18 @@
   margin: 3px auto 0;
   color: rgba(246, 244, 241, 0.55);
 }
+/* Circular line-art avatar — the white fill pops against the blue card; the
+   square's black corners are clipped away by the radius. */
+.avatar {
+  width: clamp(80px, 9vw, 116px);
+  height: clamp(80px, 9vw, 116px);
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff;
+  box-shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.3);
+}
 @media (max-width: 900px) {
-  .scribble { display: none; }
+  .cornerNote { display: none; }
 }
 .head {
   /* flex column so the line-mask clip-room margins don't collapse */

@@ -101,11 +101,14 @@ export function Footer() {
                 Let's <em>talk.</em>
               </LineMask>
             </h2>
-            <div className={styles.scribble} aria-hidden="true">
-              talk soon!
-              <svg className={styles.scribbleLine} viewBox="0 0 180 16" fill="none">
-                <path d="M3 10 C 36 3, 64 15, 96 7 S 150 4, 177 11" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
-              </svg>
+            <div className={styles.cornerNote} aria-hidden="true">
+              <div className={styles.scribble}>
+                talk soon!
+                <svg className={styles.scribbleLine} viewBox="0 0 180 16" fill="none">
+                  <path d="M3 10 C 36 3, 64 15, 96 7 S 150 4, 177 11" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
+                </svg>
+              </div>
+              <img className={styles.avatar} src="/images/profile-sketch.webp" alt="" width={112} height={112} />
             </div>
           </div>
           <Reveal className={styles.actions} i={2}>
