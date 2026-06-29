@@ -1,0 +1,43 @@
+.cred {}
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding-block: clamp(54px, 6vw, 90px);
+}
+.line {
+  font-family: var(--font-display);
+  font-weight: 580;
+  letter-spacing: -0.025em;
+  font-size: var(--fs-h3);
+  line-height: 1.15;
+  max-width: 22ch;
+}
+.line strong { font-weight: 720; }
+.mute { color: var(--gray); }
+
+.badges {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--hairline-2);
+  border-radius: 999px;
+  padding: 11px 18px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--gray-strong);
+  transition: border-color 0.3s, color 0.3s;
+}
+.badge:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}

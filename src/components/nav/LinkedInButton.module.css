@@ -1,0 +1,24 @@
+/* A perfect circle, exactly the height of the sibling controls (--ctrl-h),
+   mirroring the hamburger so the cluster reads as one set. */
+.btn {
+  width: var(--ctrl-h);
+  height: var(--ctrl-h);
+  flex-shrink: 0;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--hero-fg);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s, background 0.3s var(--ease-out);
+}
+.dark { color: var(--ink); }
+
+/* Fill on hover, icon flips to a contrasting tone. */
+.btn:hover { background: var(--hero-fg); color: var(--accent); }
+.dark:hover { background: var(--ink); color: var(--bg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: color 0.3s, border-color 0.3s; }
+}

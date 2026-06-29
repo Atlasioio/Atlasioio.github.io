@@ -1,0 +1,233 @@
+/* Reuses the inquiry modal's overlay/dialog/close (imported as `modal`); these
+   rules style the service-specific content inside it. */
+.dialog {
+  color: var(--ink);
+  /* A touch less top/bottom breathing room than the inquiry modal so the
+     content (and the CTA) fit without scrolling. */
+  padding-top: clamp(26px, 3.2vw, 40px);
+  padding-bottom: clamp(26px, 3.2vw, 42px);
+  /* Constant height across services (matches the max-height cap) so stepping
+     between them doesn't resize the dialog. Flex column pins the header to the
+     top and the CTA to the bottom; the varying whitespace sits between them. */
+  min-height: min(900px, 90vh);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header row: service eyebrow on the left, gallery controls on the right. */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: clamp(14px, 2vw, 22px);
+}
+.eyebrow { margin-bottom: 0; }
+
+/* Top-right: faint Esc hint + close. */
+.closeRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.escHint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray);
+  opacity: 0.65;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Bottom action bar: prev · counter · next, beside the CTA. */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ctrl {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline-2);
+  background: transparent;
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: border-color 0.25s, color 0.25s, transform 0.3s var(--ease-out);
+}
+.ctrl:hover { border-color: var(--accent); color: var(--accent); }
+.closeCtrl { margin-left: 6px; }
+.closeCtrl:hover { border-color: var(--ink); color: var(--ink); transform: rotate(90deg); }
+.counter {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--gray-strong);
+  font-variant-numeric: tabular-nums;
+  min-width: 58px;
+  text-align: center;
+  padding: 0 4px;
+}
+
+/* Keyed content re-animates on each step; direction set by the nav. The bottom
+   margin guarantees breathing room above the pinned CTA. */
+.content { margin-bottom: clamp(14px, 2vw, 22px); }
+.fromRight { animation: smSlideRight 0.45s var(--ease-out); }
+.fromLeft { animation: smSlideLeft 0.45s var(--ease-out); }
+@keyframes smSlideRight {
+  from { opacity: 0; transform: translateX(26px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes smSlideLeft {
+  from { opacity: 0; transform: translateX(-26px); }
+  to { opacity: 1; transform: none; }
+}
+
+.title {
+  margin-top: 2px;
+  font-family: var(--font-display);
+  font-weight: 680;
+  letter-spacing: -0.03em;
+  font-size: clamp(28px, 3.6vw, 44px);
+  line-height: 1.02;
+  color: var(--ink);
+  max-width: 18ch;
+}
+.lead {
+  margin-top: 14px;
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  color: var(--gray-strong);
+  max-width: 50ch;
+}
+
+.body {
+  margin-top: clamp(20px, 2.4vw, 30px);
+  display: grid;
+  grid-template-columns: 0.82fr 1.18fr;
+  gap: clamp(22px, 2.8vw, 40px);
+  align-items: start;
+}
+
+/* Illustration panel — the looping service art as the visual anchor. Capped so
+   it never drives the dialog taller than it needs to be. */
+.visual {
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  background: var(--bg-deep);
+  aspect-ratio: 4 / 5;
+  max-height: clamp(240px, 32vh, 320px);
+}
+
+.cols {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 2vw, 26px);
+}
+.blockTitle {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-strong);
+  margin-bottom: 12px;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: var(--ink);
+  font-size: var(--fs-sm);
+  line-height: 1.35;
+}
+.tick {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+.tick svg { width: 15px; height: 15px; }
+
+.approach {
+  color: var(--gray-strong);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  max-width: 44ch;
+}
+.tags {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tags span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--gray-strong);
+  padding: 5px 10px;
+  border: 1px solid var(--hairline-2);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.foot {
+  /* Pinned to the bottom of the constant-height dialog — an action bar with the
+     CTA on the left and the gallery nav on the right. */
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: 500;
+  padding: 15px 28px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+  border: 1px solid var(--ink);
+  cursor: pointer;
+  transition: background 0.3s var(--ease), color 0.3s, gap 0.3s, border-color 0.3s;
+}
+.cta:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  gap: 14px;
+}
+.arr { transition: transform 0.3s var(--ease-out); }
+.cta:hover .arr { transform: translateX(3px); }
+
+@media (max-width: 720px) {
+  .body { grid-template-columns: 1fr; }
+  .visual { aspect-ratio: 16 / 10; max-height: 240px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fromRight,
+  .fromLeft { animation: none; }
+  .ctrl:hover { transform: none; }
+  .closeCtrl:hover { transform: none; }
+}

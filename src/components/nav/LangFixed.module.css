@@ -1,0 +1,28 @@
+.wrap {
+  position: fixed;
+  /* Same right inset as the "Start a project" button in the fixed nav. */
+  right: calc(var(--card-pad) + var(--nav-inset));
+  bottom: calc(var(--card-pad) + var(--nav-inset));
+  z-index: 850;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition:
+    opacity 0.4s var(--ease-out),
+    transform 0.4s var(--ease-out),
+    visibility 0s linear 0s;
+}
+.hidden {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  visibility: hidden;
+  transition:
+    opacity 0.4s var(--ease-out),
+    transform 0.4s var(--ease-out),
+    visibility 0s linear 0.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrap { transition: none; }
+}

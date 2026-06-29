@@ -1,0 +1,30 @@
+.navfix {
+  position: fixed;
+  top: var(--card-pad);
+  left: var(--card-pad);
+  right: var(--card-pad);
+  z-index: 1000;
+  pointer-events: none;
+}
+.inner {
+  /* Matches the top bar: a tighter top inset, wider sides. */
+  padding: var(--nav-inset-top) var(--nav-inset) var(--nav-inset);
+  display: flex;
+  justify-content: flex-end;
+}
+.right {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  pointer-events: auto;
+}
+
+/* Pin the button to the shared control height so it matches the hamburger
+   circle exactly, and keep it at its natural (fit-content) width — never
+   shrinking or wrapping to a second line. */
+.ctrlBtn {
+  height: var(--ctrl-h);
+  padding-block: 0;
+  flex-shrink: 0;
+  white-space: nowrap;
+}

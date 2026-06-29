@@ -1,0 +1,68 @@
+/* A perfect circle, exactly the height of the sibling "Start a project" button
+   (both derive from --ctrl-h). */
+.hamburger {
+  position: relative;
+  width: var(--ctrl-h);
+  height: var(--ctrl-h);
+  flex-shrink: 0;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  color: var(--hero-fg);
+  display: grid;
+  place-items: center;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+/* Bars are positioned relative to the centre so they stay centred at any size. */
+.hamburger span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 2px;
+  margin: -1px 0 0 -10px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.45s var(--ease-out), opacity 0.3s, background 0.3s;
+}
+/* Closed default: two bars (the middle one is hidden until hover). */
+.hamburger span:nth-child(1) { transform: translateY(-3.5px); }
+.hamburger span:nth-child(2) {
+  transform: scaleX(0.35);
+  transform-origin: left;
+  opacity: 0;
+}
+.hamburger span:nth-child(3) { transform: translateY(3.5px); }
+
+/* Hover / keyboard focus (closed): the two bars spread and a third grows in. */
+.hamburger:not(.open):hover span:nth-child(1),
+.hamburger:not(.open):focus-visible span:nth-child(1) { transform: translateY(-6px); }
+.hamburger:not(.open):hover span:nth-child(2),
+.hamburger:not(.open):focus-visible span:nth-child(2) {
+  transform: none;
+  opacity: 1;
+}
+.hamburger:not(.open):hover span:nth-child(3),
+.hamburger:not(.open):focus-visible span:nth-child(3) { transform: translateY(6px); }
+
+/* Dark outline + bars once scrolled past the hero. */
+.dark { color: var(--ink); }
+
+/* Morph to X — wins over hover/dark so the X reads on the dark menu panel. */
+.open { color: var(--hero-fg); }
+.open span:nth-child(1) { transform: rotate(45deg); }
+.open span:nth-child(2) { opacity: 0; }
+.open span:nth-child(3) { transform: rotate(-45deg); }
+
+/* Hovering the open X folds the two diagonals flat into a single minus (–). */
+.open:hover span:nth-child(1),
+.open:focus-visible span:nth-child(1),
+.open:hover span:nth-child(3),
+.open:focus-visible span:nth-child(3) { transform: rotate(0deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hamburger span { transition: opacity 0.3s, background 0.3s; }
+}

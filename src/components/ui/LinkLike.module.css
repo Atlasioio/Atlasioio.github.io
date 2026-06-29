@@ -1,0 +1,68 @@
+.linklike {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: var(--fs-body);
+  color: var(--ink);
+  position: relative;
+}
+
+/* The underline stays put as a persistent affordance; on hover it does a quick
+   sweep-through (retract to the right, redraw from the left) and ends underlined. */
+.u { position: relative; }
+.u::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 1px;
+  width: 100%;
+  background: var(--ink);
+  transform-origin: left;
+  transform: scaleX(1);
+}
+.linklike:hover .u::after {
+  animation: llSweep 0.62s var(--ease-out);
+}
+@keyframes llSweep {
+  0% { transform: scaleX(1); transform-origin: right; }
+  44% { transform: scaleX(0); transform-origin: right; }
+  46% { transform: scaleX(0); transform-origin: left; }
+  100% { transform: scaleX(1); transform-origin: left; }
+}
+
+.dotmark {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: transform 0.4s var(--ease-out);
+}
+.linklike:hover .dotmark { transform: scale(1.3); }
+
+/* Arrow nudges in *after* the underline has refreshed — echoes the primary
+   buttons' "go" affordance. Reserved width keeps the label from shifting. */
+.arr {
+  display: inline-block;
+  width: 1.1em;
+  margin-left: -2px;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+}
+.linklike:hover .arr {
+  opacity: 1;
+  transform: translateX(2px);
+  transition-delay: 0.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .linklike:hover .u::after { animation: none; }
+  .arr,
+  .linklike:hover .arr { transition: none; transition-delay: 0s; }
+}
+
+/* On the accent-blue hero card the text, underline + dot are light. */
+.onDark { color: var(--hero-fg); }
+.onDark .u::after { background: var(--hero-fg); }
+.onDark .dotmark { background: var(--hero-fg); }

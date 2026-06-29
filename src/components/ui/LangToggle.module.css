@@ -1,0 +1,34 @@
+.lang {
+  display: inline-flex;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--hairline-2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.lang button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  padding: 5px 11px;
+  cursor: pointer;
+  transition: color 0.25s, background 0.25s;
+}
+
+/* Dark controls — over the off-white page (scrolled past hero). */
+.onLight {
+  color: var(--gray);
+  border-color: var(--hairline-2);
+}
+.onLight button { color: var(--gray); }
+.onLight button[aria-pressed='true'] { background: var(--ink); color: var(--bg); }
+
+/* Light controls — over the dark hero card / open menu / footer. */
+.onDark {
+  border-color: rgba(255, 255, 255, 0.28);
+}
+.onDark button { color: rgba(246, 244, 241, 0.7); }
+.onDark button[aria-pressed='true'] { background: var(--hero-fg); color: var(--dark-bg); }

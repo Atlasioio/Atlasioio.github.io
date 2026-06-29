@@ -1,0 +1,75 @@
+.nav {
+  position: absolute;
+  top: var(--card-pad);
+  left: var(--card-pad);
+  right: var(--card-pad);
+  z-index: 800;
+}
+.inner {
+  /* Uniform inset from the hero-card edges so the wordmark + controls sit
+     evenly in the rounded corners (the bar itself is already inset by
+     --card-pad to the card edge). */
+  padding: var(--nav-inset-top) var(--nav-inset) var(--nav-inset);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(20px, 3vw, 44px);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(34px, 2.9vw, 44px);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  display: inline-flex;
+  align-items: baseline;
+  color: var(--hero-fg);
+  /* The glyphs sit low in their line box; lift slightly so the wordmark is
+     optically centred on the row, matching the smaller links. */
+  transform: translateY(-0.08em);
+}
+.dot {
+  display: inline-block;
+  width: 0.17em;
+  height: 0.17em;
+  margin-left: 0.07em;
+  border-radius: 0.05em;
+  /* Ink, not accent — the blue dot vanishes against the blue hero behind it. */
+  background: var(--ink);
+  vertical-align: baseline;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2.6vw, 40px);
+  list-style: none;
+}
+.links a {
+  font-size: clamp(17px, 1.4vw, 20px);
+  color: var(--hero-fg);
+  position: relative;
+  padding-block: 4px;
+  /* Heavier on hover via the glyph stroke — thickens without shifting layout. */
+  transition: -webkit-text-stroke-width 0.25s var(--ease-out);
+  -webkit-text-stroke: 0.01px transparent;
+}
+.links a:hover {
+  -webkit-text-stroke: 0.5px currentColor;
+}
+
+/* Ghost: reserves the fixed-controls width so the links centre exactly. */
+.ghost {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (max-width: 720px) {
+  .links { display: none; }
+}

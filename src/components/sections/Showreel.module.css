@@ -1,0 +1,186 @@
+.reel {
+  position: absolute;
+  z-index: 2;
+  top: clamp(96px, 12vh, 150px);
+  right: var(--gutter);
+  width: clamp(180px, 21vw, 300px);
+  aspect-ratio: 4 / 5;
+  border-radius: clamp(12px, 1.4vw, 20px);
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  background: var(--bg-deep);
+  will-change: transform;
+  -webkit-user-select: none;
+  user-select: none;
+}
+/* Our own composition fills the whole tile (and fullscreen). Non-interactive so
+   the drag handle + controls above it receive the pointer. */
+.video {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ---- Controls (revealed on hover) --------------------------------------- */
+.controls {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease-out);
+}
+.reel:hover .controls,
+.reel:focus-within .controls {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dragBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  cursor: grab;
+  touch-action: none;
+  background: linear-gradient(rgba(14, 14, 12, 0.45), transparent);
+}
+.dragBar:active { cursor: grabbing; }
+.grip {
+  width: 26px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.close,
+.play,
+.fs {
+  position: absolute;
+  border: none;
+  border-radius: 50%;
+  background: rgba(14, 14, 12, 0.55);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s var(--ease-out);
+}
+.close:hover,
+.play:hover,
+.fs:hover { background: var(--accent); }
+
+.close {
+  top: 6px;
+  right: 6px;
+  width: 28px;
+  height: 28px;
+}
+.play {
+  top: 50%;
+  left: 50%;
+  width: 52px;
+  height: 52px;
+  transform: translate(-50%, -50%);
+}
+.play:hover { transform: translate(-50%, -50%) scale(1.06); }
+.fs {
+  bottom: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+}
+
+.meta {
+  position: absolute;
+  left: 12px;
+  bottom: 11px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: #fff;
+  text-transform: uppercase;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+.rec {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.sound {
+  display: inline-flex;
+  align-items: center;
+  opacity: 0.7;
+  transition: color 0.25s, opacity 0.25s;
+}
+.sound[data-on='true'] {
+  color: var(--accent);
+  opacity: 1;
+}
+.rec i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: recPulse 2.4s infinite;
+}
+@keyframes recPulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); }
+  70% { box-shadow: 0 0 0 9px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+/* ---- Collapsed state: circular video button ----------------------------- */
+.collapsed {
+  position: absolute;
+  z-index: 2;
+  top: clamp(96px, 12vh, 150px);
+  right: var(--gutter);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.3s var(--ease-out);
+}
+.collapsed:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translate(var(--tx, 0), 0) scale(1.05);
+}
+
+/* ---- Fullscreen --------------------------------------------------------- */
+.reel:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  aspect-ratio: auto;
+  border-radius: 0;
+  border: 0;
+  background: #000;
+  transform: none !important;
+}
+.reel:fullscreen .video { inset: 0; }
+
+@media (max-width: 1080px) {
+  .reel,
+  .collapsed { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rec i { animation: none; }
+}

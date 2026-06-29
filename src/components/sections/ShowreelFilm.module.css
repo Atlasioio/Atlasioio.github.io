@@ -1,0 +1,257 @@
+/* The bespoke hero showreel — a timed, looping composition built from the real
+   case-study assets. Sizes are in container units (cq*) so it scales with the
+   floating tile and in fullscreen alike. Motion is driven by the Web Animations
+   API (see ShowreelFilm.tsx); this file is layout + look only. */
+.film {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  container-type: size;
+  background: var(--bg);
+  color: var(--ink);
+  isolation: isolate;
+}
+
+/* Each act is a full-bleed layer; opacity is animated in JS. */
+.scene {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  display: grid;
+  place-items: center;
+  isolation: isolate; /* keep each scene's z-order self-contained */
+}
+.fill { position: absolute; inset: 0; z-index: -1; } /* always behind scene content */
+.cream { background: var(--bg); }
+.honey { background: linear-gradient(155deg, #f7b21f 0%, #f5a800 55%, #e89400 100%); }
+.ink { background: #141210; }
+.matcha { background: linear-gradient(155deg, #4f9b46 0%, #3f8a3c 55%, #2f6f33 100%); }
+
+/* Soft top/bottom scrim so labels + type stay legible over imagery. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.28) 0%, transparent 26%, transparent 62%, rgba(0, 0, 0, 0.42) 100%);
+  pointer-events: none;
+}
+
+/* ---- Shared type ---- */
+.label {
+  position: absolute;
+  left: 7cqmin;
+  top: 7cqmin;
+  font-family: var(--font-mono);
+  font-size: 3.1cqmin;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 1.6cqmin;
+}
+.label i {
+  width: 2cqmin;
+  height: 2cqmin;
+  border-radius: 50%;
+  background: currentColor;
+}
+.headline {
+  position: absolute;
+  left: 7cqmin;
+  bottom: 8cqmin;
+  font-family: var(--font-display);
+  font-weight: 820;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  font-size: 9.4cqmin;
+  text-align: left;
+}
+.lineMask { display: block; overflow: hidden; padding: 0.08em 0; margin: -0.08em 0; }
+.lineInner { display: block; will-change: transform; }
+
+/* ---- Devices ---- */
+.layer { position: absolute; inset: 0; display: grid; place-items: center; }
+.reelStage { position: relative; width: 88cqmin; }
+
+.phone {
+  height: 76cqmin;
+  width: auto;
+  border-radius: 6cqmin;
+  filter: drop-shadow(0 6cqmin 10cqmin rgba(0, 0, 0, 0.34));
+  will-change: transform;
+}
+.stack { position: absolute; display: grid; place-items: center; }
+
+.browser {
+  width: 88cqmin;
+  border-radius: 3.4cqmin;
+  overflow: hidden;
+  background: #0c0b09;
+  border: 0.5cqmin solid #2a2722;
+  box-shadow: 0 7cqmin 16cqmin rgba(0, 0, 0, 0.5);
+  will-change: transform;
+}
+.browserBar {
+  height: 7cqmin;
+  background: #26231e;
+  display: flex;
+  align-items: center;
+  gap: 1.7cqmin;
+  padding: 0 3cqmin;
+}
+.browserBar span { width: 1.8cqmin; height: 1.8cqmin; border-radius: 50%; background: #5b574e; }
+.browserView { position: relative; height: 58cqmin; overflow: hidden; }
+.browserView img { position: absolute; top: 0; left: 0; width: 100%; height: auto; will-change: transform; }
+
+.miniPhone {
+  position: absolute;
+  right: -3cqmin;
+  bottom: -6cqmin;
+  width: 26cqmin;
+  border-radius: 4cqmin;
+  border: 0.6cqmin solid #18181a;
+  background: #18181a;
+  overflow: hidden;
+  box-shadow: 0 5cqmin 12cqmin rgba(0, 0, 0, 0.5);
+  will-change: transform;
+}
+.miniPhone img { display: block; width: 100%; height: auto; }
+
+.cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+/* ---- Cold open + resolve (theme-aware) ---- */
+.mark {
+  font-family: var(--font-display);
+  font-weight: 820;
+  letter-spacing: -0.045em;
+  font-size: 20cqmin;
+  color: var(--ink);
+  will-change: transform, opacity;
+}
+.mark b { font-weight: 820; }
+/* Rounded-square brand dot (squircle). */
+.dot {
+  display: inline-block;
+  position: relative;
+  width: 0.17em;
+  height: 0.17em;
+  margin-left: 0.07em;
+  border-radius: 0.05em;
+  background: var(--accent);
+  vertical-align: baseline;
+  transform-origin: center;
+}
+/* Pulsing ring that blooms off the brand dot. */
+.ring {
+  position: absolute;
+  left: 50%;
+  top: 62%;
+  width: 9cqmin;
+  height: 9cqmin;
+  margin: -4.5cqmin 0 0 -4.5cqmin;
+  border: 0.7cqmin solid var(--accent);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.kicker {
+  position: absolute;
+  bottom: 30cqmin;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 3.1cqmin;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  opacity: 0.62;
+}
+
+.dots { position: absolute; inset: 0; display: grid; place-items: center; }
+.swatch {
+  position: absolute;
+  width: 7cqmin;
+  height: 7cqmin;
+  border-radius: 50%;
+  will-change: transform, opacity;
+}
+.blueDot {
+  position: absolute;
+  width: 7cqmin;
+  height: 7cqmin;
+  border-radius: 50%;
+  background: var(--accent);
+  will-change: transform, opacity;
+}
+.tag {
+  position: absolute;
+  bottom: 26cqmin;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 3cqmin;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  will-change: transform, opacity;
+}
+.place {
+  position: absolute;
+  bottom: 20cqmin;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 2.6cqmin;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  opacity: 0.55;
+}
+
+/* ---- Blue-dot wipe (the connective motif between acts) ---- */
+.wipe {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 300cqmax;
+  height: 300cqmax;
+  margin-left: -150cqmax;
+  margin-top: -150cqmax;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: scale(0);
+  will-change: transform;
+  z-index: 5;
+}
+
+/* ---- Progress hairline (the "film" running) ---- */
+.progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 0.7cqmin;
+  width: 100%;
+  transform-origin: left center;
+  background: var(--accent);
+  opacity: 0.9;
+  z-index: 6;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lineInner,
+  .phone,
+  .browser,
+  .cover,
+  .mark { will-change: auto; }
+}

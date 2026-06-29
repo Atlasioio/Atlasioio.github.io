@@ -1,0 +1,86 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(20px, 2.4vw, 40px);
+}
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+/* The first clip leads, spanning the full width. */
+.lead {
+  grid-column: 1 / -1;
+}
+
+.browser {
+  display: block;
+  width: 100%;
+  padding: 0;
+  position: relative;
+  border: 1px solid var(--hairline-2);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  background: var(--bg-deep);
+  box-shadow: 0 40px 90px -50px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+}
+.browser:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 52px 100px -52px rgba(0, 0, 0, 0.5);
+}
+/* Fullscreen affordance, bottom-right, fades in on hover. */
+.expand {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(10, 10, 8, 0.55);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s, transform 0.3s var(--ease-out);
+}
+.browser:hover .expand { opacity: 1; transform: none; }
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: clamp(32px, 3vw, 42px);
+  padding: 0 16px;
+  background: color-mix(in srgb, var(--bg-deep) 84%, var(--ink) 8%);
+  border-bottom: 1px solid var(--hairline-2);
+}
+.bar span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--hairline-2);
+}
+.video {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #000;
+}
+.cap {
+  font-size: var(--fs-sm);
+  color: var(--gray-strong);
+  line-height: 1.45;
+  max-width: 52ch;
+}
+
+@media (max-width: 720px) {
+  .grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Static poster only — pause handled by the browser when reduced-motion is set
+     at the OS level for autoplay; nothing to animate here. */
+}

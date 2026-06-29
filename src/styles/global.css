@@ -1,0 +1,90 @@
+/* ============================================================================
+   LUKAS AHLSE — global helpers
+   Layout wrappers, section rhythm, the reveal primitive, focus states, cursor.
+   Component-specific styling lives in co-located CSS Modules.
+   ========================================================================== */
+
+/* ---- Text selection ------------------------------------------------------ */
+/* Real copy stays selectable (so it can be marked + copied); interactive and
+   decorative UI chrome opts out of selection in its own component styles so a
+   stray click/drag doesn't highlight it. Buttons are covered globally here. */
+button {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ---- Hide native scrollbars (Lenis drives scrolling) --------------------- */
+/* Keeps the page scrollable but removes the scrollbar gutter, so the full-bleed
+   cards are symmetrically inset left/right. */
+html { scrollbar-width: none; } /* Firefox */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar { width: 0; height: 0; display: none; } /* WebKit */
+
+/* ---- Layout helpers ------------------------------------------------------ */
+.wrap {
+  width: 100%;
+  max-width: var(--content);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.section { padding-block: var(--space-section); }
+
+/* ---- Reveal primitive ---------------------------------------------------- */
+/* IntersectionObserver toggles .is-in; per-element --i staggers the delay. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.9s var(--ease-out),
+    transform 0.9s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+[data-reveal].is-in { opacity: 1; transform: none; }
+
+/* Clip-reveal for headline lines. The padding gives the emphasis-word highlight
+   room inside overflow:hidden; the negative margin cancels it from layout so
+   line spacing is unchanged. (The headline must be a flex column so these
+   margins don't collapse — see each section's .head/.headline.) */
+.line-mask {
+  overflow: hidden;
+  display: block;
+  padding: 0.24em;
+  margin: -0.24em;
+}
+.line-mask > span {
+  display: block;
+  transform: translateY(150%);
+  transition: transform 1s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 90ms + 0.1s);
+}
+.is-in .line-mask > span,
+.line-mask.is-in > span { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  .line-mask > span {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ---- Focus + cursor ------------------------------------------------------ */
+/* Keyboard focus is always visible, even while the custom cursor is active. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
+/* Lock scroll behind the inquiry modal. */
+body.modal-open { overflow: hidden; }
+
+/* While the JS custom cursor is on, hide the native one over the whole page —
+   including elements with their own cursor (e.g. cursor:pointer media), so the
+   OS cursor never shows on top of the custom one. */
+body.cursor-on,
+body.cursor-on * { cursor: none; }
+/* But never hide it from keyboard users / when the cursor is paused. */
+body.cursor-paused,
+body.cursor-paused * { cursor: auto; }

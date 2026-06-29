@@ -1,0 +1,289 @@
+/* Pull Services up closer to the studio content below. */
+.section {
+  padding-bottom: clamp(56px, 6vw, 96px);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(40px, 6vw, 88px);
+  /* Top-align so the heading sits the same distance below the marker as every
+     other section. The visual stays vertically centred against the copy. */
+  align-items: start;
+}
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3vw, 38px);
+}
+.lead {
+  font-family: var(--font-display);
+  font-weight: 520;
+  font-size: var(--fs-h3);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.lead em {
+  font-style: italic;
+  color: var(--accent);
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.body p {
+  color: var(--gray-strong);
+  max-width: 54ch;
+}
+.body p strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ---- Outcomes visual ---------------------------------------------------- */
+.visual { display: block; align-self: center; }
+.visualWrap {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin-inline: auto;
+}
+.visualSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: var(--ink);
+  overflow: visible;
+}
+
+/* ---- Hover card (mirrors the Services cards, much smaller) --------------- */
+.hoverCard {
+  position: absolute;
+  /* Anchored (via inline left/top) on the node's outward radial point, then
+     centred on it — so it points toward the discipline it describes. */
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  width: 326px;
+  pointer-events: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 15px;
+  background: var(--bg);
+  border: 1px solid var(--hairline-2);
+  border-radius: 14px;
+  box-shadow: 0 26px 60px -26px rgba(14, 14, 12, 0.55);
+  animation: cardFade 0.32s var(--ease-out) both;
+}
+@keyframes cardFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.hoverMedia {
+  flex: none;
+  width: 58px;
+  aspect-ratio: 5 / 4;
+  border-radius: 9px;
+  overflow: hidden;
+  background: var(--bg-deep);
+  border: 1px solid var(--hairline-2);
+  color: var(--ink);
+  animation: cardPop 0.42s var(--ease-out) both;
+}
+@keyframes cardPop {
+  from { transform: scale(0.9); }
+  to { transform: scale(1); }
+}
+/* Matches the original node label (display, weight, size) — it stands in for
+   the node's own label, which is hidden while its card is up. */
+.hoverText {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.hoverName {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+}
+.hoverDesc {
+  font-size: 12.5px;
+  line-height: 1.42;
+  color: var(--gray-strong);
+}
+.miniArt { display: block; width: 100%; height: 100%; }
+
+/* ---- Mini-art motifs (looping) ---- */
+.mPulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mPulse 2.2s var(--ease-out) infinite;
+}
+@keyframes mPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.28); }
+}
+.mDart {
+  animation: mDart 2.6s var(--ease-out) infinite;
+  /* Soft white halo so the ink arrow stays legible over the blue bullseye. */
+  filter: drop-shadow(0 0 1.6px #fff) drop-shadow(0 0 1.6px #fff);
+}
+@keyframes mDart {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-5px, 5px); }
+}
+.mScan { animation: mScan 3.2s var(--ease) infinite; }
+@keyframes mScan {
+  0%, 100% { transform: translate(36px, 48px); }
+  50% { transform: translate(84px, 48px); }
+}
+.mTap { animation: mTap 3.6s var(--ease) infinite; }
+@keyframes mTap {
+  0% { transform: translate(74px, 18px); }
+  34% { transform: translate(52px, 56px); }
+  42% { transform: translate(52px, 60px); }
+  50% { transform: translate(52px, 56px); }
+  100% { transform: translate(74px, 18px); }
+}
+.mTapBtn { animation: mTapBtn 3.6s var(--ease) infinite; }
+@keyframes mTapBtn {
+  0%, 36% { opacity: 1; }
+  43% { opacity: 0.55; }
+  52%, 100% { opacity: 1; }
+}
+.mBrick { transform-box: fill-box; }
+.mBrick1 { animation: mBrick 3s var(--ease-out) infinite; }
+.mBrick2 { animation: mBrick 3s var(--ease-out) 0.16s infinite; }
+.mBrick3 { animation: mBrick 3s var(--ease-out) 0.32s infinite; }
+@keyframes mBrick {
+  0%, 6% { opacity: 0; transform: translateY(14px); }
+  22% { opacity: 1; transform: translateY(0); }
+  86% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(14px); }
+}
+.mChip { fill: var(--accent); }
+.mChipA { animation: mChipA 3.6s var(--ease) infinite; }
+.mChipB { animation: mChipB 3.6s var(--ease) infinite; }
+.mChipC { animation: mChipC 3.6s var(--ease) infinite; }
+@keyframes mChipA {
+  0%, 100% { fill: var(--accent); }
+  33% { fill: var(--ink); }
+  66% { fill: var(--gray); }
+}
+@keyframes mChipB {
+  0%, 100% { fill: var(--ink); }
+  33% { fill: var(--gray); }
+  66% { fill: var(--accent); }
+}
+@keyframes mChipC {
+  0%, 100% { fill: var(--gray); }
+  33% { fill: var(--accent); }
+  66% { fill: var(--ink); }
+}
+.mStreak { animation: mStreak 2.4s var(--ease) infinite; }
+@keyframes mStreak {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.55; }
+}
+.mPuck { animation: mPuck 2.4s var(--ease) infinite; }
+@keyframes mPuck {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(32px); }
+}
+.hubRing {
+  stroke: currentColor;
+  stroke-opacity: 0.12;
+  stroke-width: 1.5;
+}
+.hubSpoke {
+  stroke: currentColor;
+  stroke-opacity: 0.16;
+  stroke-width: 1.5;
+  transition: stroke 0.25s var(--ease-out), stroke-opacity 0.25s var(--ease-out),
+    stroke-width 0.25s var(--ease-out);
+}
+/* The spoke nearest the cursor lights up (the existing line, not a new one). */
+.hubSpokeOn {
+  stroke: var(--accent);
+  stroke-opacity: 1;
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--accent) 55%, transparent));
+}
+.hubNode {
+  fill: currentColor;
+  transition: fill 0.25s var(--ease-out), r 0.25s var(--ease-out);
+}
+.hubLabel {
+  fill: currentColor;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  transition: fill 0.25s var(--ease-out), opacity 0.18s var(--ease-out);
+}
+/* While its card is up, the node's own label hides so they don't overlap. */
+.hubLabelHidden { opacity: 0; }
+/* Nearest discipline to the cursor lights up. */
+.hubNodeOn {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--accent) 55%, transparent));
+}
+
+/* Pulse of light that runs outward along the lit spoke. */
+.pulse {
+  fill: #88a0ff;
+  pointer-events: none;
+}
+.hubCore { fill: var(--accent); }
+.hubCoreText {
+  fill: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: -0.03em;
+}
+.hubPulse {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: hubPulse 3.4s var(--ease-out) infinite;
+}
+@keyframes hubPulse {
+  0% { opacity: 0.5; transform: scale(1); }
+  70% { opacity: 0; transform: scale(2.2); }
+  100% { opacity: 0; transform: scale(2.2); }
+}
+
+@media (max-width: 1080px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: clamp(40px, 7vw, 56px);
+  }
+  .visualWrap { max-width: 400px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hubPulse,
+  .mPulse,
+  .mDart,
+  .mScan,
+  .mTap,
+  .mTapBtn,
+  .mBrick1,
+  .mBrick2,
+  .mBrick3,
+  .mChipA,
+  .mChipB,
+  .mChipC,
+  .mStreak,
+  .mPuck { animation: none; }
+}

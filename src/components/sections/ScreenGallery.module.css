@@ -1,0 +1,349 @@
+.gallery { width: 100%; }
+
+/* ---- Carousel stage ----------------------------------------------------- */
+.stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Side gutters so the nav arrows sit clear of the phones, never over them. */
+  padding: clamp(6px, 1vw, 14px) clamp(48px, 7vw, 84px);
+  overflow: visible;
+}
+.frame {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  /* The two phones sit close so it's natural to look between them. */
+  gap: clamp(4px, 0.8vw, 16px);
+}
+.slideItem {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.shotBtn {
+  /* Definite phone box — height in vh, width from the device aspect. No flex
+     basis ambiguity, so the box hugs the device and the two sit close. */
+  height: clamp(440px, 60vh, 680px);
+  aspect-ratio: 1072 / 1980;
+  max-width: 100%;
+  display: block;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+.shot {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 26px 54px rgba(0, 0, 0, 0.22));
+  transition: transform 0.45s var(--ease-out);
+}
+.shotBtn:hover .shot { transform: translateY(-5px); }
+
+/* ---- Phone mockup bezel (framed galleries, e.g. Goodreads) -------------- */
+/* The bezel hugs each phone's own aspect (width:auto from the fixed height) so
+   the full screen shows — nothing is clipped at the nav bars, only the rounded
+   corners. A little extra gap gives the pair room to breathe. */
+.framed .frame { gap: clamp(22px, 3.4vw, 64px); }
+.framed .shotBtn {
+  aspect-ratio: auto;
+  width: auto;
+  position: relative;
+  overflow: hidden;
+  background: #15130f;
+  padding: clamp(8px, 0.85vw, 12px);
+  border-radius: clamp(30px, 3vw, 46px);
+  box-shadow: 0 26px 54px rgba(0, 0, 0, 0.28), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  transition: transform 0.45s var(--ease-out);
+}
+.framed .shot {
+  width: auto; /* hug the phone's intrinsic aspect — no top/bottom crop */
+  border-radius: clamp(20px, 2vw, 32px);
+  filter: none; /* the bezel carries the shadow now */
+}
+/* Lift the whole phone (bezel + screen), not the bare screenshot. */
+.framed .shotBtn:hover { transform: translateY(-6px); }
+.framed .shotBtn:hover .shot { transform: none; }
+.shotCaption {
+  flex: none;
+  font-size: var(--fs-sm);
+  color: var(--gray-strong);
+  text-align: center;
+  max-width: 26ch;
+  line-height: 1.4;
+}
+.fromRight { animation: shotInRight 0.5s var(--ease-out); }
+.fromLeft { animation: shotInLeft 0.5s var(--ease-out); }
+@keyframes shotInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes shotInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: none; }
+}
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--ink);
+  color: var(--bg);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.25s, transform 0.25s var(--ease-out);
+}
+.navBtn:hover { background: var(--accent); color: #fff; animation: none; }
+/* Gentle ring pulse so the controls read as interactive. */
+.navBtn { animation: navPulse 2.8s var(--ease-out) infinite; }
+@keyframes navPulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent); }
+  70%, 100% { box-shadow: 0 0 0 9px color-mix(in srgb, var(--accent) 0%, transparent); }
+}
+.navPrev { left: clamp(2px, 0.6vw, 14px); }
+.navNext { right: clamp(2px, 0.6vw, 14px); }
+.navPrev:hover { transform: translateY(-50%) translateX(-2px); }
+.navNext:hover { transform: translateY(-50%) translateX(2px); }
+
+/* ---- Caption bar -------------------------------------------------------- */
+.bar {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.counter {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--gray);
+  font-variant-numeric: tabular-nums;
+}
+.seeAll {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--hairline-2);
+  transition: border-color 0.25s, gap 0.25s var(--ease-out);
+}
+.seeAll:hover { border-color: var(--accent); gap: 12px; }
+
+/* ---- Lightbox (extends the modal overlay: blur + scrim) ----------------- */
+/* Block (not grid) so the tall grid + bottom padding scroll fully;
+   data-lenis-prevent (on the element) lets the wheel scroll it natively. */
+.lightbox {
+  display: block;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.lightbox::-webkit-scrollbar { width: 0; height: 0; }
+
+/* The lightbox and viewer place light text/buttons straight on the scrim (no
+   solid panel like the form dialog), so they need a properly dark scrim — the
+   shared form-modal scrim is too faint and the white UI washes out. The doubled
+   class out-specifies the shared `.overlay` regardless of bundle order. */
+.lightbox.lightbox,
+.viewer.viewer {
+  background: rgba(8, 8, 6, 0.9);
+  animation: galleryScrimIn 0.45s var(--ease-out);
+}
+@keyframes galleryScrimIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.lightInner {
+  width: 100%;
+  max-width: min(1500px, 94vw);
+  margin: 0 auto;
+}
+.lightHead {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 2px 18px;
+  margin-bottom: 6px;
+}
+.lightTitle {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+}
+.lightClose {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.3s var(--ease-out);
+}
+.lightClose:hover { background: rgba(255, 255, 255, 0.18); transform: rotate(90deg); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: clamp(20px, 2.2vw, 36px);
+  padding-bottom: clamp(20px, 4vw, 48px);
+}
+.gridItem {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.gridFrame {
+  display: grid;
+  place-items: center;
+  padding: clamp(14px, 1.4vw, 22px);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: border-color 0.25s, background 0.25s, transform 0.3s var(--ease-out);
+}
+.gridFrame img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+}
+/* Framed grid thumbnails get the same bezel treatment. */
+.framed .gridFrame {
+  background: #15130f;
+  border: 0;
+  padding: clamp(8px, 1vw, 12px);
+  border-radius: 30px;
+}
+.framed .gridItem:hover .gridFrame {
+  background: #1f1c17;
+  border: 0;
+}
+.framed .gridFrame img { border-radius: 22px; }
+.gridItem:hover .gridFrame {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-4px);
+}
+.gridCap {
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ---- Fullscreen single-screen viewer ----------------------------------- */
+.viewerShot {
+  max-height: 88vh;
+  max-width: min(440px, 84vw);
+  object-fit: contain;
+  filter: drop-shadow(0 40px 90px rgba(0, 0, 0, 0.55));
+}
+.viewerClose {
+  position: absolute;
+  top: clamp(16px, 3vw, 28px);
+  right: clamp(16px, 3vw, 28px);
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.3s var(--ease-out);
+}
+.viewerClose:hover { background: rgba(255, 255, 255, 0.18); transform: rotate(90deg); }
+.viewerNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s var(--ease-out);
+}
+.viewerNav:hover { background: rgba(255, 255, 255, 0.2); }
+.viewerPrev { left: clamp(14px, 3vw, 40px); }
+.viewerNext { right: clamp(14px, 3vw, 40px); }
+.viewerPrev:hover { transform: translateY(-50%) translateX(-3px); }
+.viewerNext:hover { transform: translateY(-50%) translateX(3px); }
+.viewerBar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(18px, 3vw, 34px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 0 20px;
+}
+.viewerCap {
+  font-size: var(--fs-sm);
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+}
+.viewerCount {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.6);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 600px) {
+  .bar { gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fromRight,
+  .fromLeft,
+  .navBtn { animation: none; }
+  .navBtn:hover,
+  .shotBtn:hover .shot,
+  .framed .shotBtn:hover,
+  .gridItem:hover .gridFrame,
+  .lightClose:hover,
+  .viewerClose:hover,
+  .viewerNav:hover { transform: none; }
+}

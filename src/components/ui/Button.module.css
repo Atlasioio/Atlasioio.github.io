@@ -1,0 +1,68 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+  border: 1px solid var(--ink);
+  transition:
+    background 0.3s var(--ease),
+    color 0.3s,
+    transform 0.3s var(--ease-out),
+    gap 0.3s,
+    border-color 0.3s;
+  cursor: pointer;
+}
+.btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+  gap: 14px;
+}
+
+.arr { transition: transform 0.3s var(--ease-out); }
+.btn:hover .arr { transform: translateX(3px); }
+
+.ghost {
+  background: transparent;
+  color: var(--ink);
+}
+.ghost:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+}
+
+/* Light pill for the blue cards (hero + footer). Constant colours so it stays
+   light in both themes (the cards are blue in both). */
+.light {
+  background: var(--hero-fg);
+  color: var(--dark-bg);
+  border-color: var(--hero-fg);
+}
+.light:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.large {
+  padding: 16px 30px;
+  font-size: var(--fs-body);
+}
+
+/* On the accent-blue card, an accent hover would vanish — darken to ink
+   (constant, so it works in both themes). */
+.onAccent:hover {
+  background: var(--dark-bg);
+  border-color: var(--dark-bg);
+  color: var(--hero-fg);
+}

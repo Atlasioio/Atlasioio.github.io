@@ -1,0 +1,42 @@
+/* Solid fill = the opposite of the current mode, so the control reads as
+   "switch to the other one". */
+.btn {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  /* Constant colours: the fill is the opposite of the current mode regardless
+     of the surface, so it always reads as "switch to the other one". */
+  border: 1px solid var(--dark-bg);
+  background: var(--dark-bg);
+  color: var(--hero-fg);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+.dark {
+  background: var(--hero-fg);
+  border-color: var(--hero-fg);
+  color: var(--dark-bg);
+}
+
+.icons {
+  position: relative;
+  width: 16px;
+  height: 16px;
+}
+/* opacity + transform are set inline per theme; the transition animates them. */
+.sun,
+.moon {
+  position: absolute;
+  inset: 0;
+  width: 16px;
+  height: 16px;
+  transition: transform 0.5s var(--ease-out), opacity 0.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sun,
+  .moon { transition: opacity 0.2s; }
+}

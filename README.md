@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tau Studio — Homepage
 
-## Getting Started
+The Tau Studio homepage, rebuilt from the hi-fi HTML/CSS design reference into a
+clean **Vite + React + TypeScript** app. It locks the visual language (tokens,
+type scale, motion vocabulary) so the rest of the site can be built on it later.
 
-First, run the development server:
+## Stack
+
+- **Vite + React 18 + TypeScript**
+- **CSS Modules** over a shared CSS-variable token system (`src/styles/tokens.css`)
+- **Lenis** for production smooth scroll (`src/hooks/useLenis.ts`)
+- Bespoke, hand-rolled motion (no animation library) — faithful to the reference
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # start the dev server
+npm run build    # typecheck + production build
+npm run preview  # preview the build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+  styles/      tokens.css (the design system) + global.css (helpers, reveal primitive)
+  data/        content.ts — all copy + services/work/process as typed, CMS-ready data
+  hooks/       reveal · lenis · nav theme-flip · custom cursor · reduced-motion
+  context/     MenuContext (menuOpen + scroll lock) · LangContext (EN/SV)
+  components/
+    Loader/ CustomCursor/
+    nav/        Nav · FixedControls · Hamburger · Menu
+    ui/         Button · LinkLike · LangToggle · Marker · Reveal · LineMask · Icons
+    sections/   Hero · Marquee · Studio · Services · Work · Credibility · Process · Closing · Footer
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Motion
 
-## Learn More
+Page-load counter + wipe, IntersectionObserver scroll reveals (with `--i`
+stagger), headline clip-reveals, seamless marquee, lerp-following custom cursor
+(fine-pointer only), the fullscreen morphing menu, nav theme-flip, and hero
+parallax. Everything degrades gracefully under `prefers-reduced-motion`.
 
-To learn more about Next.js, take a look at the following resources:
+## Production notes / TODO
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Imagery is placeholder.** Service cards point at abstract SVGs in
+  `public/images/`; work tiles use abstract CSS fills. Wire `services[].image`
+  and `projects[].image` in `src/data/content.ts` to real assets / a CMS.
+- **Sony** is referenced in copy only — no logo, not implied as a client.
+- **Language** toggle is visual only; copy ships in EN, SV translations are TBD.
+  `LangContext` is the place to hook up i18n.
+- Credibility badges (Dribbble, Awwwards) are placeholders — wire to real
+  profiles or remove.

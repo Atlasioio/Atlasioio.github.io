@@ -1,0 +1,344 @@
+.showcase { width: 100%; }
+
+/* ---- Desktop browser-frame carousel ------------------------------------- */
+/* Full-width browser (matches the hero/cover width); the arrows sit outside it,
+   in the page gutter — see the nav rules below. */
+.deskStage { position: relative; }
+.browser {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--hairline-2);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--bg-deep);
+  box-shadow: 0 32px 70px -38px rgba(0, 0, 0, 0.42);
+  cursor: pointer;
+  transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+}
+.browser:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 46px 92px -42px rgba(0, 0, 0, 0.5);
+}
+.browserBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 14px;
+  background: color-mix(in srgb, var(--bg-deep) 84%, var(--ink) 8%);
+  border-bottom: 1px solid var(--hairline-2);
+}
+.dots { position: absolute; left: 14px; display: inline-flex; gap: 7px; }
+.dots i { width: 11px; height: 11px; border-radius: 50%; background: var(--hairline-2); }
+.urlchip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--gray);
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  padding: 4px 16px;
+  border-radius: 999px;
+}
+/* Fixed 16:10 viewport so every slide is the same height — the nav arrows then
+   stay put (centred on this constant frame) instead of jumping per screenshot.
+   Wider/shorter shots letterbox onto the frame rather than cropping the work. */
+.browserImg {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  object-position: center;
+  background: var(--bg-deep);
+}
+
+.fromRight { animation: wsRight 0.5s var(--ease-out); }
+.fromLeft { animation: wsLeft 0.5s var(--ease-out); }
+@keyframes wsRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes wsLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: none; }
+}
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--ink);
+  color: var(--bg);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.25s, transform 0.25s var(--ease-out);
+}
+.navBtn:hover { background: var(--accent); color: var(--bg); animation: none; }
+/* Gentle ring pulse so the controls read as interactive. */
+.navBtn { animation: navPulse 2.8s var(--ease-out) infinite; }
+@keyframes navPulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent); }
+  70%, 100% { box-shadow: 0 0 0 9px color-mix(in srgb, var(--accent) 0%, transparent); }
+}
+/* Narrow screens: arrows tuck just inside the browser edges (no room outside). */
+.navPrev { left: clamp(4px, 1.4vw, 12px); }
+.navNext { right: clamp(4px, 1.4vw, 12px); }
+/* Wider screens: the browser keeps full width and the arrows sit fully outside
+   it, centred in the page gutter. */
+@media (min-width: 1000px) {
+  .navPrev { left: 0; transform: translate(calc(-50% - var(--gutter) / 2), -50%); }
+  .navNext { right: 0; transform: translate(calc(50% + var(--gutter) / 2), -50%); }
+}
+
+.bar {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.caption { font-size: var(--fs-sm); color: var(--gray-strong); max-width: 52ch; }
+.barRight { display: flex; align-items: center; gap: clamp(16px, 2.4vw, 28px); }
+.counter {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--gray);
+  font-variant-numeric: tabular-nums;
+}
+.seeAll {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--hairline-2);
+  transition: border-color 0.25s, gap 0.25s var(--ease-out);
+}
+.seeAll:hover { border-color: var(--accent); gap: 12px; }
+
+/* ---- Mobile phone-frame row --------------------------------------------- */
+.mobileBlock { margin-top: clamp(44px, 5vw, 76px); }
+.mobileLabel {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 22px;
+}
+.mobileRow { display: flex; gap: clamp(16px, 2.2vw, 34px); flex-wrap: wrap; }
+.phoneItem {
+  /* Flex so the phones spread to fill the row (≈ the desktop image's width). */
+  flex: 1 1 140px;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.phone {
+  width: 100%;
+  border: 0;
+  padding: 8px;
+  background: var(--ink);
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 26px 54px -30px rgba(0, 0, 0, 0.45);
+  transition: transform 0.45s var(--ease-out);
+}
+.phone:hover { transform: translateY(-5px); }
+.phoneScreen { display: block; border-radius: 22px; overflow: hidden; }
+.phoneScreen img { display: block; width: 100%; height: auto; }
+.phoneCap { font-size: var(--fs-sm); color: var(--gray-strong); text-align: center; }
+
+/* ---- See-all lightbox (blurred overlay, scrollable) --------------------- */
+.lightbox {
+  display: block;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.lightbox::-webkit-scrollbar { width: 0; height: 0; }
+
+/* Light text/buttons sit straight on the scrim, so darken it past the faint
+   shared form-modal scrim (doubled class out-specifies `.overlay`). */
+.lightbox.lightbox,
+.viewer.viewer {
+  background: rgba(8, 8, 6, 0.9);
+  animation: webScrimIn 0.45s var(--ease-out);
+}
+@keyframes webScrimIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.lightInner { width: 100%; max-width: min(1500px, 94vw); margin: 0 auto; }
+.lightHead {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 2px 18px;
+}
+.lightTitle {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+}
+.lightClose {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.3s var(--ease-out);
+}
+.lightClose:hover { background: rgba(255, 255, 255, 0.18); transform: rotate(90deg); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: clamp(18px, 2.2vw, 32px);
+  padding-bottom: clamp(20px, 4vw, 48px);
+  align-items: start;
+}
+.gridItem {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.gridDesktop { grid-column: span 2; }
+.gridBrowser {
+  display: block;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  transition: transform 0.3s var(--ease-out), border-color 0.25s;
+}
+.gridBrowser img { display: block; width: 100%; height: auto; }
+.gridPhone {
+  display: block;
+  margin: 0 auto;
+  max-width: 220px;
+  padding: 7px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  transition: transform 0.3s var(--ease-out), border-color 0.25s;
+}
+.gridPhone img { display: block; width: 100%; height: auto; border-radius: 15px; }
+.gridItem:hover .gridBrowser,
+.gridItem:hover .gridPhone {
+  border-color: rgba(255, 255, 255, 0.45);
+  transform: translateY(-4px);
+}
+.gridCap { font-size: 13px; line-height: 1.45; color: rgba(255, 255, 255, 0.7); }
+
+/* ---- Fullscreen viewer -------------------------------------------------- */
+.viewerShot {
+  object-fit: contain;
+  filter: drop-shadow(0 40px 90px rgba(0, 0, 0, 0.55));
+}
+.viewerDesktop { max-width: 92vw; max-height: 86vh; border-radius: 8px; }
+.viewerMobile { max-width: 84vw; max-height: 88vh; border-radius: 18px; }
+.viewerClose {
+  position: absolute;
+  top: clamp(16px, 3vw, 28px);
+  right: clamp(16px, 3vw, 28px);
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.3s var(--ease-out);
+}
+.viewerClose:hover { background: rgba(255, 255, 255, 0.18); transform: rotate(90deg); }
+.viewerNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s var(--ease-out);
+}
+.viewerNav:hover { background: rgba(255, 255, 255, 0.2); }
+.viewerPrev { left: clamp(14px, 3vw, 40px); }
+.viewerNext { right: clamp(14px, 3vw, 40px); }
+.viewerPrev:hover { transform: translateY(-50%) translateX(-3px); }
+.viewerNext:hover { transform: translateY(-50%) translateX(3px); }
+.viewerBar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(18px, 3vw, 34px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 0 20px;
+}
+.viewerCap { font-size: var(--fs-sm); color: rgba(255, 255, 255, 0.85); text-align: center; }
+.viewerCount {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.6);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 760px) {
+  .gridDesktop { grid-column: span 1; }
+  .grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fromRight,
+  .fromLeft { animation: none; }
+  .browser:hover,
+  .phone:hover,
+  .navBtn,
+  .navBtn:hover,
+  .gridItem:hover .gridBrowser,
+  .gridItem:hover .gridPhone,
+  .lightClose:hover,
+  .viewerClose:hover,
+  .viewerNav:hover { transform: none; }
+}

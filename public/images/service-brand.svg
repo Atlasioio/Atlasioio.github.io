@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="c" cx="0.4" cy="0.42" r="0.8">
+      <stop offset="0" stop-color="#e9e4dc"/>
+      <stop offset="0.5" stop-color="#c8c3b9"/>
+      <stop offset="1" stop-color="#ddd8cf"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#c)"/>
+  <g transform="translate(400 420)">
+    <text x="0" y="60" font-family="Archivo, sans-serif" font-size="320" font-weight="800"
+          letter-spacing="-12" text-anchor="middle" fill="#0e0e0c">τ</text>
+  </g>
+  <g fill="none" stroke="#67645c" stroke-opacity="0.3" stroke-width="2">
+    <circle cx="400" cy="380" r="220"/>
+    <line x1="180" y1="380" x2="620" y2="380"/>
+    <line x1="400" y1="160" x2="400" y2="600"/>
+  </g>
+  <g font-family="'Geist Mono', monospace" font-size="22" fill="#67645c" letter-spacing="2">
+    <text x="150" y="760">Aa Bb Cc</text>
+    <text x="150" y="800" fill="#2a4bff" fill-opacity="0.7">#2A4BFF</text>
+    <text x="150" y="840">Archivo · Inter</text>
+  </g>
+  <rect x="520" y="730" width="60" height="60" rx="8" fill="#0e0e0c"/>
+  <rect x="590" y="730" width="60" height="60" rx="8" fill="#2a4bff" fill-opacity="0.55"/>
+  <rect x="660" y="730" width="60" height="60" rx="8" fill="#67645c" fill-opacity="0.4"/>
+</svg>

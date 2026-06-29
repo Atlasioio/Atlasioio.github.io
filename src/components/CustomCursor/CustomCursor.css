@@ -1,0 +1,71 @@
+/* Custom cursor — driven imperatively (stable ids + global classes).
+   Colour adapts to the surface: accent-blue over the off-white page, white over
+   the blue hero / footer / open menu (`.on-dark`). No blend mode. */
+.cur-dot,
+.cur-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2147483000;
+  will-change: transform;
+  --cur: var(--accent);
+}
+.cur-dot.on-dark,
+.cur-ring.on-dark { --cur: #fff; }
+
+.cur-dot {
+  width: 9px;
+  height: 9px;
+  background: var(--cur);
+  margin: -4.5px 0 0 -4.5px;
+}
+.cur-ring {
+  width: 38px;
+  height: 38px;
+  margin: -19px 0 0 -19px;
+  border: 1px solid var(--cur);
+  transition:
+    width 0.28s var(--ease-out),
+    height 0.28s var(--ease-out),
+    margin 0.28s var(--ease-out),
+    opacity 0.28s,
+    background 0.28s;
+}
+.cur-ring.is-hover {
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+}
+.cur-ring.is-view {
+  width: 92px;
+  height: 92px;
+  margin: -46px 0 0 -46px;
+  background: var(--cur);
+}
+.cur-ring .cur-label {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+/* Label sits on the filled ring → contrast against its colour. */
+.cur-ring.on-dark .cur-label { color: var(--ink); }
+.cur-ring.is-view .cur-label { opacity: 1; }
+
+@media (hover: none), (pointer: coarse) {
+  .cur-dot,
+  .cur-ring { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cur-dot,
+  .cur-ring { display: none !important; }
+}

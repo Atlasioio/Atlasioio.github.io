@@ -1,0 +1,97 @@
+/* ============================================================================
+   LUKAS AHLSE — design tokens + reset
+   The locked visual language: colour tokens, fluid type scale, spacing, motion.
+   Near-monochrome / warm. Editorial grotesque. Restrained electric-blue accent.
+   ========================================================================== */
+
+:root {
+  /* ---- Colour ------------------------------------------------------------ */
+  --bg:            #f6f4f1; /* warm off-white page */
+  --bg-deep:       #efece6; /* slightly recessed surface (card media) */
+  --ink:           #0e0e0c; /* near-black text */
+  --ink-soft:      #2a2925; /* softened ink for large display */
+  --gray:          #8c887f; /* secondary text */
+  --gray-strong:   #67645c; /* metadata that needs more presence */
+  --hairline:      #e3dfd8; /* hairline borders */
+  --hairline-2:    #d7d2c9; /* stronger divider */
+  --accent:        #2a4bff; /* restrained electric-blue accent */
+  --accent-ink:    #ffffff; /* text on accent */
+  --on-dark:       #f6f4f1; /* text on dark panels */
+  --dark-bg:       #0e0e0c;
+  --hero-bg:       #0e0e0c; /* coloured hero card */
+  --hero-fg:       #f6f4f1; /* text inside the hero card */
+  --card-pad:      clamp(8px, 0.95vw, 18px);
+  --card-radius:   clamp(18px, 1.9vw, 34px);
+
+  /* ---- Type families ----------------------------------------------------- */
+  --font-display: 'Archivo', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:    'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --font-hand:    'Caveat', 'Segoe Script', cursive;
+
+  /* ---- Type scale (fluid) ------------------------------------------------ */
+  --fs-hero:    clamp(40px, 6.4vw, 104px);
+  --fs-display: clamp(40px, 5.6vw, 84px); /* closing CTA */
+  --fs-h2:      clamp(34px, 4.4vw, 56px);
+  --fs-h3:      clamp(23px, 2.3vw, 33px);
+  --fs-lead:    clamp(19px, 1.5vw, 23px);
+  --fs-body:    18px;
+  --fs-sm:      15px;
+  --fs-label:   13px;
+
+  /* ---- Spacing ----------------------------------------------------------- */
+  --space-section: clamp(110px, 13vw, 200px);
+  --gutter:        clamp(24px, 5vw, 88px);
+  --max:           1560px;
+  --content:       1400px;
+  --ctrl-h:        48px; /* shared height: fixed-nav button + hamburger circle */
+  --nav-inset:     clamp(22px, 2.2vw, 38px); /* horizontal inset of nav + corner controls from the card edge */
+  --nav-inset-top: clamp(18px, 1.7vw, 28px); /* top inset of the nav bar (a little tighter than the sides) */
+
+  /* ---- Motion ------------------------------------------------------------ */
+  --ease:     cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur:      0.6s;
+}
+
+/* ============================================================================
+   DARK THEME
+   Inverts the warm off-white surfaces to a warm near-black; the accent-blue
+   cards (hero, footer) and the on-dark tokens (--hero-fg, --on-dark, --dark-bg)
+   stay constant, so those bookends look the same in both modes.
+   ========================================================================== */
+[data-theme='dark'] {
+  --bg:            #14120f; /* warm near-black page */
+  --bg-deep:       #1e1c18; /* slightly raised surface (cards, media) */
+  --ink:           #f3f0ea; /* light primary text */
+  --ink-soft:      #d6d2c9; /* softened light for large display */
+  --gray:          #8e8a81; /* secondary text */
+  --gray-strong:   #b2aea4; /* metadata that needs more presence (lighter on dark) */
+  --hairline:      #2c2a25; /* hairline borders */
+  --hairline-2:    #3b3830; /* stronger divider */
+  color-scheme: dark;
+}
+
+/* ---- Reset --------------------------------------------------------------- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+html,
+body { background: var(--bg); }
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button { font: inherit; }
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+/* Native smooth anchor scroll as a fallback; Lenis drives it in production. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
