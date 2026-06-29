@@ -195,8 +195,11 @@ export interface Project {
   phoneFrame?: boolean
   /** CSS background for the home/work card media band (defaults to the warm mocha). */
   coverBg?: string
-  /** Looping demo videos shown in browser frames on the case study. */
+  /** Looping demo videos shown on the case study. */
   videos?: CaseScreen[]
+  /** How videos are framed: 'browser' (desktop, default) or 'bare' (mobile clips
+   *  that already include their own device frame). */
+  videoFrame?: 'browser' | 'bare'
   /* ---- Case-study detail (route /work/:id) ---- */
   year: string
   client: string
@@ -270,7 +273,7 @@ export const projects: Project[] = [
     sections: [
       {
         heading: 'The brief',
-        body: 'Travel apps default to SaaS-clean white and blue; environmental apps default to green — virtue signalled at the palette level. Both felt off. EcoTrip had to make the lower-carbon choice the obvious one without ever lecturing, and turn a private act of restraint into something that feels collective.',
+        body: 'Environmental apps reach for green by default — virtue signalled at the palette level. EcoTrip had to make the lower-carbon choice the obvious one without ever lecturing, and turn a private act of restraint into something that feels collective.',
       },
       {
         heading: 'Two travellers',
@@ -278,7 +281,7 @@ export const projects: Project[] = [
       },
       {
         heading: 'The hive, not the halo',
-        body: "The bees came out of that: warm, collective, focused on the hive's progress rather than any one person's halo. Onboarding sets the posture — you join a hive, not a leaderboard; impact is shared, not scored. And it isn't only metaphor — EcoTrip commits 5% of every trip's revenue to bee conservation, and anything a user tops up goes 100% to the foundation.",
+        body: "The bees came out of that: warm and collective, where the focus is the hive's progress rather than any one person's halo. You still track your own trips and see how others are doing — but every score reads as a cell you add to the hive, a win worth celebrating because it lifts the whole, not a rank to beat. And it isn't only metaphor — EcoTrip commits 5% of every trip's revenue to bee conservation, and anything a user tops up goes 100% to the foundation.",
       },
       {
         heading: 'A warmer system',
@@ -287,21 +290,25 @@ export const projects: Project[] = [
     ],
     results: [
       { value: '5%', label: 'Of every trip funds bee conservation' },
-      { value: '2 personas', label: 'Set where friction lives' },
+      { value: '2 personas', label: 'Two very different travellers' },
       { value: '1 system', label: 'Honey-gold palette + hexagon motif' },
     ],
     accent: '#F5A800',
+    videoFrame: 'bare',
+    videos: [
+      { src: '/work/ecotrip/why-bees.webm', caption: 'Give back to the hive — the pledge page that funds bee conservation.' },
+    ],
     coverScreens: [
       '/work/ecotrip/onboarding.webp',
       '/work/ecotrip/explore-trips.webp',
       '/work/ecotrip/profile.webp',
     ],
     screens: [
-      { src: '/work/ecotrip/onboarding.webp', caption: 'Onboarding — you join a hive, not a leaderboard.' },
+      { src: '/work/ecotrip/onboarding.webp', caption: 'Onboarding — you join a hive and start adding to it.' },
       { src: '/work/ecotrip/explore.webp', caption: 'Explore — trips the hive loved, filtered by sustainability.' },
       { src: '/work/ecotrip/explore-trips.webp', caption: 'Trip detail — EcoScore, route and itinerary at a glance.' },
       { src: '/work/ecotrip/create.webp', caption: 'Create — friction on the high-carbon choice, never the path.' },
-      { src: '/work/ecotrip/community.webp', caption: 'The Hive — collective impact, shared not scored.' },
+      { src: '/work/ecotrip/community.webp', caption: 'The Hive — shared progress, your trips and everyone’s.' },
       { src: '/work/ecotrip/community-trip.webp', caption: 'A shared trip — the full breakdown, ready to copy.' },
       { src: '/work/ecotrip/profile.webp', caption: 'Profile — impact surfaced ahead of stats.' },
     ],
@@ -336,7 +343,7 @@ export const projects: Project[] = [
     role: 'Design & React build',
     outcome: 'A job-search tracker I designed and built, end to end',
     description:
-      'A job-search tracker — three views (board, grid, map), a bento dashboard, and status read as colour. Designed and built in React, pair-built with Claude Code, born out of my own job search.',
+      'A job-search tracker — board, grid, and map views, a bento dashboard, and colour-coded stages. A real, functional tool I designed and built in React, born out of my own job search.',
     fill: 'b',
     grid: true,
     featured: true,
@@ -360,8 +367,8 @@ export const projects: Project[] = [
         body: 'Three views, each answering a different question; a bento dashboard for the morning glance; colour carrying status so the eye does the triage. Designed and built in the same loop — pushing each idea from sketch to a clickable prototype I could feel and refine.',
       },
       {
-        heading: 'Status is the colour, not the noise',
-        body: 'Each stage of the pipeline gets a colour, so the board reads in a second — applied, interviewing, offer, closed. Colour does the work; the labels stay quiet. The same status language carries across the board, grid, and map views so switching never costs a re-read.',
+        heading: 'Easy to scan, yours to shape',
+        body: 'Colour-coded stages help the board read at a glance — but so do the company logos and stage icons, so you scan however suits you. And it bends to you: filter, sort, and customise to your heart’s content across a kanban board, dense rows, or a map — all of it still simple to use.',
       },
       {
         heading: 'The build',
@@ -380,7 +387,7 @@ export const projects: Project[] = [
     desktop: [
       { src: '/work/jobquest/welcome.webp', caption: 'Welcome — your whole job search in one place.' },
       { src: '/work/jobquest/bento-home.webp', caption: 'Home — a bento dashboard for the morning glance.' },
-      { src: '/work/jobquest/board-final.webp', caption: 'Board — the pipeline by stage, status as colour.' },
+      { src: '/work/jobquest/board-final.webp', caption: 'Board — the pipeline by stage, drag to move.' },
       { src: '/work/jobquest/grid-final-sorted.webp', caption: 'Grid — dense and sortable, for the full picture.' },
       { src: '/work/jobquest/map-final.webp', caption: 'Map — roles by city, for the “what’s nearby” question.' },
       { src: '/work/jobquest/job-offer.webp', caption: 'Offer — deciding on an offer, the numbers in one place.' },

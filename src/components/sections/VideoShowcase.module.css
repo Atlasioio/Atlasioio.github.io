@@ -77,6 +77,17 @@
   max-width: 52ch;
 }
 
+/* Bare frame — mobile clips that already carry their own device frame.
+   Centred and phone-sized, no browser chrome. */
+.bare { display: flex; justify-content: center; }
+.bare .item { width: 100%; max-width: clamp(300px, 32vw, 400px); }
+.bareFrame {
+  border: 0;
+  background: transparent;
+  box-shadow: 0 40px 80px -46px rgba(20, 40, 25, 0.4);
+}
+.bareFrame .video { border-radius: var(--card-radius); }
+
 @media (max-width: 720px) {
   .grid { grid-template-columns: 1fr; }
 }

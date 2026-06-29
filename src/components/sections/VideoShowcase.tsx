@@ -14,7 +14,15 @@ const Expand = () => (
  * without controls — click any clip to watch it fullscreen (controls appear
  * there, and are removed again on exit).
  */
-export function VideoShowcase({ videos }: { videos: CaseScreen[] }) {
+export function VideoShowcase({
+  videos,
+  frame = 'browser',
+}: {
+  videos: CaseScreen[]
+  /** 'browser' wraps each clip in browser chrome; 'bare' shows it as-is (for
+   *  mobile recordings that already include their own device frame). */
+  frame?: 'browser' | 'bare'
+}) {
   // When fullscreen is exited, strip the controls we added on the way in.
   useEffect(() => {
     const onChange = () => {
@@ -40,21 +48,25 @@ export function VideoShowcase({ videos }: { videos: CaseScreen[] }) {
     }
   }
 
+  const bare = frame === 'bare'
+
   return (
-    <div className={styles.grid}>
+    <div className={`${styles.grid} ${bare ? styles.bare : ''}`}>
       {videos.map((v, i) => (
-        <figure className={`${styles.item} ${i === 0 ? styles.lead : ''}`} key={v.src}>
+        <figure className={`${styles.item} ${!bare && i === 0 ? styles.lead : ''}`} key={v.src}>
           <button
             type="button"
-            className={styles.browser}
+            className={`${styles.browser} ${bare ? styles.bareFrame : ''}`}
             onClick={openFullscreen}
             aria-label={`Play ${v.caption} fullscreen`}
             data-cursor
             data-view
           >
-            <span className={styles.bar} aria-hidden="true">
-              <span /><span /><span />
-            </span>
+            {!bare && (
+              <span className={styles.bar} aria-hidden="true">
+                <span /><span /><span />
+              </span>
+            )}
             <video
               className={styles.video}
               src={v.src}

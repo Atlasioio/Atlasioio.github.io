@@ -45,11 +45,18 @@ export function CaseStudy() {
       }
     }
     const img = new Image()
-    img.onload = ready
-    img.onerror = ready
     img.src = cover
-    if (img.complete) ready()
-    const safety = window.setTimeout(ready, 2200)
+    // Wait for the image to be *decoded* (not just loaded) so the hero is never
+    // revealed onto a frame that hasn't painted yet. Fall back to load events
+    // where decode() isn't available, and keep a safety timeout regardless.
+    if (typeof img.decode === 'function') {
+      img.decode().then(ready, ready)
+    } else {
+      img.onload = ready
+      img.onerror = ready
+      if (img.complete) ready()
+    }
+    const safety = window.setTimeout(ready, 2500)
     return () => {
       img.onload = null
       img.onerror = null
@@ -123,10 +130,6 @@ export function CaseStudy() {
             </Reveal>
           )}
           <Reveal className={styles.meta} i={5}>
-            <div className={styles.metaItem}>
-              <span className={styles.metaLabel}>Client</span>
-              <span>{project.client}</span>
-            </div>
             <div className={styles.metaItem}>
               <span className={styles.metaLabel}>Role</span>
               <span>{project.role}</span>
@@ -233,7 +236,7 @@ export function CaseStudy() {
               In motion
             </Reveal>
             <Reveal i={1}>
-              <VideoShowcase videos={project.videos} />
+              <VideoShowcase videos={project.videos} frame={project.videoFrame ?? 'browser'} />
             </Reveal>
           </section>
         )}
@@ -252,7 +255,13 @@ export function CaseStudy() {
         <section className={`${styles.body} wrap`}>
           {project.sections.map((s, i) => (
             <Reveal className={styles.block} key={s.heading} i={i}>
-              <h2 className={styles.blockHeading}>{s.heading}</h2>
+              <div className={styles.blockHead}>
+                <span className={styles.blockNum}>
+                  <span className={styles.blockSq} aria-hidden="true" />
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h2 className={styles.blockHeading}>{s.heading}</h2>
+              </div>
               <p className={styles.blockBody}>{s.body}</p>
             </Reveal>
           ))}
