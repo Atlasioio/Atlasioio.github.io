@@ -409,7 +409,7 @@ export const projects: Project[] = [
     description:
       'Smart-office product line for the Sony group — meeting-room panels, a booking app and website, and large-format wayfinding maps. Real, shipping client work; the visuals are under NDA.',
     fill: 'c',
-    image: { src: '/work/sony/cover.webp', alt: 'Sony / Nimway — smart-office product line' },
+    image: { src: '/work/sony/cover-nimway.webp', alt: 'Sony / Nimway — smart-office product line' },
     featured: true,
     year: '2025 — 2026',
     client: 'Sony / Nimway (under NDA)',
