@@ -45,6 +45,7 @@ export function CaseStudy() {
       }
     }
     const img = new Image()
+    img.fetchPriority = 'high'
     img.src = cover
     // Wait for the image to be *decoded* (not just loaded) so the hero is never
     // revealed onto a frame that hasn't painted yet. Fall back to load events
@@ -73,7 +74,7 @@ export function CaseStudy() {
 
   const Cover = ({ p, cls }: { p: typeof project; cls: string }) =>
     p.image ? (
-      <img className={styles.coverImg} src={p.image.src} alt={p.image.alt} />
+      <img className={styles.coverImg} src={p.image.src} alt={p.image.alt} fetchPriority="high" decoding="async" />
     ) : (
       <div className={`${styles.coverImg} ${cls} ${p.grid ? styles.grid : ''}`} aria-hidden="true" />
     )
@@ -152,7 +153,7 @@ export function CaseStudy() {
                 <div className={styles.webBar} aria-hidden="true">
                   <i /><i /><i />
                 </div>
-                <img src={project.desktop[0].src} alt="" aria-hidden="true" />
+                <img src={project.desktop[0].src} alt="" aria-hidden="true" fetchPriority="high" decoding="async" />
               </div>
               {project.mobile?.[0] && (
                 <div className={styles.webPhone} aria-hidden="true">
@@ -172,7 +173,7 @@ export function CaseStudy() {
                     aria-hidden="true"
                     style={{ '--n': n } as React.CSSProperties}
                   >
-                    <img src={src} alt="" />
+                    <img src={src} alt="" fetchPriority={n === 1 ? 'high' : 'auto'} decoding="async" />
                   </span>
                 ) : (
                   <img
@@ -181,6 +182,8 @@ export function CaseStudy() {
                     src={src}
                     alt=""
                     aria-hidden="true"
+                    fetchPriority={n === 1 ? 'high' : 'auto'}
+                    decoding="async"
                     style={{ '--n': n } as React.CSSProperties}
                   />
                 ),
@@ -255,6 +258,7 @@ export function CaseStudy() {
         <section className={`${styles.body} wrap`}>
           {project.sections.map((s, i) => (
             <Reveal className={styles.block} key={s.heading} i={i}>
+              <span className={styles.blockBar} aria-hidden="true" />
               <div className={styles.blockHead}>
                 <span className={styles.blockNum}>
                   <span className={styles.blockSq} aria-hidden="true" />
