@@ -82,22 +82,16 @@
    (top-right), so it tracks the headline at every screen height and never
    collides with the fixed nav. */
 .headWrap { position: relative; }
-.cornerNote {
+.scribble {
   position: absolute;
   top: 0.15em;
   right: clamp(4px, 4vw, 64px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(14px, 1.6vw, 22px);
-  pointer-events: none;
-}
-.scribble {
   transform: rotate(-6deg);
   font-family: var(--font-hand);
   font-size: clamp(30px, 3.2vw, 48px);
   line-height: 0.9;
   color: rgba(246, 244, 241, 0.92);
+  pointer-events: none;
 }
 .scribbleLine {
   display: block;
@@ -105,18 +99,25 @@
   margin: 3px auto 0;
   color: rgba(246, 244, 241, 0.55);
 }
-/* Circular line-art avatar — the white fill pops against the blue card; the
-   square's black corners are clipped away by the radius. */
+/* Circular line-art self-portrait — the white fill pops against the blue card;
+   the square's black corners are clipped away by the radius. Sits well below the
+   scribble, dropping into the empty right column so its base lines up with the
+   email row. */
 .avatar {
-  width: clamp(80px, 9vw, 116px);
-  height: clamp(80px, 9vw, 116px);
+  position: absolute;
+  right: clamp(4px, 4vw, 64px);
+  top: clamp(120px, 14.5vw, 210px);
+  width: clamp(118px, 13vw, 168px);
+  height: clamp(118px, 13vw, 168px);
   border-radius: 50%;
   object-fit: cover;
   background: #fff;
-  box-shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 18px 42px -16px rgba(0, 0, 0, 0.34);
+  pointer-events: none;
 }
 @media (max-width: 900px) {
-  .cornerNote { display: none; }
+  .scribble,
+  .avatar { display: none; }
 }
 .head {
   /* flex column so the line-mask clip-room margins don't collapse */

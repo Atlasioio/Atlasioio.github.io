@@ -95,7 +95,7 @@ export function Hero({ started }: { started: boolean }) {
           <path className={styles.draw} d="M4 44 L12 60 L26 53" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
         <span className={styles.scribbleText}>
-          apps, websites
+          apps, sites
           <br />&amp; brands
         </span>
         <svg className={styles.scribbleLine} viewBox="0 0 180 16" fill="none">
