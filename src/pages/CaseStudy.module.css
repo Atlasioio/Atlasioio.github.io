@@ -175,29 +175,23 @@
   margin-top: clamp(56px, 8vw, 120px);
   display: flex;
   flex-direction: column;
-  gap: clamp(40px, 5vw, 80px);
+  gap: clamp(56px, 7vw, 104px);
 }
+/* Each section: a narrow heading rail on the left that stays pinned while the
+   body scrolls past on the right in one calm, readable column. Consistent grid
+   row-to-row, so the run reads cleanly instead of zig-zagging. */
 .block {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: clamp(20px, 3vw, 56px);
+  grid-template-columns: minmax(200px, 0.7fr) minmax(0, 1.5fr);
+  gap: clamp(28px, 5vw, 88px);
   align-items: start;
 }
-/* Every other section mirrors — heading swings to the right, copy to the left —
-   so the run of sections zig-zags down the page instead of marching in a column
-   (echoes the alternating blocks on the home page). */
-.blockAlt {
-  grid-template-columns: 2fr 1fr;
-}
-.blockAlt .blockHead {
-  order: 2;
-  align-items: flex-end;
-  text-align: right;
-}
-.blockAlt .blockBody {
-  order: 1;
-}
 .blockHead {
+  position: sticky;
+  top: clamp(96px, 13vh, 140px);
+  align-self: start;
+}
+.blockHeadInner {
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -231,9 +225,9 @@
 }
 .blockBody {
   font-size: var(--fs-lead);
-  line-height: 1.6;
+  line-height: 1.62;
   color: var(--gray-strong);
-  max-width: 56ch;
+  max-width: 60ch;
 }
 
 /* Next project */
@@ -540,11 +534,9 @@
 @media (max-width: 880px) {
   .meta { grid-template-columns: repeat(2, 1fr); }
   .results { grid-template-columns: 1fr; gap: 28px; }
-  .block,
-  .blockAlt { grid-template-columns: 1fr; gap: 14px; }
-  /* Stacked: every section reads heading-first, left-aligned. */
-  .blockAlt .blockHead { order: 0; align-items: flex-start; text-align: left; }
-  .blockAlt .blockBody { order: 0; }
+  /* Stacked: heading sits above its body, not pinned. */
+  .block { grid-template-columns: 1fr; gap: 16px; }
+  .blockHead { position: static; top: auto; }
   .systemGrid { grid-template-columns: 1fr; gap: 36px; }
   .next { flex-direction: row; }
   .nextThumb { display: none; }

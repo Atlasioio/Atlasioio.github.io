@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useEffect, useState, type CSSProperties, type ImgHTMLAttributes } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { projects, coverSrc, preloadCover } from '../data/content'
 import { useLenis } from '../hooks/useLenis'
@@ -13,6 +13,11 @@ import { BrandGallery } from '../components/sections/BrandGallery'
 import { RouteTransition } from '../components/RouteTransition/RouteTransition'
 import { Reveal } from '../components/ui/Reveal'
 import styles from './CaseStudy.module.css'
+
+// React 18.3 doesn't map the camelCase `fetchPriority` prop at runtime (it warns
+// and would spam the console), so pass the lowercase HTML attribute instead. The
+// hero is the LCP image, so we want the browser to fetch it first.
+const HIGH_FETCH = { fetchpriority: 'high' } as unknown as ImgHTMLAttributes<HTMLImageElement>
 
 /** A single selected-work case study (route "/work/:slug"). */
 export function CaseStudy() {
@@ -74,7 +79,7 @@ export function CaseStudy() {
 
   const Cover = ({ p, cls }: { p: typeof project; cls: string }) =>
     p.image ? (
-      <img className={styles.coverImg} src={p.image.src} alt={p.image.alt} fetchPriority="high" decoding="async" />
+      <img className={styles.coverImg} src={p.image.src} alt={p.image.alt} {...HIGH_FETCH} decoding="async" />
     ) : (
       <div className={`${styles.coverImg} ${cls} ${p.grid ? styles.grid : ''}`} aria-hidden="true" />
     )
@@ -153,7 +158,7 @@ export function CaseStudy() {
                 <div className={styles.webBar} aria-hidden="true">
                   <i /><i /><i />
                 </div>
-                <img src={project.desktop[0].src} alt="" aria-hidden="true" fetchPriority="high" decoding="async" />
+                <img src={project.desktop[0].src} alt="" aria-hidden="true" {...HIGH_FETCH} decoding="async" />
               </div>
               {project.mobile?.[0] && (
                 <div className={styles.webPhone} aria-hidden="true">
@@ -171,9 +176,9 @@ export function CaseStudy() {
                     key={src}
                     className={styles.devicePhone}
                     aria-hidden="true"
-                    style={{ '--n': n } as React.CSSProperties}
+                    style={{ '--n': n } as CSSProperties}
                   >
-                    <img src={src} alt="" fetchPriority={n === 1 ? 'high' : 'auto'} decoding="async" />
+                    <img src={src} alt="" {...(n === 1 ? HIGH_FETCH : {})} decoding="async" />
                   </span>
                 ) : (
                   <img
@@ -182,9 +187,9 @@ export function CaseStudy() {
                     src={src}
                     alt=""
                     aria-hidden="true"
-                    fetchPriority={n === 1 ? 'high' : 'auto'}
+                    {...(n === 1 ? HIGH_FETCH : {})}
                     decoding="async"
-                    style={{ '--n': n } as React.CSSProperties}
+                    style={{ '--n': n } as CSSProperties}
                   />
                 ),
               )}
@@ -257,20 +262,22 @@ export function CaseStudy() {
 
         <section className={`${styles.body} wrap`}>
           {project.sections.map((s, i) => (
-            <Reveal
-              className={`${styles.block} ${i % 2 === 1 ? styles.blockAlt : ''}`}
-              key={s.heading}
-              i={i}
-            >
+            // Plain wrapper (no transform) so the sticky heading below isn't
+            // trapped by a transformed ancestor; the reveal lives on the inner bits.
+            <div className={styles.block} key={s.heading}>
               <div className={styles.blockHead}>
-                <span className={styles.blockNum}>
-                  <span className={styles.blockSq} aria-hidden="true" />
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <h2 className={styles.blockHeading}>{s.heading}</h2>
+                <Reveal className={styles.blockHeadInner} i={i}>
+                  <span className={styles.blockNum}>
+                    <span className={styles.blockSq} aria-hidden="true" />
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <h2 className={styles.blockHeading}>{s.heading}</h2>
+                </Reveal>
               </div>
-              <p className={styles.blockBody}>{s.body}</p>
-            </Reveal>
+              <Reveal as="p" className={styles.blockBody} i={i}>
+                {s.body}
+              </Reveal>
+            </div>
           ))}
         </section>
 
