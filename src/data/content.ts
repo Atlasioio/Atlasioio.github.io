@@ -296,6 +296,7 @@ export const projects: Project[] = [
     accent: '#F5A800',
     videoFrame: 'bare',
     videos: [
+      { src: '/work/ecotrip/EcoTrip-Flow-vid.webm', caption: 'A walk through the core flow — exploring and planning a greener trip.' },
       { src: '/work/ecotrip/why-bees.webm', caption: 'Give back to the hive — the pledge page that funds bee conservation.' },
     ],
     coverScreens: [

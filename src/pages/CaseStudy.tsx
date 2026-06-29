@@ -257,8 +257,11 @@ export function CaseStudy() {
 
         <section className={`${styles.body} wrap`}>
           {project.sections.map((s, i) => (
-            <Reveal className={styles.block} key={s.heading} i={i}>
-              <span className={styles.blockBar} aria-hidden="true" />
+            <Reveal
+              className={`${styles.block} ${i % 2 === 1 ? styles.blockAlt : ''}`}
+              key={s.heading}
+              i={i}
+            >
               <div className={styles.blockHead}>
                 <span className={styles.blockNum}>
                   <span className={styles.blockSq} aria-hidden="true" />
