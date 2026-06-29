@@ -11,9 +11,9 @@ const R = 162
 /** How Lukas works in each discipline — shown beside the motif in the hover card. */
 const NODE_DESC: Record<string, string> = {
   AI: 'I use AI to close the gap between design and code — pushing an idea from sketch to a clickable prototype I can feel and refine. I care more about where it earns a place than the hype.',
-  Research: 'I start from how people actually behave — interviews, flows, and a clear read on what success looks like before a single pixel.',
-  'UX/UI': 'Flows to pixels: interfaces built on a system, so they stay coherent under real, daily use instead of becoming one-off screens.',
-  Build: 'I build what I design — front-end in React or Framer — so ideas ship as working products, not just hand-offs.',
+  Research: 'I start from evidence, not assumptions — user interviews, competitor and desk research, and a clear read on what success looks like before a single pixel.',
+  'UX/UI': 'Flows to pixels — interfaces that hold up under real, daily use. Systems keep them consistent; the product decides where to break the mould.',
+  Build: 'I prototype in code — React or Framer — turning ideas into clickable, functional demos that test a feature or direction, well beyond static mockups.',
   Brand: 'Identity as a system: type, colour, and a visual language that holds together across every surface, from a logo to a full screen.',
   Motion: 'Motion with intent — transitions and micro-interactions that guide attention and make a product feel alive, never decorative.',
 }

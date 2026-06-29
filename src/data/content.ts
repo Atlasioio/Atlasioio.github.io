@@ -85,14 +85,14 @@ export const services: Service[] = [
     index: 'S/01',
     name: 'Web & app development',
     description:
-      'I design and build websites and web apps — fast, accessible, and fully responsive, so they feel right on desktop and mobile alike.',
-    tags: ['Web apps', 'Responsive', 'React', 'Framer'],
+      'I design and build websites and apps, across web and mobile — fast, accessible, and responsive, so they feel right on every screen.',
+    tags: ['Web & mobile', 'Responsive', 'Framer'],
     image: { src: '/images/service-web.svg', alt: 'A responsive website and web app shown on a browser and a phone' },
     category: ['Website', 'Web app'],
     detail: {
-      lead: 'Websites and web apps that earn their keep — quick to load, easy to run, and built to look right on every screen.',
+      lead: 'Websites and apps that earn their keep — quick to load, easy to run, and built to look right on every screen.',
       includes: [
-        'Marketing sites & web apps',
+        'Marketing sites & apps',
         'Front-end build — React or Framer',
         'Responsive, desktop to mobile',
         'A CMS you can edit yourself',
