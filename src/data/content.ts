@@ -292,18 +292,18 @@ export const projects: Project[] = [
     ],
     accent: '#F5A800',
     coverScreens: [
-      '/work/ecotrip/onboarding.png',
-      '/work/ecotrip/explore-trips.png',
-      '/work/ecotrip/profile.png',
+      '/work/ecotrip/onboarding.webp',
+      '/work/ecotrip/explore-trips.webp',
+      '/work/ecotrip/profile.webp',
     ],
     screens: [
-      { src: '/work/ecotrip/onboarding.png', caption: 'Onboarding — you join a hive, not a leaderboard.' },
-      { src: '/work/ecotrip/explore.png', caption: 'Explore — trips the hive loved, filtered by sustainability.' },
-      { src: '/work/ecotrip/explore-trips.png', caption: 'Trip detail — EcoScore, route and itinerary at a glance.' },
-      { src: '/work/ecotrip/create.png', caption: 'Create — friction on the high-carbon choice, never the path.' },
-      { src: '/work/ecotrip/community.png', caption: 'The Hive — collective impact, shared not scored.' },
-      { src: '/work/ecotrip/community-trip.png', caption: 'A shared trip — the full breakdown, ready to copy.' },
-      { src: '/work/ecotrip/profile.png', caption: 'Profile — impact surfaced ahead of stats.' },
+      { src: '/work/ecotrip/onboarding.webp', caption: 'Onboarding — you join a hive, not a leaderboard.' },
+      { src: '/work/ecotrip/explore.webp', caption: 'Explore — trips the hive loved, filtered by sustainability.' },
+      { src: '/work/ecotrip/explore-trips.webp', caption: 'Trip detail — EcoScore, route and itinerary at a glance.' },
+      { src: '/work/ecotrip/create.webp', caption: 'Create — friction on the high-carbon choice, never the path.' },
+      { src: '/work/ecotrip/community.webp', caption: 'The Hive — collective impact, shared not scored.' },
+      { src: '/work/ecotrip/community-trip.webp', caption: 'A shared trip — the full breakdown, ready to copy.' },
+      { src: '/work/ecotrip/profile.webp', caption: 'Profile — impact surfaced ahead of stats.' },
     ],
     designSystem: {
       intro:
@@ -325,7 +325,7 @@ export const projects: Project[] = [
         'Friction on the high-carbon choice, never the path.',
         'Reward without the lecture — a nudge, not a sticker.',
       ],
-      sheet: '/work/ecotrip/components.png',
+      sheet: '/work/ecotrip/components.webp',
     },
   },
   {
