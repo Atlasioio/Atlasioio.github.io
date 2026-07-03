@@ -30,7 +30,11 @@ export function FixedControls({ staticDark = false }: { staticDark?: boolean }) 
       <div className={styles.inner}>
         <div className={styles.right}>
           <Hamburger open={open} onClick={toggle} theme={dark ? 'dark' : 'light'} />
-          <LinkedInButton theme={dark ? 'dark' : 'light'} />
+          {/* LinkedIn drops on phones (it lives in the menu + footer) so the
+              controls never crowd the wordmark on narrow screens. */}
+          <span className={styles.liControl}>
+            <LinkedInButton theme={dark ? 'dark' : 'light'} />
+          </span>
           <Button
             onClick={() => openModal()}
             className={styles.ctrlBtn}

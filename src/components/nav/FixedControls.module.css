@@ -18,6 +18,15 @@
   gap: 22px;
   pointer-events: auto;
 }
+.liControl {
+  display: inline-flex;
+  align-items: center;
+}
+/* On phones, hide LinkedIn from the top controls so they clear the wordmark. */
+@media (max-width: 600px) {
+  .liControl { display: none; }
+  .right { gap: 16px; }
+}
 
 /* Pin the button to the shared control height so it matches the hamburger
    circle exactly, and keep it at its natural (fit-content) width — never
