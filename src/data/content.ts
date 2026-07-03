@@ -123,7 +123,7 @@ export const services: Service[] = [
         'Build-ready hand-off',
       ],
       approach:
-        'Systems before screens. I map how the thing actually works, prototype the parts that carry risk, and settle a component set that stays coherent as the product grows.',
+        'I map how the thing actually works, then tackle what matters most to users first — the make-or-break flows down to the small details that make it feel right. I prototype the riskier parts early to test them, and keep the interface consistent as it grows.',
     },
   },
   {
@@ -344,7 +344,7 @@ export const projects: Project[] = [
     role: 'Design & React build',
     outcome: 'A job-search tracker I designed and built, end to end',
     description:
-      'A job-search tracker — board, grid, and map views, a bento dashboard, and colour-coded stages. A real, functional tool I designed and built in React, born out of my own job search.',
+      'A job-search tracker — board, grid, and map views, a bento dashboard, and colour-coded stages. A real, functional tool I designed and built in React, made for the reality of job-hunting in today’s market.',
     fill: 'b',
     grid: true,
     featured: true,
@@ -355,7 +355,7 @@ export const projects: Project[] = [
     client: 'Jobquest — self-initiated',
     services: ['Product design', 'UX/UI', 'React build'],
     tagline:
-      'A job-search tracker born out of my own search — built to make the hunt feel calm and clear.',
+      'A job-search tracker for today’s market — built to make the hunt feel calm and clear.',
     overview:
       'Jobquest is a web app I designed and built — a job-search tracker that came out of running my own search. Three views answer three different questions, status reads as colour rather than noise, and a local-first architecture keeps it quick and frictionless. Built in React/TypeScript, pair-built with Claude Code.',
     sections: [
@@ -369,7 +369,7 @@ export const projects: Project[] = [
       },
       {
         heading: 'Easy to scan, yours to shape',
-        body: 'Colour-coded stages help the board read at a glance — but so do the company logos and stage icons, so you scan however suits you. And it bends to you: filter, sort, and customise to your heart’s content across a kanban board, dense rows, or a map — all of it still simple to use.',
+        body: 'Colour-coded stages help the board read at a glance — but so do the company logos and stage icons, so you scan however suits you. It bends to you, too: filter, sort, and customise to your heart’s content across a kanban board, dense rows, or a map. And each application keeps the CV and cover letter you tailored for it, so the whole search lives in one place — not scattered across folders.',
       },
       {
         heading: 'The build',
@@ -634,7 +634,7 @@ export const steps: Step[] = [
   {
     no: '01',
     name: 'Discovery',
-    description: 'Understand the people, the problem, and what success actually looks like.',
+    description: 'Understand the users, other stakeholders, and the core problem — to see what success actually looks like.',
   },
   {
     no: '02',

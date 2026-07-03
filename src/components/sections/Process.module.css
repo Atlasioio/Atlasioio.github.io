@@ -79,20 +79,21 @@
   color: var(--gray-strong);
   letter-spacing: 0.04em;
 }
+/* No margin-top:auto here — the number, heading, and copy stack from the top so
+   they line up across all four steps regardless of how many lines each blurb
+   runs to (a longer one just extends further down). A little extra space above
+   the heading separates it from the icon + number. */
 .name {
   font-family: var(--font-display);
   font-weight: 620;
   letter-spacing: -0.025em;
   font-size: clamp(24px, 2.4vw, 34px);
-  margin-top: auto;
+  margin-top: clamp(10px, 1.4vw, 20px);
 }
 .desc {
   color: var(--gray-strong);
   font-size: var(--fs-sm);
   line-height: 1.5;
-  /* Reserve a consistent height (~3 lines) so a shorter description doesn't let
-     its heading drop lower than the others. */
-  min-height: 4.5em;
   max-width: 26ch;
 }
 .bar {
