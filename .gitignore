@@ -5,6 +5,13 @@ dist-ssr
 .DS_Store
 .vite
 
+# Local env (the contact-form key). Note: VITE_ vars are inlined into the client
+# bundle at build time, so the Web3Forms key is public either way — it's spam-
+# protected and safe to expose; this just keeps it out of source.
+.env
+.env.*
+!.env.example
+
 # Editor
 .vscode/*
 !.vscode/extensions.json

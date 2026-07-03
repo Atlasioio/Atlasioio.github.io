@@ -6,11 +6,16 @@ import styles from './StartProjectModal.module.css'
 const LINKEDIN_URL = socials.find((s) => s.label === 'LinkedIn')?.href ?? '#'
 
 /**
- * Where the message is sent. Set this to a form endpoint (e.g. a Formspree URL
- * or your own API) to enable real delivery. While empty, the form runs in demo
- * mode and resolves successfully so the confirmation flow can be seen.
+ * Real message delivery via Web3Forms (https://web3forms.com) — a free, no-backend
+ * relay that emails submissions straight to the studio inbox. Get an access key by
+ * entering your email on their site (no account); it's safe to expose client-side.
+ * Set it in `.env` as VITE_WEB3FORMS_KEY (and in the Vercel project's env vars).
+ *
+ * If no key is configured or the request fails, we surface a real error rather than
+ * a fake "sent" — the form never claims success it can't back up.
  */
-const FORM_ENDPOINT = ''
+const WEB3FORMS_KEY = (import.meta.env.VITE_WEB3FORMS_KEY as string | undefined)?.trim() || ''
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
@@ -21,16 +26,26 @@ interface Message {
 }
 
 async function sendMessage(payload: Message): Promise<void> {
-  if (!FORM_ENDPOINT) {
-    await new Promise((r) => setTimeout(r, 1100))
-    return
+  if (!WEB3FORMS_KEY) {
+    throw new Error('Contact form is not configured (missing delivery key).')
   }
-  const res = await fetch(FORM_ENDPOINT, {
+  const res = await fetch(WEB3FORMS_ENDPOINT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({
+      access_key: WEB3FORMS_KEY,
+      subject: `Portfolio contact${payload.name ? ` — ${payload.name}` : ''}`,
+      from_name: payload.name || 'Portfolio visitor',
+      replyto: payload.email,
+      name: payload.name || '(not given)',
+      email: payload.email,
+      message: payload.message,
+    }),
   })
-  if (!res.ok) throw new Error('Request failed')
+  const data = (await res.json().catch(() => null)) as { success?: boolean; message?: string } | null
+  if (!res.ok || !data?.success) {
+    throw new Error(data?.message || `Delivery failed (${res.status}).`)
+  }
 }
 
 const CopyIcon = () => (
