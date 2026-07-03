@@ -239,6 +239,21 @@
   100% { top: 100%; }
 }
 
+/* Language + theme toggles at the foot of the hero — phones only (desktop keeps
+   the fixed pair). Sits opposite the scroll cue, in white on the blue. */
+.heroToggles { display: none; }
+@media (max-width: 600px) {
+  .heroToggles {
+    position: absolute;
+    z-index: 2;
+    right: var(--gutter);
+    bottom: clamp(28px, 4vw, 44px);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
 /* Short viewports (laptops in landscape): trim the tall paddings/gaps so the
    card keeps an even inset to the screen edge instead of overflowing the bottom. */
 @media (max-height: 1000px) {

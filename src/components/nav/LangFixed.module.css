@@ -23,6 +23,12 @@
     visibility 0s linear 0.4s;
 }
 
+/* On phones the toggles live in the hero and the menu instead of floating over
+   the content, so drop the fixed pair. */
+@media (max-width: 600px) {
+  .wrap { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .wrap { transition: none; }
 }

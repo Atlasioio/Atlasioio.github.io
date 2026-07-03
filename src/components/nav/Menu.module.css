@@ -100,8 +100,26 @@
   flex-wrap: wrap;
 }
 
+/* Language + theme toggles, so they're reachable from the menu (the fixed pair
+   is hidden on phones and while the menu is open). */
+.toggles {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: clamp(22px, 3vh, 34px);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s, transform 0.6s var(--ease-out);
+}
+.open .toggles {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.58s;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .menu,
   .link,
-  .meta { transition: none; }
+  .meta,
+  .toggles { transition: none; }
 }

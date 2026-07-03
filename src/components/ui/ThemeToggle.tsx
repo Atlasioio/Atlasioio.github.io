@@ -6,7 +6,7 @@ import styles from './ThemeToggle.module.css'
  * mode — solid black in light mode (so it reads as "switch to dark"), solid
  * white in dark mode — and shows the icon of the mode you'd switch to.
  */
-export function ThemeToggle() {
+export function ThemeToggle({ onDark = false }: { onDark?: boolean }) {
   const { theme, toggle } = useTheme()
   const dark = theme === 'dark'
 
@@ -23,7 +23,7 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
-      className={`${styles.btn} ${dark ? styles.dark : ''}`}
+      className={`${styles.btn} ${dark ? styles.dark : ''} ${onDark ? styles.onDark : ''}`}
       onClick={toggle}
       aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}
       aria-pressed={dark}

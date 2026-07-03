@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { menuLinks, socials, studio } from '../../data/content'
 import { useMenu } from '../../context/MenuContext'
 import { useToast } from '../../context/ToastContext'
+import { LangToggle } from '../ui/LangToggle'
+import { ThemeToggle } from '../ui/ThemeToggle'
 import styles from './Menu.module.css'
 
 /**
@@ -92,6 +94,11 @@ export function Menu() {
           <span className={styles.metaLabel}>Based in</span>
           <span>{studio.location} · {studio.worldwide}</span>
         </div>
+      </div>
+
+      <div className={styles.toggles}>
+        <LangToggle theme="onDark" />
+        <ThemeToggle onDark />
       </div>
     </div>
   )

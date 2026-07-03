@@ -20,6 +20,11 @@
   border-color: var(--hero-fg);
   color: var(--dark-bg);
 }
+/* On a dark surface (the ink menu panel), the light-mode dark fill would vanish —
+   give it a light ring so it stays visible. */
+.onDark:not(.dark) {
+  border-color: rgba(246, 244, 241, 0.45);
+}
 
 .icons {
   position: relative;

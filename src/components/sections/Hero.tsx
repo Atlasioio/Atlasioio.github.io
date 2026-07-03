@@ -1,5 +1,7 @@
 import { Button } from '../ui/Button'
 import { LinkLike } from '../ui/LinkLike'
+import { LangToggle } from '../ui/LangToggle'
+import { ThemeToggle } from '../ui/ThemeToggle'
 import { Showreel } from './Showreel'
 import { ShowreelBoundary } from './ShowreelBoundary'
 import { useStartModal } from '../../context/StartModalContext'
@@ -108,6 +110,13 @@ export function Hero({ started }: { started: boolean }) {
         <span className={styles.track}>
           <i />
         </span>
+      </div>
+
+      {/* Phone-only: the language + theme toggles live at the foot of the hero
+          (white, on the blue) rather than floating fixed over the page. */}
+      <div className={styles.heroToggles}>
+        <LangToggle theme="onDark" />
+        <ThemeToggle />
       </div>
     </section>
   )
