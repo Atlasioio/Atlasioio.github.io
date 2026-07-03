@@ -11,6 +11,7 @@ import { WebShowcase } from '../components/sections/WebShowcase'
 import { VideoShowcase } from '../components/sections/VideoShowcase'
 import { BrandGallery } from '../components/sections/BrandGallery'
 import { RouteTransition } from '../components/RouteTransition/RouteTransition'
+import { ProjectChat } from '../components/ProjectChat/ProjectChat'
 import { Reveal } from '../components/ui/Reveal'
 import styles from './CaseStudy.module.css'
 
@@ -361,6 +362,7 @@ export function CaseStudy() {
       </main>
 
       <Footer />
+      <ProjectChat project={project} />
     </>
   )
 }

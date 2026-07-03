@@ -7,6 +7,7 @@ import { LangFixed } from '../components/nav/LangFixed'
 import { Menu } from '../components/nav/Menu'
 import { Footer } from '../components/sections/Footer'
 import { CaseRow } from '../components/sections/CaseRow'
+import { ProjectChat } from '../components/ProjectChat/ProjectChat'
 import { Reveal } from '../components/ui/Reveal'
 import caseStyles from './CaseStudy.module.css'
 import workStyles from '../components/sections/Work.module.css'
@@ -60,6 +61,7 @@ export function AllWork() {
       </main>
 
       <Footer />
+      <ProjectChat />
     </>
   )
 }
