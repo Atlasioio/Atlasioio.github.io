@@ -65,7 +65,14 @@ function StudioVisual() {
 
   useEffect(() => {
     const svg = svgRef.current
-    if (!svg || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    // Desktop-only flourish: skip on reduced-motion and on touch devices (where
+    // tap-fired pointer events would pop the wide hover card off-screen).
+    if (
+      !svg ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      window.matchMedia('(hover: none)').matches
+    )
+      return
 
     const cur = { vis: 0, pulse: 0 }
     const target = { on: 0 }

@@ -90,6 +90,10 @@
 
 @media (max-width: 720px) {
   .grid { grid-template-columns: 1fr; }
+  /* Stack bare (phone-frame) clips vertically so each stays a usable size
+     instead of shrinking to a thumbnail side-by-side. */
+  .bare { flex-direction: column; align-items: center; gap: clamp(24px, 6vw, 40px); }
+  .bare .item { max-width: min(320px, 82vw); }
 }
 @media (prefers-reduced-motion: reduce) {
   /* Static poster only — pause handled by the browser when reduced-motion is set

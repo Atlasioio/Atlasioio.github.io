@@ -3,6 +3,11 @@
   margin: var(--card-pad);
   border-radius: var(--card-radius);
   overflow: hidden;
+  /* Own compositing layer — stops iOS Safari from flickering the rounded corners
+     to square and back during scroll (a repaint bug on rounded overflow:hidden). */
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   background: var(--accent);
   color: var(--hero-fg);
   min-height: calc(100svh - var(--card-pad) * 2);

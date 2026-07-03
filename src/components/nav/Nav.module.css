@@ -72,4 +72,8 @@
 
 @media (max-width: 720px) {
   .links { display: none; }
+  /* The ghost only exists to reserve the controls' width so the links centre.
+     With the links hidden on mobile it serves no purpose, and its reserved width
+     (wordmark + full controls) overflows the bar → horizontal page scroll. Drop it. */
+  .ghost { display: none; }
 }
