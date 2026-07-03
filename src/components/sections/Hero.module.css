@@ -234,6 +234,19 @@
   100% { top: 100%; }
 }
 
+/* Short viewports (laptops in landscape): trim the tall paddings/gaps so the
+   card keeps an even inset to the screen edge instead of overflowing the bottom. */
+@media (max-height: 1000px) {
+  .hero {
+    padding-block: clamp(52px, 9vh, 118px) clamp(30px, 6vh, 84px);
+  }
+  .inner { gap: clamp(14px, 3vh, 40px); }
+  .row { margin-top: clamp(16px, 3vh, 44px); }
+  /* Headline is 4 fixed lines — its biggest vertical cost — so cap it by height
+     here (only on short screens; larger displays keep the full --fs-hero). */
+  .headline { font-size: min(var(--fs-hero), 8.4vh); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lineMask > span { transform: none; }
 }
