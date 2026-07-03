@@ -3,13 +3,13 @@ import type { Service } from '../../data/content'
 import { useServiceModal } from '../../context/ServiceModalContext'
 import { Reveal } from '../ui/Reveal'
 import { ArrowUpRight } from '../ui/Icons'
-import { WebArt, UxArt, BrandArt } from './ServiceArt'
+import { TinkerArt, UxArt, BrandArt } from './ServiceArt'
 import styles from './Services.module.css'
 
 /** Built-in animated illustrations, keyed by service id (real CMS imagery
  *  would override these via service.image). */
 const ART: Record<string, ComponentType> = {
-  'svc-web': WebArt,
+  'svc-tinker': TinkerArt,
   'svc-ux': UxArt,
   'svc-brand': BrandArt,
 }

@@ -2,13 +2,13 @@ import { useEffect, useState, type ComponentType, type MouseEvent } from 'react'
 import type { Service } from '../../data/content'
 import { useServiceModal } from '../../context/ServiceModalContext'
 import { useStartModal } from '../../context/StartModalContext'
-import { WebArt, UxArt, BrandArt } from '../sections/ServiceArt'
+import { TinkerArt, UxArt, BrandArt } from '../sections/ServiceArt'
 import modal from '../StartProjectModal/StartProjectModal.module.css'
 import styles from './ServiceModal.module.css'
 
 /** Animated illustrations, keyed by service id (mirrors ServiceCard). */
 const ART: Record<string, ComponentType> = {
-  'svc-web': WebArt,
+  'svc-tinker': TinkerArt,
   'svc-ux': UxArt,
   'svc-brand': BrandArt,
 }

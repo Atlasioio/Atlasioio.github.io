@@ -9,49 +9,53 @@ const ink = 'currentColor'
 const accent = 'var(--accent)'
 
 /**
- * Web design & development — a browser and a phone; a cursor clicks the CTA and
- * taps a phone item, both responding (the "responsive, interactive" idea).
+ * Tinkering — the curious, hands-on side: a code snippet types itself, a card
+ * builds line by line and its button clicks, a toggle flips on, and an AI spark
+ * spins. All looping.
  */
-export function WebArt() {
+export function TinkerArt() {
   return (
     <svg className={styles.artSvg} viewBox="0 0 400 500" fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
-      {/* Browser window */}
-      <g>
-        <rect x="34" y="78" width="246" height="188" rx="14" fill={screen} stroke={ink} strokeOpacity="0.18" strokeWidth="2" />
-        <line x1="34" y1="112" x2="280" y2="112" stroke={ink} strokeOpacity="0.14" strokeWidth="2" />
-        <circle cx="52" cy="95" r="4" fill={ink} fillOpacity="0.25" />
-        <circle cx="66" cy="95" r="4" fill={ink} fillOpacity="0.25" />
-        <circle cx="80" cy="95" r="4" fill={ink} fillOpacity="0.25" />
-        <rect x="120" y="90" width="140" height="10" rx="5" fill={ink} fillOpacity="0.08" />
-        {/* content */}
-        <rect className={styles.wSel} x="52" y="130" width="120" height="14" rx="7" fill={ink} fillOpacity="0.16" />
-        <rect x="52" y="156" width="190" height="9" rx="4.5" fill={ink} fillOpacity="0.1" />
-        <rect x="52" y="174" width="170" height="9" rx="4.5" fill={ink} fillOpacity="0.1" />
-        <rect className={styles.wBtn} x="52" y="204" width="92" height="34" rx="17" fill={accent} />
+      {/* A loose pill drifting */}
+      <g className={styles.tkPill}>
+        <g transform="rotate(-9 116 165)">
+          <rect x="74" y="152" width="86" height="26" rx="13" fill={accent} fillOpacity="0.55" />
+        </g>
       </g>
 
-      {/* Phone */}
+      {/* Card that builds itself, then its button clicks */}
       <g>
-        <rect x="236" y="250" width="128" height="210" rx="26" fill={ink} fillOpacity="0.9" />
-        <rect x="245" y="259" width="110" height="192" rx="18" fill={screen} />
-        <rect x="282" y="270" width="36" height="6" rx="3" fill={ink} fillOpacity="0.3" />
-        <rect className={styles.pHero} x="259" y="290" width="82" height="50" rx="9" fill={accent} fillOpacity="0.55" />
-        <rect className={styles.pItem} x="259" y="352" width="82" height="22" rx="7" fill={ink} fillOpacity="0.1" />
-        <rect className={styles.pItem2} x="259" y="382" width="82" height="22" rx="7" fill={ink} fillOpacity="0.1" />
-        <rect x="259" y="418" width="50" height="20" rx="10" fill={ink} fillOpacity="0.12" />
+        <rect x="118" y="210" width="170" height="140" rx="14" fill={screen} stroke={ink} strokeOpacity="0.2" strokeWidth="2" />
+        <rect x="138" y="232" width="64" height="9" rx="4.5" fill={ink} fillOpacity="0.2" />
+        <rect className={styles.tkLine} style={{ animationDelay: '0.15s' }} x="138" y="252" width="138" height="7" rx="3.5" fill={ink} fillOpacity="0.14" />
+        <rect className={styles.tkLine} style={{ animationDelay: '0.4s' }} x="138" y="266" width="120" height="7" rx="3.5" fill={ink} fillOpacity="0.14" />
+        <rect className={styles.tkLine} style={{ animationDelay: '0.65s' }} x="138" y="280" width="98" height="7" rx="3.5" fill={ink} fillOpacity="0.12" />
+        <rect className={styles.tkBtn} x="138" y="300" width="66" height="22" rx="11" fill={accent} fillOpacity="0.9" />
+        <rect x="214" y="300" width="60" height="22" rx="8" fill={ink} fillOpacity="0.1" />
       </g>
 
-      {/* Stylized blue-and-white cursor that moves between the two */}
-      <g className={styles.cursor}>
-        <path
-          d="M0 0 L0 25 L7 18 L13 29 L17 27 L11 17 L21 17 Z"
-          fill={accent}
-          stroke="#fff"
-          strokeWidth="2.4"
-          strokeLinejoin="round"
-          strokeLinecap="round"
-        />
+      {/* Mini code snippet that types, with a blinking cursor */}
+      <g className={styles.tkSnip}>
+        <g transform="rotate(8 320 174)">
+          <rect x="282" y="140" width="76" height="68" rx="10" fill={ink} fillOpacity="0.9" />
+          <rect className={styles.tkLine} style={{ animationDelay: '0s' }} x="292" y="154" width="24" height="6" rx="3" fill={accent} fillOpacity="0.9" />
+          <rect className={styles.tkLine} style={{ animationDelay: '0.3s' }} x="320" y="154" width="26" height="6" rx="3" fill={screen} fillOpacity="0.32" />
+          <rect className={styles.tkLine} style={{ animationDelay: '0.55s' }} x="300" y="166" width="36" height="6" rx="3" fill={screen} fillOpacity="0.5" />
+          <rect className={styles.tkLine} style={{ animationDelay: '0.8s' }} x="300" y="178" width="24" height="6" rx="3" fill={screen} fillOpacity="0.3" />
+          <rect className={styles.tkLine} style={{ animationDelay: '1.05s' }} x="292" y="190" width="22" height="6" rx="3" fill={accent} fillOpacity="0.6" />
+          <rect className={styles.tkCursor} x="318" y="188" width="3" height="9" rx="1.5" fill={screen} fillOpacity="0.85" />
+        </g>
       </g>
+
+      {/* Toggle that flips on */}
+      <g transform="rotate(6 116 360)">
+        <rect x="85" y="347" width="66" height="26" rx="13" fill={ink} fillOpacity="0.16" />
+        <rect className={styles.tkOn} x="85" y="347" width="66" height="26" rx="13" fill={accent} fillOpacity="0.8" />
+        <circle className={styles.tkKnob} cx="99" cy="360" r="10" fill={screen} stroke={ink} strokeOpacity="0.2" strokeWidth="1.5" />
+      </g>
+
+      {/* AI spark that spins + pulses */}
+      <path className={styles.tkSpark} d="M326 300 C 328 316, 331 319, 347 320 C 331 321, 328 324, 326 340 C 324 324, 321 321, 305 320 C 321 319, 324 316, 326 300 Z" fill={accent} fillOpacity="0.9" />
     </svg>
   )
 }

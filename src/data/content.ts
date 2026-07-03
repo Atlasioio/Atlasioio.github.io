@@ -104,31 +104,8 @@ export const services: Service[] = [
     },
   },
   {
-    id: 'svc-web',
-    index: 'S/02',
-    name: 'Web & app development',
-    description:
-      'I design and build websites and apps, across web and mobile — fast, accessible, and responsive, so they feel right on every screen.',
-    tags: ['Web & mobile', 'Responsive', 'Framer'],
-    image: { src: '/images/service-web.svg', alt: 'A responsive website and web app shown on a browser and a phone' },
-    category: ['Website', 'Web app'],
-    detail: {
-      lead: 'Websites and apps that earn their keep — quick to load, easy to run, and built to look right on every screen.',
-      includes: [
-        'Marketing sites & apps',
-        'Front-end build — React or Framer',
-        'Responsive, desktop to mobile',
-        'A CMS you can edit yourself',
-        'Performance, accessibility & SEO',
-        'Launch & handover',
-      ],
-      approach:
-        'I start with the goal and the content, not a template — and the same hands design and build it, so nothing gets lost in a hand-off. You end up with something fast that you can actually maintain.',
-    },
-  },
-  {
     id: 'svc-brand',
-    index: 'S/03',
+    index: 'S/02',
     name: 'Brand identity',
     description:
       'Logo, type, and visual systems that tie it all together — one consistent language across every surface and screen.',
@@ -147,6 +124,29 @@ export const services: Service[] = [
       ],
       approach:
         'Identity built as a system, not a single logo — defined clearly enough to apply itself, and flexible enough to live everywhere from a business card to a six-metre wall.',
+    },
+  },
+  {
+    id: 'svc-tinker',
+    index: 'S/03',
+    name: 'Tinkering',
+    description:
+      'The hands-on, curious side — I tinker in code and with AI to prototype ideas, explore what’s possible, and turn a concept into something you can actually click and try.',
+    tags: ['Code', 'AI', 'Prototyping'],
+    image: { src: '/images/service-web.svg', alt: 'Tinkering — prototyping in code and with AI' },
+    category: ['Prototype', 'Experiment'],
+    detail: {
+      lead: 'The hands-on, curious side of the work — where an idea becomes something you can click, poke at, and actually try.',
+      includes: [
+        'Functional prototypes & demos',
+        'Tinkering in code — React & Framer',
+        'AI tools for fast, working builds',
+        'Proof-of-concepts & experiments',
+        'Exploring ideas before committing',
+        'Learning what actually works',
+      ],
+      approach:
+        'Less production engineering, more curiosity. I tinker in code and with AI to push an idea from sketch to something clickable — exploring and testing what works before anyone commits to building it. For me, building is a way to think, not just to ship.',
     },
   },
 ]
