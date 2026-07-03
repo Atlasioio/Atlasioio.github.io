@@ -81,31 +81,8 @@ export interface Service {
 
 export const services: Service[] = [
   {
-    id: 'svc-web',
-    index: 'S/01',
-    name: 'Web & app development',
-    description:
-      'I design and build websites and apps, across web and mobile — fast, accessible, and responsive, so they feel right on every screen.',
-    tags: ['Web & mobile', 'Responsive', 'Framer'],
-    image: { src: '/images/service-web.svg', alt: 'A responsive website and web app shown on a browser and a phone' },
-    category: ['Website', 'Web app'],
-    detail: {
-      lead: 'Websites and apps that earn their keep — quick to load, easy to run, and built to look right on every screen.',
-      includes: [
-        'Marketing sites & apps',
-        'Front-end build — React or Framer',
-        'Responsive, desktop to mobile',
-        'A CMS you can edit yourself',
-        'Performance, accessibility & SEO',
-        'Launch & handover',
-      ],
-      approach:
-        'I start with the goal and the content, not a template — and the same hands design and build it, so nothing gets lost in a hand-off. You end up with something fast that you can actually maintain.',
-    },
-  },
-  {
     id: 'svc-ux',
-    index: 'S/02',
+    index: 'S/01',
     name: 'UX/UI design',
     description:
       'Product thinking from flows to pixels — research, interface design, and prototypes for apps and tools that hold up under real use.',
@@ -124,6 +101,29 @@ export const services: Service[] = [
       ],
       approach:
         'I map how the thing actually works, then tackle what matters most to users first — the make-or-break flows down to the small details that make it feel right. I prototype the riskier parts early to test them, and keep the interface consistent as it grows.',
+    },
+  },
+  {
+    id: 'svc-web',
+    index: 'S/02',
+    name: 'Web & app development',
+    description:
+      'I design and build websites and apps, across web and mobile — fast, accessible, and responsive, so they feel right on every screen.',
+    tags: ['Web & mobile', 'Responsive', 'Framer'],
+    image: { src: '/images/service-web.svg', alt: 'A responsive website and web app shown on a browser and a phone' },
+    category: ['Website', 'Web app'],
+    detail: {
+      lead: 'Websites and apps that earn their keep — quick to load, easy to run, and built to look right on every screen.',
+      includes: [
+        'Marketing sites & apps',
+        'Front-end build — React or Framer',
+        'Responsive, desktop to mobile',
+        'A CMS you can edit yourself',
+        'Performance, accessibility & SEO',
+        'Launch & handover',
+      ],
+      approach:
+        'I start with the goal and the content, not a template — and the same hands design and build it, so nothing gets lost in a hand-off. You end up with something fast that you can actually maintain.',
     },
   },
   {
