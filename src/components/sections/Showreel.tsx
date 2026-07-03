@@ -1,6 +1,6 @@
 import { useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
 import { ShowreelFilm } from './ShowreelFilm'
-import { useAmbientPad } from '../../hooks/useAmbientPad'
+import { useReelTrack } from '../../hooks/useReelTrack'
 import styles from './Showreel.module.css'
 
 /* ---- Inline control icons ------------------------------------------------ */
@@ -42,9 +42,9 @@ export function Showreel() {
   const reelRef = useRef<HTMLDivElement>(null)
   const dragStart = useRef<{ x: number; y: number; bx: number; by: number } | null>(null)
 
-  // Ambient pad: audible only while hovering the playing reel.
+  // A looping song preview, audible only while hovering the playing reel.
   const soundOn = open && playing && hovered
-  useAmbientPad(soundOn)
+  useReelTrack('/audio/mariella.mp3', soundOn)
 
   const togglePlay = () => setPlaying((p) => !p)
 

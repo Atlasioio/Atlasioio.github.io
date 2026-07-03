@@ -653,6 +653,43 @@ export const steps: Step[] = [
   },
 ]
 
+/* ---- Beyond the work (05) — the personal bento --------------------------- */
+export const aboutMe = {
+  blurb:
+    "Moved to Stockholm this year and eager to explore it. I like keeping up with design and AI — and off the clock you'll usually find me with a book, cooking something, or grabbing a matcha.",
+  tags: ['New to Stockholm', 'Curious by default'],
+  /** Self-hosted 30-sec previews + cover art (no Spotify iframe → no third-party
+   *  cookies or tracking). `url` opens the full track on Spotify on click only. */
+  tracks: [
+    {
+      title: 'White Keys',
+      artist: 'Dominic Fike',
+      cover: '/images/tracks/white-keys.jpg',
+      preview: '/audio/white-keys.mp3',
+      url: 'https://open.spotify.com/track/5ViLKrbyL3HD6wsq3AB9eI',
+    },
+    {
+      title: 'Self Aware',
+      artist: 'Temper City',
+      cover: '/images/tracks/self-aware.jpg',
+      preview: '/audio/self-aware.mp3',
+      url: 'https://open.spotify.com/track/4qW3BbQAwZsrnu8a3ZRdyT',
+    },
+    {
+      title: 'Mariella',
+      artist: 'Khruangbin, Leon Bridges',
+      cover: '/images/tracks/mariella.jpg',
+      preview: '/audio/mariella.mp3',
+      url: 'https://open.spotify.com/track/3dvXRk7TZ929m21p49RR5P',
+    },
+  ],
+  books: [
+    { title: 'Brave New World', author: 'Aldous Huxley', cover: '/images/books/brave-new-world.jpg' },
+    { title: "Aesop's Fables", author: 'Aesop', cover: '/images/books/aesop-fables.jpg' },
+  ],
+  interests: ['Cooking', 'Matcha', 'Design & AI', 'Exploring Stockholm'],
+}
+
 /* ---- Footer -------------------------------------------------------------- */
 export const footerColumns = [
   {

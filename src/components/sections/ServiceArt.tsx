@@ -60,31 +60,58 @@ export function TinkerArt() {
 }
 
 /**
- * UX/UI design — three nodes whose links draw in and connect, then a checkmark
- * confirms the flow (the "polished UX moment"), looping.
+ * UX/UI design — a two-act loop that cross-fades between the two halves of the
+ * craft: a *user flow* (wireframe screens with a user travelling the path) and
+ * the *system behind it* (nodes whose links draw in, then a check confirms).
  */
 export function UxArt() {
+  const screens = [
+    { id: 's1', cls: styles.uxScreen1, x: 68, y: 116 },
+    { id: 's2', cls: styles.uxScreen2, x: 224, y: 116 },
+    { id: 's3', cls: styles.uxScreen3, x: 146, y: 292 },
+  ]
   return (
     <svg className={styles.artSvg} viewBox="0 0 400 500" fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
-      {/* links */}
-      <g stroke={ink} strokeOpacity="0.35" strokeWidth="2.5" strokeLinecap="round">
-        <line className={styles.uxLine1} x1="200" y1="170" x2="130" y2="300" />
-        <line className={styles.uxLine2} x1="130" y1="300" x2="270" y2="300" />
-        <line className={styles.uxLine3} x1="270" y1="300" x2="200" y2="170" />
+      {/* Act 1 — the user flow */}
+      <g className={styles.uxFlow}>
+        <g stroke={ink} strokeOpacity="0.32" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none">
+          <path d="M178 161 H 220" />
+          <path d="M213 155 L 220 161 L 213 167" />
+          <path d="M279 206 L 206 288" />
+          <path d="M205 277 L 205 289 L 216 285" />
+        </g>
+        {screens.map((s) => (
+          <g key={s.id} className={`${styles.uxScreen} ${s.cls}`}>
+            <rect x={s.x} y={s.y} width="110" height="90" rx="11" fill={screen} stroke={ink} strokeOpacity="0.42" strokeWidth="2.5" />
+            <rect x={s.x + 14} y={s.y + 14} width="42" height="8" rx="4" fill={accent} fillOpacity="0.75" />
+            <rect x={s.x + 14} y={s.y + 32} width="82" height="6" rx="3" fill={ink} fillOpacity="0.16" />
+            <rect x={s.x + 14} y={s.y + 46} width="62" height="6" rx="3" fill={ink} fillOpacity="0.14" />
+            <rect x={s.x + 14} y={s.y + 64} width="46" height="14" rx="7" fill={ink} fillOpacity="0.12" />
+          </g>
+        ))}
+        {/* the user travelling the flow */}
+        <circle className={styles.uxFlowDot} r="9" fill={accent} />
       </g>
-      {/* nodes */}
-      <g>
-        <circle cx="200" cy="170" r="30" fill={screen} stroke={ink} strokeOpacity="0.5" strokeWidth="2.5" />
-        <circle cx="130" cy="300" r="30" fill={screen} stroke={ink} strokeOpacity="0.5" strokeWidth="2.5" />
-        <circle cx="270" cy="300" r="30" fill={screen} stroke={ink} strokeOpacity="0.5" strokeWidth="2.5" />
-        <circle className={`${styles.uxDot} ${styles.uxDot1}`} cx="200" cy="170" r="10" fill={accent} />
-        <circle className={`${styles.uxDot} ${styles.uxDot2}`} cx="130" cy="300" r="10" fill={accent} />
-        <circle className={`${styles.uxDot} ${styles.uxDot3}`} cx="270" cy="300" r="10" fill={accent} />
-      </g>
-      {/* polished moment — a check appears once connected */}
-      <g className={styles.uxCheck}>
-        <circle cx="200" cy="395" r="26" fill={accent} />
-        <path d="M188 395 l8 8 l16 -18" fill="none" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+
+      {/* Act 2 — the node graph behind it */}
+      <g className={styles.uxNodes}>
+        <g stroke={ink} strokeOpacity="0.35" strokeWidth="2.5" strokeLinecap="round">
+          <line className={styles.uxLink} x1="200" y1="170" x2="130" y2="300" />
+          <line className={`${styles.uxLink} ${styles.uxLink2}`} x1="130" y1="300" x2="270" y2="300" />
+          <line className={`${styles.uxLink} ${styles.uxLink3}`} x1="270" y1="300" x2="200" y2="170" />
+        </g>
+        <g>
+          <circle cx="200" cy="170" r="30" fill={screen} stroke={ink} strokeOpacity="0.5" strokeWidth="2.5" />
+          <circle cx="130" cy="300" r="30" fill={screen} stroke={ink} strokeOpacity="0.5" strokeWidth="2.5" />
+          <circle cx="270" cy="300" r="30" fill={screen} stroke={ink} strokeOpacity="0.5" strokeWidth="2.5" />
+          <circle className={styles.uxNode} cx="200" cy="170" r="10" fill={accent} />
+          <circle className={`${styles.uxNode} ${styles.uxNode2}`} cx="130" cy="300" r="10" fill={accent} />
+          <circle className={`${styles.uxNode} ${styles.uxNode3}`} cx="270" cy="300" r="10" fill={accent} />
+        </g>
+        <g className={styles.uxCheck}>
+          <circle cx="200" cy="395" r="26" fill={accent} />
+          <path d="M188 395 l8 8 l16 -18" fill="none" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+        </g>
       </g>
     </svg>
   )

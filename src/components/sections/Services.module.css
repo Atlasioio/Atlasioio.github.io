@@ -91,42 +91,83 @@
   100% { transform: scale(1); }
 }
 
-/* ---- UX: links draw + connect, then a check confirms the flow ---------- */
-.uxLine1,
-.uxLine2,
-.uxLine3 { stroke-dasharray: 152; animation: uxDraw 4.6s var(--ease) infinite; }
-.uxLine2 { animation-delay: 0.2s; }
-.uxLine3 { animation-delay: 0.4s; }
-@keyframes uxDraw {
-  0% { stroke-dashoffset: 152; }
-  28% { stroke-dashoffset: 0; }
-  72% { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: -152; }
+/* ---- UX/UI: cross-fades between a user-flow act and a node-graph act ----- */
+.uxFlow { animation: uxFadeA 10s var(--ease) infinite; }
+.uxNodes { animation: uxFadeB 10s var(--ease) infinite; }
+@keyframes uxFadeA {
+  0% { opacity: 1; }
+  44% { opacity: 1; }
+  50% { opacity: 0; }
+  94% { opacity: 0; }
+  100% { opacity: 1; }
 }
-.uxDot {
+@keyframes uxFadeB {
+  0% { opacity: 0; }
+  44% { opacity: 0; }
+  50% { opacity: 1; }
+  94% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Act 1 — a user travels the flow; each screen lights up on arrival */
+.uxFlowDot {
+  transform: translate(123px, 161px);
+  animation: uxFlowDot 10s var(--ease) infinite;
+}
+@keyframes uxFlowDot {
+  0% { transform: translate(123px, 161px); }
+  9% { transform: translate(123px, 161px); }
+  21% { transform: translate(279px, 161px); }
+  33% { transform: translate(201px, 337px); }
+  44% { transform: translate(201px, 337px); }
+  94% { transform: translate(201px, 337px); }
+  100% { transform: translate(123px, 161px); }
+}
+.uxScreen {
   transform-box: fill-box;
   transform-origin: center;
-  animation: uxPulse 4.6s var(--ease-out) infinite;
 }
-.uxDot2 { animation-delay: 0.2s; }
-.uxDot3 { animation-delay: 0.4s; }
+.uxScreen1 { animation: uxScr1 10s var(--ease-out) infinite; }
+.uxScreen2 { animation: uxScr2 10s var(--ease-out) infinite; }
+.uxScreen3 { animation: uxScr3 10s var(--ease-out) infinite; }
+@keyframes uxScr1 { 0%, 4% { transform: scale(1); } 9% { transform: scale(1.06); } 15%, 100% { transform: scale(1); } }
+@keyframes uxScr2 { 0%, 16% { transform: scale(1); } 21% { transform: scale(1.06); } 27%, 100% { transform: scale(1); } }
+@keyframes uxScr3 { 0%, 28% { transform: scale(1); } 33% { transform: scale(1.06); } 39%, 100% { transform: scale(1); } }
+
+/* Act 2 — links draw + connect, nodes pulse, a check confirms the flow */
+.uxLink { stroke-dasharray: 152; animation: uxDraw 10s var(--ease) infinite; }
+.uxLink2 { animation-delay: 0.18s; }
+.uxLink3 { animation-delay: 0.36s; }
+@keyframes uxDraw {
+  0%, 52% { stroke-dashoffset: 152; }
+  66% { stroke-dashoffset: 0; }
+  88% { stroke-dashoffset: 0; }
+  95%, 100% { stroke-dashoffset: -152; }
+}
+.uxNode {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: uxPulse 10s var(--ease-out) infinite;
+}
+.uxNode2 { animation-delay: 0.12s; }
+.uxNode3 { animation-delay: 0.24s; }
 @keyframes uxPulse {
-  0%, 22% { transform: scale(1); }
-  34% { transform: scale(1.35); }
-  48% { transform: scale(1); }
+  0%, 60% { transform: scale(1); }
+  68% { transform: scale(1.35); }
+  76% { transform: scale(1); }
   100% { transform: scale(1); }
 }
 .uxCheck {
   transform-box: fill-box;
   transform-origin: center;
   opacity: 0;
-  animation: uxCheck 4.6s var(--ease-out) infinite;
+  animation: uxCheck 10s var(--ease-out) infinite;
 }
 @keyframes uxCheck {
-  0%, 42% { opacity: 0; transform: scale(0.6); }
-  52% { opacity: 1; transform: scale(1); }
-  74% { opacity: 1; transform: scale(1); }
-  84% { opacity: 0; transform: scale(0.92); }
+  0%, 74% { opacity: 0; transform: scale(0.6); }
+  82% { opacity: 1; transform: scale(1); }
+  90% { opacity: 1; transform: scale(1); }
+  94% { opacity: 0; transform: scale(0.92); }
   100% { opacity: 0; transform: scale(0.6); }
 }
 
@@ -235,10 +276,14 @@
   .cursor,
   .wBtn,
   .pHero,
-  .uxLine1,
-  .uxLine2,
-  .uxLine3,
-  .uxDot,
+  .uxFlow,
+  .uxNodes,
+  .uxFlowDot,
+  .uxScreen1,
+  .uxScreen2,
+  .uxScreen3,
+  .uxLink,
+  .uxNode,
   .uxCheck,
   .brandGlyph,
   .swatch,
@@ -251,9 +296,9 @@
   .tkOn,
   .tkFill,
   .tkSpark { animation: none; }
-  .uxLine1,
-  .uxLine2,
-  .uxLine3 { stroke-dashoffset: 0; }
+  .uxFlow { opacity: 0; }
+  .uxNodes { opacity: 1; }
+  .uxLink { stroke-dashoffset: 0; }
   .uxCheck { opacity: 1; }
   .brandGlyph0 { opacity: 1; }
   .tkLine,

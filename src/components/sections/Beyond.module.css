@@ -1,0 +1,310 @@
+.section {
+  /* Tighter top so it hugs "How I work"; global padding keeps space before the footer. */
+  padding-top: clamp(40px, 4.5vw, 72px);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-h2);
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  color: var(--ink);
+  margin-top: clamp(18px, 1.8vw, 30px);
+  margin-bottom: clamp(28px, 3vw, 46px);
+  max-width: 18ch;
+}
+
+/* ---- Bento grid --------------------------------------------------------- */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(14px, 1.4vw, 20px);
+  grid-auto-rows: minmax(104px, auto);
+}
+
+.tile {
+  background: var(--bg-deep);
+  border: 1px solid var(--hairline);
+  border-radius: var(--card-radius);
+  padding: clamp(20px, 1.9vw, 30px);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  box-shadow: 0 26px 54px -42px rgba(14, 14, 12, 0.34);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: clamp(14px, 1.4vw, 18px);
+}
+
+/* ---- Intro (accent tile) ------------------------------------------------ */
+.intro {
+  grid-column: span 2;
+  grid-row: span 2;
+  background: var(--accent);
+  border-color: transparent;
+  color: var(--hero-fg);
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+.avatar {
+  width: clamp(58px, 5.4vw, 74px);
+  height: clamp(58px, 5.4vw, 74px);
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff;
+  margin-bottom: clamp(18px, 2vw, 26px);
+}
+.introName {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(26px, 2.6vw, 35px);
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  color: var(--hero-fg);
+  margin-bottom: clamp(11px, 1.2vw, 15px);
+}
+.introBlurb {
+  font-size: var(--fs-sm);
+  line-height: 1.62;
+  color: color-mix(in srgb, var(--hero-fg) 82%, transparent);
+  max-width: 34ch;
+}
+.hej {
+  position: absolute;
+  top: clamp(14px, 1.5vw, 22px);
+  right: clamp(20px, 2vw, 30px);
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: clamp(30px, 3.2vw, 46px);
+  line-height: 1;
+  color: #fff;
+  transform: rotate(-8deg);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ---- Tags (intro + off the clock) --------------------------------------- */
+.tags {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+.intro .tags {
+  margin-top: clamp(18px, 2vw, 24px);
+}
+.tags span {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline-2);
+  color: var(--gray-strong);
+  white-space: nowrap;
+}
+.intro .tags span {
+  border-color: color-mix(in srgb, var(--hero-fg) 32%, transparent);
+  color: color-mix(in srgb, var(--hero-fg) 90%, transparent);
+}
+
+/* ---- On repeat (Spotify) ------------------------------------------------ */
+.music {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.tracks {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(14px, 1.6vw, 22px);
+}
+.track {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.trackPlay {
+  position: relative;
+  width: clamp(48px, 4.6vw, 58px);
+  height: clamp(48px, 4.6vw, 58px);
+  border-radius: 11px;
+  overflow: hidden;
+  flex: none;
+  padding: 0;
+  border: 1px solid var(--hairline);
+  background: var(--bg);
+  cursor: pointer;
+}
+.cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.playBadge {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(14, 14, 12, 0.42);
+  opacity: 0;
+  transition: opacity 0.25s var(--ease-out);
+}
+.trackPlay:hover .playBadge,
+.trackOn .playBadge {
+  opacity: 1;
+}
+.trackMeta {
+  flex: 1;
+  min-width: 0;
+}
+.trackTitle {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.trackArtist {
+  font-size: 13px;
+  color: var(--gray);
+  margin-top: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.progress {
+  margin-top: 9px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--hairline-2);
+  overflow: hidden;
+}
+.progressFill {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--accent);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.15s linear;
+}
+.spotifyOut {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  color: var(--gray);
+  transition: color 0.2s;
+}
+.spotifyOut:hover {
+  color: var(--accent);
+}
+
+/* ---- On the nightstand (books) ------------------------------------------ */
+.books {
+  grid-column: span 2;
+}
+.bookRow {
+  display: flex;
+  gap: clamp(22px, 2.6vw, 40px);
+  flex-wrap: wrap;
+}
+.book {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.bookCover {
+  width: clamp(44px, 4vw, 52px);
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 3px;
+  flex: none;
+  box-shadow: 0 10px 22px -12px rgba(14, 14, 12, 0.55);
+}
+.bookTitle {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--ink);
+}
+.bookAuthor {
+  font-size: 13px;
+  color: var(--gray);
+  margin-top: 1px;
+}
+
+/* ---- Currently ---------------------------------------------------------- */
+.nowLoc {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--gray-strong);
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3b8a2f;
+  flex: none;
+  animation: nowPulse 2.6s var(--ease-out) infinite;
+}
+@keyframes nowPulse {
+  0% { box-shadow: 0 0 0 0 rgba(59, 138, 47, 0.5); }
+  70% { box-shadow: 0 0 0 8px rgba(59, 138, 47, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(59, 138, 47, 0); }
+}
+
+/* ---- Responsive --------------------------------------------------------- */
+@media (max-width: 900px) {
+  .bento {
+    grid-template-columns: 1fr 1fr;
+  }
+  .intro,
+  .music,
+  .books {
+    grid-column: span 2;
+    grid-row: auto;
+  }
+  .clock,
+  .now {
+    grid-column: span 1;
+  }
+}
+@media (max-width: 560px) {
+  .bento {
+    grid-template-columns: 1fr;
+  }
+  .intro,
+  .music,
+  .books,
+  .clock,
+  .now {
+    grid-column: span 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot { animation: none; }
+}

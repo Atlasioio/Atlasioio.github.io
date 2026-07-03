@@ -66,7 +66,7 @@ const ART: Record<string, () => ReactElement> = {
 /** 04 — Process. Four numbered steps, each with a stage-appropriate illustration. */
 export function Process() {
   return (
-    <section className="section wrap" id="process">
+    <section className={`section wrap ${styles.section}`} id="process">
       <Marker num="04" label="How I work" />
       <div className={styles.grid}>
         {steps.map((step, i) => {

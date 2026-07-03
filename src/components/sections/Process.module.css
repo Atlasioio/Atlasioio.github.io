@@ -1,3 +1,7 @@
+.section {
+  /* Tighter bottom so "Beyond the work" sits closer beneath. */
+  padding-bottom: clamp(52px, 6vw, 96px);
+}
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
