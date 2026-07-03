@@ -16,11 +16,10 @@ const accent = 'var(--accent)'
 export function TinkerArt() {
   return (
     <svg className={styles.artSvg} viewBox="0 0 400 500" fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
-      {/* A loose pill drifting */}
-      <g className={styles.tkPill}>
-        <g transform="rotate(-9 116 165)">
-          <rect x="74" y="152" width="86" height="26" rx="13" fill={accent} fillOpacity="0.55" />
-        </g>
+      {/* A little build/loading bar that fills up */}
+      <g transform="rotate(-9 116 165)">
+        <rect x="74" y="152" width="86" height="26" rx="13" fill={ink} fillOpacity="0.12" />
+        <rect className={styles.tkFill} x="78" y="156" width="78" height="18" rx="9" fill={accent} fillOpacity="0.75" />
       </g>
 
       {/* Card that builds itself, then its button clicks */}
@@ -47,11 +46,11 @@ export function TinkerArt() {
         </g>
       </g>
 
-      {/* Toggle that flips on */}
-      <g transform="rotate(6 116 360)">
-        <rect x="85" y="347" width="66" height="26" rx="13" fill={ink} fillOpacity="0.16" />
-        <rect className={styles.tkOn} x="85" y="347" width="66" height="26" rx="13" fill={accent} fillOpacity="0.8" />
-        <circle className={styles.tkKnob} cx="99" cy="360" r="10" fill={screen} stroke={ink} strokeOpacity="0.2" strokeWidth="1.5" />
+      {/* Toggle that flips on (sits below-left of the card) */}
+      <g transform="rotate(6 97 367)">
+        <rect x="64" y="354" width="66" height="26" rx="13" fill={ink} fillOpacity="0.16" />
+        <rect className={styles.tkOn} x="64" y="354" width="66" height="26" rx="13" fill={accent} fillOpacity="0.8" />
+        <circle className={styles.tkKnob} cx="78" cy="367" r="10" fill={screen} stroke={ink} strokeOpacity="0.2" strokeWidth="1.5" />
       </g>
 
       {/* AI spark that spins + pulses */}

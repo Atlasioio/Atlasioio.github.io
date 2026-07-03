@@ -219,6 +219,17 @@
   50% { transform: rotate(180deg) scale(1.35); opacity: 1; }
   100% { transform: rotate(360deg) scale(0.85); opacity: 0.7; }
 }
+.tkFill {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: tkFill 4.4s var(--ease) infinite;
+}
+@keyframes tkFill {
+  0% { transform: scaleX(0); }
+  40% { transform: scaleX(1); }
+  78% { transform: scaleX(1); }
+  88%, 100% { transform: scaleX(0); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .cursor,
@@ -238,13 +249,15 @@
   .tkSnip,
   .tkKnob,
   .tkOn,
+  .tkFill,
   .tkSpark { animation: none; }
   .uxLine1,
   .uxLine2,
   .uxLine3 { stroke-dashoffset: 0; }
   .uxCheck { opacity: 1; }
   .brandGlyph0 { opacity: 1; }
-  .tkLine { transform: scaleX(1); }
+  .tkLine,
+  .tkFill { transform: scaleX(1); }
   .tkOn { opacity: 1; }
   .tkKnob { transform: translateX(38px); }
 }
