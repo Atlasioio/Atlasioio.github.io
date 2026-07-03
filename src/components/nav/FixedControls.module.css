@@ -22,10 +22,27 @@
   display: inline-flex;
   align-items: center;
 }
+.hamWrap {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.55s var(--ease-out);
+}
 /* On phones, hide LinkedIn from the top controls so they clear the wordmark. */
 @media (max-width: 600px) {
   .liControl { display: none; }
   .right { gap: 16px; }
+  /* Slide the hamburger from its spot next to Contact all the way to the top-left
+     corner when scrolled past the hero. The distance is the inner content width
+     (100vw minus the card + nav insets) minus the Contact button + gap + the
+     hamburger's own width sitting on the right. */
+  .navfix[data-ham-left] .hamWrap {
+    transform: translateX(
+      calc(-100vw + var(--card-pad) * 2 + var(--nav-inset) * 2 + var(--ctrl-h) + 16px + var(--contact-w, 126px))
+    );
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hamWrap { transition: none; }
 }
 
 /* Pin the button to the shared control height so it matches the hamburger

@@ -24,12 +24,18 @@ export function FixedControls({ staticDark = false }: { staticDark?: boolean }) 
   const dark = (staticDark || scrolled) && !open
   // Over the accent-blue hero card, the light pill's hover darkens to ink.
   const overHero = !staticDark && !scrolled && !open
+  // On phones, once scrolled past the hero (home only — sub-pages have a
+  // top-left back link the hamburger would collide with), the hamburger slides
+  // over to the top-left corner; back at the top it slides home next to Contact.
+  const hamLeft = scrolled && !staticDark
 
   return (
-    <div className={styles.navfix}>
+    <div className={styles.navfix} data-ham-left={hamLeft ? '' : undefined}>
       <div className={styles.inner}>
         <div className={styles.right}>
-          <Hamburger open={open} onClick={toggle} theme={dark ? 'dark' : 'light'} />
+          <span className={styles.hamWrap}>
+            <Hamburger open={open} onClick={toggle} theme={dark ? 'dark' : 'light'} />
+          </span>
           {/* LinkedIn drops on phones (it lives in the menu + footer) so the
               controls never crowd the wordmark on narrow screens. */}
           <span className={styles.liControl}>
