@@ -235,10 +235,11 @@ export function Studio() {
               internationally — across web, app, and large-format screens.
             </Reveal>
             <Reveal as="p" i={2}>
-              There's a Scandinavian sensibility to how I work — calm, considered, and built on
-              coherent systems rather than one-off screens. But how much design a product needs
-              depends on the product, not a house style; what I care about most is decisions that
-              hold up under real use. And lately, a real curiosity about where AI fits into the craft.
+              I'm curious by default — I like understanding <em>why</em> a product should work a
+              certain way, then sweating the details until it feels right for the people using it. I
+              love owning my work and pushing it forward independently, and I'm every bit as happy
+              building alongside a team. Lately I've been more hands-on in code, learning where AI
+              actually helps.
             </Reveal>
           </div>
         </div>
