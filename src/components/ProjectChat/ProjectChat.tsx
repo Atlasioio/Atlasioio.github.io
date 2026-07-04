@@ -1,13 +1,17 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { projects, type Project } from '../../data/content'
+import { useStartModal } from '../../context/StartModalContext'
 import { buildChatConfig } from '../../lib/chatContext'
 import styles from './ProjectChat.module.css'
 
 type Mode = 'bar' | 'open' | 'mini'
 interface Action {
   label: string
-  to: string
+  /** Navigation target (project / process section). */
+  to?: string
+  /** Opens the contact form modal instead of navigating. */
+  contact?: boolean
 }
 interface Msg {
   role: 'user' | 'assistant'
@@ -30,7 +34,7 @@ function deriveActions(text: string, currentId?: string): Action[] {
     out.push({ label: 'See my design process', to: '/#process' })
   }
   if (/get in touch|reach out|contact me|email me|drop me a/.test(lower)) {
-    out.push({ label: 'Get in touch', to: '/#contact' })
+    out.push({ label: 'Get in touch', contact: true })
   }
   return out.slice(0, 4)
 }
@@ -58,10 +62,12 @@ const SendIcon = () => (
  */
 export function ProjectChat({ project }: { project?: Project }) {
   const cfg = useMemo(() => buildChatConfig(project), [project])
+  const { openModal } = useStartModal()
   const [mode, setMode] = useState<Mode>('bar')
   const [messages, setMessages] = useState<Msg[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const dockRef = useRef<HTMLDivElement>(null)
   const logRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -77,6 +83,25 @@ export function ProjectChat({ project }: { project?: Project }) {
       logRef.current.scrollTop = logRef.current.scrollHeight
     }
   }, [messages, loading, mode])
+
+  // Keep the window sitting above the mobile on-screen keyboard: the
+  // VisualViewport shrinks when the keyboard opens, so we expose that height as
+  // --kb and the CSS lifts the dock and trims the panel to fit.
+  useEffect(() => {
+    const vv = window.visualViewport
+    if (!vv) return
+    const update = () => {
+      const kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop)
+      dockRef.current?.style.setProperty('--kb', `${Math.round(kb)}px`)
+    }
+    update()
+    vv.addEventListener('resize', update)
+    vv.addEventListener('scroll', update)
+    return () => {
+      vv.removeEventListener('resize', update)
+      vv.removeEventListener('scroll', update)
+    }
+  }, [])
 
   // Focus the field when the window opens; Esc minimizes it.
   useEffect(() => {
@@ -112,7 +137,8 @@ export function ProjectChat({ project }: { project?: Project }) {
         {
           role: 'assistant',
           error: true,
-          content: "Sorry — I couldn't reach the assistant just now. You can still get in touch with Lukas via the contact button.",
+          content: "Sorry — I couldn't reach the assistant just now. You can still get in touch with me directly:",
+          actions: [{ label: 'Get in touch', contact: true }],
         },
       ])
     } finally {
@@ -121,19 +147,24 @@ export function ProjectChat({ project }: { project?: Project }) {
   }
 
   return (
-    <div className={styles.dock} data-mode={mode}>
-      {/* Docked bar (initial) */}
-      <button type="button" className={styles.bar} onClick={() => setMode('open')} aria-label="Open the project assistant" data-cursor>
-        <span className={styles.avatar}>
-          <img src={AVATAR} alt="" width={40} height={40} />
-          <span className={styles.pulse} aria-hidden="true" />
-        </span>
-        <span className={styles.barLabel}>{cfg.title}</span>
-        <span className={styles.barChevron} aria-hidden="true"><ChevronUp /></span>
-      </button>
+    <div className={styles.dock} data-mode={mode} ref={dockRef}>
+      {/* Docked bar (initial + minimized) */}
+      <div className={styles.bar} aria-hidden={mode !== 'bar'}>
+        <button type="button" className={styles.barMain} onClick={() => setMode('open')} aria-label="Open the project assistant" tabIndex={mode === 'bar' ? 0 : -1} data-cursor>
+          <span className={styles.avatar}>
+            <img src={AVATAR} alt="" width={40} height={40} />
+            <span className={styles.pulse} aria-hidden="true" />
+          </span>
+          <span className={styles.barLabel}>{cfg.title}</span>
+          <span className={styles.barChevron} aria-hidden="true"><ChevronUp /></span>
+        </button>
+        <button type="button" className={styles.barClose} onClick={() => setMode('mini')} aria-label="Close chat to corner" tabIndex={mode === 'bar' ? 0 : -1} data-cursor>
+          <CloseX />
+        </button>
+      </div>
 
       {/* Minimized avatar (corner) */}
-      <button type="button" className={styles.mini} onClick={() => setMode('open')} aria-label="Open the project assistant" data-cursor>
+      <button type="button" className={styles.mini} onClick={() => setMode('open')} aria-label="Open the project assistant" aria-hidden={mode !== 'mini'} tabIndex={mode === 'mini' ? 0 : -1} data-cursor>
         <img src={AVATAR} alt="" width={58} height={58} />
         <span className={styles.pulse} aria-hidden="true" />
       </button>
@@ -170,12 +201,19 @@ export function ProjectChat({ project }: { project?: Project }) {
               </div>
               {m.actions && m.actions.length > 0 && (
                 <div className={styles.actions}>
-                  {m.actions.map((a) => (
-                    <Link key={a.to} to={a.to} className={styles.action} data-cursor>
-                      {a.label}
-                      <span aria-hidden="true">→</span>
-                    </Link>
-                  ))}
+                  {m.actions.map((a) =>
+                    a.contact ? (
+                      <button key={a.label} type="button" className={styles.action} onClick={() => openModal()} data-cursor>
+                        {a.label}
+                        <span aria-hidden="true">→</span>
+                      </button>
+                    ) : (
+                      <Link key={a.to} to={a.to!} className={styles.action} data-cursor>
+                        {a.label}
+                        <span aria-hidden="true">→</span>
+                      </Link>
+                    ),
+                  )}
                 </div>
               )}
             </Fragment>

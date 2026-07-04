@@ -5,17 +5,20 @@
   position: fixed;
   left: 0;
   right: 0;
-  bottom: calc(var(--card-pad) + var(--nav-inset));
+  /* --kb lifts everything above the mobile on-screen keyboard (set from JS via
+     the VisualViewport API); 0 on desktop / when no keyboard is shown. */
+  bottom: calc(var(--card-pad) + var(--nav-inset) + var(--kb, 0px));
   z-index: 860;
   font-family: var(--font-body);
   pointer-events: none;
   --chat-inset: calc(var(--card-pad) + var(--nav-inset));
   --chat-lift: 62px; /* raise the corner circle above the language/theme toggles */
   --chat-w: min(424px, calc(100vw - 32px));
+  --chat-ease: cubic-bezier(0.34, 1.08, 0.5, 1); /* smooth, gently springy */
 }
 @media (max-width: 600px) {
   .dock {
-    bottom: 16px;
+    bottom: calc(16px + var(--kb, 0px));
     --chat-inset: 16px;
     --chat-lift: 8px;
   }
@@ -28,8 +31,9 @@
   bottom: 0;
   pointer-events: auto;
   transition:
-    transform 0.42s var(--ease-out),
-    opacity 0.3s var(--ease-out);
+    transform 0.5s var(--chat-ease),
+    opacity 0.42s var(--ease-out),
+    border-radius 0.5s var(--ease-out);
 }
 /* Bar + window sit centered at the bottom; only the minimized circle goes right. */
 .bar,
@@ -82,15 +86,44 @@
 .bar {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 4px;
   height: 58px;
   width: var(--chat-w);
-  padding: 0 18px 0 9px;
-  border: 0;
+  padding: 0 8px 0 9px;
   border-radius: 999px;
   background: var(--bg);
   box-shadow: 0 16px 40px -18px rgba(14, 14, 12, 0.3);
+}
+.barMain {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
   cursor: pointer;
+}
+.barClose {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--gray);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: color 0.2s, background 0.2s;
+}
+.barClose:hover {
+  color: var(--ink);
+  background: var(--bg-deep);
 }
 .barLabel {
   flex: 1;
@@ -139,7 +172,7 @@
   display: flex;
   flex-direction: column;
   width: var(--chat-w);
-  height: min(600px, calc(100vh - 150px));
+  height: min(600px, calc(100dvh - 150px - var(--kb, 0px)));
   background: var(--bg);
   border-radius: 22px;
   overflow: hidden;
@@ -149,7 +182,16 @@
 }
 @media (max-width: 600px) {
   .panel {
-    height: min(600px, calc(100vh - 110px));
+    height: min(660px, calc(100dvh - 92px - var(--kb, 0px)));
+  }
+  /* Bigger touch targets on phones. */
+  .min {
+    width: 34px;
+    height: 34px;
+  }
+  .barClose {
+    width: 40px;
+    height: 40px;
   }
 }
 
@@ -264,6 +306,7 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
+  font-family: inherit;
   font-size: 13px;
   font-weight: 500;
   padding: 8px 14px;
@@ -272,6 +315,7 @@
   color: var(--accent);
   background: transparent;
   text-decoration: none;
+  cursor: pointer;
   transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out);
 }
 .action:hover {
@@ -378,11 +422,17 @@
 .dock[data-mode='open'] .mini { transform: scale(0.4); opacity: 0; pointer-events: none; }
 .dock[data-mode='open'] .panel { transform: scale(1); opacity: 1; pointer-events: auto; }
 
-.dock[data-mode='mini'] .bar { transform: scale(0.4); opacity: 0; pointer-events: none; }
+.dock[data-mode='mini'] .bar {
+  transform: translate(calc(50vw - var(--chat-inset) - 29px), calc(-1 * var(--chat-lift) - 29px)) scale(0.14);
+  opacity: 0;
+  pointer-events: none;
+}
 .dock[data-mode='mini'] .mini { transform: scale(1); opacity: 1; pointer-events: auto; }
-/* Close (×) collapses the centered window toward the far-right corner circle. */
+/* Close (×): the window travels to the far-right corner while rounding into the
+   circle — the border-radius transition makes it morph rather than just shrink. */
 .dock[data-mode='mini'] .panel {
   transform: translate(calc(50vw - var(--chat-inset) - 29px), calc(-1 * var(--chat-lift) - 29px)) scale(0.1);
+  border-radius: 50%;
   opacity: 0;
   pointer-events: none;
 }
