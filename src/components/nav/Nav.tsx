@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { topNavLinks } from '../../data/content'
 import { Button } from '../ui/Button'
 import { Hamburger } from './Hamburger'
@@ -23,7 +24,11 @@ export function Nav() {
         <ul className={styles.links}>
           {topNavLinks.map((link) => (
             <li key={link.href}>
-              <a href={link.href}>{link.label}</a>
+              {link.href.startsWith('/') ? (
+                <Link to={link.href} data-cursor>{link.label}</Link>
+              ) : (
+                <a href={link.href}>{link.label}</a>
+              )}
             </li>
           ))}
         </ul>

@@ -20,7 +20,7 @@ export interface NavLink {
 
 /** Top-bar links (the slim editorial nav). */
 export const topNavLinks: NavLink[] = [
-  { label: 'Work', href: '#work' },
+  { label: 'Work', href: '/work' },
   { label: 'Skills', href: '#services' },
   { label: 'About', href: '#studio' },
   { label: 'Contact', href: '#contact' },
