@@ -12,6 +12,7 @@ import { VideoShowcase } from '../components/sections/VideoShowcase'
 import { BrandGallery } from '../components/sections/BrandGallery'
 import { RouteTransition } from '../components/RouteTransition/RouteTransition'
 import { ProjectChat } from '../components/ProjectChat/ProjectChat'
+import { ProjectThumb } from '../components/ui/ProjectThumb'
 import { Reveal } from '../components/ui/Reveal'
 import styles from './CaseStudy.module.css'
 
@@ -76,14 +77,25 @@ export function CaseStudy() {
   const idx = projects.findIndex((p) => p.id === slug)
   const next = projects[(idx + 1) % projects.length]
   const fillClass = styles[`fill${project.fill.toUpperCase()}` as 'fillA' | 'fillB' | 'fillC']
-  const nextFill = styles[`fill${next.fill.toUpperCase()}` as 'fillA' | 'fillB' | 'fillC']
 
-  const Cover = ({ p, cls }: { p: typeof project; cls: string }) =>
-    p.image ? (
-      <img className={styles.coverImg} src={p.image.src} alt={p.image.alt} {...HIGH_FETCH} decoding="async" />
+  // Resolve the best cover for any project type (desktop shot / phone screen /
+  // flat image), so the "next project" thumbnail is never a blank fill. `eager`
+  // is for the LCP hero; the below-the-fold next thumbnail lazy-loads.
+  const Cover = ({ p, cls, eager }: { p: typeof project; cls: string; eager?: boolean }) => {
+    const src = coverSrc(p)
+    return src ? (
+      <img
+        className={styles.coverImg}
+        src={src}
+        alt={p.image?.alt ?? `${p.name} — cover`}
+        {...(eager ? HIGH_FETCH : {})}
+        loading={eager ? undefined : 'lazy'}
+        decoding="async"
+      />
     ) : (
       <div className={`${styles.coverImg} ${cls} ${p.grid ? styles.grid : ''}`} aria-hidden="true" />
     )
+  }
 
   return (
     <>
@@ -197,7 +209,7 @@ export function CaseStudy() {
             </Reveal>
           ) : (
             <Reveal className={styles.cover}>
-              <Cover p={project} cls={fillClass} />
+              <Cover p={project} cls={fillClass} eager />
             </Reveal>
           )}
         </div>
@@ -342,6 +354,9 @@ export function CaseStudy() {
           <Link
             to={`/work/${next.id}`}
             className={styles.next}
+            /* Hover accent belongs to the project you're heading to, not this one
+               — fall back to brand blue when it has no signature colour. */
+            style={{ '--accent': next.accent ?? '#2a4bff' } as CSSProperties}
             data-cursor
             data-view
             onPointerEnter={() => preloadCover(next)}
@@ -355,7 +370,7 @@ export function CaseStudy() {
               </span>
             </div>
             <div className={styles.nextThumb} aria-hidden="true">
-              <Cover p={next} cls={nextFill} />
+              <ProjectThumb project={next} />
             </div>
           </Link>
         </section>
