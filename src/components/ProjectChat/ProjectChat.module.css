@@ -1,6 +1,7 @@
-/* Fixed dock, anchored bottom-right and lifted above the language/theme toggles.
-   Bar, mini-avatar and panel share the bottom-right origin so the panel appears
-   to grow from / shrink into the corner circle. */
+/* One continuous shell that morphs between the docked bar, the open window and
+   the corner circle by animating its own size / position / radius. Three content
+   layers cross-fade inside it; overflow:hidden clips the tall window content
+   while the shell is short, so the window appears to rise as the shell grows. */
 .dock {
   position: fixed;
   left: 0;
@@ -14,40 +15,94 @@
   --chat-inset: calc(var(--card-pad) + var(--nav-inset));
   --chat-lift: 62px; /* raise the corner circle above the language/theme toggles */
   --chat-w: min(424px, calc(100vw - 32px));
-  --chat-ease: cubic-bezier(0.34, 1.08, 0.5, 1); /* smooth, gently springy */
+  --chat-h: min(600px, calc(100dvh - 150px - var(--kb, 0px)));
+  --chat-ease: cubic-bezier(0.34, 1.06, 0.52, 1); /* smooth, gently springy */
 }
 @media (max-width: 600px) {
   .dock {
     bottom: calc(16px + var(--kb, 0px));
     --chat-inset: 16px;
     --chat-lift: 8px;
+    --chat-h: min(660px, calc(100dvh - 92px - var(--kb, 0px)));
   }
+  .min { width: 34px; height: 34px; }
+  .barClose { width: 40px; height: 40px; }
 }
 
-.bar,
-.mini,
-.panel {
+.shell {
   position: absolute;
   bottom: 0;
+  left: calc(50% - var(--chat-w) / 2);
+  width: var(--chat-w);
+  height: 58px;
+  border-radius: 999px;
+  background: var(--bg);
+  overflow: hidden;
   pointer-events: auto;
+  box-shadow:
+    0 24px 64px -24px rgba(14, 14, 12, 0.26),
+    0 4px 16px -6px rgba(14, 14, 12, 0.1);
   transition:
-    transform 0.5s var(--chat-ease),
-    opacity 0.42s var(--ease-out),
-    border-radius 0.5s var(--ease-out);
+    width 0.52s var(--chat-ease),
+    height 0.52s var(--chat-ease),
+    left 0.52s var(--chat-ease),
+    transform 0.52s var(--chat-ease),
+    border-radius 0.52s var(--chat-ease);
 }
-/* Bar + window sit centered at the bottom; only the minimized circle goes right. */
-.bar,
-.panel {
+
+/* ---- Content layers ------------------------------------------------------ */
+.barContent,
+.miniContent,
+.windowContent {
+  transition: opacity 0.3s var(--ease-out);
+}
+.barContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 8px 0 9px;
+}
+.miniContent {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0;
+}
+.miniContent img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+.miniContent .pulse {
+  right: 4px;
+  bottom: 4px;
+}
+/* Anchored to the shell's bottom at a fixed height so the input stays put and
+   the header/log reveal upward as the shell grows (clipped by overflow). */
+.windowContent {
+  position: absolute;
   left: 0;
   right: 0;
-  margin: 0 auto;
-  transform-origin: bottom center;
+  bottom: 0;
+  height: var(--chat-h);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
 }
 
 /* ---- Shared avatar ------------------------------------------------------- */
 .avatar,
 .whoAvatar,
-.mini img {
+.miniContent img {
   background: #fff;
 }
 .avatar {
@@ -82,18 +137,7 @@
   100% { box-shadow: 0 0 0 0 rgba(59, 138, 47, 0); }
 }
 
-/* ---- Docked bar ---------------------------------------------------------- */
-.bar {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  height: 58px;
-  width: var(--chat-w);
-  padding: 0 8px 0 9px;
-  border-radius: 999px;
-  background: var(--bg);
-  box-shadow: 0 16px 40px -18px rgba(14, 14, 12, 0.3);
-}
+/* ---- Docked bar content -------------------------------------------------- */
 .barMain {
   flex: 1;
   min-width: 0;
@@ -141,66 +185,14 @@
   color: var(--gray);
 }
 
-/* ---- Minimized circle ---------------------------------------------------- */
-.mini {
-  right: var(--chat-inset);
-  bottom: var(--chat-lift);
-  width: 58px;
-  height: 58px;
-  border: 0;
-  border-radius: 50%;
-  overflow: visible;
-  padding: 0;
-  cursor: pointer;
-  transform-origin: center;
-  box-shadow: 0 16px 40px -18px rgba(14, 14, 12, 0.32);
-}
-.mini img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-}
-.mini .pulse {
-  right: 2px;
-  bottom: 2px;
-}
-
-/* ---- Chat window --------------------------------------------------------- */
-.panel {
-  display: flex;
-  flex-direction: column;
-  width: var(--chat-w);
-  height: min(600px, calc(100dvh - 150px - var(--kb, 0px)));
-  background: var(--bg);
-  border-radius: 22px;
-  overflow: hidden;
-  box-shadow:
-    0 24px 64px -24px rgba(14, 14, 12, 0.26),
-    0 4px 16px -6px rgba(14, 14, 12, 0.1);
-}
-@media (max-width: 600px) {
-  .panel {
-    height: min(660px, calc(100dvh - 92px - var(--kb, 0px)));
-  }
-  /* Bigger touch targets on phones. */
-  .min {
-    width: 34px;
-    height: 34px;
-  }
-  .barClose {
-    width: 40px;
-    height: 40px;
-  }
-}
-
+/* ---- Window: header ------------------------------------------------------ */
 .head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   padding: 14px 14px 10px;
+  flex: none;
 }
 .who {
   display: flex;
@@ -256,6 +248,7 @@
   border-color: var(--gray);
 }
 
+/* ---- Window: log --------------------------------------------------------- */
 .log {
   flex: 1;
   overflow-y: auto;
@@ -374,10 +367,12 @@
   color: var(--accent);
 }
 
+/* ---- Window: input ------------------------------------------------------- */
 .inputRow {
   display: flex;
   gap: 8px;
   padding: 10px 12px 12px;
+  flex: none;
 }
 .input {
   flex: 1;
@@ -413,34 +408,32 @@
   cursor: default;
 }
 
-/* ---- State machine ------------------------------------------------------- */
-.dock[data-mode='bar'] .bar { transform: scale(1); opacity: 1; pointer-events: auto; }
-.dock[data-mode='bar'] .mini { transform: scale(0.4); opacity: 0; pointer-events: none; }
-.dock[data-mode='bar'] .panel { transform: scale(0.9); opacity: 0; pointer-events: none; }
+/* ---- State machine — the shell changes shape, the layers cross-fade ------ */
+.dock[data-mode='bar'] .barContent { opacity: 1; pointer-events: auto; }
+.dock[data-mode='bar'] .miniContent,
+.dock[data-mode='bar'] .windowContent { opacity: 0; pointer-events: none; }
 
-.dock[data-mode='open'] .bar { transform: scale(0.4); opacity: 0; pointer-events: none; }
-.dock[data-mode='open'] .mini { transform: scale(0.4); opacity: 0; pointer-events: none; }
-.dock[data-mode='open'] .panel { transform: scale(1); opacity: 1; pointer-events: auto; }
-
-.dock[data-mode='mini'] .bar {
-  transform: translate(calc(50vw - var(--chat-inset) - 29px), calc(-1 * var(--chat-lift) - 29px)) scale(0.14);
-  opacity: 0;
-  pointer-events: none;
+.dock[data-mode='open'] .shell {
+  height: var(--chat-h);
+  border-radius: 22px;
 }
-.dock[data-mode='mini'] .mini { transform: scale(1); opacity: 1; pointer-events: auto; }
-/* Close (×): the window travels to the far-right corner while rounding into the
-   circle — the border-radius transition makes it morph rather than just shrink. */
-.dock[data-mode='mini'] .panel {
-  transform: translate(calc(50vw - var(--chat-inset) - 29px), calc(-1 * var(--chat-lift) - 29px)) scale(0.1);
+.dock[data-mode='open'] .windowContent { opacity: 1; pointer-events: auto; }
+.dock[data-mode='open'] .barContent,
+.dock[data-mode='open'] .miniContent { opacity: 0; pointer-events: none; }
+
+.dock[data-mode='mini'] .shell {
+  width: 58px;
+  height: 58px;
+  left: calc(100% - var(--chat-inset) - 58px);
+  transform: translateY(calc(-1 * var(--chat-lift)));
   border-radius: 50%;
-  opacity: 0;
-  pointer-events: none;
 }
+.dock[data-mode='mini'] .miniContent { opacity: 1; pointer-events: auto; }
+.dock[data-mode='mini'] .barContent,
+.dock[data-mode='mini'] .windowContent { opacity: 0; pointer-events: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  .bar, .mini, .panel { transition: opacity 0.2s linear; }
-  .dock[data-mode='open'] .panel,
-  .dock[data-mode='bar'] .bar,
-  .dock[data-mode='mini'] .mini { transform: none; }
+  .shell { transition: none; }
+  .barContent, .miniContent, .windowContent { transition: opacity 0.15s linear; }
   .pulse, .dot { animation: none; }
 }

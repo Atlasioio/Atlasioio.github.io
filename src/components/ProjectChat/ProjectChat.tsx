@@ -148,30 +148,33 @@ export function ProjectChat({ project }: { project?: Project }) {
 
   return (
     <div className={styles.dock} data-mode={mode} ref={dockRef}>
-      {/* Docked bar (initial + minimized) */}
-      <div className={styles.bar} aria-hidden={mode !== 'bar'}>
-        <button type="button" className={styles.barMain} onClick={() => setMode('open')} aria-label="Open the project assistant" tabIndex={mode === 'bar' ? 0 : -1} data-cursor>
-          <span className={styles.avatar}>
-            <img src={AVATAR} alt="" width={40} height={40} />
-            <span className={styles.pulse} aria-hidden="true" />
-          </span>
-          <span className={styles.barLabel}>{cfg.title}</span>
-          <span className={styles.barChevron} aria-hidden="true"><ChevronUp /></span>
-        </button>
-        <button type="button" className={styles.barClose} onClick={() => setMode('mini')} aria-label="Close chat to corner" tabIndex={mode === 'bar' ? 0 : -1} data-cursor>
-          <CloseX />
-        </button>
-      </div>
+      {/* A single shell that morphs between the three states; the layers below
+          cross-fade inside it. */}
+      <div className={styles.shell}>
+        {/* Docked bar (initial + minimized-to-bar) */}
+        <div className={styles.barContent} aria-hidden={mode !== 'bar'}>
+          <button type="button" className={styles.barMain} onClick={() => setMode('open')} aria-label="Open the project assistant" tabIndex={mode === 'bar' ? 0 : -1} data-cursor>
+            <span className={styles.avatar}>
+              <img src={AVATAR} alt="" width={40} height={40} />
+              <span className={styles.pulse} aria-hidden="true" />
+            </span>
+            <span className={styles.barLabel}>{cfg.title}</span>
+            <span className={styles.barChevron} aria-hidden="true"><ChevronUp /></span>
+          </button>
+          <button type="button" className={styles.barClose} onClick={() => setMode('mini')} aria-label="Close chat to corner" tabIndex={mode === 'bar' ? 0 : -1} data-cursor>
+            <CloseX />
+          </button>
+        </div>
 
-      {/* Minimized avatar (corner) */}
-      <button type="button" className={styles.mini} onClick={() => setMode('open')} aria-label="Open the project assistant" aria-hidden={mode !== 'mini'} tabIndex={mode === 'mini' ? 0 : -1} data-cursor>
-        <img src={AVATAR} alt="" width={58} height={58} />
-        <span className={styles.pulse} aria-hidden="true" />
-      </button>
+        {/* Minimized avatar (corner circle) */}
+        <button type="button" className={styles.miniContent} onClick={() => setMode('open')} aria-label="Open the project assistant" aria-hidden={mode !== 'mini'} tabIndex={mode === 'mini' ? 0 : -1} data-cursor>
+          <img src={AVATAR} alt="" width={58} height={58} />
+          <span className={styles.pulse} aria-hidden="true" />
+        </button>
 
-      {/* Chat window */}
-      <div className={styles.panel} role="dialog" aria-label="Project assistant" aria-hidden={mode !== 'open'}>
-        <header className={styles.head}>
+        {/* Chat window */}
+        <div className={styles.windowContent} role="dialog" aria-label="Project assistant" aria-hidden={mode !== 'open'}>
+          <header className={styles.head}>
           <div className={styles.who}>
             <span className={styles.whoAvatar}>
               <img src={AVATAR} alt="" width={36} height={36} />
@@ -258,6 +261,7 @@ export function ProjectChat({ project }: { project?: Project }) {
             <SendIcon />
           </button>
         </form>
+        </div>
       </div>
     </div>
   )
