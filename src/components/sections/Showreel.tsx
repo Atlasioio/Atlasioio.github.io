@@ -1,5 +1,5 @@
-import { useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
-import { ShowreelFilm } from './ShowreelFilm'
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
+import { ShowreelFilm, type ShowreelFilmHandle } from './ShowreelFilm'
 import { useReelTrack } from '../../hooks/useReelTrack'
 import styles from './Showreel.module.css'
 
@@ -16,6 +16,9 @@ const Close = () => (
 )
 const FullscreenIcon = () => (
   <svg width={ICON} height={ICON} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg>
+)
+const RestartIcon = () => (
+  <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8" /><path d="M3 3v5h5" /></svg>
 )
 const VideoMark = () => (
   <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2" /><path d="m16 10 5-3v10l-5-3z" /></svg>
@@ -40,11 +43,34 @@ export function Showreel() {
   const [hovered, setHovered] = useState(false)
   const [pos, setPos] = useState({ x: 0, y: 0 })
   const reelRef = useRef<HTMLDivElement>(null)
+  const filmRef = useRef<ShowreelFilmHandle>(null)
+  const scrubRef = useRef<HTMLInputElement>(null)
+  const scrubbing = useRef(false)
   const dragStart = useRef<{ x: number; y: number; bx: number; by: number } | null>(null)
 
   // A looping song preview, audible only while hovering the playing reel.
   const soundOn = open && playing && hovered
-  useReelTrack('/audio/mariella.mp3', soundOn)
+  useReelTrack('/audio/everlasting-light.mp3', soundOn)
+
+  // Keep the scrubber in sync with the 28s composition clock while it plays
+  // (skipped while the user is dragging so their thumb doesn't fight the loop).
+  useEffect(() => {
+    if (!(open && playing)) return
+    let raf = 0
+    const tick = () => {
+      if (!scrubbing.current && scrubRef.current && filmRef.current) {
+        scrubRef.current.value = String(Math.round(filmRef.current.getProgress() * 1000))
+      }
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [open, playing])
+
+  const seek = (fraction: number) => {
+    filmRef.current?.seek(fraction)
+    if (scrubRef.current) scrubRef.current.value = String(Math.round(fraction * 1000))
+  }
 
   const togglePlay = () => setPlaying((p) => !p)
 
@@ -100,7 +126,7 @@ export function Showreel() {
       onPointerLeave={() => setHovered(false)}
     >
       <div className={styles.video}>
-        <ShowreelFilm playing={playing} />
+        <ShowreelFilm playing={playing} ref={filmRef} />
       </div>
 
       <div className={styles.controls}>
@@ -113,6 +139,15 @@ export function Showreel() {
         >
           <span className={styles.grip} />
         </div>
+
+        <button
+          type="button"
+          className={styles.restart}
+          onClick={() => seek(0)}
+          aria-label="Restart from the beginning"
+        >
+          <RestartIcon />
+        </button>
 
         <button type="button" className={styles.close} onClick={close} aria-label="Close showreel">
           <Close />
@@ -135,6 +170,23 @@ export function Showreel() {
         >
           <FullscreenIcon />
         </button>
+
+        <input
+          type="range"
+          className={styles.scrub}
+          ref={scrubRef}
+          min={0}
+          max={1000}
+          defaultValue={0}
+          aria-label="Seek showreel"
+          onPointerDown={() => {
+            scrubbing.current = true
+          }}
+          onPointerUp={() => {
+            scrubbing.current = false
+          }}
+          onInput={(e) => filmRef.current?.seek(Number(e.currentTarget.value) / 1000)}
+        />
       </div>
 
       <div className={styles.meta}>

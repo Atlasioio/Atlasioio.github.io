@@ -57,7 +57,8 @@
 
 .close,
 .play,
-.fs {
+.fs,
+.restart {
   position: absolute;
   border: none;
   border-radius: 50%;
@@ -72,7 +73,15 @@
 }
 .close:hover,
 .play:hover,
-.fs:hover { background: var(--accent); }
+.fs:hover,
+.restart:hover { background: var(--accent); }
+
+.restart {
+  top: 6px;
+  left: 6px;
+  width: 28px;
+  height: 28px;
+}
 
 .close {
   top: 6px;
@@ -93,6 +102,28 @@
   right: 8px;
   width: 30px;
   height: 30px;
+}
+
+/* ---- Scrubber (seek / restart the 28s composition) ---------------------- */
+.scrub {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 44px;
+  width: auto;
+  height: 14px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--accent);
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45));
+}
+.reel:fullscreen .scrub {
+  left: 50%;
+  right: auto;
+  width: min(60vw, 720px);
+  transform: translateX(-50%);
+  bottom: 46px;
+  height: 18px;
 }
 
 .meta {
@@ -176,6 +207,19 @@
   transform: none !important;
 }
 .reel:fullscreen .video { inset: 0; }
+/* The custom cursor's dot lives on <body>, outside the fullscreened element, so
+   it can't render here — restore the native cursor so it doesn't vanish. */
+.reel:fullscreen,
+.reel:fullscreen * {
+  cursor: auto;
+}
+.reel:fullscreen .close,
+.reel:fullscreen .play,
+.reel:fullscreen .fs,
+.reel:fullscreen .restart,
+.reel:fullscreen .scrub {
+  cursor: pointer;
+}
 
 @media (max-width: 1080px) {
   .reel,

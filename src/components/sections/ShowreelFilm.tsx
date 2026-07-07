@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, type CSSProperties } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef, type CSSProperties } from 'react'
 import styles from './ShowreelFilm.module.css'
 
 /**
@@ -87,11 +87,37 @@ const TRACKS: Track[] = [
   { id: 'progress', frames: [{ t: 0, transform: 'scaleX(0)' }, { t: 28, transform: 'scaleX(1)' }] },
 ]
 
-export function ShowreelFilm({ playing }: { playing: boolean }) {
+export interface ShowreelFilmHandle {
+  /** Jump to a position in the 28s loop (fraction 0–1). */
+  seek: (fraction: number) => void
+  /** Current position in the loop (fraction 0–1). */
+  getProgress: () => number
+}
+
+export const ShowreelFilm = forwardRef<ShowreelFilmHandle, { playing: boolean }>(function ShowreelFilm(
+  { playing },
+  ref,
+) {
   const els = useRef(new Map<string, HTMLElement>())
   const anims = useRef<Animation[]>([])
   const playingRef = useRef(playing)
   playingRef.current = playing
+
+  // Every layer shares the same 28s clock, so scrubbing means setting the same
+  // currentTime on all of them, and progress is any one of them (mod the loop).
+  useImperativeHandle(ref, () => ({
+    seek: (fraction) => {
+      const t = Math.min(1, Math.max(0, fraction)) * TOTAL
+      anims.current.forEach((a) => {
+        a.currentTime = t
+      })
+    },
+    getProgress: () => {
+      const ct = anims.current[0]?.currentTime
+      if (ct == null) return 0
+      return (Number(ct) % TOTAL) / TOTAL
+    },
+  }), [])
 
   const reg = (id: string) => (el: HTMLElement | null) => {
     if (el) els.current.set(id, el)
@@ -236,4 +262,4 @@ export function ShowreelFilm({ playing }: { playing: boolean }) {
       <div className={styles.progress} ref={reg('progress')} />
     </div>
   )
-}
+})
