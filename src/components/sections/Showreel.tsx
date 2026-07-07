@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
-import { ShowreelFilm, type ShowreelFilmHandle } from './ShowreelFilm'
+import { ShowreelFilm, SHOWREEL_SECONDS, type ShowreelFilmHandle } from './ShowreelFilm'
 import { useReelTrack } from '../../hooks/useReelTrack'
 import styles from './Showreel.module.css'
 
@@ -48,28 +48,41 @@ export function Showreel() {
   const scrubbing = useRef(false)
   const dragStart = useRef<{ x: number; y: number; bx: number; by: number } | null>(null)
 
-  // A looping song preview, audible only while hovering the playing reel.
+  // A looping song preview, audible only while hovering the playing reel, and
+  // locked to the film clock (starts at 0:00, follows scrubs).
   const soundOn = open && playing && hovered
-  useReelTrack('/audio/everlasting-light.mp3', soundOn)
+  const track = useReelTrack('/audio/everlasting-light.mp3', soundOn)
 
-  // Keep the scrubber in sync with the 28s composition clock while it plays
-  // (skipped while the user is dragging so their thumb doesn't fight the loop).
+  // Paint the scrubber: native value drives the thumb, --fill drives the track.
+  const paintScrub = (fraction: number) => {
+    const el = scrubRef.current
+    if (!el) return
+    el.value = String(Math.round(fraction * 1000))
+    el.style.setProperty('--fill', `${(fraction * 100).toFixed(2)}%`)
+  }
+
+  // Keep the scrubber and the song aligned to the 28s composition clock while it
+  // plays (scrubber paint skipped while dragging so the thumb doesn't fight it).
   useEffect(() => {
     if (!(open && playing)) return
     let raf = 0
     const tick = () => {
-      if (!scrubbing.current && scrubRef.current && filmRef.current) {
-        scrubRef.current.value = String(Math.round(filmRef.current.getProgress() * 1000))
+      const film = filmRef.current
+      if (film) {
+        const p = film.getProgress()
+        if (!scrubbing.current) paintScrub(p)
+        track.sync(p * SHOWREEL_SECONDS)
       }
       raf = requestAnimationFrame(tick)
     }
     raf = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf)
-  }, [open, playing])
+  }, [open, playing, track])
 
   const seek = (fraction: number) => {
     filmRef.current?.seek(fraction)
-    if (scrubRef.current) scrubRef.current.value = String(Math.round(fraction * 1000))
+    paintScrub(fraction)
+    track.sync(fraction * SHOWREEL_SECONDS)
   }
 
   const togglePlay = () => setPlaying((p) => !p)
@@ -170,23 +183,6 @@ export function Showreel() {
         >
           <FullscreenIcon />
         </button>
-
-        <input
-          type="range"
-          className={styles.scrub}
-          ref={scrubRef}
-          min={0}
-          max={1000}
-          defaultValue={0}
-          aria-label="Seek showreel"
-          onPointerDown={() => {
-            scrubbing.current = true
-          }}
-          onPointerUp={() => {
-            scrubbing.current = false
-          }}
-          onInput={(e) => filmRef.current?.seek(Number(e.currentTarget.value) / 1000)}
-        />
       </div>
 
       <div className={styles.meta}>
@@ -198,6 +194,25 @@ export function Showreel() {
           {soundOn ? <SoundOn /> : <SoundOff />}
         </span>
       </div>
+
+      {/* The single progress bar: always visible, thickens + gains a draggable
+          thumb on hover. Lives outside .controls so it shows without hovering. */}
+      <input
+        type="range"
+        className={styles.scrub}
+        ref={scrubRef}
+        min={0}
+        max={1000}
+        defaultValue={0}
+        aria-label="Seek showreel"
+        onPointerDown={() => {
+          scrubbing.current = true
+        }}
+        onPointerUp={() => {
+          scrubbing.current = false
+        }}
+        onInput={(e) => seek(Number(e.currentTarget.value) / 1000)}
+      />
     </div>
   )
 }

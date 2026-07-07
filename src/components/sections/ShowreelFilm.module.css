@@ -34,6 +34,18 @@
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.28) 0%, transparent 26%, transparent 62%, rgba(0, 0, 0, 0.42) 100%);
   pointer-events: none;
 }
+/* EcoTrip sets its type dark on a bright honey ground, so the default (dark)
+   scrim would work against it. Lift the top/bottom with a warm, light wash
+   instead — keeps the dark label + headline crisp over any phone imagery. */
+.scrimWarm {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 240, 208, 0.5) 0%,
+    rgba(255, 240, 208, 0) 26%,
+    rgba(255, 240, 208, 0) 58%,
+    rgba(255, 233, 190, 0.62) 100%
+  );
+}
 
 /* ---- Shared type ---- */
 .label {
@@ -232,20 +244,6 @@
   transform: scale(0);
   will-change: transform;
   z-index: 5;
-}
-
-/* ---- Progress hairline (the "film" running) ---- */
-.progress {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 0.7cqmin;
-  width: 100%;
-  transform-origin: left center;
-  background: var(--accent);
-  opacity: 0.9;
-  z-index: 6;
-  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {

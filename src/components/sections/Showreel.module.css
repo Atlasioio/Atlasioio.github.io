@@ -98,38 +98,101 @@
 }
 .play:hover { transform: translate(-50%, -50%) scale(1.06); }
 .fs {
-  bottom: 8px;
+  bottom: 16px;
   right: 8px;
   width: 30px;
   height: 30px;
 }
 
-/* ---- Scrubber (seek / restart the 28s composition) ---------------------- */
+/* ---- Scrubber -----------------------------------------------------------
+   The one progress bar. Always visible as a thin hairline pinned to the very
+   bottom edge (accent fill = playhead); on hover it thickens and reveals a
+   draggable thumb. `--fill` is set in JS so the accent runs up to the head. */
 .scrub {
   position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 44px;
-  width: auto;
-  height: 14px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 16px;
   margin: 0;
+  padding: 0;
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
   cursor: pointer;
-  accent-color: var(--accent);
-  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45));
+  z-index: 4;
+  --fill: 0%;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.4));
 }
-.reel:fullscreen .scrub {
-  left: 50%;
-  right: auto;
-  width: min(60vw, 720px);
-  transform: translateX(-50%);
-  bottom: 46px;
-  height: 18px;
+/* WebKit — the runnable track is the hairline; a hard-stop gradient at --fill
+   paints the accent up to the playhead. */
+.scrub::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: 0 2px 0 0;
+  background: linear-gradient(
+    to right,
+    var(--accent) var(--fill),
+    rgba(255, 255, 255, 0.32) var(--fill)
+  );
+  transition: height 0.16s var(--ease-out);
 }
+.scrub:hover::-webkit-slider-runnable-track,
+.scrub:focus-visible::-webkit-slider-runnable-track { height: 6px; }
+.scrub::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  margin-top: -5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.16s var(--ease-out), transform 0.16s var(--ease-out);
+}
+.scrub:hover::-webkit-slider-thumb,
+.scrub:focus-visible::-webkit-slider-thumb {
+  opacity: 1;
+  transform: scale(1);
+  margin-top: -3.5px;
+}
+/* Firefox — native progress element handles the accent fill. */
+.scrub::-moz-range-track {
+  height: 3px;
+  border-radius: 0 2px 0 0;
+  background: rgba(255, 255, 255, 0.32);
+  transition: height 0.16s var(--ease-out);
+}
+.scrub::-moz-range-progress { height: 3px; background: var(--accent); }
+.scrub:hover::-moz-range-track,
+.scrub:focus-visible::-moz-range-track,
+.scrub:hover::-moz-range-progress,
+.scrub:focus-visible::-moz-range-progress { height: 6px; }
+.scrub::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.16s var(--ease-out);
+}
+.scrub:hover::-moz-range-thumb,
+.scrub:focus-visible::-moz-range-thumb { opacity: 1; }
+/* A touch larger in fullscreen so it's easy to grab. */
+.reel:fullscreen .scrub { height: 22px; }
+.reel:fullscreen .scrub::-webkit-slider-runnable-track { height: 4px; }
+.reel:fullscreen .scrub:hover::-webkit-slider-runnable-track { height: 7px; }
+.reel:fullscreen .scrub::-moz-range-track,
+.reel:fullscreen .scrub::-moz-range-progress { height: 4px; }
 
 .meta {
   position: absolute;
   left: 12px;
-  bottom: 11px;
+  bottom: 16px;
   display: flex;
   align-items: center;
   gap: 6px;

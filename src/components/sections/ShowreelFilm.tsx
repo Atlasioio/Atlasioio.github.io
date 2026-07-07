@@ -10,6 +10,8 @@ import styles from './ShowreelFilm.module.css'
  */
 
 const TOTAL = 28_000
+/** The loop length in seconds — exported so the hero can sync audio to it. */
+export const SHOWREEL_SECONDS = TOTAL / 1000
 const EO = 'cubic-bezier(.22,1,.36,1)' // ease-out (entrances)
 const IO = 'cubic-bezier(.7,0,.3,1)' // ease-in-out (wipes)
 
@@ -83,8 +85,6 @@ const TRACKS: Track[] = [
   { id: 'res-tag', frames: [{ t: 25.3, opacity: 0, transform: 'translateY(40%)', easing: EO }, { t: 25.8, opacity: 1, transform: 'none' }, { t: 27.3, opacity: 1, transform: 'none' }, { t: 27.7, opacity: 0 }] },
   { id: 'res-place', frames: [{ t: 25.7, opacity: 0 }, { t: 26.2, opacity: 0.55 }, { t: 27.3, opacity: 0.55 }, { t: 27.7, opacity: 0 }] },
 
-  // ---- Progress hairline ----
-  { id: 'progress', frames: [{ t: 0, transform: 'scaleX(0)' }, { t: 28, transform: 'scaleX(1)' }] },
 ]
 
 export interface ShowreelFilmHandle {
@@ -178,10 +178,10 @@ export const ShowreelFilm = forwardRef<ShowreelFilmHandle, { playing: boolean }>
       <div className={styles.scene} ref={reg('eco')}>
         <div className={`${styles.fill} ${styles.honey}`} />
         <div className={styles.layer}>
-          <img className={styles.phone} style={over} ref={reg('eco-a')} src="/work/ecotrip/onboarding.png" alt="" />
-          <img className={styles.phone} style={over} ref={reg('eco-b')} src="/work/ecotrip/explore.png" alt="" />
+          <img className={styles.phone} style={over} ref={reg('eco-a')} src="/work/ecotrip/onboarding.webp" alt="" />
+          <img className={styles.phone} style={over} ref={reg('eco-b')} src="/work/ecotrip/explore.webp" alt="" />
         </div>
-        <div className={styles.scrim} />
+        <div className={`${styles.scrim} ${styles.scrimWarm}`} />
         <div className={styles.label} style={{ color: '#3a2a05' }} ref={reg('eco-label')}>
           <i />
           EcoTrip · App
@@ -257,9 +257,8 @@ export const ShowreelFilm = forwardRef<ShowreelFilmHandle, { playing: boolean }>
         </div>
       </div>
 
-      {/* Connective motif + running progress */}
+      {/* Connective motif (the blue-dot wipe between acts) */}
       <div className={styles.wipe} ref={reg('wipe')} />
-      <div className={styles.progress} ref={reg('progress')} />
     </div>
   )
 })
