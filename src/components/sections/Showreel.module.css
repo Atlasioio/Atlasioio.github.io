@@ -79,10 +79,10 @@
 /* Bottom control row: [play] [restart] ————scrubber———— [fs], all centred on
    the same line (25px up from the base) so it reads like a mini video player. */
 .play {
-  bottom: 8px;
+  bottom: 11px;
   left: 8px;
-  width: 34px;
-  height: 34px;
+  width: 28px;
+  height: 28px;
 }
 .play:hover { transform: scale(1.06); }
 .restart {
