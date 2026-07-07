@@ -76,11 +76,26 @@
 .fs:hover,
 .restart:hover { background: var(--accent); }
 
+/* Bottom control row: [play] [restart] ————scrubber———— [fs], all centred on
+   the same line (25px up from the base) so it reads like a mini video player. */
+.play {
+  bottom: 8px;
+  left: 8px;
+  width: 34px;
+  height: 34px;
+}
+.play:hover { transform: scale(1.06); }
 .restart {
-  top: 6px;
-  left: 6px;
+  bottom: 11px;
+  left: 47px;
   width: 28px;
   height: 28px;
+}
+.fs {
+  bottom: 10px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
 }
 
 .close {
@@ -89,31 +104,17 @@
   width: 28px;
   height: 28px;
 }
-.play {
-  top: 50%;
-  left: 50%;
-  width: 52px;
-  height: 52px;
-  transform: translate(-50%, -50%);
-}
-.play:hover { transform: translate(-50%, -50%) scale(1.06); }
-.fs {
-  bottom: 16px;
-  right: 8px;
-  width: 30px;
-  height: 30px;
-}
 
 /* ---- Scrubber -----------------------------------------------------------
-   The one progress bar. Always visible as a thin hairline pinned to the very
-   bottom edge (accent fill = playhead); on hover it thickens and reveals a
+   The one progress bar, sitting in the bottom control row to the right of the
+   play button (accent fill = playhead); on hover it thickens and reveals a
    draggable thumb. `--fill` is set in JS so the accent runs up to the head. */
 .scrub {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
+  left: 82px;
+  right: 46px;
+  bottom: 17px;
+  width: auto;
   height: 16px;
   margin: 0;
   padding: 0;
@@ -129,7 +130,7 @@
    paints the accent up to the playhead. */
 .scrub::-webkit-slider-runnable-track {
   height: 3px;
-  border-radius: 0 2px 0 0;
+  border-radius: 2px;
   background: linear-gradient(
     to right,
     var(--accent) var(--fill),
@@ -161,7 +162,7 @@
 /* Firefox — native progress element handles the accent fill. */
 .scrub::-moz-range-track {
   height: 3px;
-  border-radius: 0 2px 0 0;
+  border-radius: 2px;
   background: rgba(255, 255, 255, 0.32);
   transition: height 0.16s var(--ease-out);
 }
@@ -191,8 +192,8 @@
 
 .meta {
   position: absolute;
-  left: 12px;
-  bottom: 16px;
+  right: 44px;
+  top: 11px;
   display: flex;
   align-items: center;
   gap: 6px;
