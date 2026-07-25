@@ -102,6 +102,7 @@ function Dialog({ service, closing, close }: { service: Service; closing: boolea
       role="dialog"
       aria-modal="true"
       aria-labelledby="service-title"
+      data-lenis-prevent
     >
       <div className={styles.header}>
         <p className={`${modal.eyebrow} ${styles.eyebrow}`}>{service.index} · Service</p>

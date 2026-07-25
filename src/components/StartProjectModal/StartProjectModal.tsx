@@ -132,6 +132,7 @@ function Dialog({ close, closing }: { close: () => void; closing: boolean }) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="start-title"
+      data-lenis-prevent
     >
       <button type="button" className={styles.close} onClick={close} aria-label="Close" data-cursor>
         <CloseIcon />

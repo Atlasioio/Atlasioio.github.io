@@ -391,5 +391,6 @@
     grid-template-columns: 1fr;
     gap: 30px;
   }
-  .media { aspect-ratio: 16 / 11; }
+  /* Keep the 4/5 media (matches the art's viewBox) so the looping illustration
+     fits fully — a shorter landscape ratio here crops it via `slice`. */
 }

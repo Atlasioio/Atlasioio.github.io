@@ -138,6 +138,11 @@
   color: rgba(246, 244, 241, 0.66);
 }
 .sub strong { color: #fff; font-weight: 500; }
+/* Phones trim the bio to one line — "A product designer — most recently at Sony
+   Nimway." — to keep the hero from crowding; desktop keeps the full sentence. */
+@media (max-width: 600px) {
+  .deskDetail { display: none; }
+}
 .cta {
   display: flex;
   align-items: center;
@@ -265,6 +270,15 @@
   /* Headline is 4 fixed lines — its biggest vertical cost — so cap it by height
      here (only on short screens; larger displays keep the full --fs-hero). */
   .headline { font-size: min(var(--fs-hero), 8.4vh); }
+}
+
+/* Phone: give the eyebrow room under the fixed header, keep the CTA on one row
+   (Contact + See the work side by side), and lift the content clear of the
+   scroll cue + toggles that sit pinned at the bottom. Placed last so it wins
+   over the short-screen (max-height) padding above. */
+@media (max-width: 600px) {
+  .hero { padding-block: 92px 104px; }
+  .cta { flex-wrap: nowrap; gap: 16px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

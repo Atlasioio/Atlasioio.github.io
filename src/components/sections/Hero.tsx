@@ -69,9 +69,12 @@ export function Hero({ started }: { started: boolean }) {
               data-reveal
               style={{ '--i': 3 } as React.CSSProperties}
             >
-              A product designer with enterprise roots —{' '}
-              <strong>most recently at Sony Nimway</strong>, designing smart-office products
-              across web, app, and large-format screens.
+              A product designer<span className={styles.deskDetail}> with enterprise roots</span> —{' '}
+              <strong>most recently at Sony Nimway</strong>
+              <span className={styles.deskDetail}>
+                , designing smart-office products across web, app, and large-format screens
+              </span>
+              .
             </p>
             <div
               className={`${styles.cta} ${started ? 'is-in' : ''}`}
