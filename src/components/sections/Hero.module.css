@@ -252,14 +252,19 @@
    the fixed pair). Sits opposite the scroll cue, in white on the blue. */
 .heroToggles { display: none; }
 @media (max-width: 600px) {
+  /* Phones swap the foot pair: toggles go bottom-left, scroll cue bottom-right. */
   .heroToggles {
     position: absolute;
     z-index: 2;
-    right: var(--gutter);
+    left: var(--gutter);
     bottom: clamp(28px, 4vw, 44px);
     display: flex;
     align-items: center;
     gap: 10px;
+  }
+  .scrollcue {
+    left: auto;
+    right: var(--gutter);
   }
 }
 
