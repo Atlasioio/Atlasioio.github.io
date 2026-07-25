@@ -233,17 +233,19 @@
   font-size: clamp(34px, 4.4vw, 60px);
   line-height: 0.98;
 }
+/* One emphasised subtitle (role · outcome). Shares the body font with the
+   description below — just heavier and darker — so the stack reads as a clean
+   header → subtitle → paragraph, not four competing type styles. */
 .role {
   display: inline-flex;
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
-  font-family: var(--font-mono);
-  font-size: var(--fs-sm);
-  color: var(--gray-strong);
-  letter-spacing: 0.01em;
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.005em;
 }
-.o { color: var(--ink); }
 .dot {
   width: 4px;
   height: 4px;

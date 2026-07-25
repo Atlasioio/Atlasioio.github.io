@@ -69,7 +69,9 @@ export function Hero({ started }: { started: boolean }) {
               data-reveal
               style={{ '--i': 3 } as React.CSSProperties}
             >
-              A product designer<span className={styles.deskDetail}> with enterprise roots</span> —{' '}
+              <span className={styles.deskLead}>A product designer</span>
+              <span className={styles.mobLead}>Product designer</span>
+              <span className={styles.deskDetail}> with enterprise roots</span> —{' '}
               <strong>most recently at Sony Nimway</strong>
               <span className={styles.deskDetail}>
                 , designing smart-office products across web, app, and large-format screens
@@ -85,7 +87,8 @@ export function Hero({ started }: { started: boolean }) {
                 Contact
               </Button>
               <LinkLike href="#work" onDark>
-                See the work
+                <span className={styles.deskLead}>See the work</span>
+                <span className={styles.mobLead}>Work</span>
               </LinkLike>
             </div>
           </div>
@@ -109,10 +112,10 @@ export function Hero({ started }: { started: boolean }) {
       </div>
 
       <div className={styles.scrollcue} aria-hidden="true">
-        <span>Scroll</span>
         <span className={styles.track}>
           <i />
         </span>
+        <span>Scroll</span>
       </div>
 
       {/* Phone-only: the language + theme toggles live at the foot of the hero

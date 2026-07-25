@@ -138,10 +138,14 @@
   color: rgba(246, 244, 241, 0.66);
 }
 .sub strong { color: #fff; font-weight: 500; }
-/* Phones trim the bio to one line — "A product designer — most recently at Sony
-   Nimway." — to keep the hero from crowding; desktop keeps the full sentence. */
+/* Phones trim the bio to one line — "Product designer — most recently at Sony
+   Nimway." — to keep the hero from crowding; desktop keeps the full sentence
+   ("A product designer with enterprise roots — …"). */
+.mobLead { display: none; }
 @media (max-width: 600px) {
+  .deskLead,
   .deskDetail { display: none; }
+  .mobLead { display: inline; }
 }
 .cta {
   display: flex;

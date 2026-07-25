@@ -42,7 +42,7 @@ export function CaseRow({ project }: { project: Project }) {
         <div className={styles.idx}>{project.index}</div>
         <h3 className={styles.name}>{project.name}</h3>
         <div className={styles.role}>
-          <span className={styles.o}>{project.role}</span>
+          <span>{project.role}</span>
           <span className={styles.dot} />
           <span>{project.outcome}</span>
         </div>
