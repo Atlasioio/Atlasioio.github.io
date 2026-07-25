@@ -162,7 +162,7 @@ export function WebShowcase({ desktop, mobile, label }: { desktop: CaseScreen[];
       )}
 
       {view !== null && (
-        <div className={`${modal.overlay} ${styles.viewer}`} data-cursor-modal data-lenis-prevent onClick={(e) => { if (e.target === e.currentTarget) setView(null) }}>
+        <div className={`${modal.overlay} ${styles.viewer}`} data-kind={all[view].kind} data-cursor-modal data-lenis-prevent onClick={(e) => { if (e.target === e.currentTarget) setView(null) }}>
           <button type="button" className={styles.viewerClose} onClick={() => setView(null)} aria-label="Close" data-cursor>
             <CloseIcon />
           </button>

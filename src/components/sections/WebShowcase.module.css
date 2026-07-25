@@ -359,28 +359,29 @@
   .viewerDesktop.fromRight { animation: wsNextRot 0.5s var(--ease-out); }
   .viewerDesktop.fromLeft { animation: wsPrevRot 0.5s var(--ease-out); }
 
-  /* The shot now reads landscape on the upright phone, so browse up/down: prev
-     at the top, next above the caption bar — icons turned to point that way.
-     Two-class selectors so they out-specify the base `.viewerNav` centring. */
-  .viewer .viewerNav { left: 50%; right: auto; }
-  .viewer .viewerPrev {
+  /* Only the rotated desktop shot browses up/down. Mobile screenshots in the same
+     project stay upright, so they keep the base left/right arrows — hence every
+     rule below is scoped to a desktop item ([data-kind="desktop"]). Prev at the
+     top, next above the caption bar, icons turned to point that way. */
+  .viewer[data-kind='desktop'] .viewerNav { left: 50%; right: auto; }
+  .viewer[data-kind='desktop'] .viewerPrev {
     top: clamp(12px, 3.5vw, 26px);
     bottom: auto;
     transform: translateX(-50%);
   }
-  .viewer .viewerNext {
+  .viewer[data-kind='desktop'] .viewerNext {
     top: auto;
     bottom: clamp(58px, 14vw, 78px);
     transform: translateX(-50%);
   }
-  .viewer .viewerPrev svg,
-  .viewer .viewerNext svg { transform: rotate(90deg); }
-  .viewer .viewerPrev:hover { transform: translateX(-50%) translateY(-3px); }
-  .viewer .viewerNext:hover { transform: translateX(-50%) translateY(3px); }
+  .viewer[data-kind='desktop'] .viewerPrev svg,
+  .viewer[data-kind='desktop'] .viewerNext svg { transform: rotate(90deg); }
+  .viewer[data-kind='desktop'] .viewerPrev:hover { transform: translateX(-50%) translateY(-3px); }
+  .viewer[data-kind='desktop'] .viewerNext:hover { transform: translateX(-50%) translateY(3px); }
   /* Keep the caption bar to one line so it stays short and the next arrow can sit
      just above it without overlapping (long captions otherwise wrap to ~3 lines). */
-  .viewer .viewerBar { flex-wrap: nowrap; bottom: clamp(14px, 3vw, 22px); }
-  .viewer .viewerCap {
+  .viewer[data-kind='desktop'] .viewerBar { flex-wrap: nowrap; bottom: clamp(14px, 3vw, 22px); }
+  .viewer[data-kind='desktop'] .viewerCap {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
