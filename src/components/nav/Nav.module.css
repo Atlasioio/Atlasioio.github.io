@@ -76,4 +76,13 @@
      With the links hidden on mobile it serves no purpose, and its reserved width
      (wordmark + full controls) overflows the bar → horizontal page scroll. Drop it. */
   .ghost { display: none; }
+  /* …but the ghost also held the row at control height, which is what lined the
+     wordmark up with the fixed Contact/hamburger. With it gone the wordmark
+     centres in its own (shorter) height and rides high — give the content box
+     the control height back so it centres on the same line. content-box so the
+     height is the inner content, not eaten by the padding. */
+  .inner {
+    box-sizing: content-box;
+    min-height: var(--ctrl-h);
+  }
 }

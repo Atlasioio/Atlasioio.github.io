@@ -12,7 +12,7 @@ import styles from './Work.module.css'
  * preview (phone / laptop combo / cover / fill) is shared with the case study's
  * "next project" card via ProjectThumb.
  */
-export function CaseRow({ project }: { project: Project }) {
+export function CaseRow({ project, showRole = true }: { project: Project; showRole?: boolean }) {
   const to = `/work/${project.id}`
 
   return (
@@ -42,8 +42,12 @@ export function CaseRow({ project }: { project: Project }) {
         <div className={styles.idx}>{project.index}</div>
         <h3 className={styles.name}>{project.name}</h3>
         <div className={styles.role}>
-          <span>{project.role}</span>
-          <span className={styles.dot} />
+          {showRole && (
+            <>
+              <span>{project.role}</span>
+              <span className={styles.dot} />
+            </>
+          )}
           <span>{project.outcome}</span>
         </div>
         <p className={styles.desc}>{project.description}</p>
