@@ -93,7 +93,7 @@ export function WebShowcase({ desktop, mobile, label }: { desktop: CaseScreen[];
         <button type="button" className={`${styles.navBtn} ${styles.navPrev}`} onClick={() => goDesk(-1)} aria-label="Previous screen" data-cursor data-cursor-light>
           <ChevronLeft />
         </button>
-        <button type="button" key={di} className={`${styles.browser} ${slide}`} onClick={() => setView(di)} aria-label={`View ${cur.caption}`} data-cursor data-view>
+        <button type="button" key={di} className={`${styles.browser} ${slide}`} onClick={() => { setDir(0); setView(di) }} aria-label={`View ${cur.caption}`} data-cursor data-view>
           <BrowserBar label={label} />
           <img className={styles.browserImg} src={cur.src} alt={cur.caption} />
         </button>
@@ -120,7 +120,7 @@ export function WebShowcase({ desktop, mobile, label }: { desktop: CaseScreen[];
         <div className={styles.mobileRow}>
           {mobile.map((s, mi) => (
             <figure className={styles.phoneItem} key={s.src}>
-              <button type="button" className={styles.phone} onClick={() => setView(desktop.length + mi)} aria-label={`View ${s.caption}, mobile`} data-cursor data-view>
+              <button type="button" className={styles.phone} onClick={() => { setDir(0); setView(desktop.length + mi) }} aria-label={`View ${s.caption}, mobile`} data-cursor data-view>
                 <span className={styles.phoneScreen}>
                   <img src={s.src} alt={`${s.caption}, mobile`} loading="lazy" />
                 </span>

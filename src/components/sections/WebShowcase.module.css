@@ -351,15 +351,53 @@
     max-height: none;
     border-radius: 10px;
     transform: translate(-50%, -50%) rotate(90deg);
-    animation: flipLandscape 0.6s var(--ease-out);
+    animation: flipLandscape 0.55s var(--ease-out);
   }
-  /* Nudge the arrows to the very edges so they clear the enlarged shot. */
-  .viewerPrev { left: 6px; }
-  .viewerNext { right: 6px; }
+  /* Navigation slides must KEEP the 90° rotation, or the shot briefly un-rotates
+     mid-animation and snaps back (the "spin"). Slide vertically to match the
+     up/down arrows: next enters from the bottom, prev from the top. */
+  .viewerDesktop.fromRight { animation: wsNextRot 0.5s var(--ease-out); }
+  .viewerDesktop.fromLeft { animation: wsPrevRot 0.5s var(--ease-out); }
+
+  /* The shot now reads landscape on the upright phone, so browse up/down: prev
+     at the top, next above the caption bar — icons turned to point that way.
+     Two-class selectors so they out-specify the base `.viewerNav` centring. */
+  .viewer .viewerNav { left: 50%; right: auto; }
+  .viewer .viewerPrev {
+    top: clamp(12px, 3.5vw, 26px);
+    bottom: auto;
+    transform: translateX(-50%);
+  }
+  .viewer .viewerNext {
+    top: auto;
+    bottom: clamp(58px, 14vw, 78px);
+    transform: translateX(-50%);
+  }
+  .viewer .viewerPrev svg,
+  .viewer .viewerNext svg { transform: rotate(90deg); }
+  .viewer .viewerPrev:hover { transform: translateX(-50%) translateY(-3px); }
+  .viewer .viewerNext:hover { transform: translateX(-50%) translateY(3px); }
+  /* Keep the caption bar to one line so it stays short and the next arrow can sit
+     just above it without overlapping (long captions otherwise wrap to ~3 lines). */
+  .viewer .viewerBar { flex-wrap: nowrap; bottom: clamp(14px, 3vw, 22px); }
+  .viewer .viewerCap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
 }
 @keyframes flipLandscape {
-  from { transform: translate(-50%, -50%) rotate(62deg) scale(0.84); opacity: 0; }
+  from { transform: translate(-50%, -50%) rotate(72deg) scale(0.9); opacity: 0; }
   to { transform: translate(-50%, -50%) rotate(90deg) scale(1); opacity: 1; }
+}
+@keyframes wsNextRot {
+  from { opacity: 0; transform: translate(-50%, calc(-50% + 46px)) rotate(90deg); }
+  to { opacity: 1; transform: translate(-50%, -50%) rotate(90deg); }
+}
+@keyframes wsPrevRot {
+  from { opacity: 0; transform: translate(-50%, calc(-50% - 46px)) rotate(90deg); }
+  to { opacity: 1; transform: translate(-50%, -50%) rotate(90deg); }
 }
 @media (prefers-reduced-motion: reduce) {
   .fromRight,
