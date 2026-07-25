@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties, type ImgHTMLAttributes } from 'react'
+import { useEffect, useLayoutEffect, useState, type CSSProperties, type ImgHTMLAttributes } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { projects, coverSrc, preloadCover } from '../data/content'
 import { useLenis } from '../hooks/useLenis'
@@ -26,8 +26,12 @@ export function CaseStudy() {
   const { slug } = useParams()
   useLenis()
 
-  // Always start a case study from the top.
-  useEffect(() => {
+  // Always start a case study from the top. A layout effect (not passive) so the
+  // scroll resets *before* the reveal effects run their in-view check — otherwise,
+  // arriving via the bottom "next project" link, the hero's Reveal checks while
+  // still scrolled to the previous page's bottom, never reveals, and the hero
+  // stays at opacity:0 despite the image loading fine.
+  useLayoutEffect(() => {
     window.scrollTo(0, 0)
   }, [slug])
 
