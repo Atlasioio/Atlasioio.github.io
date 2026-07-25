@@ -150,19 +150,43 @@
   object-fit: cover;
   display: block;
 }
-.playBadge {
+/* Full-cover dark wash — reserved for hover, so the cover stays clean at rest. */
+.trackPlay::after {
+  content: '';
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
-  color: #fff;
   background: rgba(14, 14, 12, 0.42);
   opacity: 0;
   transition: opacity 0.25s var(--ease-out);
+  pointer-events: none;
+  z-index: 1;
+}
+.trackPlay:hover::after {
+  opacity: 1;
+}
+
+/* The play/pause chip sits on the cover at all times (not just on hover); it
+   goes accent while hovered or playing. */
+.playBadge {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(14, 14, 12, 0.52);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  z-index: 2;
+  transition: transform 0.25s var(--ease-out), background 0.25s;
 }
 .trackPlay:hover .playBadge,
 .trackOn .playBadge {
-  opacity: 1;
+  background: var(--accent);
+  transform: translate(-50%, -50%) scale(1.05);
 }
 .trackMeta {
   flex: 1;
