@@ -52,6 +52,11 @@ export default async function handler(req, res) {
     })
 
     if (!r.ok) {
+      // Surfaces in the Vercel function logs. A 401/403 here almost always means
+      // the deployed ANTHROPIC_API_KEY is missing/invalid (the usual cause of a
+      // live-only failure while local dev works); a 400 often means billing/credits.
+      const detail = await r.text().catch(() => '')
+      console.error(`Anthropic API ${r.status}:`, detail.slice(0, 600))
       res.status(502).json({ error: 'The assistant is unavailable right now.' })
       return
     }
@@ -64,7 +69,8 @@ export default async function handler(req, res) {
       .trim()
 
     res.status(200).json({ reply: reply || '…' })
-  } catch {
+  } catch (err) {
+    console.error('chat handler error:', err)
     res.status(500).json({ error: 'Something went wrong.' })
   }
 }
