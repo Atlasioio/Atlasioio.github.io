@@ -25,7 +25,7 @@
 .dialog {
   position: relative;
   width: min(840px, 100%);
-  max-height: min(900px, 90vh);
+  max-height: min(900px, 90dvh);
   overflow-y: auto;
   /* Hide the scrollbar (content scrolls if it overflows). */
   scrollbar-width: none;

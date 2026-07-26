@@ -22,7 +22,7 @@
   margin-top: auto;
   display: flex;
   flex-direction: column;
-  gap: clamp(2px, 1vh, 12px);
+  gap: clamp(6px, 1.2vh, 16px);
 }
 .link {
   display: flex;
@@ -34,7 +34,9 @@
   font-weight: 700;
   letter-spacing: -0.04em;
   font-size: clamp(40px, 7.4vw, 104px);
-  line-height: 1.04;
+  /* The display glyphs render taller than their em, so a near-1 line-height let
+     adjacent huge links touch/overlap on desktop — give them real breathing room. */
+  line-height: 1.16;
   color: var(--hero-fg);
   transform: translateY(46px);
   opacity: 0;

@@ -105,7 +105,7 @@ function Dialog({ service, closing, close }: { service: Service; closing: boolea
       data-lenis-prevent
     >
       <div className={styles.header}>
-        <p className={`${modal.eyebrow} ${styles.eyebrow}`}>{service.index} · Service</p>
+        <p className={`${modal.eyebrow} ${styles.eyebrow}`}>{service.index} · What I do</p>
         <div className={styles.closeRow}>
           <span className={styles.escHint} aria-hidden="true">Esc</span>
           <button type="button" className={`${styles.ctrl} ${styles.closeCtrl}`} onClick={close} aria-label="Close" data-cursor>
