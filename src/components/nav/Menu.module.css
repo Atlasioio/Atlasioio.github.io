@@ -53,6 +53,10 @@
   font-family: var(--font-mono);
   font-weight: 500;
   font-size: clamp(12px, 1vw, 15px);
+  /* Reset the display letter-spacing inherited from .link — as an em value it
+     computes against the huge link font (~-4px) and would crush the two digits
+     of the number together. */
+  letter-spacing: 0.02em;
   color: rgba(246, 244, 241, 0.38);
 }
 .txt { transition: color 0.3s, transform 0.45s var(--ease-out); }

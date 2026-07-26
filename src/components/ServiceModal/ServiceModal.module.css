@@ -224,12 +224,12 @@
 @media (max-width: 720px) {
   .body { grid-template-columns: 1fr; }
   /* Match the art's 4/5 viewBox (it uses `slice`), so the illustration fits
-     instead of being cropped; centre it at a modest size. */
+     instead of being cropped. Full width like the text blocks below it — which
+     makes it taller, keeping the same resolution. */
   .visual {
     aspect-ratio: 4 / 5;
     max-height: none;
-    width: min(62%, 200px);
-    margin: 0 auto;
+    width: 100%;
   }
 }
 /* Phones: let the dialog size to its content (capped) and sit clear of the
