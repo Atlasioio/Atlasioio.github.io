@@ -35,10 +35,6 @@
   display: flex;
   justify-content: center;
 }
-.more :global(a) {
-  font-family: var(--font-mono);
-  font-size: var(--fs-sm);
-}
 .case {
   display: grid;
   grid-template-columns: 1fr 1fr;

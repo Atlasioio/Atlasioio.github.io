@@ -1,7 +1,7 @@
 import { projects } from '../../data/content'
 import { Marker } from '../ui/Marker'
 import { Reveal } from '../ui/Reveal'
-import { LinkLike } from '../ui/LinkLike'
+import { Button } from '../ui/Button'
 import { CaseRow } from './CaseRow'
 import styles from './Work.module.css'
 
@@ -29,7 +29,9 @@ export function Work() {
       </div>
 
       <Reveal className={styles.more} i={1}>
-        <LinkLike to="/work">View all work ({projects.length})</LinkLike>
+        <Button to="/work" large>
+          View all work ({projects.length})
+        </Button>
       </Reveal>
     </section>
   )
