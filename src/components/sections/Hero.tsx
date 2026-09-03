@@ -9,7 +9,7 @@ import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion'
 import { studio } from '../../data/content'
 import styles from './Hero.module.css'
 
-const HEADLINE_LINES = ['Design &', 'development', 'for products that', 'want to feel']
+const HEADLINE_LINES = ['Designing', 'products that', 'want to feel']
 
 /**
  * The editorial first screen: an inset accent "card". The headline clip-reveals

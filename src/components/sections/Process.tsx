@@ -32,13 +32,13 @@ function Design(): ReactElement {
   )
 }
 
-// Build — code brackets that spread apart on hover.
-function Build(): ReactElement {
+// Define — two chevrons converge on a focal accent dot (diverge → converge).
+function Define(): ReactElement {
   return (
     <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={SW} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={styles.svg}>
-      <polyline className={styles.bLeft} points="18,13 7,24 18,35" />
-      <polyline className={styles.bRight} points="30,13 41,24 30,35" />
-      <line className={styles.accentStroke} x1="27" y1="11" x2="21" y2="37" />
+      <polyline className={styles.defLeft} points="13,13 22,24 13,35" />
+      <polyline className={styles.defRight} points="35,13 26,24 35,35" />
+      <circle className={`${styles.defDot} ${styles.accentFill}`} cx="24" cy="24" r="3.2" stroke="none" />
     </svg>
   )
 }
@@ -58,8 +58,8 @@ function Launch(): ReactElement {
 
 const ART: Record<string, () => ReactElement> = {
   '01': Discovery,
-  '02': Design,
-  '03': Build,
+  '02': Define,
+  '03': Design,
   '04': Launch,
 }
 

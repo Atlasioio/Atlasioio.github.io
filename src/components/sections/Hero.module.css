@@ -288,6 +288,19 @@
 @media (max-width: 600px) {
   .hero { padding-block: 92px 104px; }
   .cta { flex-wrap: nowrap; gap: 16px; }
+  /* Three zones so the eyebrow sits high near the header and the Contact row sits
+     low near the bottom (further apart), with the headline in the middle: a gap
+     drops the headline below the eyebrow, and the bio + Contact anchor to the
+     bottom of the main column. */
+  .inner { justify-content: flex-start; gap: clamp(26px, 7vh, 56px); }
+  .main { flex: 1; }
+  /* Bio stays just under the headline (top of the row); the Contact cluster is
+     pushed to the bottom of the hero. */
+  .row { flex: 1; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 18px; }
+  /* Ease the density on phones: a tad smaller headline (the copy is now 4 lines,
+     not 5), and a tighter eyebrow so the location fits on one line not two. */
+  .headline { font-size: clamp(30px, 9vw, 36px); }
+  .eyebrow { font-size: 11px; letter-spacing: 0.035em; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -35,8 +35,9 @@
 .dSquare,
 .dCircle,
 .dAccent,
-.bLeft,
-.bRight,
+.defLeft,
+.defRight,
+.defDot,
 .magnifier,
 .discDot,
 .lArrow {
@@ -55,9 +56,10 @@
 .step:hover .dCircle { transform: scale(1.16); }
 .step:hover .dSquare { transform: rotate(-10deg); }
 
-/* Build — code brackets spread apart. */
-.step:hover .bLeft { transform: translateX(-4px); }
-.step:hover .bRight { transform: translateX(4px); }
+/* Define — chevrons converge on the focal dot. */
+.step:hover .defLeft { transform: translateX(4px); }
+.step:hover .defRight { transform: translateX(-4px); }
+.step:hover .defDot { transform: scale(1.4); }
 
 /* Launch — lift off. */
 .step:hover .lArrow { animation: launch 1.1s var(--ease-out) infinite; }
@@ -71,8 +73,8 @@
   .dSquare,
   .dCircle,
   .dAccent,
-  .bLeft,
-  .bRight,
+  .defLeft,
+  .defRight,
   .magnifier,
   .discDot { transition: none; }
 }

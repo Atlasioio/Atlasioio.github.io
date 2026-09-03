@@ -443,56 +443,60 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 'reel',
+    id: 'goodreads',
     index: 'W/04',
-    name: 'Reel',
-    tag: 'Web · Concept',
-    role: 'Design & Framer build',
-    outcome: 'A calm, photography-led site for a design studio',
+    name: 'Goodreads Redesign',
+    tag: 'Concept · Redesign',
+    role: 'Solo redesign',
+    outcome: 'Unburying the core flows without breaking the community',
     description:
-      'A self-initiated concept for a contemporary architecture & interior studio — restrained, typographic, and fully responsive, designed and built in Framer.',
+      'A self-initiated redesign of Goodreads — cutting a decade of feature clutter from the everyday “add, track, discover” flows, while protecting the community that makes it loved.',
     fill: 'a',
-    accent: 'var(--ink)',
-    liveUrl: 'https://goodness-jargon-613166.framer.app/',
-    browserLabel: 'reel — architecture',
-    year: '2025',
-    client: 'Reel — self-initiated concept',
-    services: ['Web design', 'Art direction', 'Framer build'],
+    accent: '#6f4e37',
+    phoneFrame: true,
+    year: '2024',
+    client: 'Goodreads — self-initiated redesign',
+    services: ['UX/UI', 'Product design', 'Redesign'],
     tagline:
-      'A concept site for a contemporary architecture studio — where the work is the loudest thing on the page.',
+      'Rethinking how readers track and discover books — and knowing what not to touch.',
     overview:
-      "Reel is a self-initiated concept for a contemporary architecture and interior design studio. The brief I set myself: make a portfolio site that gets out of the way of the photography — confident type, generous space, and a structure that reads as cleanly on a phone as on a wide display.",
+      'Goodreads is beloved for its community — reviews, ratings, friends’ shelves. But the everyday “add a book, track progress, find the next one” flows are buried under a decade of feature accretion. This self-initiated redesign sharpens those core flows while deliberately preserving what people already love.',
     sections: [
       {
-        heading: 'The idea',
-        body: 'Architecture sites tend toward one of two failures — sterile grids that flatten the work, or over-designed layouts that fight it. Reel aims for the narrow middle: a typographic, near-monochrome system that frames the photography and never competes with it.',
+        heading: 'The problem',
+        body: 'Goodreads earns its loyalty through community, not polish. The cost is that the simple daily jobs — log a book, update progress, decide what’s next — are scattered and slow. The redesign’s hardest constraint was restraint: knowing what not to change.',
       },
       {
-        heading: 'The system',
-        body: 'A single display face does the heavy lifting — set large and tight — and everything else stays quiet. Black, white, and the warmth of the architectural photography are the whole palette. Sections breathe, one idea per screen: vision, studio, services, work.',
+        heading: 'The approach',
+        body: 'A three-step move: synthesise what readers actually do day to day, separate the loved-and-untouchable (the community) from the cluttered-and-fixable (the core flows), then redesign only the latter. Before-and-afters kept each change honest.',
       },
       {
-        heading: 'Responsive by design',
-        body: 'It was built mobile-up in Framer, so the same restraint holds from a wide hero to a phone. Type rescales, the services list stacks, and the project grid reflows — the composition stays calm at every width.',
+        heading: 'The solution',
+        body: 'A calmer My Books, a clearer home and social feed, a lighter review interface, and an Explore that surfaces the next read instead of burying it — the community left intact, the everyday flows unburied.',
+      },
+      {
+        heading: 'The outcome',
+        body: 'A focused exercise in editing a mature product: the discipline was as much in what stayed as in what changed.',
       },
     ],
     results: [
-      { value: 'Mobile-up', label: 'Responsive at every width' },
-      { value: '1 face', label: 'Type carries the design' },
-      { value: 'Framer', label: 'Designed & built, no hand-off' },
+      { value: '3 weeks', label: 'Self-initiated exercise' },
+      { value: '7 screens', label: 'Before / after, core flows' },
+      { value: 'Restraint', label: 'Knowing what not to change' },
     ],
-    desktop: [
-      { src: '/work/reel/d-hero.webp', caption: 'Home — “Vision. Structure. Impact.”' },
-      { src: '/work/reel/d-about.webp', caption: 'About — the studio, on bold colour blocks.' },
-      { src: '/work/reel/d-services.webp', caption: 'Services — residential, commercial, innovative.' },
-      { src: '/work/reel/d-projects.webp', caption: 'Projects — stats beside a selected-work grid.' },
+    coverScreens: [
+      '/work/goodreads/home.webp',
+      '/work/goodreads/my-books.webp',
+      '/work/goodreads/social.webp',
     ],
-    mobile: [
-      { src: '/work/reel/m-hero.webp', caption: 'Home' },
-      { src: '/work/reel/m-about.webp', caption: 'About' },
-      { src: '/work/reel/m-services.webp', caption: 'Services' },
-      { src: '/work/reel/m-projects.webp', caption: 'Projects' },
-      { src: '/work/reel/m-contact.webp', caption: 'Contact' },
+    screens: [
+      { src: '/work/goodreads/my-books.webp', caption: 'My Books — redesigned: progress and shelves up front.' },
+      { src: '/work/goodreads/old-my-books.webp', caption: 'My Books — the original, before the edit.' },
+      { src: '/work/goodreads/home.webp', caption: 'Home — current read and quick actions, decluttered.' },
+      { src: '/work/goodreads/social.webp', caption: 'Social — the community feed, kept and clarified.' },
+      { src: '/work/goodreads/social-old.webp', caption: 'Social — the original feed.' },
+      { src: '/work/goodreads/explore.webp', caption: 'Explore — surfacing the next read instead of burying it.' },
+      { src: '/work/goodreads/review.webp', caption: 'Review — a lighter, faster rating flow.' },
     ],
   },
   {
@@ -566,60 +570,56 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 'goodreads',
+    id: 'reel',
     index: 'W/06',
-    name: 'Goodreads Redesign',
-    tag: 'Concept · Redesign',
-    role: 'Solo redesign',
-    outcome: 'Unburying the core flows without breaking the community',
+    name: 'Reel',
+    tag: 'Web · Concept',
+    role: 'Design & Framer build',
+    outcome: 'A calm, photography-led site for a design studio',
     description:
-      'A self-initiated redesign of Goodreads — cutting a decade of feature clutter from the everyday “add, track, discover” flows, while protecting the community that makes it loved.',
+      'A self-initiated concept for a contemporary architecture & interior studio — restrained, typographic, and fully responsive, designed and built in Framer.',
     fill: 'a',
-    accent: '#6f4e37',
-    phoneFrame: true,
-    year: '2024',
-    client: 'Goodreads — self-initiated redesign',
-    services: ['UX/UI', 'Product design', 'Redesign'],
+    accent: 'var(--ink)',
+    liveUrl: 'https://goodness-jargon-613166.framer.app/',
+    browserLabel: 'reel — architecture',
+    year: '2025',
+    client: 'Reel — self-initiated concept',
+    services: ['Web design', 'Art direction', 'Framer build'],
     tagline:
-      'Rethinking how readers track and discover books — and knowing what not to touch.',
+      'A concept site for a contemporary architecture studio — where the work is the loudest thing on the page.',
     overview:
-      'Goodreads is beloved for its community — reviews, ratings, friends’ shelves. But the everyday “add a book, track progress, find the next one” flows are buried under a decade of feature accretion. This self-initiated redesign sharpens those core flows while deliberately preserving what people already love.',
+      "Reel is a self-initiated concept for a contemporary architecture and interior design studio. The brief I set myself: make a portfolio site that gets out of the way of the photography — confident type, generous space, and a structure that reads as cleanly on a phone as on a wide display.",
     sections: [
       {
-        heading: 'The problem',
-        body: 'Goodreads earns its loyalty through community, not polish. The cost is that the simple daily jobs — log a book, update progress, decide what’s next — are scattered and slow. The redesign’s hardest constraint was restraint: knowing what not to change.',
+        heading: 'The idea',
+        body: 'Architecture sites tend toward one of two failures — sterile grids that flatten the work, or over-designed layouts that fight it. Reel aims for the narrow middle: a typographic, near-monochrome system that frames the photography and never competes with it.',
       },
       {
-        heading: 'The approach',
-        body: 'A three-step move: synthesise what readers actually do day to day, separate the loved-and-untouchable (the community) from the cluttered-and-fixable (the core flows), then redesign only the latter. Before-and-afters kept each change honest.',
+        heading: 'The system',
+        body: 'A single display face does the heavy lifting — set large and tight — and everything else stays quiet. Black, white, and the warmth of the architectural photography are the whole palette. Sections breathe, one idea per screen: vision, studio, services, work.',
       },
       {
-        heading: 'The solution',
-        body: 'A calmer My Books, a clearer home and social feed, a lighter review interface, and an Explore that surfaces the next read instead of burying it — the community left intact, the everyday flows unburied.',
-      },
-      {
-        heading: 'The outcome',
-        body: 'A focused exercise in editing a mature product: the discipline was as much in what stayed as in what changed.',
+        heading: 'Responsive by design',
+        body: 'It was built mobile-up in Framer, so the same restraint holds from a wide hero to a phone. Type rescales, the services list stacks, and the project grid reflows — the composition stays calm at every width.',
       },
     ],
     results: [
-      { value: '3 weeks', label: 'Self-initiated exercise' },
-      { value: '7 screens', label: 'Before / after, core flows' },
-      { value: 'Restraint', label: 'Knowing what not to change' },
+      { value: 'Mobile-up', label: 'Responsive at every width' },
+      { value: '1 face', label: 'Type carries the design' },
+      { value: 'Framer', label: 'Designed & built, no hand-off' },
     ],
-    coverScreens: [
-      '/work/goodreads/home.webp',
-      '/work/goodreads/my-books.webp',
-      '/work/goodreads/social.webp',
+    desktop: [
+      { src: '/work/reel/d-hero.webp', caption: 'Home — “Vision. Structure. Impact.”' },
+      { src: '/work/reel/d-about.webp', caption: 'About — the studio, on bold colour blocks.' },
+      { src: '/work/reel/d-services.webp', caption: 'Services — residential, commercial, innovative.' },
+      { src: '/work/reel/d-projects.webp', caption: 'Projects — stats beside a selected-work grid.' },
     ],
-    screens: [
-      { src: '/work/goodreads/my-books.webp', caption: 'My Books — redesigned: progress and shelves up front.' },
-      { src: '/work/goodreads/old-my-books.webp', caption: 'My Books — the original, before the edit.' },
-      { src: '/work/goodreads/home.webp', caption: 'Home — current read and quick actions, decluttered.' },
-      { src: '/work/goodreads/social.webp', caption: 'Social — the community feed, kept and clarified.' },
-      { src: '/work/goodreads/social-old.webp', caption: 'Social — the original feed.' },
-      { src: '/work/goodreads/explore.webp', caption: 'Explore — surfacing the next read instead of burying it.' },
-      { src: '/work/goodreads/review.webp', caption: 'Review — a lighter, faster rating flow.' },
+    mobile: [
+      { src: '/work/reel/m-hero.webp', caption: 'Home' },
+      { src: '/work/reel/m-about.webp', caption: 'About' },
+      { src: '/work/reel/m-services.webp', caption: 'Services' },
+      { src: '/work/reel/m-projects.webp', caption: 'Projects' },
+      { src: '/work/reel/m-contact.webp', caption: 'Contact' },
     ],
   },
 ]
@@ -630,34 +630,35 @@ export interface Step {
   name: string
   description: string
 }
+// A double-diamond rhythm: diverge to explore, converge to decide — twice.
 export const steps: Step[] = [
   {
     no: '01',
-    name: 'Discovery',
-    description: 'Understand the users, other stakeholders, and the core problem — to see what success actually looks like.',
+    name: 'Discover',
+    description: 'Research the people, the context, and the goals, going broad to understand the real problem behind the brief.',
   },
   {
     no: '02',
-    name: 'Design',
-    description: 'Systems and screens — type, grid, and components that scale, looping back to discovery as I learn.',
+    name: 'Define',
+    description: 'Synthesise it into a sharp focus: the problem worth solving, and what success actually looks like.',
   },
   {
     no: '03',
-    name: 'Build',
-    description: 'Built in Framer or React — with Claude Code for functional demos, in close collaboration with engineers and PMs.',
+    name: 'Develop',
+    description: 'Explore solutions in flows, wireframes, and interface systems, made tangible fast as prototypes and mockups in Figma and Claude Code.',
   },
   {
     no: '04',
-    name: 'Ship',
-    description: 'Ship, then learn from real use — measure, refine, and keep improving.',
+    name: 'Deliver',
+    description: 'Test with real users, refine, and ship, then learn from real use and keep improving.',
   },
 ]
 
 /* ---- Beyond the work (05) — the personal bento --------------------------- */
 export const aboutMe = {
   blurb:
-    "Moved to Stockholm this year and eager to explore it. I like keeping up with design and AI — and off the clock you'll usually find me with a book, cooking something, or grabbing a matcha.",
-  tags: ['New to Stockholm', 'Curious by default'],
+    "I split my time between Malmö and Stockholm, at home (and open to work) in both. I like keeping up with design and AI, and off the clock you'll usually find me with a book, cooking something, or grabbing a matcha.",
+  tags: ['Malmö & Stockholm', 'Curious by default'],
   /** Self-hosted 30-sec previews + cover art (no Spotify iframe → no third-party
    *  cookies or tracking). `url` opens the full track on Spotify on click only. */
   tracks: [
