@@ -155,6 +155,9 @@ export const services: Service[] = [
 export interface CaseSection {
   heading: string
   body: string
+  /** Process artifacts for this stage (audit, IA, flows, explorations). Rendered
+   *  full-width beneath the stage's text so wide diagrams stay legible. */
+  media?: CaseScreen[]
 }
 export interface CaseResult {
   value: string
@@ -204,11 +207,20 @@ export interface Project {
   year: string
   client: string
   services: string[]
+  /* ---- Deep-dive extras (optional; shown only when set) ---- */
+  /** e.g. "Solo" — who was on it. */
+  team?: string
+  /** e.g. ['Figma', 'Claude Code'] — what it was made with. */
+  tools?: string[]
+  /** Closing reflection: what the work taught, and what comes next. */
+  reflection?: { heading: string; body: string }[]
   /** Hero subhead on the case-study page. */
   tagline: string
   overview: string
   sections: CaseSection[]
-  results: CaseResult[]
+  /** "At a glance" figures. Omit entirely to hide the row — better empty than
+   *  padded with scope dressed up as outcomes. */
+  results?: CaseResult[]
   /** Signature colour — replaces the brand blue within this project's case study
    *  and its homepage work row (left unset → stays brand blue). */
   accent?: string
@@ -266,32 +278,54 @@ export const projects: Project[] = [
     year: '2025',
     client: 'EcoTrip — self-initiated concept',
     services: ['UX/UI design', 'Brand identity', 'Design system'],
+    team: 'Solo',
+    tools: ['Figma'],
     tagline:
       'A travel app where the greener choice is the shared one — progress measured by the hive, not the halo.',
     overview:
       'EcoTrip is a concept for a travel app that makes the lower-carbon choice the shared one. Instead of guilt-tripping individuals, it frames sustainability as collective progress — a hive you contribute to — and backs the metaphor with real commitment: 5% of every trip funds bee conservation.',
     sections: [
       {
-        heading: 'The brief',
-        body: 'Environmental apps reach for green by default — virtue signalled at the palette level. EcoTrip had to make the lower-carbon choice the obvious one without ever lecturing, and turn a private act of restraint into something that feels collective.',
+        heading: 'Discover',
+        body: 'EcoTrip began as an earlier build of my own, so the honest first move was to audit it. The file had grown to 126 frames hanging off four tabs with no route between them, where duplicates and unlinked experiments outnumbered the real paths. There was no onboarding, no way to give back, and no way to compare one trip against another. The interface had its own tells: a single saturated yellow doing every job, leaves scoring the trip, and a bare "132 KgCO2" with nothing to measure it against.',
+        media: [
+          { src: '/work/ecotrip/process/audit-old-ui.webp', caption: 'Audit of the earlier build. Four findings, each turned into a decision that shaped the redesign.' },
+          { src: '/work/ecotrip/process/ia-before.webp', caption: 'The old architecture: 126 frames across four dead-end tabs, with no route between them.' },
+        ],
       },
       {
-        heading: 'Two travellers',
-        body: "Two personas set the rules. John takes bigger trips abroad and won't trade much convenience — his journey set the ceiling on friction: surface the green option, never block the path. Jane reduces carbon at every step, comfort be damned — hers showed where friction needed to live (on the unsustainable options) and where it had to disappear (on the sustainable ones).",
+        heading: 'Define',
+        body: 'Two travellers set the rules. Jane reduces carbon at every step and wanted friction on the unsustainable option, not on her own path. John takes bigger trips and will not trade much convenience, so he set the ceiling: surface the greener option, never block the route. Between them they produced the principle the whole product rests on. Friction only where it counts. The green path stays frictionless, and a high-carbon pick earns one honest, dismissible question and nothing more.',
+        media: [
+          { src: '/work/ecotrip/process/flow-plan-trip.webp', caption: 'Plan a trip. Jane set the floor and John the ceiling, so the nudge lives on the high-carbon branch and never on the path itself.' },
+        ],
       },
       {
-        heading: 'The hive, not the halo',
-        body: "The bees came out of that: warm and collective, where the focus is the hive's progress rather than any one person's halo. You still track your own trips and see how others are doing — but every score reads as a cell you add to the hive, a win worth celebrating because it lifts the whole, not a rank to beat. And it isn't only metaphor — EcoTrip commits 5% of every trip's revenue to bee conservation, and anything a user tops up goes 100% to the foundation.",
+        heading: 'Develop',
+        body: "126 frames became nine screens on a single loop: onboarding sets the posture, every trip ends in the Hive, and the Hive feeds the next trip, with giving back as its own branch. The visual direction took three passes. Eco-green read as a virtue sticker, SaaS-clean had no warmth and no sense of the collective, so honey and warm earth won: about the hive’s progress rather than a halo. Scoring went the same way, with leaves too generic and a bar too flat, until honeycomb cells won because they scale from five on a card to a full comb for the whole hive.",
+        media: [
+          { src: '/work/ecotrip/process/ia-after.webp', caption: 'The redesigned architecture: nine screens on one loop, with giving back as a new branch.' },
+          { src: '/work/ecotrip/process/explorations.webp', caption: 'Palette, type and scoring explored in parallel. Eco-green and SaaS-clean were rejected for the reasons noted.' },
+        ],
       },
       {
-        heading: 'A warmer system',
-        body: 'Honey gold and earthy tones replaced the predictable green; a rounded display family replaced the corporate sans. The hexagon recurs quietly across the system — badges, rewards, completion states — tying the identity to the metaphor without lecturing. The result reads as an invitation, not an obligation.',
+        heading: 'Deliver',
+        body: 'Nine screens, a warm rounded system, and a giving branch that commits 5% of every trip to bee conservation, with anything a user tops up going 100% to the foundation. It is a self-initiated concept, so it has not been usability tested and I would not claim it as validated. The next step is the one that matters: put the create flow in front of both traveller types and check the thing the design rests on, that the nudge informs without ever reading as a block.',
       },
     ],
-    results: [
-      { value: '5%', label: 'Of every trip funds bee conservation' },
-      { value: '2 personas', label: 'Two very different travellers' },
-      { value: '1 system', label: 'Honey-gold palette + hexagon motif' },
+    reflection: [
+      {
+        heading: 'What I learned',
+        body: 'The visual category was the trap. Travel defaults to white and blue, environment defaults to green, and both signal virtue at the palette level before a word is read. Finding a third way through the hive metaphor did more for the concept than any single screen.',
+      },
+      {
+        heading: 'What I would do differently',
+        body: 'I would set the success measure before designing the nudge. "Informs without blocking" is the whole thesis and it is testable, but I defined it in language rather than in something I could measure.',
+      },
+      {
+        heading: 'What is next',
+        body: 'Put the create flow in front of both traveller types. If Jane finds the green path slower, or John reads the nudge as a block, the principle fails and the flow needs rethinking before anything else does.',
+      },
     ],
     accent: '#F5A800',
     videoFrame: 'bare',
@@ -337,8 +371,119 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 'jobquest',
+    id: 'goodreads',
     index: 'W/02',
+    name: 'Goodreads Redesign',
+    tag: 'Concept · Redesign',
+    role: 'Product designer — research, IA, interaction, visual system',
+    outcome: 'Making reading native, so everything social becomes a by-product',
+    description:
+      'A ground-up redesign of the largest book app in the world, on the premise that it forgot what its users are actually doing: reading.',
+    fill: 'a',
+    featured: true,
+    accent: '#A24E1C',
+    year: '2026',
+    client: 'Goodreads — self-initiated concept',
+    services: ['UX/UI', 'Product design', 'Design system'],
+    team: 'Solo',
+    tools: ['Claude Design'],
+    tagline:
+      'Goodreads, rebuilt around reading. The app should hold the book, not just the database entry for it.',
+    overview:
+      'Goodreads has the data and the community, and has been structurally frozen for over a decade. This is a ground-up redesign built on one premise: the product forgot what its users are actually doing, which is reading. Make reading native, and the social half stops being a wall of events and becomes a by-product of it.',
+    sections: [
+      {
+        heading: 'Discover',
+        body: 'Goodreads earns its loyalty through community, not polish. Working from the live app and my own use of it as a reader, four failures kept surfacing. Reading itself is absent, so progress is a number you type in, quotes get screenshotted into camera rolls, and notes end up in other apps. The feed is a wall of events, where a line saying someone rated a book three stars is not something anyone can reply to or wants to read. Discovery has left for short video, and the app answers with bestseller grids. And organisation punishes the organised, with shelves, tags and lists buried under a UI that treats every book as a row in a table.',
+      },
+      {
+        heading: 'Define',
+        body: 'One line held the redesign together: make reading native, and everything social becomes a by-product of it. If the app holds the book, it knows your page. Knowing your page means highlights become quotes without any filing work, reviews can start from passages you already saved, spoilers can be hidden by where you are rather than by a stranger’s guess, and a finished book can be a moment rather than a form. One structural decision pays for four features. The constraint alongside it was to stay recognisably Goodreads, because the brand equity is real. What changes is what the surface is for.',
+      },
+      {
+        heading: 'Develop',
+        body: 'Before committing I built three whole home screens rather than three mood boards, because the disagreement was structural rather than decorative. The Bookmark treated one book at a time as an object, and hid the library behind reverence for it. The Ledger made reading a tracked practice, which turned a hobby into a KPI dashboard. The Stack won: your books as a stack you reach into, covers doing the visual work, the library present and the current book obvious. The system fell out of that choice. One palette holding no colour outside the paper-to-brown spectrum, because covers are the loudest thing on every screen and any UI hue competes with them, and two typefaces, Literata for anything that is prose and Bricolage Grotesque for structure.',
+        media: [
+          { src: '/work/goodreads/process/explorations.webp', caption: 'Three whole home screens, built before committing to one. The Bookmark, The Ledger, and The Stack, which became the app.' },
+        ],
+      },
+      {
+        heading: 'Deliver',
+        body: 'Eighteen screens across four tabs, one design system, and a hero flow that carries the argument: finish a book, rate it, write the review, watch it land on your shelf. The payoff of native reading shows up in that review screen, where the quotes you kept while reading sit under the draft ready to pull in, so what you wrote while reading becomes what you publish. Every flow is leavable, because finishing without rating is a complete act and so is rating without reviewing. It is a self-initiated concept, so it has not been usability tested and I would not call it validated. The next step is an interactive prototype of that flow, so the argument can be felt rather than read.',
+        media: [
+          { src: '/work/goodreads/process/hero-flow.webp', caption: 'The hero flow, left to right: the last page, the rating, the review with kept quotes ready to pull in, and the book landing on the shelf.' },
+        ],
+      },
+    ],
+    results: [
+      { value: '4', label: 'Root tabs the whole product folds into' },
+      { value: '18', label: 'Screens designed across them' },
+      { value: '3', label: 'Home screens built before one was chosen' },
+    ],
+    reflection: [
+      {
+        heading: 'What I learned',
+        body: 'The palette decision did more work than any single screen. An earlier pass used a green accent and it fought every cover on the page. Cutting every hue outside paper and brown let the books be the colour, and made the one rust action unmistakable.',
+      },
+      {
+        heading: 'What I would do differently',
+        body: 'I would set the success measures before drawing anything. "Fewer taps to shelve a book" is testable; "calmer" is not, and I leaned on the second more than the first.',
+      },
+      {
+        heading: 'What is next',
+        body: 'An interactive prototype of the finish, rate, review and shelve flow, so the argument can be felt rather than read. After that, onboarding that seeds taste from three books you loved, and a first pass at tablet.',
+      },
+    ],
+    coverScreens: [
+      '/work/goodreads/home.webp',
+      '/work/goodreads/my-books.webp',
+      '/work/goodreads/book-page.webp',
+    ],
+    screens: [
+      { src: '/work/goodreads/home.webp', caption: 'Reading — the tab opens the book you are in, not a dashboard.' },
+      { src: '/work/goodreads/reader.webp', caption: 'The reader — one serif column at a real reading measure, chrome cut to almost nothing.' },
+      { src: '/work/goodreads/highlight.webp', caption: 'Highlight to capture — the toolbar comes to the passage. The hinge of the whole redesign.' },
+      { src: '/work/goodreads/quote-kept.webp', caption: 'Quote kept — the confirmation does the filing: page reference automatic, tags one tap.' },
+      { src: '/work/goodreads/my-books.webp', caption: 'My Books — shelves first, with did-not-finish as a first-class shelf.' },
+      { src: '/work/goodreads/my-books-lists.webp', caption: 'My Books — lists with real cover stacks, tags with counts, quotes as a destination.' },
+      { src: '/work/goodreads/old-my-books.webp', caption: 'My Books — the original, before the edit.' },
+      { src: '/work/goodreads/discover-browse.webp', caption: 'Discover — recommendations that lead with why, rather than a bestseller wall.' },
+      { src: '/work/goodreads/discover-shorts.webp', caption: 'Shorts — reader-made clips as a mode of Discover, the book one tap from your shelf.' },
+      { src: '/work/goodreads/social-old.webp', caption: 'The original community feed, before the edit.' },
+      { src: '/work/goodreads/search.webp', caption: 'Search — global, but the books already on your shelves come first.' },
+      { src: '/work/goodreads/book-page.webp', caption: 'Book page — the cover floods the header, your progress before the crowd’s.' },
+      { src: '/work/goodreads/book-snapshot.webp', caption: 'Inline snapshot — author, rating, series and blurb without leaving the screen.' },
+      { src: '/work/goodreads/finished.webp', caption: 'Finishing is a moment: a wax seal, and three numbers that actually mean something.' },
+      { src: '/work/goodreads/rate.webp', caption: 'Rating — every value carries a word, and half stars exist.' },
+      { src: '/work/goodreads/write-review.webp', caption: 'The review — your kept quotes sit under the draft, ready to pull in.' },
+      { src: '/work/goodreads/community-feed.webp', caption: 'Community — only things a person made, with reviews truncated by the page you are on.' },
+    ],
+    designSystem: {
+      intro:
+        'One palette, two typefaces, four component families. The palette deliberately holds no colour outside the paper-to-brown spectrum, because covers are the loudest thing on every screen.',
+      palette: [
+        { name: 'Paper', hex: '#F7F4ED', note: 'Surfaces' },
+        { name: 'Card', hex: '#FFFDF8', note: 'Raised fills' },
+        { name: 'Quiet fill', hex: '#EDE7DA', note: 'Rules · inactive' },
+        { name: 'Rust', hex: '#A24E1C', note: 'The one primary action' },
+        { name: 'Star', hex: '#8A5220', note: 'Ratings · highlights' },
+        { name: 'Ink', hex: '#3A2A18', note: 'Text' },
+      ],
+      typefaces: [
+        { name: 'Literata', role: 'Prose — titles, quotes, the reader' },
+        { name: 'Bricolage Grotesque', role: 'Structure — headings, UI, labels' },
+      ],
+      principles: [
+        'Rust is reserved for the single most important action on a screen.',
+        'No colour outside paper and brown, so the covers are the colour.',
+        'Books never appear as text where a cover could appear instead.',
+        'Every flow is leavable: the completionist path is offered, never enforced.',
+      ],
+    },
+  },
+  {
+    id: 'jobquest',
+    index: 'W/03',
     name: 'Jobquest',
     tag: 'Web app · Shipped',
     role: 'Design & React build',
@@ -381,7 +526,7 @@ export const projects: Project[] = [
       },
     ],
     results: [
-      { value: '~3 weeks', label: 'Idea to shipped' },
+      { value: 'Local-first', label: 'No auth, no backend, nothing in the way' },
       { value: '3 views', label: 'Board · Grid · Map' },
       { value: 'Shipped', label: 'A real, working product' },
     ],
@@ -401,7 +546,7 @@ export const projects: Project[] = [
   },
   {
     id: 'sony',
-    index: 'W/03',
+    index: 'W/04',
     name: 'Sony / Nimway',
     tag: 'Smart office · Client',
     role: 'UX design',
@@ -440,63 +585,6 @@ export const projects: Project[] = [
       { value: 'Sony', label: 'Real, shipping client work' },
       { value: '4 surfaces', label: 'Panel · kiosk · wayfinding · app' },
       { value: '1 system', label: 'Coherent across all of them' },
-    ],
-  },
-  {
-    id: 'goodreads',
-    index: 'W/04',
-    name: 'Goodreads Redesign',
-    tag: 'Concept · Redesign',
-    role: 'Solo redesign',
-    outcome: 'Unburying the core flows without breaking the community',
-    description:
-      'A self-initiated redesign of Goodreads — cutting a decade of feature clutter from the everyday “add, track, discover” flows, while protecting the community that makes it loved.',
-    fill: 'a',
-    accent: '#6f4e37',
-    phoneFrame: true,
-    year: '2024',
-    client: 'Goodreads — self-initiated redesign',
-    services: ['UX/UI', 'Product design', 'Redesign'],
-    tagline:
-      'Rethinking how readers track and discover books — and knowing what not to touch.',
-    overview:
-      'Goodreads is beloved for its community — reviews, ratings, friends’ shelves. But the everyday “add a book, track progress, find the next one” flows are buried under a decade of feature accretion. This self-initiated redesign sharpens those core flows while deliberately preserving what people already love.',
-    sections: [
-      {
-        heading: 'The problem',
-        body: 'Goodreads earns its loyalty through community, not polish. The cost is that the simple daily jobs — log a book, update progress, decide what’s next — are scattered and slow. The redesign’s hardest constraint was restraint: knowing what not to change.',
-      },
-      {
-        heading: 'The approach',
-        body: 'A three-step move: synthesise what readers actually do day to day, separate the loved-and-untouchable (the community) from the cluttered-and-fixable (the core flows), then redesign only the latter. Before-and-afters kept each change honest.',
-      },
-      {
-        heading: 'The solution',
-        body: 'A calmer My Books, a clearer home and social feed, a lighter review interface, and an Explore that surfaces the next read instead of burying it — the community left intact, the everyday flows unburied.',
-      },
-      {
-        heading: 'The outcome',
-        body: 'A focused exercise in editing a mature product: the discipline was as much in what stayed as in what changed.',
-      },
-    ],
-    results: [
-      { value: '3 weeks', label: 'Self-initiated exercise' },
-      { value: '7 screens', label: 'Before / after, core flows' },
-      { value: 'Restraint', label: 'Knowing what not to change' },
-    ],
-    coverScreens: [
-      '/work/goodreads/home.webp',
-      '/work/goodreads/my-books.webp',
-      '/work/goodreads/social.webp',
-    ],
-    screens: [
-      { src: '/work/goodreads/my-books.webp', caption: 'My Books — redesigned: progress and shelves up front.' },
-      { src: '/work/goodreads/old-my-books.webp', caption: 'My Books — the original, before the edit.' },
-      { src: '/work/goodreads/home.webp', caption: 'Home — current read and quick actions, decluttered.' },
-      { src: '/work/goodreads/social.webp', caption: 'Social — the community feed, kept and clarified.' },
-      { src: '/work/goodreads/social-old.webp', caption: 'Social — the original feed.' },
-      { src: '/work/goodreads/explore.webp', caption: 'Explore — surfacing the next read instead of burying it.' },
-      { src: '/work/goodreads/review.webp', caption: 'Review — a lighter, faster rating flow.' },
     ],
   },
   {
