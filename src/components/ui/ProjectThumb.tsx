@@ -14,7 +14,13 @@ export function ProjectThumb({ project }: { project: Project }) {
 
   if (project.coverScreens) {
     return (
-      <div className={styles.deviceThumb} aria-hidden="true">
+      <div
+        className={styles.deviceThumb}
+        /* The band defaults to EcoTrip's honey; a project with its own palette
+           sets coverBg so the phone doesn't sit on someone else's colour. */
+        style={project.coverBg ? ({ background: project.coverBg } as CSSProperties) : undefined}
+        aria-hidden="true"
+      >
         <img src={project.coverScreens[1] ?? project.coverScreens[0]} alt="" loading="lazy" />
       </div>
     )

@@ -434,10 +434,13 @@ export const projects: Project[] = [
         body: 'An interactive prototype of the finish, rate, review and shelve flow, so the argument can be felt rather than read. After that, onboarding that seeds taste from three books you loved, and a first pass at tablet.',
       },
     ],
+    /* Warm paper and terracotta rather than EcoTrip's honey, so each card
+       carries its own project's colour. */
+    coverBg: 'linear-gradient(150deg, #e0b08a 0%, #f4ebe0 100%)',
     coverScreens: [
-      '/work/goodreads/home.webp',
-      '/work/goodreads/my-books.webp',
-      '/work/goodreads/book-page.webp',
+      '/work/goodreads/cover-my-books.webp',
+      '/work/goodreads/cover-home.webp',
+      '/work/goodreads/cover-book-page.webp',
     ],
     screens: [
       { src: '/work/goodreads/home.webp', caption: 'Reading — the tab opens the book you are in, not a dashboard.' },
