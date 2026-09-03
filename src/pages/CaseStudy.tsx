@@ -14,6 +14,7 @@ import { RouteTransition } from '../components/RouteTransition/RouteTransition'
 import { ProjectChat } from '../components/ProjectChat/ProjectChat'
 import { ProjectThumb } from '../components/ui/ProjectThumb'
 import { Reveal } from '../components/ui/Reveal'
+import { Button } from '../components/ui/Button'
 import styles from './CaseStudy.module.css'
 
 // React 18.3 doesn't map the camelCase `fetchPriority` prop at runtime (it warns
@@ -157,10 +158,22 @@ export function CaseStudy() {
               <span className={styles.metaLabel}>Role</span>
               <span>{project.role}</span>
             </div>
+            {project.team && (
+              <div className={styles.metaItem}>
+                <span className={styles.metaLabel}>Team</span>
+                <span>{project.team}</span>
+              </div>
+            )}
             <div className={styles.metaItem}>
               <span className={styles.metaLabel}>Services</span>
               <span>{project.services.join(', ')}</span>
             </div>
+            {project.tools && (
+              <div className={styles.metaItem}>
+                <span className={styles.metaLabel}>Tools</span>
+                <span>{project.tools.join(', ')}</span>
+              </div>
+            )}
             <div className={styles.metaItem}>
               <span className={styles.metaLabel}>Year</span>
               <span>{project.year}</span>
@@ -224,12 +237,56 @@ export function CaseStudy() {
           </Reveal>
         </section>
 
-        <section className={`${styles.results} wrap`} aria-label="Outcomes">
-          {project.results.map((r, i) => (
-            <Reveal className={styles.result} key={r.label} i={i}>
-              <div className={styles.resultValue}>{r.value}</div>
-              <div className={styles.resultLabel}>{r.label}</div>
-            </Reveal>
+        {project.results && project.results.length > 0 && (
+          <section className={`${styles.results} wrap`} aria-label="At a glance">
+            {project.results.map((r, i) => (
+              <Reveal className={styles.result} key={r.label} i={i}>
+                <div className={styles.resultValue}>{r.value}</div>
+                <div className={styles.resultLabel}>{r.label}</div>
+              </Reveal>
+            ))}
+          </section>
+        )}
+
+        {/* The thinking comes before the payoff: the process narrative runs first,
+            so the finished screens below read as its conclusion, not a preface. */}
+        <section className={`${styles.body} wrap`}>
+          {project.sections.map((s, i) => (
+            // Plain wrapper (no transform); the reveal lives on the inner bits.
+            <div className={styles.block} key={s.heading}>
+              <div className={styles.blockHead}>
+                <Reveal className={styles.blockHeadInner} i={i}>
+                  <span className={styles.blockNum}>
+                    <span className={styles.blockSq} aria-hidden="true" />
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <h2 className={styles.blockHeading}>{s.heading}</h2>
+                </Reveal>
+              </div>
+              <Reveal as="p" className={styles.blockBody} i={i}>
+                {s.body}
+              </Reveal>
+              {s.media && (
+                <div className={styles.blockMedia}>
+                  {s.media.map((m, mi) => (
+                    <Reveal as="figure" className={styles.artifact} key={m.src} i={mi}>
+                      {/* An artifact that hasn't been exported yet simply doesn't
+                          render, rather than showing a broken-image icon. */}
+                      <img
+                        src={m.src}
+                        alt={m.caption}
+                        loading="lazy"
+                        onError={(e) => {
+                          const fig = e.currentTarget.closest('figure')
+                          if (fig) fig.hidden = true
+                        }}
+                      />
+                      <figcaption className={styles.artifactCap}>{m.caption}</figcaption>
+                    </Reveal>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
         </section>
 
@@ -276,27 +333,6 @@ export function CaseStudy() {
             </Reveal>
           </section>
         )}
-
-        <section className={`${styles.body} wrap`}>
-          {project.sections.map((s, i) => (
-            // Plain wrapper (no transform) so the sticky heading below isn't
-            // trapped by a transformed ancestor; the reveal lives on the inner bits.
-            <div className={styles.block} key={s.heading}>
-              <div className={styles.blockHead}>
-                <Reveal className={styles.blockHeadInner} i={i}>
-                  <span className={styles.blockNum}>
-                    <span className={styles.blockSq} aria-hidden="true" />
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <h2 className={styles.blockHeading}>{s.heading}</h2>
-                </Reveal>
-              </div>
-              <Reveal as="p" className={styles.blockBody} i={i}>
-                {s.body}
-              </Reveal>
-            </div>
-          ))}
-        </section>
 
         {project.designSystem && (
           <section className={`${styles.system} wrap`} aria-label="Design system">
@@ -354,6 +390,22 @@ export function CaseStudy() {
           </section>
         )}
 
+        {project.reflection && (
+          <section className={`${styles.reflection} wrap`} aria-label="Reflection">
+            <Reveal as="p" className={styles.sectionLabel}>
+              Looking back
+            </Reveal>
+            <div className={styles.reflectionGrid}>
+              {project.reflection.map((r, i) => (
+                <Reveal className={styles.reflectionItem} key={r.heading} i={i}>
+                  <h3 className={styles.reflectionHeading}>{r.heading}</h3>
+                  <p className={styles.reflectionBody}>{r.body}</p>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+        )}
+
         <section className={`${styles.nextWrap} wrap`}>
           <Link
             to={`/work/${next.id}`}
@@ -377,6 +429,18 @@ export function CaseStudy() {
               <ProjectThumb project={next} />
             </div>
           </Link>
+
+          {/* Secondary exits. The next-project card is the main path onward;
+              these are for anyone who'd rather step back out to the full index
+              or return to the top of the site than keep going through the work. */}
+          <Reveal className={styles.exits} i={1}>
+            <Button to="/work" variant="ghost" arrow={false}>
+              All projects
+            </Button>
+            <Button to="/" variant="ghost" arrow={false}>
+              Home
+            </Button>
+          </Reveal>
         </section>
       </main>
 
