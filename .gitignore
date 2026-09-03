@@ -19,3 +19,6 @@ dist-ssr
 
 # Source image/video exports (only optimized .webp under public/ ships)
 _assets-src
+
+# TypeScript incremental build cache
+*.tsbuildinfo
