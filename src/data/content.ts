@@ -434,7 +434,7 @@ export const projects: Project[] = [
     results: [
       { value: '4', label: 'Root tabs the whole product folds into' },
       { value: '18', label: 'Screens designed across them' },
-      { value: '3', label: 'Home screens built before one was chosen' },
+      { value: '4 → 1', label: 'Apps a kept passage crossed, before and after' },
     ],
     reflection: [
       {
