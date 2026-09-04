@@ -169,6 +169,10 @@ export interface CaseScreen {
   /** Optional longer explanation, shown beside the screen in the scroll-through.
    *  Only the screens that carry an argument need one; the rest just show. */
   note?: string
+  /** Screens that belong to one idea — a sequence, a tab, two halves of a scroll
+   *  — share a group id and render side by side under a single heading. Only
+   *  consecutive screens fold together, and the first one supplies the text. */
+  group?: string
 }
 export interface CasePalette {
   name: string
@@ -464,54 +468,34 @@ export const projects: Project[] = [
       },
       {
         src: '/work/goodreads/reader.webp',
-        caption: 'The reader',
-        note: 'Tapping Reading with a book open comes straight here, with no dashboard in between. One serif column at a real reading measure, chapter and page marked, chrome cut back to title and type size.',
+        group: 'capture',
+        caption: 'Reading, and the moment a screenshot becomes data',
+        note: 'Tapping Reading with a book open comes straight here: one serif column at a real reading measure, chrome cut back to title and type size. Select a passage and the toolbar comes to you, where Quote keeps it verbatim with its page and Note attaches a thought. The confirmation does the filing, so the page reference is automatic and tags are one tap. This is the hinge of the whole redesign.',
       },
-      {
-        src: '/work/goodreads/highlight.webp',
-        caption: 'Highlight to capture',
-        note: 'The hinge of the whole redesign: the moment a screenshot becomes structured data. Quote keeps the passage verbatim with its page, Note attaches a thought, Define and Share follow.',
-      },
-      {
-        src: '/work/goodreads/quote-kept.webp',
-        caption: 'Quote kept',
-        note: 'The confirmation does the filing. Page reference automatic, tags one tap, an optional note riding along, and it lands in a collection that is a real destination rather than a dead-end toast.',
-      },
+      { src: '/work/goodreads/highlight.webp', group: 'capture', caption: 'Highlight to capture — the toolbar arrives at the passage' },
+      { src: '/work/goodreads/quote-kept.webp', group: 'capture', caption: 'Quote kept, with its page reference already filled in' },
       {
         src: '/work/goodreads/my-books.webp',
-        caption: 'My Books — shelves first',
-        note: 'Want to read and Read lead, with did-not-finish given a shelf of its own rather than hidden. Reading sits below them, because the Reading tab already owns that job.',
+        group: 'library',
+        caption: 'My Books — the library that works',
+        note: 'Shelves lead, with did-not-finish given a shelf of its own rather than hidden, and sort, filter and search sitting on top where a library needs them. Below that, lists carry real cover stacks, tags carry counts, and quotes and notes become somewhere to go rather than a feature to remember.',
       },
-      {
-        src: '/work/goodreads/my-books-lists.webp',
-        caption: 'Lists, tags, and somewhere for the quotes to live',
-        note: 'Lists carry real cover stacks, tags carry counts, and quotes and notes become a destination. The yearly goal is a hairline row rather than a scoreboard.',
-      },
+      { src: '/work/goodreads/my-books-lists.webp', group: 'library', caption: 'Lists with cover stacks, tags with counts, quotes as a destination' },
       {
         src: '/work/goodreads/discover-browse.webp',
-        caption: 'Discover — recommendations that lead with why',
-        note: 'Because of the book in your hands, or because someone you trust finished it, rather than a bestseller wall. Search stays pinned at the top of both modes.',
+        group: 'discover',
+        caption: 'Discover — two halves of finding a book',
+        note: 'Recommendations lead with why: because of the book in your hands, or because someone you trust finished it, rather than a bestseller wall. Shorts brings back the half of discovery that left for short video, with the book one tap from your shelf. Search is pinned above both, and the books already on your shelves come first.',
       },
-      {
-        src: '/work/goodreads/discover-shorts.webp',
-        caption: 'Shorts',
-        note: 'The half of discovery that left for short video, brought back inside as a mode of Discover rather than a separate app. The difference is the persistent book card: the thing being recommended is one tap from your shelf.',
-      },
-      {
-        src: '/work/goodreads/search.webp',
-        caption: 'Search — global, but yours first',
-        note: 'Matches already on a shelf group at the top and show which shelf, as a control you can change on the spot. Everything below is one tap from Want to read.',
-      },
+      { src: '/work/goodreads/discover-shorts.webp', group: 'discover', caption: 'Shorts — reader-made clips, the book one tap from your shelf' },
+      { src: '/work/goodreads/search.webp', group: 'discover', caption: 'Search — global, but the books on your shelves come first' },
       {
         src: '/work/goodreads/book-page.webp',
-        caption: 'Book page',
-        note: 'The cover owns the top: its colour floods the header and fades into paper, so every book page feels like that book. Your relationship with it comes before the crowd’s.',
+        group: 'book',
+        caption: 'The book itself',
+        note: 'The cover owns the top: its colour floods the header and fades into paper, so every book page feels like that book. Your relationship with it comes before the crowd’s. Beside it, the inline snapshot is what the chevron on the reading root opens — author, rating, series and length, delivered without leaving the screen.',
       },
-      {
-        src: '/work/goodreads/book-snapshot.webp',
-        caption: 'Inline snapshot',
-        note: 'What the chevron on the reading root opens: author, rating, series and length, delivered without leaving the screen. Navigation avoided is navigation designed.',
-      },
+      { src: '/work/goodreads/book-snapshot.webp', group: 'book', caption: 'The inline snapshot the chevron opens' },
       {
         src: '/work/goodreads/community-feed.webp',
         caption: 'Community — made things only',

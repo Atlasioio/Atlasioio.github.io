@@ -1,11 +1,13 @@
-/* Screens read as a scroll-through: one row per screen, sides alternating, the
-   reasoning sitting beside the shot instead of under a carousel arrow. */
+/* Screens read as a scroll-through. A lone screen sits beside its reasoning,
+   sides alternating; screens belonging to one idea run side by side under a
+   single heading, so a sequence costs one row instead of three. */
 .scroll {
   display: flex;
   flex-direction: column;
   gap: clamp(72px, 9vw, 150px);
 }
 
+/* ---- Single screen: phone one side, reasoning the other ------------------ */
 .item {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -16,6 +18,22 @@
    a single hard edge down the page. */
 .item:nth-child(even) .shot { order: 2; }
 .item:nth-child(even) .text { order: 1; }
+
+/* ---- Group: heading above, screens across the full width ----------------- */
+.groupItem {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3vw, 40px);
+}
+.shots {
+  display: flex;
+  gap: clamp(16px, 2.4vw, 32px);
+  align-items: flex-start;
+}
+/* Three across the content column lands each phone at ~386px — the same size a
+   lone screen gets, so grouping costs no legibility. Pairs are capped so two
+   don't balloon to half the page each. */
+.shots .shot { flex: 1 1 0; min-width: 0; max-width: 400px; }
 
 .shot {
   margin: 0;
@@ -28,10 +46,11 @@
   max-width: 392px;
   height: auto;
   border-radius: clamp(20px, 2vw, 30px);
-  /* The Goodreads covers carry their own device bezel and transparent corners,
-     so the shadow is cast by the artwork rather than by a box behind it. */
+  /* The covers carry their own device bezel and transparent corners, so the
+     shadow is cast by the artwork rather than by a box behind it. */
   filter: drop-shadow(0 22px 44px rgba(28, 22, 14, 0.22));
 }
+.shots .shot img { max-width: 100%; }
 
 .text {
   display: flex;
@@ -39,6 +58,7 @@
   align-items: flex-start;
   max-width: 42ch;
 }
+.groupItem .text { max-width: 62ch; }
 
 .no {
   font-family: var(--font-mono);
@@ -76,4 +96,20 @@
   .item:nth-child(even) .shot { order: 0; }
   .item:nth-child(even) .text { order: 1; }
   .text { max-width: 46ch; }
+
+  /* A trio at phone width would be three slivers, so the group scrolls
+     sideways instead — the screens stay readable and the row stays one row. */
+  .shots {
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .shots .shot {
+    flex: 0 0 auto;
+    width: min(74vw, 320px);
+    max-width: none;
+    scroll-snap-align: center;
+  }
 }
