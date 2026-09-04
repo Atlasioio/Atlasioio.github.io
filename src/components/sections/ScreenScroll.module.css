@@ -1,0 +1,79 @@
+/* Screens read as a scroll-through: one row per screen, sides alternating, the
+   reasoning sitting beside the shot instead of under a carousel arrow. */
+.scroll {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(72px, 9vw, 150px);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+}
+/* Alternate which side the phone sits on so the run has a rhythm rather than
+   a single hard edge down the page. */
+.item:nth-child(even) .shot { order: 2; }
+.item:nth-child(even) .text { order: 1; }
+
+.shot {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+.shot img {
+  display: block;
+  width: 100%;
+  max-width: 392px;
+  height: auto;
+  border-radius: clamp(20px, 2vw, 30px);
+  /* The Goodreads covers carry their own device bezel and transparent corners,
+     so the shadow is cast by the artwork rather than by a box behind it. */
+  filter: drop-shadow(0 22px 44px rgba(28, 22, 14, 0.22));
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 42ch;
+}
+
+.no {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 14px;
+}
+
+.caption {
+  font-family: var(--font-display);
+  font-weight: 640;
+  font-size: clamp(20px, 1.9vw, 26px);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.note {
+  margin-top: 14px;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 880px) {
+  .scroll { gap: clamp(52px, 10vw, 84px); }
+  .item {
+    grid-template-columns: 1fr;
+    gap: clamp(20px, 4vw, 30px);
+    justify-items: center;
+  }
+  /* One column: the shot always leads, whatever the alternation said. */
+  .item:nth-child(even) .shot { order: 0; }
+  .item:nth-child(even) .text { order: 1; }
+  .text { max-width: 46ch; }
+}

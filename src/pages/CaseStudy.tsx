@@ -6,7 +6,7 @@ import { FixedControls } from '../components/nav/FixedControls'
 import { LangFixed } from '../components/nav/LangFixed'
 import { Menu } from '../components/nav/Menu'
 import { Footer } from '../components/sections/Footer'
-import { ScreenGallery } from '../components/sections/ScreenGallery'
+import { ScreenScroll } from '../components/sections/ScreenScroll'
 import { WebShowcase } from '../components/sections/WebShowcase'
 import { VideoShowcase } from '../components/sections/VideoShowcase'
 import { BrandGallery } from '../components/sections/BrandGallery'
@@ -295,9 +295,7 @@ export function CaseStudy() {
             <Reveal as="p" className={styles.sectionLabel}>
               The screens
             </Reveal>
-            <Reveal i={1}>
-              <ScreenGallery screens={project.screens} framed={project.phoneFrame} />
-            </Reveal>
+            <ScreenScroll screens={project.screens} />
           </section>
         )}
 

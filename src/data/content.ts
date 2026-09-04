@@ -166,6 +166,9 @@ export interface CaseResult {
 export interface CaseScreen {
   src: string
   caption: string
+  /** Optional longer explanation, shown beside the screen in the scroll-through.
+   *  Only the screens that carry an argument need one; the rest just show. */
+  note?: string
 }
 export interface CasePalette {
   name: string
@@ -443,23 +446,66 @@ export const projects: Project[] = [
       '/work/goodreads/cover-book-page.webp',
     ],
     screens: [
-      { src: '/work/goodreads/home.webp', caption: 'Reading — the tab opens the book you are in, not a dashboard.' },
-      { src: '/work/goodreads/reader.webp', caption: 'The reader — one serif column at a real reading measure, chrome cut to almost nothing.' },
-      { src: '/work/goodreads/highlight.webp', caption: 'Highlight to capture — the toolbar comes to the passage. The hinge of the whole redesign.' },
-      { src: '/work/goodreads/quote-kept.webp', caption: 'Quote kept — the confirmation does the filing: page reference automatic, tags one tap.' },
-      { src: '/work/goodreads/my-books.webp', caption: 'My Books — shelves first, with did-not-finish as a first-class shelf.' },
-      { src: '/work/goodreads/my-books-lists.webp', caption: 'My Books — lists with real cover stacks, tags with counts, quotes as a destination.' },
-      { src: '/work/goodreads/old-my-books.webp', caption: 'My Books — the original, before the edit.' },
-      { src: '/work/goodreads/discover-browse.webp', caption: 'Discover — recommendations that lead with why, rather than a bestseller wall.' },
-      { src: '/work/goodreads/discover-shorts.webp', caption: 'Shorts — reader-made clips as a mode of Discover, the book one tap from your shelf.' },
-      { src: '/work/goodreads/social-old.webp', caption: 'The original community feed, before the edit.' },
-      { src: '/work/goodreads/search.webp', caption: 'Search — global, but the books already on your shelves come first.' },
-      { src: '/work/goodreads/book-page.webp', caption: 'Book page — the cover floods the header, your progress before the crowd’s.' },
-      { src: '/work/goodreads/book-snapshot.webp', caption: 'Inline snapshot — author, rating, series and blurb without leaving the screen.' },
-      { src: '/work/goodreads/finished.webp', caption: 'Finishing is a moment: a wax seal, and three numbers that actually mean something.' },
-      { src: '/work/goodreads/rate.webp', caption: 'Rating — every value carries a word, and half stars exist.' },
-      { src: '/work/goodreads/write-review.webp', caption: 'The review — your kept quotes sit under the draft, ready to pull in.' },
-      { src: '/work/goodreads/community-feed.webp', caption: 'Community — only things a person made, with reviews truncated by the page you are on.' },
+      {
+        src: '/work/goodreads/home.webp',
+        caption: 'Reading — the tab opens the book, not a dashboard',
+        note: 'The root you land on when you back out of the reader. Your stack, the current book’s progress, and the three things you actually do with a book you are reading: quotes, notes, rate.',
+      },
+      {
+        src: '/work/goodreads/reader.webp',
+        caption: 'The reader',
+        note: 'Tapping Reading with a book open comes straight here, with no dashboard in between. One serif column at a real reading measure, chapter and page marked, chrome cut back to title and type size.',
+      },
+      {
+        src: '/work/goodreads/highlight.webp',
+        caption: 'Highlight to capture',
+        note: 'The hinge of the whole redesign: the moment a screenshot becomes structured data. Quote keeps the passage verbatim with its page, Note attaches a thought, Define and Share follow.',
+      },
+      {
+        src: '/work/goodreads/quote-kept.webp',
+        caption: 'Quote kept',
+        note: 'The confirmation does the filing. Page reference automatic, tags one tap, an optional note riding along, and it lands in a collection that is a real destination rather than a dead-end toast.',
+      },
+      {
+        src: '/work/goodreads/my-books.webp',
+        caption: 'My Books — shelves first',
+        note: 'Want to read and Read lead, with did-not-finish given a shelf of its own rather than hidden. Reading sits below them, because the Reading tab already owns that job.',
+      },
+      {
+        src: '/work/goodreads/my-books-lists.webp',
+        caption: 'Lists, tags, and somewhere for the quotes to live',
+        note: 'Lists carry real cover stacks, tags carry counts, and quotes and notes become a destination. The yearly goal is a hairline row rather than a scoreboard.',
+      },
+      {
+        src: '/work/goodreads/discover-browse.webp',
+        caption: 'Discover — recommendations that lead with why',
+        note: 'Because of the book in your hands, or because someone you trust finished it, rather than a bestseller wall. Search stays pinned at the top of both modes.',
+      },
+      {
+        src: '/work/goodreads/discover-shorts.webp',
+        caption: 'Shorts',
+        note: 'The half of discovery that left for short video, brought back inside as a mode of Discover rather than a separate app. The difference is the persistent book card: the thing being recommended is one tap from your shelf.',
+      },
+      {
+        src: '/work/goodreads/search.webp',
+        caption: 'Search — global, but yours first',
+        note: 'Matches already on a shelf group at the top and show which shelf, as a control you can change on the spot. Everything below is one tap from Want to read.',
+      },
+      {
+        src: '/work/goodreads/book-page.webp',
+        caption: 'Book page',
+        note: 'The cover owns the top: its colour floods the header and fades into paper, so every book page feels like that book. Your relationship with it comes before the crowd’s.',
+      },
+      {
+        src: '/work/goodreads/book-snapshot.webp',
+        caption: 'Inline snapshot',
+        note: 'What the chevron on the reading root opens: author, rating, series and length, delivered without leaving the screen. Navigation avoided is navigation designed.',
+      },
+      {
+        src: '/work/goodreads/community-feed.webp',
+        caption: 'Community — made things only',
+        note: 'Bare activity collapses into one line at the bottom instead of being the feed. Reviews are truncated by the page you are on, rather than by a stranger’s guess at what counts as a spoiler.',
+      },
     ],
     designSystem: {
       intro:
