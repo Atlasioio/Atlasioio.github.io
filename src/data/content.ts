@@ -398,16 +398,26 @@ export const projects: Project[] = [
       {
         heading: 'Discover',
         body: 'Goodreads earns its loyalty through community, not polish. Working from the live app and my own use of it as a reader, four failures kept surfacing. Reading itself is absent, so progress is a number you type in, quotes get screenshotted into camera rolls, and notes end up in other apps. The feed is a wall of events, where a line saying someone rated a book three stars is not something anyone can reply to or wants to read. Discovery has left for short video, and the app answers with bestseller grids. And organisation punishes the organised, with shelves, tags and lists buried under a UI that treats every book as a row in a table.',
+        media: [
+          { src: '/work/goodreads/process/audit-current.webp', caption: 'Audit of the live Android app. Four findings, each turned into a decision the redesign had to answer to.' },
+          { src: '/work/goodreads/process/ia-before.webp', caption: 'The architecture as it stands: three jobs split across five tabs, every one of them ending in “More”, and no home at all for the reading.' },
+        ],
       },
       {
         heading: 'Define',
         body: 'One line held the redesign together: make reading native, and everything social becomes a by-product of it. If the app holds the book, it knows your page. Knowing your page means highlights become quotes without any filing work, reviews can start from passages you already saved, spoilers can be hidden by where you are rather than by a stranger’s guess, and a finished book can be a moment rather than a form. One structural decision pays for four features. The constraint alongside it was to stay recognisably Goodreads, because the brand equity is real. What changes is what the surface is for.',
+        media: [
+          { src: '/work/goodreads/process/personas.webp', caption: 'Two assumption personas, built from the teardown and public complaints. Labelled as assumptions rather than dressed up as research nobody ran.' },
+          { src: '/work/goodreads/process/split.webp', caption: 'The restraint call: loved-and-untouchable on one side, cluttered-and-fixable on the other. Every change had to pass one test, that a reader returning after two years still knows where they are.' },
+        ],
       },
       {
         heading: 'Develop',
-        body: 'Before committing I built three whole home screens rather than three mood boards, because the disagreement was structural rather than decorative. The Bookmark treated one book at a time as an object, and hid the library behind reverence for it. The Ledger made reading a tracked practice, which turned a hobby into a KPI dashboard. The Stack won: your books as a stack you reach into, covers doing the visual work, the library present and the current book obvious. The system fell out of that choice. One palette holding no colour outside the paper-to-brown spectrum, because covers are the loudest thing on every screen and any UI hue competes with them, and two typefaces, Literata for anything that is prose and Bricolage Grotesque for structure.',
+        body: 'Before committing I built three whole home screens rather than three mood boards, because the disagreement was structural rather than decorative. The Bookmark treated one book at a time as an object, and hid the library behind reverence for it. The Ledger made reading a tracked practice, which turned a hobby into a KPI dashboard. The Stack won: your books as a stack you reach into, covers doing the visual work, the library present and the current book obvious. Structurally, five tabs and a drawer collapsed into four, with everything buried in “More” relocated rather than cut. The system fell out of that choice. One palette holding no colour outside the paper-to-brown spectrum, because covers are the loudest thing on every screen and any UI hue competes with them, and two typefaces, Literata for anything that is prose and Bricolage Grotesque for structure.',
         media: [
           { src: '/work/goodreads/process/explorations.webp', caption: 'Three whole home screens, built before committing to one. The Bookmark, The Ledger, and The Stack, which became the app.' },
+          { src: '/work/goodreads/process/ia-after.webp', caption: 'The architecture after: four tabs, each job landing in one place, and reading finally given a tab of its own.' },
+          { src: '/work/goodreads/process/design-system.webp', caption: 'One warm family so the covers can shout, including the mid-project reversal that killed the green accent.' },
         ],
       },
       {
@@ -507,28 +517,6 @@ export const projects: Project[] = [
         note: 'Bare activity collapses into one line at the bottom instead of being the feed. Reviews are truncated by the page you are on, rather than by a stranger’s guess at what counts as a spoiler.',
       },
     ],
-    designSystem: {
-      intro:
-        'One palette, two typefaces, four component families. The palette deliberately holds no colour outside the paper-to-brown spectrum, because covers are the loudest thing on every screen.',
-      palette: [
-        { name: 'Paper', hex: '#F7F4ED', note: 'Surfaces' },
-        { name: 'Card', hex: '#FFFDF8', note: 'Raised fills' },
-        { name: 'Quiet fill', hex: '#EDE7DA', note: 'Rules · inactive' },
-        { name: 'Rust', hex: '#A24E1C', note: 'The one primary action' },
-        { name: 'Star', hex: '#8A5220', note: 'Ratings · highlights' },
-        { name: 'Ink', hex: '#3A2A18', note: 'Text' },
-      ],
-      typefaces: [
-        { name: 'Literata', role: 'Prose — titles, quotes, the reader' },
-        { name: 'Bricolage Grotesque', role: 'Structure — headings, UI, labels' },
-      ],
-      principles: [
-        'Rust is reserved for the single most important action on a screen.',
-        'No colour outside paper and brown, so the covers are the colour.',
-        'Books never appear as text where a cover could appear instead.',
-        'Every flow is leavable: the completionist path is offered, never enforced.',
-      ],
-    },
   },
   {
     id: 'jobquest',
