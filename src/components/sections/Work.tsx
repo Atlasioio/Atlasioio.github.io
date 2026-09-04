@@ -24,7 +24,7 @@ export function Work() {
 
       <div className={styles.list}>
         {featured.map((project) => (
-          <CaseRow key={project.id} project={project} showRole={false} />
+          <CaseRow key={project.id} project={project} />
         ))}
       </div>
 

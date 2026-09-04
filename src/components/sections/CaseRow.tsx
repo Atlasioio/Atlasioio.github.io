@@ -12,7 +12,7 @@ import styles from './Work.module.css'
  * preview (phone / laptop combo / cover / fill) is shared with the case study's
  * "next project" card via ProjectThumb.
  */
-export function CaseRow({ project, showRole = true }: { project: Project; showRole?: boolean }) {
+export function CaseRow({ project }: { project: Project }) {
   const to = `/work/${project.id}`
 
   return (
@@ -41,15 +41,10 @@ export function CaseRow({ project, showRole = true }: { project: Project; showRo
       <div className={styles.info}>
         <div className={styles.idx}>{project.index}</div>
         <h3 className={styles.name}>{project.name}</h3>
-        <div className={styles.role}>
-          {showRole && (
-            <>
-              <span>{project.role}</span>
-              <span className={styles.dot} />
-            </>
-          )}
-          <span>{project.outcome}</span>
-        </div>
+        {/* One line of prose, not two. The outcome line said the same thing as
+            the description in a different weight and colour, which read as extra
+            type styles rather than extra information. The role now lives only on
+            the case study's own meta row, where it belongs. */}
         <p className={styles.desc}>{project.description}</p>
         <LinkLike to={to} className={styles.link}>
           View case study

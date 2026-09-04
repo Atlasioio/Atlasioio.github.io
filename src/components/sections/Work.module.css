@@ -220,6 +220,7 @@
 .idx {
   font-family: var(--font-mono);
   font-size: var(--fs-label);
+  letter-spacing: 0.06em;
   color: var(--accent);
 }
 .name {
@@ -232,22 +233,6 @@
 /* One emphasised subtitle (role · outcome). Shares the body font with the
    description below — just heavier and darker — so the stack reads as a clean
    header → subtitle → paragraph, not four competing type styles. */
-.role {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  font-size: var(--fs-body);
-  font-weight: 500;
-  color: var(--ink);
-  letter-spacing: -0.005em;
-}
-.dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--hairline-2);
-}
 .desc {
   color: var(--gray-strong);
   max-width: 44ch;
