@@ -397,37 +397,35 @@ export const projects: Project[] = [
     sections: [
       {
         heading: 'Discover',
-        body: 'Goodreads earns its loyalty through community, not polish. Working from the live app and my own use of it as a reader, four failures kept surfacing. Reading itself is absent, so progress is a number you type in, quotes get screenshotted into camera rolls, and notes end up in other apps. The feed is a wall of events, where a line saying someone rated a book three stars is not something anyone can reply to or wants to read. Discovery has left for short video, and the app answers with bestseller grids. And organisation punishes the organised, with shelves, tags and lists buried under a UI that treats every book as a row in a table. Tracing where a passage actually goes made the shape of it plain: four apps and six steps, with Goodreads arriving last and receiving only a number. Nobody else owns the whole set either, since Kindle holds the reading but refuses to be social and the taste apps never hold the book.',
+        body: 'Goodreads earns its loyalty through community, not polish. Working from the live app on my own account, four failures kept surfacing, and one sat underneath the rest: reading itself is absent. Progress is a number you type in, quotes get screenshotted into camera rolls, and notes end up in other apps. Tracing where a passage actually goes made the shape of it plain, and the app arrives last in that chain to receive nothing but a rating.',
         media: [
-          { src: '/work/goodreads/process/audit-current.webp', caption: 'Teardown of the shipped Android app on my own account. Four findings, each one turned into a decision the redesign had to answer to.' },
-          { src: '/work/goodreads/process/boundary.webp', caption: 'Where a passage actually goes today: four apps, six steps, nothing searchable, and Goodreads arriving last to receive a number. Moving one boundary is what pays for four features at once.' },
-          { src: '/work/goodreads/process/ia-before.webp', caption: 'The architecture as it stands: three jobs split across five tabs, every one of them ending in “More”, and no home at all for the reading.' },
-          { src: '/work/goodreads/process/competitive-matrix.webp', caption: 'The landscape. Kindle owns reading and refuses to be social, StoryGraph owns taste and never holds the book, BookTok owns discovery and owns nothing else.' },
+          { src: '/work/goodreads/process/audit-current.webp', caption: 'Audit of the shipped app: four findings, each paired with the decision it drove.' },
+          { src: '/work/goodreads/process/boundary.webp', caption: 'Where a kept passage travels today across four apps and six steps, and the redrawn one-app path.' },
         ],
       },
       {
         heading: 'Define',
-        body: 'Two readers framed it. Maya keeps what she reads and loses it to a camera roll; Sam finds books on video and never starts them. Neither gap closes without the app holding the book. One line held the redesign together: make reading native, and everything social becomes a by-product of it. If the app holds the book, it knows your page. Knowing your page means highlights become quotes without any filing work, reviews can start from passages you already saved, spoilers can be hidden by where you are rather than by a stranger’s guess, and a finished book can be a moment rather than a form. One structural decision pays for four features. The constraint alongside it was to stay recognisably Goodreads, because the brand equity is real. What changes is what the surface is for.',
+        body: 'Two readers framed it, and neither gap closes without the app holding the book. One line held the rest together: make reading native, and everything social becomes a by-product of it. If the app holds the book it knows your page, and that one structural decision then pays for four features. The constraint alongside it was to stay recognisably Goodreads, because the brand equity is real. What changes is what the surface is for.',
         media: [
-          { src: '/work/goodreads/process/personas.webp', caption: 'Maya and Sam, built from informal conversations with readers, a read of public reviews, and the teardown. Directional rather than statistical, and labelled that way wherever they appear.' },
-          { src: '/work/goodreads/process/split.webp', caption: 'The restraint call: loved-and-untouchable on one side, cluttered-and-fixable on the other. It set the scope, and it is why this is a redesign rather than a rebrand.' },
+          { src: '/work/goodreads/process/personas.webp', caption: 'Maya and Sam, two readers the current app fails in different ways.' },
+          { src: '/work/goodreads/process/split.webp', caption: 'Loved-and-untouchable against cluttered-and-fixable, the sort that set the scope.' },
         ],
       },
       {
         heading: 'Develop',
-        body: 'Before committing I built three whole home screens rather than three mood boards, because the disagreement was structural rather than decorative. The Bookmark treated one book at a time as an object, and hid the library behind reverence for it. The Ledger made reading a tracked practice, which turned a hobby into a KPI dashboard. The Stack won: your books as a stack you reach into, covers doing the visual work, the library present and the current book obvious. Structurally, five tabs and a drawer collapsed into four, with everything buried in “More” relocated rather than cut. The system fell out of that choice. One palette holding no colour outside the paper-to-brown spectrum, because covers are the loudest thing on every screen and any UI hue competes with them, and two typefaces, Literata for anything that is prose and Bricolage Grotesque for structure.',
+        body: 'Before committing I built three whole home screens rather than three mood boards, because the disagreement was structural rather than decorative. The Stack won: your books as a stack you reach into, with the covers doing the visual work. Five tabs and a drawer collapsed into four, everything in “More” relocated rather than cut. The system fell out of that choice, holding no colour outside the paper-to-brown spectrum, because the covers are the loudest thing on every screen.',
         media: [
-          { src: '/work/goodreads/process/explorations.webp', caption: 'Three whole home screens, built before committing to one. The Bookmark, The Ledger, and The Stack, which became the app.' },
-          { src: '/work/goodreads/process/ia-after.webp', caption: 'The architecture after: four tabs, each job landing in one place, and reading finally given a tab of its own.' },
-          { src: '/work/goodreads/process/design-system.webp', caption: 'One warm family so the covers can shout, including the mid-project reversal that killed the green accent.' },
+          { src: '/work/goodreads/process/explorations.webp', caption: 'Three home-screen directions: The Bookmark, The Ledger, and The Stack.' },
+          { src: '/work/goodreads/process/ia-after.webp', caption: 'The redesigned architecture: four tabs, each job landing in one place.' },
+          { src: '/work/goodreads/process/design-system.webp', caption: 'The palette, type and components, and the green-to-rust reversal.' },
         ],
       },
       {
         heading: 'Deliver',
-        body: 'Eighteen screens across four tabs, one design system, and a hero flow that carries the argument: finish a book, rate it, write the review, watch it land on your shelf. The payoff of native reading shows up in that review screen, where the quotes you kept while reading sit under the draft ready to pull in, so what you wrote while reading becomes what you publish. Every flow is leavable, because finishing without rating is a complete act and so is rating without reviewing. It is a self-initiated concept, so it has not been usability tested and I would not call it validated. The next step is an interactive prototype of that flow, so the argument can be felt rather than read.',
+        body: 'Eighteen screens across four tabs, one design system, and a hero flow that carries the argument: finish a book, rate it, write the review, watch it land on your shelf. The payoff shows up in that review screen, where the quotes you kept while reading sit under the draft ready to pull in. Every flow is leavable. It is a self-initiated concept, so it has not been usability tested and I would not call it validated.',
         media: [
-          { src: '/work/goodreads/process/hero-flow.webp', caption: 'The hero flow, left to right: the last page, the rating, the review with kept quotes ready to pull in, and the book landing on the shelf.' },
-          { src: '/work/goodreads/process/process-map.webp', caption: 'How the whole thing was made. Four stages, a thesis fixed at the end of Define and never moved, and what each stage actually produced.' },
+          { src: '/work/goodreads/process/hero-flow.webp', caption: 'The hero flow: the last page, the rating, the review, and the book landing on the shelf.' },
+          { src: '/work/goodreads/process/process-map.webp', caption: 'The four stages and what each one produced.' },
         ],
       },
     ],

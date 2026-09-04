@@ -270,7 +270,11 @@ export function CaseStudy() {
                 <div className={styles.blockMedia}>
                   {s.media.map((m, mi) => (
                     <Reveal as="figure" className={styles.artifact} key={m.src} i={mi}>
-                      {/* An artifact that hasn't been exported yet simply doesn't
+                      {/* No figcaption: each artifact is a self-contained sheet with
+                          its own kicker, headline and subhead, so a caption beneath it
+                          only restated what the image already says (and what the stage
+                          body says above it). The caption lives on as alt text.
+                          An artifact that hasn't been exported yet simply doesn't
                           render, rather than showing a broken-image icon. */}
                       <img
                         src={m.src}
@@ -281,7 +285,6 @@ export function CaseStudy() {
                           if (fig) fig.hidden = true
                         }}
                       />
-                      <figcaption className={styles.artifactCap}>{m.caption}</figcaption>
                     </Reveal>
                   ))}
                 </div>

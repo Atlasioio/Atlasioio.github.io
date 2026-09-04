@@ -260,14 +260,6 @@
      cards rather than floating crops. */
   box-shadow: 0 16px 38px -28px rgba(20, 18, 15, 0.3);
 }
-.artifactCap {
-  margin-top: 13px;
-  font-size: var(--fs-sm);
-  line-height: 1.55;
-  color: var(--gray-strong);
-  max-width: 62ch;
-}
-
 /* Next project */
 .nextWrap { margin-top: clamp(64px, 9vw, 130px); }
 
