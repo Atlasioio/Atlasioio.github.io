@@ -389,7 +389,7 @@ export const projects: Project[] = [
     client: 'Goodreads — self-initiated concept',
     services: ['UX/UI', 'Product design', 'Design system'],
     team: 'Solo',
-    tools: ['Claude Design'],
+    tools: ['Figma', 'Claude'],
     tagline:
       'Goodreads, rebuilt around reading. The app should hold the book, not just the database entry for it.',
     overview:
