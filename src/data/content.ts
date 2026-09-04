@@ -504,8 +504,125 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 'jobquest',
+    id: 'sherry',
     index: 'W/03',
+    name: 'Sherry',
+    tag: 'Fieldwork · Concept',
+    role: 'Research & interaction design',
+    outcome: 'A tool library that runs on the neighbourhood library itself',
+    description:
+      'A neighbourhood tool library for Kirseberg in Malmö, built on four weeks of fieldwork, with every handover moved into the library drop-box so nobody has to stand in a stranger’s hallway.',
+    fill: 'c',
+    featured: true,
+    accent: '#7A2836',
+    /* Soft rose into paper — the mockups’ deep red at card scale, kept well
+       clear of EcoTrip’s honey and Goodreads’ terracotta. */
+    coverBg: 'linear-gradient(150deg, #d8a6ac 0%, #f2e9e7 100%)',
+    year: '2024',
+    client: 'Kirseberg, Malmö — neighbourhood fieldwork project',
+    services: ['User research', 'Service design', 'Interaction design'],
+    team: 'Three',
+    tools: ['Figma', 'Claude'],
+    tagline:
+      'A tool library that runs on the library itself, because sharing between neighbours dies at the handover.',
+    overview:
+      'A whole district buying 2 000 kr machines to use them for one weekend. Kirseberg already shares — it has even run its own temporary local currency — but it had no way to hand things over without knocking on a stranger’s door. Sherry moves every handover into the neighbourhood library’s drop-box, and builds the product around that one decision.',
+    sections: [
+      {
+        heading: 'Discover',
+        body: 'A wallpaper table costs around 2 000 kr and gets used for one hallway. The maths is obvious to everyone, and the default is still to buy, because everything around the object is harder than buying it: finding who has one, learning whether it is free this weekend, and above all arranging to stand in a stranger’s hallway. Rather than surveying, we spent four weeks in the places Kirseberg already gathers — the library, the language café, the sports club, the neighbourhood café — and let the people running them say what the district needs.',
+      },
+      {
+        heading: 'Define',
+        body: 'Five findings shaped the product and one became its spine: the library is trusted, and strangers’ hallways are not. Making it the handover point removes the meeting, the timing negotiation and the safety question in a single move. Space rather than willingness turned out to be the constraint, so a drop-box asks for a few square metres and no staff time. Exchange without money already worked here, so borrowing stays free and price is replaced by an insured value. And the library’s wish to reach non-Swedish speakers set the writing rules: short sentences, numbered terms, status as plain state.',
+      },
+      {
+        heading: 'Develop',
+        body: 'The borrower’s blocker is time and the lender’s is risk, and the drop-box answers both, which is why both end up on the same screen. Five tabs, each answering a question someone actually arrives with: what can I get, what is mine right now, I have something spare, who needs an answer, and was this worth it. Onboarding ends by choosing a drop-box, which then seeds the feed, so the first thing the app learns is the one thing that governs what you can actually collect.',
+      },
+      {
+        heading: 'Deliver',
+        body: 'Twenty-four screens across seven flows: browse, request, accept the terms, collect with a code, return and review. The rebuild changed the interaction design rather than the research. A PIN in a pop-up became a Loans tab split by direction, each loan carrying a status timeline and an expiring code. Six bullets of quasi-legal text became four numbered promises that name the lender and the insured amount. A badges page of confetti became impact first, in kronor, square metres and CO₂, then badges with progress, half of them earned by lending rather than borrowing.',
+      },
+    ],
+    results: [
+      { value: '4', label: 'Neighbourhood sites the fieldwork ran in' },
+      { value: '5', label: 'Findings that shaped the product' },
+      { value: '0 kr', label: 'What borrowing costs; only the insured value matters' },
+    ],
+    reflection: [
+      {
+        heading: 'What I learned',
+        body: 'The handover was the whole problem. We could have designed a better catalogue for months and changed nothing, because what stopped people was never finding the thing, it was arranging to collect it. Moving that one step into the library made most of the rest fall out on its own.',
+      },
+      {
+        heading: 'What I would do differently',
+        body: 'I would have tested the terms sheet with someone who reads Swedish slowly. The library asked for exactly that in week two, it went into the findings, and I still wrote the terms in English first and checked the reading level last.',
+      },
+      {
+        heading: 'What is next',
+        body: 'Put the request-and-collect flow in front of a lender who has had something come back broken, and a borrower who has given up on a Facebook-group loan. The drop-box removes the meeting; whether it removes the worry is the part still to prove.',
+      },
+    ],
+    coverScreens: [
+      '/work/sherry/cover-item.webp',
+      '/work/sherry/cover-browse.webp',
+      '/work/sherry/cover-impact.webp',
+    ],
+    screens: [
+      {
+        src: '/work/sherry/welcome.webp',
+        group: 'start',
+        caption: 'Onboarding ends by choosing a drop-box',
+        note: 'Five steps that explain the model rather than the app: what is nearby, how the library box works, who covers it if something breaks, and finally which box you can actually walk to. That last answer seeds the feed, so nothing is ever shown that you could not collect.',
+      },
+      { src: '/work/sherry/onboarding-dropbox.webp', group: 'start', caption: 'The lender drops it in the box; you open it with a one-time code' },
+      { src: '/work/sherry/onboarding-area.webp', group: 'start', caption: 'Choosing the box you can walk to' },
+      {
+        src: '/work/sherry/browse.webp',
+        group: 'browse',
+        caption: 'Search the thing, not the shop',
+        note: 'The feed leads with what is ready to collect, then what is fresh within walking distance, each item carrying its owner and its distance. Search opens over the feed with local supply counts, and categories are framed by the job — workshop, garden, kitchen, moving day — rather than by product type.',
+      },
+      { src: '/work/sherry/search.webp', group: 'browse', caption: 'Search, with how many of each thing are nearby' },
+      { src: '/work/sherry/results.webp', group: 'browse', caption: 'Results sorted by distance, with what is already in the box marked' },
+      {
+        src: '/work/sherry/item.webp',
+        group: 'request',
+        caption: 'One number instead of an awkward conversation',
+        note: 'The listing leads with the insured value, the distance and the maximum loan, because those are the three things that decide whether to ask. The terms are four numbered promises in plain language, naming the lender and the amount, and accepting them is what sends the request.',
+      },
+      { src: '/work/sherry/terms.webp', group: 'request', caption: 'Four numbered terms, one sentence each' },
+      { src: '/work/sherry/request-sent.webp', group: 'request', caption: 'Sent, with the code arriving in Loans once the lender agrees' },
+      {
+        src: '/work/sherry/borrowing.webp',
+        group: 'loans',
+        caption: 'A code, a timeline, and a way to end it',
+        note: 'The original showed a PIN in a pop-up over the home feed with no record of the loan it belonged to. Now every loan has a status timeline, an expiring drop-box code, a return step and a review, so the thing you are holding is never something the app has forgotten about.',
+      },
+      { src: '/work/sherry/dropbox-code.webp', group: 'loans', caption: 'The drop-box code, valid until the library closes' },
+      { src: '/work/sherry/review.webp', group: 'loans', caption: 'The review that keeps the next handover honest' },
+      {
+        src: '/work/sherry/lending-out.webp',
+        group: 'lend',
+        caption: 'The other side, on your own schedule',
+        note: 'Lending has to cost less than the tool is worth in guilt. Requests arrive with who is asking and why, the terms they are accepting are the same four you can read in a breath, and the drop-off happens whenever you are next passing the library.',
+      },
+      { src: '/work/sherry/handle-request.webp', group: 'lend', caption: 'Who is asking, why, and what they are agreeing to' },
+      { src: '/work/sherry/list-item.webp', group: 'lend', caption: 'Listing something spare, with the handover point built in' },
+      {
+        src: '/work/sherry/profile.webp',
+        group: 'you',
+        caption: 'Was this worth it?',
+        note: 'The original ended in a badges page of emoji confetti, disconnected from everything else. Impact comes first now — kronor not spent, square metres not filled, CO₂ not emitted — and half the badges are earned by lending rather than borrowing, because the neighbourhood only works when things go both ways.',
+      },
+      { src: '/work/sherry/impact.webp', group: 'you', caption: 'Kronor saved, storage freed, CO₂ not emitted' },
+      { src: '/work/sherry/badges.webp', group: 'you', caption: 'Ten badges with progress, half of them for lending' },
+    ],
+  },
+  {
+    id: 'jobquest',
+    index: 'W/04',
     name: 'Jobquest',
     tag: 'Web app · Shipped',
     role: 'Design & React build',
@@ -568,7 +685,7 @@ export const projects: Project[] = [
   },
   {
     id: 'sony',
-    index: 'W/04',
+    index: 'W/05',
     name: 'Sony / Nimway',
     tag: 'Smart office · Client',
     role: 'UX design',
@@ -611,7 +728,7 @@ export const projects: Project[] = [
   },
   {
     id: 'teem',
-    index: 'W/05',
+    index: 'W/06',
     name: 'Teem',
     tag: 'Brand · Concept',
     role: 'Brand & packaging design',
@@ -681,7 +798,7 @@ export const projects: Project[] = [
   },
   {
     id: 'reel',
-    index: 'W/06',
+    index: 'W/07',
     name: 'Reel',
     tag: 'Web · Concept',
     role: 'Design & Framer build',
