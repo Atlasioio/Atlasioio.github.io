@@ -433,11 +433,6 @@ export const projects: Project[] = [
         ],
       },
     ],
-    results: [
-      { value: '4', label: 'Root tabs the whole product folds into' },
-      { value: '18', label: 'Screens designed across them' },
-      { value: '4 → 1', label: 'Apps a kept passage crossed, before and after' },
-    ],
     reflection: [
       {
         heading: 'What I learned',
@@ -544,11 +539,6 @@ export const projects: Project[] = [
         heading: 'Deliver',
         body: 'Twenty-four screens across seven flows: browse, request, accept the terms, collect with a code, return and review. The rebuild changed the interaction design rather than the research. A PIN in a pop-up became a Loans tab split by direction, each loan carrying a status timeline and an expiring code. Six bullets of quasi-legal text became four numbered promises that name the lender and the insured amount. A badges page of confetti became impact first, in kronor, square metres and CO₂, then badges with progress, half of them earned by lending rather than borrowing.',
       },
-    ],
-    results: [
-      { value: '4', label: 'Neighbourhood sites the fieldwork ran in' },
-      { value: '5', label: 'Findings that shaped the product' },
-      { value: '0 kr', label: 'What borrowing costs; only the insured value matters' },
     ],
     reflection: [
       {
