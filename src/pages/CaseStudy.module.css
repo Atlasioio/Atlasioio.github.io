@@ -633,7 +633,13 @@
   gap: clamp(32px, 5vw, 78px);
   align-items: center;
 }
-.leadVideo { display: flex; justify-content: center; }
+.leadVideo {
+  /* width:100% matters: as a grid item under justify-items:center the box
+     would otherwise shrink to max-content, and the video sizes against it. */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .leadVideo video {
   display: block;
   width: 100%;
