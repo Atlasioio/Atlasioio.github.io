@@ -7,6 +7,8 @@ import styles from './Work.module.css'
 
 /** Featured projects for the curated home strip; the rest live on /work. */
 const featured = projects.filter((p) => p.featured)
+/** Spelled out, so the line cannot drift from the data as it did at three. */
+const COUNT = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven']
 
 /** 03 — Selected work. The centrepiece: a few large case rows, then a link to all. */
 export function Work() {
@@ -18,7 +20,7 @@ export function Work() {
           A few projects worth a closer look.
         </Reveal>
         <Reveal as="p" className={styles.note} i={1}>
-          Three projects here; see them all on the work page.
+          {COUNT[featured.length] ?? featured.length} projects here; see them all on the work page.
         </Reveal>
       </div>
 

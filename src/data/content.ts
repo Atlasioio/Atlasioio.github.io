@@ -271,8 +271,126 @@ export function preloadCover(p: Project): void {
 
 export const projects: Project[] = [
   {
-    id: 'ecotrip',
+    id: 'time',
     index: 'W/01',
+    name: 'Time',
+    tag: 'Tool · Shipped',
+    role: 'Design and code',
+    outcome: 'A session timer recording completed time, not elapsed time',
+    description:
+      'A session timer with no pause control, built for one person and in daily use. It records the length committed to against the amount actually completed.',
+    fill: 'b',
+    featured: true,
+    /* Sampled from the session orb: the app runs on violet-to-magenta
+       gradients over a near-black ground. */
+    accent: '#9818A8',
+    coverBg: 'linear-gradient(150deg, #cfc6e0 0%, #f0edf4 100%)',
+    liveUrl: 'https://time-lac-kappa.vercel.app',
+    year: '2026',
+    client: 'Self-initiated — shipped and in daily use',
+    services: ['Product design', 'Design system', 'Build'],
+    team: 'Solo',
+    tools: ['Expo', 'React Native'],
+    tagline:
+      'A session timer that records time held rather than time elapsed — the length committed to, against the amount completed.',
+    overview:
+      'Time is a session timer, built for one person and used daily. You choose a category, name the session, set a length and start it. There is no pause control, and the only way to stop early is to hold a button for a second, which is recorded rather than hidden. What accumulates is a record of how much time was set aside, how much was completed, what it was spent on, and how each session was rated afterwards.',
+    sections: [
+      {
+        heading: 'Discover',
+        body: 'Most timers report elapsed time, which shows that a session ran but not whether it was finished. A second problem was in the interface. An audit of the codebase counted thirty-five borders across thirteen files at fourteen different alpha values between 0.07 and 0.2 — differences too small to see individually, but numerous enough to need maintaining. The month grid had a related fault: each day’s dot blended colour stops taken from up to three different categories, so most dots rendered in colours the palette does not contain.',
+      },
+      {
+        heading: 'Define',
+        body: 'The app records time held rather than time elapsed: the length committed to, against the amount completed. That determines most of the interface. There is no pause control, because pausing allows a session to stay open while no work is happening. Ending early is recorded as an outcome rather than a failure — it appears in the week view as a shorter column and is never marked in red. The first screen asks which category the session belongs to; the length is chosen last.',
+      },
+      {
+        heading: 'Develop',
+        body: 'Each of the eleven categories is defined as four colour stops rather than one hue. Marks large enough to show a gradient use the full set; anything below 24pt takes a single named stop from it, so a bar, a card, a session orb and an eight-point legend dot all read as the same category. Cards carry no border. Raising their fill from 5.5% to 9% white over the near-black ground brings them to 1.20 : 1 against it, which separates them more clearly than the bordered version did. No figure is shown on its own — each is stated against the previous week, a typical day, or a total.',
+        media: [
+          { src: '/work/time/process/category-colour.webp', caption: 'A category as four stops rather than one hue, so every size of mark stays recognisable.' },
+          { src: '/work/time/process/the-system.webp', caption: 'The system the app is checked against.' },
+          { src: '/work/time/process/the-week.webp', caption: 'The week: every figure saying what it did against something else.' },
+          { src: '/work/time/process/a-day.webp', caption: 'A day, opened into what was actually run.' },
+        ],
+      },
+      {
+        heading: 'Deliver',
+        body: 'Time ships as a PWA, stores everything on the device, and has no account, server or analytics. A design document in the repository is paired with a script that checks the app against it, counting radii, surface alpha values, type weights, page gutters, tap targets and accessibility labels, and reporting which are standard, which are near-standard and which are one-off. There are no usage figures in this case study, because the app has one user. What can be evidenced is what the audit counts.',
+      },
+    ],
+    reflection: [
+      {
+        heading: 'What I learned',
+        body: 'Written design rules drift when there is no way to verify them. The document specified three type weights; counting the codebase found five in use, and the most frequent of them — 700 Bold — was not listed at all. The document was corrected rather than the app.',
+      },
+      {
+        heading: 'What I would do differently',
+        body: 'The audit should have been written before the design document rather than after it. Of the five problems its first run reported, three were faults in the audit itself: it could not distinguish a pill from a card, and counted correct code as violations.',
+      },
+      {
+        heading: 'What is next',
+        body: 'Tinted surfaces have no defined rule yet. The completion chime and the backup function work only in the web build. Accessibility labels are in place throughout but have not been tested with VoiceOver or TalkBack on a device.',
+      },
+    ],
+    videoFrame: 'bare',
+    videos: [
+      { src: '/work/time/session-flow.webm', caption: 'The whole session: pick a category, name it, set a length, and hold to end.' },
+      { src: '/work/time/how-it-went.webm', caption: 'One question at the end, on four cards tinted by the session you just finished.' },
+      { src: '/work/time/open-a-day.webm', caption: 'Every day opens into what you actually ran.' },
+      { src: '/work/time/open-a-sheet.webm', caption: 'Every figure opens into what it is made of.' },
+    ],
+    coverScreens: [
+      '/work/time/cover-session.webp',
+      '/work/time/cover-category.webp',
+      '/work/time/cover-me-week.webp',
+    ],
+    screens: [
+      {
+        src: '/work/time/pick-a-category.webp',
+        group: 'start',
+        caption: 'Category first, length last',
+        note: 'The first screen asks which category the session belongs to, then what to call it. The length is set last, so the session is identified before it is measured.',
+      },
+      { src: '/work/time/name-it.webp', group: 'start', caption: 'Say what it is' },
+      { src: '/work/time/set-the-length.webp', group: 'start', caption: 'Set how long, last' },
+      {
+        src: '/work/time/session-running.webp',
+        group: 'hold',
+        caption: 'No pause control',
+        note: 'A ring draws down the remaining time and the orb carries the session’s category colour. There is no pause. Ending early requires holding the control for over a second, which is the one action that changes what the record says.',
+      },
+      { src: '/work/time/sheet-held.webp', group: 'hold', caption: 'Hold to end early' },
+      { src: '/work/time/session-done.webp', group: 'hold', caption: 'Ending early is recorded, and never red' },
+      {
+        src: '/work/time/how-it-went.webp',
+        group: 'after',
+        caption: 'One rating at the end',
+        note: 'Four options — Rough, Patchy, Good, Perfect — tinted with the finished session’s category colour and presented on the same card arc used to choose the category, so the gesture at the end matches the one at the start.',
+      },
+      { src: '/work/time/session-summary.webp', group: 'after', caption: 'What the session came to' },
+      { src: '/work/time/to-do.webp', group: 'after', caption: 'A list that knows about sessions' },
+      {
+        src: '/work/time/me-week.webp',
+        group: 'record',
+        caption: 'Every figure has a comparison',
+        note: 'Each figure is stated against the previous week, a typical day, or a total. A shorter column is a session that ended early; it is shown at its actual length and is not marked as a failure.',
+      },
+      { src: '/work/time/me-month.webp', group: 'record', caption: 'The month, one dot a day' },
+      { src: '/work/time/day.webp', group: 'record', caption: 'Every day opens into what you ran' },
+      {
+        src: '/work/time/sheet-sessions.webp',
+        group: 'deeper',
+        caption: 'Figures open into their detail',
+        note: 'A total opens into the sessions behind it and a streak into the days that built it. Patterns — which categories and times of day are completed most often — sits behind a button rather than on the main view, as it is consulted occasionally.',
+      },
+      { src: '/work/time/sheet-streak.webp', group: 'deeper', caption: 'The days a streak is made of' },
+      { src: '/work/time/patterns.webp', group: 'deeper', caption: 'When you hold best' },
+    ],
+  },
+  {
+    id: 'ecotrip',
+    index: 'W/02',
     name: 'EcoTrip',
     tag: 'Travel · Concept',
     role: 'End-to-end UX/UI & brand',
@@ -379,7 +497,7 @@ export const projects: Project[] = [
   },
   {
     id: 'goodreads',
-    index: 'W/02',
+    index: 'W/03',
     name: 'Goodreads Redesign',
     tag: 'Concept · Redesign',
     role: 'Product designer — research, IA, interaction, visual system',
@@ -496,124 +614,6 @@ export const projects: Project[] = [
         caption: 'Community — made things only',
         note: 'Bare activity collapses into one line at the bottom instead of being the feed. Reviews are truncated by the page you are on, rather than by a stranger’s guess at what counts as a spoiler.',
       },
-    ],
-  },
-  {
-    id: 'time',
-    index: 'W/03',
-    name: 'Time',
-    tag: 'Tool · Shipped',
-    role: 'Design and code',
-    outcome: 'A session timer recording completed time, not elapsed time',
-    description:
-      'A session timer with no pause control, built for one person and in daily use. It records the length committed to against the amount actually completed.',
-    fill: 'b',
-    featured: true,
-    /* Sampled from the session orb: the app runs on violet-to-magenta
-       gradients over a near-black ground. */
-    accent: '#9818A8',
-    coverBg: 'linear-gradient(150deg, #cfc6e0 0%, #f0edf4 100%)',
-    liveUrl: 'https://time-lac-kappa.vercel.app',
-    year: '2026',
-    client: 'Self-initiated — shipped and in daily use',
-    services: ['Product design', 'Design system', 'Build'],
-    team: 'Solo',
-    tools: ['Expo', 'React Native'],
-    tagline:
-      'A session timer that records time held rather than time elapsed — the length committed to, against the amount completed.',
-    overview:
-      'Time is a session timer, built for one person and used daily. You choose a category, name the session, set a length and start it. There is no pause control, and the only way to stop early is to hold a button for a second, which is recorded rather than hidden. What accumulates is a record of how much time was set aside, how much was completed, what it was spent on, and how each session was rated afterwards.',
-    sections: [
-      {
-        heading: 'Discover',
-        body: 'Most timers report elapsed time, which shows that a session ran but not whether it was finished. A second problem was in the interface. An audit of the codebase counted thirty-five borders across thirteen files at fourteen different alpha values between 0.07 and 0.2 — differences too small to see individually, but numerous enough to need maintaining. The month grid had a related fault: each day’s dot blended colour stops taken from up to three different categories, so most dots rendered in colours the palette does not contain.',
-      },
-      {
-        heading: 'Define',
-        body: 'The app records time held rather than time elapsed: the length committed to, against the amount completed. That determines most of the interface. There is no pause control, because pausing allows a session to stay open while no work is happening. Ending early is recorded as an outcome rather than a failure — it appears in the week view as a shorter column and is never marked in red. The first screen asks which category the session belongs to; the length is chosen last.',
-      },
-      {
-        heading: 'Develop',
-        body: 'Each of the eleven categories is defined as four colour stops rather than one hue. Marks large enough to show a gradient use the full set; anything below 24pt takes a single named stop from it, so a bar, a card, a session orb and an eight-point legend dot all read as the same category. Cards carry no border. Raising their fill from 5.5% to 9% white over the near-black ground brings them to 1.20 : 1 against it, which separates them more clearly than the bordered version did. No figure is shown on its own — each is stated against the previous week, a typical day, or a total.',
-        media: [
-          { src: '/work/time/process/category-colour.webp', caption: 'A category as four stops rather than one hue, so every size of mark stays recognisable.' },
-          { src: '/work/time/process/the-system.webp', caption: 'The system the app is checked against.' },
-          { src: '/work/time/process/the-week.webp', caption: 'The week: every figure saying what it did against something else.' },
-          { src: '/work/time/process/a-day.webp', caption: 'A day, opened into what was actually run.' },
-        ],
-      },
-      {
-        heading: 'Deliver',
-        body: 'Time ships as a PWA, stores everything on the device, and has no account, server or analytics. A design document in the repository is paired with a script that checks the app against it, counting radii, surface alpha values, type weights, page gutters, tap targets and accessibility labels, and reporting which are standard, which are near-standard and which are one-off. There are no usage figures in this case study, because the app has one user. What can be evidenced is what the audit counts.',
-      },
-    ],
-    reflection: [
-      {
-        heading: 'What I learned',
-        body: 'Written design rules drift when there is no way to verify them. The document specified three type weights; counting the codebase found five in use, and the most frequent of them — 700 Bold — was not listed at all. The document was corrected rather than the app.',
-      },
-      {
-        heading: 'What I would do differently',
-        body: 'The audit should have been written before the design document rather than after it. Of the five problems its first run reported, three were faults in the audit itself: it could not distinguish a pill from a card, and counted correct code as violations.',
-      },
-      {
-        heading: 'What is next',
-        body: 'Tinted surfaces have no defined rule yet. The completion chime and the backup function work only in the web build. Accessibility labels are in place throughout but have not been tested with VoiceOver or TalkBack on a device.',
-      },
-    ],
-    videoFrame: 'bare',
-    videos: [
-      { src: '/work/time/session-flow.webm', caption: 'The whole session: pick a category, name it, set a length, and hold to end.' },
-      { src: '/work/time/how-it-went.webm', caption: 'One question at the end, on four cards tinted by the session you just finished.' },
-      { src: '/work/time/open-a-day.webm', caption: 'Every day opens into what you actually ran.' },
-      { src: '/work/time/open-a-sheet.webm', caption: 'Every figure opens into what it is made of.' },
-    ],
-    coverScreens: [
-      '/work/time/cover-session.webp',
-      '/work/time/cover-category.webp',
-      '/work/time/cover-me-week.webp',
-    ],
-    screens: [
-      {
-        src: '/work/time/pick-a-category.webp',
-        group: 'start',
-        caption: 'Category first, length last',
-        note: 'The first screen asks which category the session belongs to, then what to call it. The length is set last, so the session is identified before it is measured.',
-      },
-      { src: '/work/time/name-it.webp', group: 'start', caption: 'Say what it is' },
-      { src: '/work/time/set-the-length.webp', group: 'start', caption: 'Set how long, last' },
-      {
-        src: '/work/time/session-running.webp',
-        group: 'hold',
-        caption: 'No pause control',
-        note: 'A ring draws down the remaining time and the orb carries the session’s category colour. There is no pause. Ending early requires holding the control for over a second, which is the one action that changes what the record says.',
-      },
-      { src: '/work/time/sheet-held.webp', group: 'hold', caption: 'Hold to end early' },
-      { src: '/work/time/session-done.webp', group: 'hold', caption: 'Ending early is recorded, and never red' },
-      {
-        src: '/work/time/how-it-went.webp',
-        group: 'after',
-        caption: 'One rating at the end',
-        note: 'Four options — Rough, Patchy, Good, Perfect — tinted with the finished session’s category colour and presented on the same card arc used to choose the category, so the gesture at the end matches the one at the start.',
-      },
-      { src: '/work/time/session-summary.webp', group: 'after', caption: 'What the session came to' },
-      { src: '/work/time/to-do.webp', group: 'after', caption: 'A list that knows about sessions' },
-      {
-        src: '/work/time/me-week.webp',
-        group: 'record',
-        caption: 'Every figure has a comparison',
-        note: 'Each figure is stated against the previous week, a typical day, or a total. A shorter column is a session that ended early; it is shown at its actual length and is not marked as a failure.',
-      },
-      { src: '/work/time/me-month.webp', group: 'record', caption: 'The month, one dot a day' },
-      { src: '/work/time/day.webp', group: 'record', caption: 'Every day opens into what you ran' },
-      {
-        src: '/work/time/sheet-sessions.webp',
-        group: 'deeper',
-        caption: 'Figures open into their detail',
-        note: 'A total opens into the sessions behind it and a streak into the days that built it. Patterns — which categories and times of day are completed most often — sits behind a button rather than on the main view, as it is consulted occasionally.',
-      },
-      { src: '/work/time/sheet-streak.webp', group: 'deeper', caption: 'The days a streak is made of' },
-      { src: '/work/time/patterns.webp', group: 'deeper', caption: 'When you hold best' },
     ],
   },
   {
