@@ -19,6 +19,9 @@ interface ButtonProps {
   to?: string
   /** External / hash / mailto — renders a plain anchor. */
   href?: string
+  /** For an external href that should open in a new tab. */
+  target?: string
+  rel?: string
   /** Action (e.g. open a modal) — renders a <button>. */
   onClick?: () => void
   className?: string
@@ -38,6 +41,8 @@ export function Button({
   onAccent = false,
   to,
   href,
+  target,
+  rel,
   onClick,
   className,
   'aria-label': ariaLabel,
@@ -80,7 +85,7 @@ export function Button({
   }
   if (href !== undefined) {
     return (
-      <a href={href} onClick={onClick} {...shared}>
+      <a href={href} target={target} rel={rel} onClick={onClick} {...shared}>
         {inner}
       </a>
     )

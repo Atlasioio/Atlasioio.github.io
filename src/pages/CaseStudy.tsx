@@ -136,7 +136,7 @@ export function CaseStudy() {
           <Reveal as="p" className={styles.tagline} i={3}>
             {project.tagline}
           </Reveal>
-          {project.liveUrl && (
+          {project.liveUrl && !project.videos?.length && (
             <Reveal i={4}>
               <a
                 className={styles.liveLink}
@@ -237,6 +237,45 @@ export function CaseStudy() {
           </Reveal>
         </section>
 
+        {/* One clip up front, so the thing is seen moving before it is read
+            about — and, where the project is actually live, the invitation to
+            go and use it sits beside it rather than as a lone pill in the hero. */}
+        {project.videos && project.videos.length > 0 && (
+          <section className={`${styles.lead} wrap`} aria-label="Demo">
+            <Reveal className={styles.leadVideo}>
+              <video
+                src={project.videos[0].src}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                aria-label={project.videos[0].caption}
+              />
+            </Reveal>
+            <Reveal className={styles.leadAside} i={1}>
+              <p className={styles.leadCap}>{project.videos[0].caption}</p>
+              {project.liveUrl && (
+                <>
+                  <p className={styles.leadTry}>It runs in your browser.</p>
+                  <p className={styles.leadNote}>
+                    No account, nothing to install. Open it and start a session — it is the
+                    same build these screens come from.
+                  </p>
+                  <Button
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    large
+                  >
+                    Try it yourself
+                  </Button>
+                </>
+              )}
+            </Reveal>
+          </section>
+        )}
+
         {project.results && project.results.length > 0 && (
           <section className={`${styles.results} wrap`} aria-label="At a glance">
             {project.results.map((r, i) => (
@@ -319,7 +358,7 @@ export function CaseStudy() {
               In motion
             </Reveal>
             <Reveal i={1}>
-              <VideoShowcase videos={project.videos} frame={project.videoFrame ?? 'browser'} />
+              <VideoShowcase videos={project.videos.slice(1)} frame={project.videoFrame ?? 'browser'} />
             </Reveal>
           </section>
         )}

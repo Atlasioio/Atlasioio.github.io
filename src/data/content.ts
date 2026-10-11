@@ -688,9 +688,9 @@ export const projects: Project[] = [
       { src: '/work/time/open-a-sheet.webm', caption: 'Every figure opens into what it is made of.' },
     ],
     coverScreens: [
-      '/work/time/cover-day.webp',
-      '/work/time/cover-me-week.webp',
       '/work/time/cover-session.webp',
+      '/work/time/cover-category.webp',
+      '/work/time/cover-me-week.webp',
     ],
     screens: [
       {

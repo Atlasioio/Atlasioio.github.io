@@ -621,3 +621,54 @@
   .meta { grid-template-columns: 1fr 1fr; }
   .swatches { grid-template-columns: 1fr; }
 }
+
+/* ---- Lead demo -----------------------------------------------------------
+   One clip straight after the overview, so the product is seen moving before
+   it is read about. Where the project is live, the invitation to go and use it
+   sits beside the clip — a lone pill in the hero read as a footnote. */
+.lead {
+  margin-top: clamp(48px, 6vw, 86px);
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 78px);
+  align-items: center;
+}
+.leadVideo { display: flex; justify-content: center; }
+.leadVideo video {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+  /* The clip carries its own rounded corners and alpha, so the shadow is cast
+     by the artwork rather than by a rectangle behind it. */
+  filter: drop-shadow(0 26px 52px rgba(20, 18, 15, 0.26));
+}
+.leadAside { max-width: 44ch; }
+.leadCap {
+  font-family: var(--font-display);
+  font-weight: 640;
+  font-size: clamp(20px, 1.9vw, 26px);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.leadTry {
+  margin-top: 26px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.leadNote {
+  margin-top: 10px;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.leadAside a { margin-top: 22px; }
+
+@media (max-width: 880px) {
+  .lead { grid-template-columns: 1fr; gap: clamp(24px, 5vw, 36px); justify-items: center; }
+  .leadAside { max-width: 46ch; }
+}
