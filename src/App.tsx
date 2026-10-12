@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useParams } from 'react-router-dom'
 import { MenuProvider } from './context/MenuContext'
 import { LangProvider } from './context/LangContext'
 import { ThemeProvider } from './context/ThemeContext'
@@ -12,6 +12,7 @@ import { Home } from './pages/Home'
 import { AllWork } from './pages/AllWork'
 import { About } from './pages/About'
 import { CaseStudy } from './pages/CaseStudy'
+import { TimeCase } from './pages/cases/TimeCase'
 
 export default function App() {
   return (
@@ -28,7 +29,7 @@ export default function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/work" element={<AllWork />} />
                   <Route path="/about" element={<About />} />
-                  <Route path="/work/:slug" element={<CaseStudy />} />
+                  <Route path="/work/:slug" element={<CaseRoute />} />
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </ServiceModalProvider>
@@ -38,4 +39,10 @@ export default function App() {
       </ThemeProvider>
     </LangProvider>
   )
+}
+
+/** Case studies with their own bespoke page; the rest use the shared template. */
+function CaseRoute() {
+  const { slug } = useParams()
+  return slug === 'time' ? <TimeCase /> : <CaseStudy />
 }

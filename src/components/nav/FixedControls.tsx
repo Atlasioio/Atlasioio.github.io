@@ -13,21 +13,22 @@ import styles from './FixedControls.module.css'
  * menu is open.
  */
 /** `staticDark` forces dark controls over a light page (sub-pages with no blue
- *  hero), instead of the hero-driven light→dark flip. */
-export function FixedControls({ staticDark = false }: { staticDark?: boolean }) {
+ *  hero), instead of the hero-driven light→dark flip. `staticLight` forces
+ *  light controls, for pages that are dark all the way down (the Time case). */
+export function FixedControls({ staticDark = false, staticLight = false }: { staticDark?: boolean; staticLight?: boolean }) {
   const scrolled = useNavScrolled('hero')
   const { open, toggle } = useMenu()
   const { openModal } = useStartModal()
 
   // Dark controls when scrolled past the hero (or always, on sub-pages) AND the
   // menu is closed.
-  const dark = (staticDark || scrolled) && !open
+  const dark = !staticLight && (staticDark || scrolled) && !open
   // Over the accent-blue hero card, the light pill's hover darkens to ink.
-  const overHero = !staticDark && !scrolled && !open
+  const overHero = !staticDark && !staticLight && !scrolled && !open
   // On phones, once scrolled past the hero (home only — sub-pages have a
   // top-left back link the hamburger would collide with), the hamburger slides
   // over to the top-left corner; back at the top it slides home next to Contact.
-  const hamLeft = scrolled && !staticDark
+  const hamLeft = scrolled && !staticDark && !staticLight
 
   return (
     <div className={styles.navfix} data-ham-left={hamLeft ? '' : undefined}>
