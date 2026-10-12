@@ -428,8 +428,123 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 'sherry',
+    id: 'ecotrip',
     index: 'W/02',
+    name: 'EcoTrip',
+    tag: 'Travel · Concept',
+    role: 'End-to-end UX/UI & brand',
+    outcome: 'A travel app where the greener choice is the shared one',
+    description:
+      'A concept travel app that makes the lower-carbon choice collective, not a chore — built on a hive metaphor, with 5% of every trip funding bee conservation.',
+    fill: 'b',
+    grid: true,
+    featured: true,
+    year: '2025',
+    client: 'EcoTrip — self-initiated concept',
+    services: ['UX/UI design', 'Brand identity', 'Design system'],
+    team: 'Solo',
+    tools: ['Figma'],
+    tagline:
+      'A travel app where the greener choice is the shared one — progress measured by the hive, not the halo.',
+    overview:
+      'EcoTrip is a concept for a travel app that makes the lower-carbon choice the shared one. Instead of guilt-tripping individuals, it frames sustainability as collective progress — a hive you contribute to — and backs the metaphor with real commitment: 5% of every trip funds bee conservation.',
+    sections: [
+      {
+        heading: 'Discover',
+        body: 'EcoTrip began as an earlier build of my own, so the honest first move was to audit it. The file had grown to 126 frames hanging off four tabs with no route between them, where duplicates and unlinked experiments outnumbered the real paths. There was no onboarding, no way to give back, and no way to compare one trip against another. The interface had its own tells: a single saturated yellow doing every job, leaves scoring the trip, and a bare "132 KgCO2" with nothing to measure it against.',
+        media: [
+          { src: '/work/ecotrip/process/audit-old-ui.webp', caption: 'Audit of the earlier build. Four findings, each turned into a decision that shaped the redesign.' },
+          { src: '/work/ecotrip/process/ia-before.webp', caption: 'The old architecture: 126 frames across four dead-end tabs, with no route between them.' },
+        ],
+      },
+      {
+        heading: 'Define',
+        body: 'Two travellers set the rules. Jane reduces carbon at every step and wanted friction on the unsustainable option, not on her own path. John takes bigger trips and will not trade much convenience, so he set the ceiling: surface the greener option, never block the route. Between them they produced the principle the whole product rests on. Friction only where it counts. The green path stays frictionless, and a high-carbon pick earns one honest, dismissible question and nothing more.',
+        media: [
+          { src: '/work/ecotrip/process/flow-plan-trip.webp', caption: 'Plan a trip. Jane set the floor and John the ceiling, so the nudge lives on the high-carbon branch and never on the path itself.' },
+        ],
+      },
+      {
+        heading: 'Develop',
+        body: "126 frames became nine screens on a single loop: onboarding sets the posture, every trip ends in the Hive, and the Hive feeds the next trip, with giving back as its own branch. The visual direction took three passes. Eco-green read as a virtue sticker, SaaS-clean had no warmth and no sense of the collective, so honey and warm earth won: about the hive’s progress rather than a halo. Scoring went the same way, with leaves too generic and a bar too flat, until honeycomb cells won because they scale from five on a card to a full comb for the whole hive.",
+        media: [
+          { src: '/work/ecotrip/process/ia-after.webp', caption: 'The redesigned architecture: nine screens on one loop, with giving back as a new branch.' },
+          { src: '/work/ecotrip/process/explorations.webp', caption: 'Palette, type and scoring explored in parallel. Eco-green and SaaS-clean were rejected for the reasons noted.' },
+        ],
+      },
+      {
+        heading: 'Deliver',
+        body: 'Nine screens, a warm rounded system, and a giving branch that commits 5% of every trip to bee conservation, with anything a user tops up going 100% to the foundation. It is a self-initiated concept, so it has not been usability tested and I would not claim it as validated. The next step is the one that matters: put the create flow in front of both traveller types and check the thing the design rests on, that the nudge informs without ever reading as a block.',
+      },
+    ],
+    reflection: [
+      {
+        heading: 'What I learned',
+        body: 'The visual category was the trap. Travel defaults to white and blue, environment defaults to green, and both signal virtue at the palette level before a word is read. Finding a third way through the hive metaphor did more for the concept than any single screen.',
+      },
+      {
+        heading: 'What I would do differently',
+        body: 'I would set the success measure before designing the nudge. "Informs without blocking" is the whole thesis and it is testable, but I defined it in language rather than in something I could measure.',
+      },
+      {
+        heading: 'What is next',
+        body: 'Put the create flow in front of both traveller types. If Jane finds the green path slower, or John reads the nudge as a block, the principle fails and the flow needs rethinking before anything else does.',
+      },
+    ],
+    accent: '#F5A800',
+    videoFrame: 'bare',
+    videos: [
+      { src: '/work/ecotrip/EcoTrip-Flow-vid.webm', caption: 'A walk through the core flow — exploring and planning a greener trip.' },
+      { src: '/work/ecotrip/why-bees.webm', caption: 'Give back to the hive — the pledge page that funds bee conservation.' },
+    ],
+    card: {
+      title: 'A travel app for protecting the hive',
+      bg: '/work/ecotrip/card-bg.webp',
+      pos: '100% 40%',
+      scrim: '18 24 8',
+      phones: ['/work/ecotrip/explore-trips.webp', '/work/ecotrip/profile.webp'],
+      mark: 'ecotrip',
+    },
+    coverScreens: [
+      '/work/ecotrip/onboarding.webp',
+      '/work/ecotrip/explore-trips.webp',
+      '/work/ecotrip/profile.webp',
+    ],
+    screens: [
+      { src: '/work/ecotrip/onboarding.webp', caption: 'Onboarding — you join a hive and start adding to it.' },
+      { src: '/work/ecotrip/explore.webp', caption: 'Explore — trips the hive loved, filtered by sustainability.' },
+      { src: '/work/ecotrip/explore-trips.webp', caption: 'Trip detail — EcoScore, route and itinerary at a glance.' },
+      { src: '/work/ecotrip/create.webp', caption: 'Create — friction on the high-carbon choice, never the path.' },
+      { src: '/work/ecotrip/community.webp', caption: 'The Hive — shared progress, your trips and everyone’s.' },
+      { src: '/work/ecotrip/community-trip.webp', caption: 'A shared trip — the full breakdown, ready to copy.' },
+      { src: '/work/ecotrip/profile.webp', caption: 'Profile — impact surfaced ahead of stats.' },
+    ],
+    designSystem: {
+      intro:
+        'The hive metaphor, made into a system — collective progress over individual sacrifice, reward without the lecture.',
+      palette: [
+        { name: 'Honey Gold', hex: '#F5A800', note: 'Primary · actions' },
+        { name: 'Amber', hex: '#C7900A', note: 'Warmth · accents' },
+        { name: 'Terracotta', hex: '#C26739', note: 'Alerts · high-carbon' },
+        { name: 'Olive', hex: '#687A35', note: 'Carbon saved' },
+        { name: 'Cream', hex: '#F7EFDD', note: 'Surfaces' },
+        { name: 'Espresso', hex: '#2A1E12', note: 'Text · dark cards' },
+      ],
+      typefaces: [
+        { name: 'Fredoka', role: 'Display — rounded, warm' },
+        { name: 'Nunito', role: 'Body — quiet, legible' },
+      ],
+      principles: [
+        'The hive, not the halo — collective progress over personal virtue.',
+        'Friction on the high-carbon choice, never the path.',
+        'Reward without the lecture — a nudge, not a sticker.',
+      ],
+      sheet: '/work/ecotrip/components.webp',
+    },
+  },
+  {
+    id: 'sherry',
+    index: 'W/03',
     name: 'Sherry',
     tag: 'Fieldwork · Concept',
     role: 'Research & interaction design',
@@ -551,7 +666,7 @@ export const projects: Project[] = [
   },
   {
     id: 'goodreads',
-    index: 'W/03',
+    index: 'W/04',
     name: 'Goodreads Redesign',
     tag: 'Concept · Redesign',
     role: 'Product designer — research, IA, interaction, visual system',
@@ -677,121 +792,6 @@ export const projects: Project[] = [
         note: 'Bare activity collapses into one line at the bottom instead of being the feed. Reviews are truncated by the page you are on, rather than by a stranger’s guess at what counts as a spoiler.',
       },
     ],
-  },
-  {
-    id: 'ecotrip',
-    index: 'W/04',
-    name: 'EcoTrip',
-    tag: 'Travel · Concept',
-    role: 'End-to-end UX/UI & brand',
-    outcome: 'A travel app where the greener choice is the shared one',
-    description:
-      'A concept travel app that makes the lower-carbon choice collective, not a chore — built on a hive metaphor, with 5% of every trip funding bee conservation.',
-    fill: 'b',
-    grid: true,
-    featured: true,
-    year: '2025',
-    client: 'EcoTrip — self-initiated concept',
-    services: ['UX/UI design', 'Brand identity', 'Design system'],
-    team: 'Solo',
-    tools: ['Figma'],
-    tagline:
-      'A travel app where the greener choice is the shared one — progress measured by the hive, not the halo.',
-    overview:
-      'EcoTrip is a concept for a travel app that makes the lower-carbon choice the shared one. Instead of guilt-tripping individuals, it frames sustainability as collective progress — a hive you contribute to — and backs the metaphor with real commitment: 5% of every trip funds bee conservation.',
-    sections: [
-      {
-        heading: 'Discover',
-        body: 'EcoTrip began as an earlier build of my own, so the honest first move was to audit it. The file had grown to 126 frames hanging off four tabs with no route between them, where duplicates and unlinked experiments outnumbered the real paths. There was no onboarding, no way to give back, and no way to compare one trip against another. The interface had its own tells: a single saturated yellow doing every job, leaves scoring the trip, and a bare "132 KgCO2" with nothing to measure it against.',
-        media: [
-          { src: '/work/ecotrip/process/audit-old-ui.webp', caption: 'Audit of the earlier build. Four findings, each turned into a decision that shaped the redesign.' },
-          { src: '/work/ecotrip/process/ia-before.webp', caption: 'The old architecture: 126 frames across four dead-end tabs, with no route between them.' },
-        ],
-      },
-      {
-        heading: 'Define',
-        body: 'Two travellers set the rules. Jane reduces carbon at every step and wanted friction on the unsustainable option, not on her own path. John takes bigger trips and will not trade much convenience, so he set the ceiling: surface the greener option, never block the route. Between them they produced the principle the whole product rests on. Friction only where it counts. The green path stays frictionless, and a high-carbon pick earns one honest, dismissible question and nothing more.',
-        media: [
-          { src: '/work/ecotrip/process/flow-plan-trip.webp', caption: 'Plan a trip. Jane set the floor and John the ceiling, so the nudge lives on the high-carbon branch and never on the path itself.' },
-        ],
-      },
-      {
-        heading: 'Develop',
-        body: "126 frames became nine screens on a single loop: onboarding sets the posture, every trip ends in the Hive, and the Hive feeds the next trip, with giving back as its own branch. The visual direction took three passes. Eco-green read as a virtue sticker, SaaS-clean had no warmth and no sense of the collective, so honey and warm earth won: about the hive’s progress rather than a halo. Scoring went the same way, with leaves too generic and a bar too flat, until honeycomb cells won because they scale from five on a card to a full comb for the whole hive.",
-        media: [
-          { src: '/work/ecotrip/process/ia-after.webp', caption: 'The redesigned architecture: nine screens on one loop, with giving back as a new branch.' },
-          { src: '/work/ecotrip/process/explorations.webp', caption: 'Palette, type and scoring explored in parallel. Eco-green and SaaS-clean were rejected for the reasons noted.' },
-        ],
-      },
-      {
-        heading: 'Deliver',
-        body: 'Nine screens, a warm rounded system, and a giving branch that commits 5% of every trip to bee conservation, with anything a user tops up going 100% to the foundation. It is a self-initiated concept, so it has not been usability tested and I would not claim it as validated. The next step is the one that matters: put the create flow in front of both traveller types and check the thing the design rests on, that the nudge informs without ever reading as a block.',
-      },
-    ],
-    reflection: [
-      {
-        heading: 'What I learned',
-        body: 'The visual category was the trap. Travel defaults to white and blue, environment defaults to green, and both signal virtue at the palette level before a word is read. Finding a third way through the hive metaphor did more for the concept than any single screen.',
-      },
-      {
-        heading: 'What I would do differently',
-        body: 'I would set the success measure before designing the nudge. "Informs without blocking" is the whole thesis and it is testable, but I defined it in language rather than in something I could measure.',
-      },
-      {
-        heading: 'What is next',
-        body: 'Put the create flow in front of both traveller types. If Jane finds the green path slower, or John reads the nudge as a block, the principle fails and the flow needs rethinking before anything else does.',
-      },
-    ],
-    accent: '#F5A800',
-    videoFrame: 'bare',
-    videos: [
-      { src: '/work/ecotrip/EcoTrip-Flow-vid.webm', caption: 'A walk through the core flow — exploring and planning a greener trip.' },
-      { src: '/work/ecotrip/why-bees.webm', caption: 'Give back to the hive — the pledge page that funds bee conservation.' },
-    ],
-    card: {
-      title: 'A travel app for protecting the hive',
-      bg: '/work/ecotrip/card-bg.webp',
-      pos: '100% 40%',
-      scrim: '18 24 8',
-      phones: ['/work/ecotrip/explore-trips.webp', '/work/ecotrip/profile.webp'],
-      mark: 'ecotrip',
-    },
-    coverScreens: [
-      '/work/ecotrip/onboarding.webp',
-      '/work/ecotrip/explore-trips.webp',
-      '/work/ecotrip/profile.webp',
-    ],
-    screens: [
-      { src: '/work/ecotrip/onboarding.webp', caption: 'Onboarding — you join a hive and start adding to it.' },
-      { src: '/work/ecotrip/explore.webp', caption: 'Explore — trips the hive loved, filtered by sustainability.' },
-      { src: '/work/ecotrip/explore-trips.webp', caption: 'Trip detail — EcoScore, route and itinerary at a glance.' },
-      { src: '/work/ecotrip/create.webp', caption: 'Create — friction on the high-carbon choice, never the path.' },
-      { src: '/work/ecotrip/community.webp', caption: 'The Hive — shared progress, your trips and everyone’s.' },
-      { src: '/work/ecotrip/community-trip.webp', caption: 'A shared trip — the full breakdown, ready to copy.' },
-      { src: '/work/ecotrip/profile.webp', caption: 'Profile — impact surfaced ahead of stats.' },
-    ],
-    designSystem: {
-      intro:
-        'The hive metaphor, made into a system — collective progress over individual sacrifice, reward without the lecture.',
-      palette: [
-        { name: 'Honey Gold', hex: '#F5A800', note: 'Primary · actions' },
-        { name: 'Amber', hex: '#C7900A', note: 'Warmth · accents' },
-        { name: 'Terracotta', hex: '#C26739', note: 'Alerts · high-carbon' },
-        { name: 'Olive', hex: '#687A35', note: 'Carbon saved' },
-        { name: 'Cream', hex: '#F7EFDD', note: 'Surfaces' },
-        { name: 'Espresso', hex: '#2A1E12', note: 'Text · dark cards' },
-      ],
-      typefaces: [
-        { name: 'Fredoka', role: 'Display — rounded, warm' },
-        { name: 'Nunito', role: 'Body — quiet, legible' },
-      ],
-      principles: [
-        'The hive, not the halo — collective progress over personal virtue.',
-        'Friction on the high-carbon choice, never the path.',
-        'Reward without the lecture — a nudge, not a sticker.',
-      ],
-      sheet: '/work/ecotrip/components.webp',
-    },
   },
   {
     id: 'jobquest',
