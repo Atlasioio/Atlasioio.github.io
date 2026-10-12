@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '../ui/Button'
 import { Hamburger } from './Hamburger'
@@ -19,6 +20,16 @@ import styles from './FixedControls.module.css'
 export function FixedControls({ staticDark = false, staticLight = false, home = false }: { staticDark?: boolean; staticLight?: boolean; home?: boolean }) {
   const scrolled = useNavScrolled('hero')
   const { open, toggle } = useMenu()
+  // Sub-pages: once the page has scrolled, the pinned wordmark gets a blurred
+  // backing so it stays legible over headings and images passing beneath it.
+  const [pastTop, setPastTop] = useState(false)
+  useEffect(() => {
+    if (!home) return
+    const on = () => setPastTop(window.scrollY > 40)
+    on()
+    window.addEventListener('scroll', on, { passive: true })
+    return () => window.removeEventListener('scroll', on)
+  }, [home])
   const { openModal } = useStartModal()
 
   // Dark controls when scrolled past the hero (or always, on sub-pages) AND the
@@ -36,7 +47,8 @@ export function FixedControls({ staticDark = false, staticLight = false, home = 
       <div className={`${styles.inner} ${home ? styles.withHome : ''}`}>
         {/* Sub-pages: the wordmark stays pinned top-left, as the way home. */}
         {home && (
-          <Link to="/" className={`${styles.home} ${dark ? styles.homeDark : ''}`} data-cursor aria-label="Lukas Ahlse — home">
+          <Link to="/" className={`${styles.home} ${dark ? styles.homeDark : ''}`}
+            data-backed={pastTop ? '' : undefined} data-cursor aria-label="Lukas Ahlse — home">
             lukas<span className={styles.homeDot} />
           </Link>
         )}
