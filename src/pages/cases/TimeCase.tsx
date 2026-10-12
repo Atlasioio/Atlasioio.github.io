@@ -113,6 +113,55 @@ export function TimeCase() {
           </div>
         </section>
 
+        {/* ---- Where it started: what bugged me about what came before ---- */}
+        <section className={styles.section} aria-label="Where it started">
+          <Reveal as="h2" className={styles.h2}>Every timer I tried.</Reveal>
+          <Reveal as="p" className={styles.sub} i={1}>
+            Before Time I used Pomodoro apps, the phone's timer and a separate to-do list. These
+            are the things I kept saying about them.
+          </Reveal>
+          <div className={styles.quotes}>
+            {QUOTES.map(([q, size, tone], i) => (
+              <Reveal as="p" key={q} className={`${styles.quote} ${styles[`q_${size}`]} ${styles[`c_${tone}`]}`} i={i % 4}>
+                “{q}”
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        {/* ---- What using it taught me ---- */}
+        <section className={styles.section} aria-label="Insights">
+          <Reveal as="h2" className={styles.h2}>What using it taught me.</Reveal>
+          <div className={styles.insights}>
+            {INSIGHTS.map(([h, t, tone], i) => (
+              <Reveal className={styles.insight} key={h} i={i}>
+                <span className={`${styles.insightDot} ${styles[`d_${tone}`]}`} aria-hidden="true" />
+                <h3>{h}</h3>
+                <p>{t}</p>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        {/* ---- What it had to be: three principles, then what each means in the app ---- */}
+        <section className={styles.section} aria-label="Principles">
+          <Reveal as="h2" className={styles.h2}>What it had to be.</Reveal>
+          <Reveal as="p" className={styles.sub} i={1}>
+            Three principles, and where they meet. Every point around them is something that is
+            actually in the app.
+          </Reveal>
+          <Reveal className={styles.venn} i={2}>
+            <Venn />
+          </Reveal>
+          <div className={styles.spokes}>
+            {PILLARS.map((p, i) => (
+              <Reveal className={styles.spoke} key={p.name} i={i}>
+                <Spoke {...p} />
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
         {/* ---- The idea, in four decisions ---- */}
         <section className={styles.panels} aria-label="Four decisions">
           <Panel tone="deep" no="01 · No pause" title="The only way out is to hold."
@@ -329,5 +378,98 @@ function Phone({ src, clip }: { src: string; clip?: string }) {
       <img src={src} alt="" loading="lazy" decoding="async" />
       {clip && <video ref={ref} src={clip} muted loop playsInline preload="none" disablePictureInPicture />}
     </span>
+  )
+}
+
+/* ---- Where it started ---- */
+type QTone = 'pink' | 'green' | 'blue' | 'gold' | 'white' | 'muted'
+/** [quote, size, colour]. In my own voice, about the timers and lists I used before. */
+const QUOTES: [string, 'xl' | 'l' | 'm' | 's', QTone][] = [
+  ['I have no idea where my week went', 'xl', 'pink'],
+  ['I’d just ignore it when it rang', 'm', 'white'],
+  ['I paused it and never came back', 'l', 'green'],
+  ['Finishing a session felt like nothing', 'm', 'blue'],
+  ['25 minutes, whether I’m in flow or not', 's', 'muted'],
+  ['Did that session even go well?', 'l', 'gold'],
+  ['My to-do list and my timer don’t know each other', 'm', 'white'],
+  ['Doing my taxes counted the same as deep work', 's', 'blue'],
+  ['One hour of gaming turned into four', 'l', 'pink'],
+  ['It’s a stopwatch, not a record', 's', 'green'],
+]
+
+/* ---- What using it taught me ---- */
+const INSIGHTS: [string, string, 'pink' | 'green' | 'blue' | 'gold'][] = [
+  ['Hard isn’t one thing.', 'Admin is its own category. Doing your taxes is hard, but it isn’t deep work, and lumping them together hides which kind of hard the week actually was.', 'blue'],
+  ['Fun needs a limit too.', 'Play gets its own category because it’s good, and because it’s the one that overruns. For play, the length works as a ceiling, not a target.', 'gold'],
+  ['The list and the timer belong together.', 'Start a session straight from a to-do, and the tick lands on the day you did it. Two apps became one.', 'green'],
+  ['A session isn’t done until you say how it went.', 'Time held is half the record. One question at the end, how did it go, is the other half.', 'pink'],
+]
+
+/* ---- What it had to be ---- */
+type Pillar = { name: string; tone: 'pink' | 'green' | 'blue'; points: string[][] }
+const PILLARS: Pillar[] = [
+  { name: 'Honest', tone: 'pink', points: [['No pause', 'button'], ['Ending early', 'is recorded'], ['No number', 'without a why'], ['Status never', 'colour alone'], ['Rate every', 'session'], ['Held, not', 'elapsed']] },
+  { name: 'Intentional', tone: 'green', points: [['Category', 'before length'], ['Name the', 'session'], ['Admin apart', 'from deep work'], ['Play gets', 'a limit too'], ['Start from', 'a to-do'], ['One question', 'at the end']] },
+  { name: 'Calm', tone: 'blue', points: [['Nothing', 'turns red'], ['Only the', 'timer moves'], ['No account,', 'no tracking'], ['Patterns', 'on request'], ['The fill is', 'the edge'], ['Works', 'offline']] },
+]
+const TONE = { pink: ['#FFAB4E', '#FF4A6E', '#E81E96'], green: ['#ABF25F', '#1ED489', '#0BA6BA'], blue: ['#E3CBFF', '#93A5FF', '#5B36D2'] }
+
+function Grad({ id, tone }: { id: string; tone: keyof typeof TONE }) {
+  const [a, b, c] = TONE[tone]
+  return (
+    <linearGradient id={id} x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stopColor={a} />
+      <stop offset=".5" stopColor={b} />
+      <stop offset="1" stopColor={c} />
+    </linearGradient>
+  )
+}
+
+/** Three principles overlapping, the centre named from the side. */
+function Venn() {
+  const circles = [
+    { name: 'Honest', tone: 'pink' as const, cx: 380, cy: 210, lx: 380, ly: 165 },
+    { name: 'Intentional', tone: 'green' as const, cx: 300, cy: 345, lx: 262, ly: 400 },
+    { name: 'Calm', tone: 'blue' as const, cx: 460, cy: 345, lx: 498, ly: 400 },
+  ]
+  return (
+    <svg viewBox="0 0 760 520" className={styles.vennSvg} role="img" aria-label="Honest, Intentional and Calm overlap; where all three meet is Time held.">
+      <defs>{circles.map((c) => <Grad key={c.tone} id={`v-${c.tone}`} tone={c.tone} />)}</defs>
+      {circles.map((c) => (
+        <circle key={c.name} cx={c.cx} cy={c.cy} r="150" fill="none" stroke={`url(#v-${c.tone})`} strokeWidth="2.5" />
+      ))}
+      {circles.map((c) => (
+        <text key={c.name} x={c.lx} y={c.ly} textAnchor="middle" className={styles.vennLabel}>{c.name}</text>
+      ))}
+      <text x="30" y="92" className={styles.vennLabel}>Time held</text>
+      <path d="M120 108 L370 290 M370 290 l-13 -1 M370 290 l-5 -12" stroke="rgba(244,241,248,.55)" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+/** A principle with the six things in the app that make it true. */
+function Spoke({ name, tone, points }: Pillar) {
+  const C = 310, CY = 300, R = 214
+  return (
+    <svg viewBox="0 0 620 600" className={styles.spokeSvg} role="img" aria-label={`${name}: ${points.map((p) => p.join(' ')).join(', ')}`}>
+      <defs><Grad id={`s-${tone}`} tone={tone} /></defs>
+      {points.map((lines, i) => {
+        const a = ((-90 + i * 60) * Math.PI) / 180
+        const x = C + R * Math.cos(a), y = CY + R * Math.sin(a)
+        const ex = C + 92 * Math.cos(a), ey = CY + 92 * Math.sin(a)
+        const ix = x - 72 * Math.cos(a), iy = y - 72 * Math.sin(a)
+        return (
+          <g key={lines.join(' ')}>
+            <line x1={ex} y1={ey} x2={ix} y2={iy} stroke={`url(#s-${tone})`} strokeWidth="1.6" opacity=".7" />
+            <circle cx={x} cy={y} r="72" fill="none" stroke="rgba(244,241,248,.32)" strokeWidth="1.4" strokeDasharray="2 5" strokeLinecap="round" />
+            <text x={x} y={y - (lines.length - 1) * 11.5 + 6} textAnchor="middle" className={styles.spokeText}>
+              {lines.map((l, k) => <tspan key={l} x={x} dy={k ? 23 : 0}>{l}</tspan>)}
+            </text>
+          </g>
+        )
+      })}
+      <circle cx={C} cy={CY} r="92" fill="#07050b" stroke={`url(#s-${tone})`} strokeWidth="3" />
+      <text x={C} y={CY + 10} textAnchor="middle" className={styles.spokeName}>{name}</text>
+    </svg>
   )
 }

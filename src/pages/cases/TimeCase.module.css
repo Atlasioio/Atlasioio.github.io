@@ -394,15 +394,58 @@
 .exits a { font-size: 15px; color: var(--t-muted); border-bottom: 1px solid var(--t-line); padding-bottom: 2px; transition: color 0.25s, border-color 0.25s; }
 .exits a:hover { color: var(--t-ink); border-color: var(--t-ink); }
 
+/* ---- Where it started: the quote cloud ---- */
+.quotes {
+  margin: clamp(40px, 5vw, 80px) auto 0;
+  max-width: 1240px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: clamp(14px, 1.6vw, 26px) clamp(28px, 3.4vw, 60px);
+}
+.quote { font-family: var(--font-display); letter-spacing: -0.025em; line-height: 1.05; text-align: center; }
+.q_xl { font-size: clamp(36px, 5.6vw, 84px); font-weight: 700; }
+.q_l { font-size: clamp(26px, 3.4vw, 50px); font-weight: 600; }
+.q_m { font-size: clamp(20px, 2.2vw, 32px); font-weight: 500; }
+.q_s { font-size: clamp(16px, 1.5vw, 22px); font-weight: 450; font-style: italic; }
+.c_pink { color: #ff6f8f; }
+.c_green { color: #3fe0a0; }
+.c_blue { color: #a9b6ff; }
+.c_gold { color: #ffc65a; }
+.c_white { color: var(--t-ink); }
+.c_muted { color: var(--t-muted); }
+
+/* ---- What using it taught me ---- */
+.insights { margin-top: clamp(32px, 3.4vw, 52px); display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--t-edge); }
+.insight { padding: clamp(22px, 2.4vw, 34px); border-radius: 22px; background: var(--t-panel); border: 1px solid var(--t-line); }
+.insightDot { display: block; width: 14px; height: 14px; border-radius: 50%; margin-bottom: clamp(24px, 3vw, 44px); }
+.d_pink { background: linear-gradient(135deg, #ffab4e, #ff4a6e, #e81e96); }
+.d_green { background: linear-gradient(135deg, #abf25f, #1ed489, #0ba6ba); }
+.d_blue { background: linear-gradient(135deg, #e3cbff, #93a5ff, #5b36d2); }
+.d_gold { background: linear-gradient(135deg, #fff5a8, #ffd43f, #f28a22); }
+.insight h3 { font-family: var(--font-display); font-weight: 650; font-size: clamp(19px, 1.6vw, 24px); line-height: 1.15; letter-spacing: -0.02em; color: var(--t-ink); }
+.insight p { margin-top: 12px; font-size: 15px; line-height: 1.55; color: var(--t-muted); }
+
+/* ---- What it had to be: Venn + spokes ---- */
+.venn { margin: clamp(32px, 4vw, 64px) auto 0; max-width: 820px; }
+.vennSvg, .spokeSvg { display: block; width: 100%; height: auto; overflow: visible; }
+.vennLabel { fill: var(--t-ink); font-family: var(--font-display); font-weight: 700; font-size: 30px; letter-spacing: -0.02em; }
+.spokes { margin: clamp(40px, 5vw, 80px) 0 clamp(72px, 9vw, 140px); display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2vw, 32px); }
+.spokeText { fill: rgba(244, 241, 248, 0.86); font-family: var(--font-body); font-size: 19px; }
+.spokeName { fill: var(--t-ink); font-family: var(--font-display); font-weight: 700; font-size: 30px; letter-spacing: -0.02em; }
+
 /* ---- Narrow screens ---- */
 @media (max-width: 900px) {
   .hero { flex-direction: column; justify-content: flex-end; }
   .heroPhones { position: relative; right: auto; bottom: auto; margin: 120px auto 0; }
   .heroPhones .phone { width: 40vw; max-width: 220px; }
+  .insights { grid-template-columns: 1fr 1fr; }
+  .spokes { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
   .twoUp, .tiles, .reflection { grid-template-columns: 1fr; }
   .built { grid-template-columns: 1fr 1fr; }
   .trio { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 }
 @media (max-width: 560px) {
-  .built { grid-template-columns: 1fr; }
+  .built, .insights { grid-template-columns: 1fr; }
 }
