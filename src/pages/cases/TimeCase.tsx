@@ -411,104 +411,71 @@ const PILLARS: Pillar[] = [
   { name: 'Intentional', tone: 'green', points: [['Category', 'before length'], ['Name the', 'session'], ['Admin apart', 'from deep work'], ['Play gets', 'a limit too'], ['Start from', 'a to-do'], ['One question', 'at the end']] },
   { name: 'Calm', tone: 'blue', points: [['Nothing', 'turns red'], ['Only the', 'timer moves'], ['No account,', 'no tracking'], ['Patterns', 'on request'], ['The fill is', 'the edge'], ['Works', 'offline']] },
 ]
-const TONE = { pink: ['#FFAB4E', '#FF4A6E', '#E81E96'], green: ['#ABF25F', '#1ED489', '#0BA6BA'], blue: ['#E3CBFF', '#93A5FF', '#5B36D2'] }
 
-function Grad({ id, tone }: { id: string; tone: keyof typeof TONE }) {
-  const [a, b, c] = TONE[tone]
-  return (
-    <linearGradient id={id} x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stopColor={a} />
-      <stop offset=".5" stopColor={b} />
-      <stop offset="1" stopColor={c} />
-    </linearGradient>
-  )
-}
+const SOLID = { pink: '#FF4A6E', green: '#1ED489', blue: '#93A5FF' }
 
 /**
- * Three principles as three glowing orbs, like the session orb: each filled
- * with its category gradient and blended with screen, so the overlaps get
- * brighter and the middle, where all three meet, burns almost white.
+ * Three principles as hairline circles, like a star map: colour only on each
+ * circle's dot, and a white dot where all three meet.
  */
 function Venn() {
-  const orbs = [
-    { name: 'Honest', tone: 'pink' as const, cx: 380, cy: 205, lx: 380, ly: 30, anchor: 'middle' as const },
-    { name: 'Intentional', tone: 'green' as const, cx: 305, cy: 335, lx: 100, ly: 470, anchor: 'start' as const },
-    { name: 'Calm', tone: 'blue' as const, cx: 455, cy: 335, lx: 660, ly: 470, anchor: 'end' as const },
+  const circles = [
+    { name: 'Honest', tone: 'pink' as const, cx: 380, cy: 210, dx: 380, dy: 255, lx: 380, ly: 180 },
+    { name: 'Intentional', tone: 'green' as const, cx: 300, cy: 345, dx: 333, dy: 333, lx: 262, ly: 385 },
+    { name: 'Calm', tone: 'blue' as const, cx: 460, cy: 345, dx: 427, dy: 333, lx: 498, ly: 385 },
   ]
   return (
     <svg viewBox="0 0 760 520" className={styles.vennSvg} role="img" aria-label="Honest, Intentional and Calm overlap; where all three meet is Time held.">
-      <defs>
-        {orbs.map((o) => {
-          const [a, b, c] = TONE[o.tone]
-          return (
-            <radialGradient key={o.tone} id={`o-${o.tone}`} cx=".5" cy=".5" r=".5">
-              <stop offset="0" stopColor={a} stopOpacity=".95" />
-              <stop offset=".55" stopColor={b} stopOpacity=".75" />
-              <stop offset="1" stopColor={c} stopOpacity="0" />
-            </radialGradient>
-          )
-        })}
-      </defs>
-      <g style={{ mixBlendMode: 'screen' }}>
-        {orbs.map((o) => <circle key={o.name} cx={o.cx} cy={o.cy} r="165" fill={`url(#o-${o.tone})`} style={{ mixBlendMode: 'screen' }} />)}
-      </g>
-      {/* a ring of ticks round the whole thing, like the session dial */}
-      {Array.from({ length: 72 }, (_, i) => {
-        const a = (i * 5 * Math.PI) / 180
-        const r1 = 236, r2 = i % 6 === 0 ? 250 : 244
-        return <line key={i} x1={380 + r1 * Math.cos(a)} y1={290 + r1 * Math.sin(a)} x2={380 + r2 * Math.cos(a)} y2={290 + r2 * Math.sin(a)} stroke="rgba(244,241,248,.22)" strokeWidth="1.5" strokeLinecap="round" />
-      })}
-      {orbs.map((o) => (
-        <text key={o.name} x={o.lx} y={o.ly} textAnchor={o.anchor} className={styles.vennLabel}>{o.name}</text>
+      {circles.map((c) => (
+        <circle key={c.name} cx={c.cx} cy={c.cy} r="150" fill="none" stroke="rgba(244,241,248,.35)" strokeWidth="1.2" />
       ))}
-      <g transform="translate(380 292)">
-        <rect x="-74" y="-21" width="148" height="42" rx="21" fill="#07050b" opacity=".82" />
-        <text y="8" textAnchor="middle" className={styles.vennCentre}>Time held</text>
-      </g>
+      {circles.map((c) => <circle key={c.name} cx={c.dx} cy={c.dy} r="7" fill={SOLID[c.tone]} />)}
+      <circle cx="380" cy="300" r="9" fill="#fff" />
+      <circle cx="380" cy="300" r="18" fill="none" stroke="#fff" strokeOpacity=".35" />
+      {circles.map((c) => (
+        <text key={c.name} x={c.lx} y={c.ly} textAnchor="middle" className={styles.vennLabel}>{c.name}</text>
+      ))}
+      <text x="408" y="306" className={styles.vennCentre}>Time held</text>
     </svg>
   )
 }
 
 /**
- * A principle drawn as the session dial: its orb in the middle, a ring of
- * ticks, and the six things in the app that make it true set round the dial
- * where the hours would be, each joined to the ring by a longer tick.
+ * A principle as a constellation: its six points as coloured dots joined to
+ * the centre and to each other by hairlines, set slightly off a perfect ring.
  */
 function Spoke({ name, tone, points }: Pillar) {
   const C = 310, CY = 300
-  const [a0, a1] = TONE[tone]
+  const pts = points.map((lines, i) => {
+    const a = ((-90 + i * 60) * Math.PI) / 180 + (i % 2 ? 0.12 : -0.08)
+    const r = i % 2 ? 190 : 165
+    return { lines, x: C + r * Math.cos(a), y: CY + r * Math.sin(a), c: Math.cos(a), s: Math.sin(a) }
+  })
   return (
     <svg viewBox="0 0 620 600" className={styles.spokeSvg} role="img" aria-label={`${name}: ${points.map((p) => p.join(' ')).join(', ')}`}>
-      <defs>
-        <Grad id={`s-${tone}`} tone={tone} />
-        <radialGradient id={`so-${tone}`} cx=".5" cy=".5" r=".5">
-          <stop offset="0" stopColor={a0} stopOpacity=".95" />
-          <stop offset=".6" stopColor={a1} stopOpacity=".55" />
-          <stop offset="1" stopColor={a1} stopOpacity="0" />
-        </radialGradient>
-      </defs>
-      <circle cx={C} cy={CY} r="118" fill={`url(#so-${tone})`} />
-      {Array.from({ length: 60 }, (_, i) => {
-        const a = (i * 6 * Math.PI) / 180
-        return <line key={i} x1={C + 128 * Math.cos(a)} y1={CY + 128 * Math.sin(a)} x2={C + 138 * Math.cos(a)} y2={CY + 138 * Math.sin(a)} stroke="rgba(244,241,248,.3)" strokeWidth="1.6" strokeLinecap="round" />
+      {pts.map((q) => <line key={'c' + q.lines.join()} x1={C} y1={CY} x2={q.x} y2={q.y} stroke="rgba(244,241,248,.25)" strokeWidth="1" />)}
+      {pts.map((q, i) => {
+        const n = pts[(i + 1) % pts.length]
+        return <line key={'r' + q.lines.join()} x1={q.x} y1={q.y} x2={n.x} y2={n.y} stroke="rgba(244,241,248,.12)" strokeWidth="1" />
       })}
-      {points.map((lines, i) => {
-        const deg = -90 + i * 60
-        const a = (deg * Math.PI) / 180
-        const cos = Math.cos(a), sin = Math.sin(a)
-        const x = C + 178 * cos, y = CY + 178 * sin
-        const anchor = Math.abs(cos) < 0.2 ? 'middle' : cos > 0 ? 'start' : 'end'
-        const ty = Math.abs(cos) < 0.2 ? (sin < 0 ? y - 14 - (lines.length - 1) * 23 : y + 26) : y - (lines.length - 1) * 11.5 + 6
+      {pts.map((q) => {
+        const side = Math.abs(q.c) < 0.2
+        const anchor = side ? 'middle' : q.c > 0 ? 'start' : 'end'
+        const x = q.x + (side ? 0 : q.c > 0 ? 16 : -16)
+        const y = side ? (q.s < 0 ? q.y - 34 : q.y + 34) : q.y
         return (
-          <g key={lines.join(' ')}>
-            <line x1={C + 128 * cos} y1={CY + 128 * sin} x2={C + 160 * cos} y2={CY + 160 * sin} stroke={a1} strokeWidth="3" strokeLinecap="round" />
-            <text x={x} y={ty} textAnchor={anchor} className={styles.spokeText}>
-              {lines.map((l, k) => <tspan key={l} x={x} dy={k ? 23 : 0}>{l}</tspan>)}
+          <g key={q.lines.join()}>
+            <circle cx={q.x} cy={q.y} r="6" fill={SOLID[tone]} />
+            <text x={x} y={y - (q.lines.length - 1) * 11.5 + 6} textAnchor={anchor} className={styles.spokeText}>
+              {q.lines.map((l, k) => <tspan key={l} x={x} dy={k ? 23 : 0}>{l}</tspan>)}
             </text>
           </g>
         )
       })}
-      <text x={C} y={CY + 11} textAnchor="middle" className={styles.spokeName}>{name}</text>
+      <circle cx={C} cy={CY} r="10" fill="#fff" />
+      {/* the name sits on a patch of page colour, so the hairlines pass behind it */}
+      <rect x={C - name.length * 9.4 - 14} y={CY + 22} width={name.length * 18.8 + 28} height="42" rx="21" fill="#07050b" />
+      <text x={C} y={CY + 54} textAnchor="middle" className={styles.spokeName}>{name}</text>
     </svg>
   )
 }
