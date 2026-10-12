@@ -302,7 +302,8 @@
 .flowStep figcaption { font-size: 14px; color: var(--t-ink); display: flex; gap: 10px; }
 .flowStep figcaption span { font-family: var(--font-mono); font-size: 12px; color: var(--t-muted); padding-top: 2px; }
 
-/* The system boards: light artboards, framed on the dark page, side by side. */
+/* The system boards: the dark renders from the Time repo (their ground is
+   #0c0c0e), framed by a hairline on the page, side by side. */
 .boards {
   margin-top: clamp(32px, 3.4vw, 52px);
   display: grid;
@@ -311,6 +312,7 @@
   align-items: start;
 }
 .board {
+  background: #0c0c0e;
   border-radius: 22px;
   overflow: hidden;
   border: 1px solid var(--t-line);

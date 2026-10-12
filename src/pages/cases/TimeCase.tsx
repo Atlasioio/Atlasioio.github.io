@@ -179,10 +179,10 @@ export function TimeCase() {
           </Reveal>
           <div className={styles.boards}>
             <Reveal className={styles.board} i={2}>
-              <img src={`${W}/process/the-system.webp`} alt="The eleven category palettes and Nunito in five weights." loading="lazy" />
+              <img src={`${W}/process/the-system-dark.webp`} alt="The eleven category palettes and Nunito in five weights." loading="lazy" />
             </Reveal>
             <Reveal className={styles.board} i={3}>
-              <img src={`${W}/process/category-colour.webp`} alt="The week view before and after: flat hues replaced by the full gradient." loading="lazy" />
+              <img src={`${W}/process/category-colour-dark.webp`} alt="The week view before and after: flat hues replaced by the full gradient." loading="lazy" />
             </Reveal>
           </div>
         </section>
