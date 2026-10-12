@@ -23,119 +23,88 @@
 }
 .fill { position: absolute; inset: 0; z-index: -1; } /* always behind scene content */
 .cream { background: var(--bg); }
-.honey { background: linear-gradient(155deg, #f7b21f 0%, #f5a800 55%, #e89400 100%); }
-.ink { background: #141210; }
-.matcha { background: linear-gradient(155deg, #4f9b46 0%, #3f8a3c 55%, #2f6f33 100%); }
 
-/* Soft top/bottom scrim so labels + type stay legible over imagery. */
+/* ---- Project acts: the card photo, two phones, a caption underneath ---- */
+.photo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  will-change: transform;
+}
+/* Darkens the photo overall and most at the bottom, under the caption, so
+   white type reads over any image (same idea as the home cards' scrim). */
 .scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.28) 0%, transparent 26%, transparent 62%, rgba(0, 0, 0, 0.42) 100%);
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(10, 8, 6, 0.42) 0%, rgba(10, 8, 6, 0.3) 45%, rgba(10, 8, 6, 0.82) 100%);
   pointer-events: none;
 }
-/* EcoTrip sets its type dark on a bright honey ground, so the default (dark)
-   scrim would work against it. Lift the top/bottom with a warm, light wash
-   instead — keeps the dark label + headline crisp over any phone imagery. */
-.scrimWarm {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 240, 208, 0.5) 0%,
-    rgba(255, 240, 208, 0) 26%,
-    rgba(255, 240, 208, 0) 58%,
-    rgba(255, 233, 190, 0.62) 100%
-  );
+
+/* The phone sits in the upper part of the frame; the caption owns the
+   bottom, so the two can never overlap (the old EcoTrip act did). */
+.phones {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 6cqh;
+  height: 58cqh;
+}
+/* Absolutely placed with a definite height: the width follows from the
+   image ratio and the auto margins centre it. (In a grid cell, height:100%
+   resolved against the image itself and the phones overflowed the caption.) */
+.phone {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: auto;
+  margin: 0 auto;
+  will-change: transform, opacity;
+}
+
+.caption {
+  position: absolute;
+  left: 7cqmin;
+  right: 7cqmin;
+  /* clear of the progress bar along the tile's bottom edge */
+  bottom: max(13cqmin, 30px);
+  display: flex;
+  flex-direction: column;
+  gap: 2.4cqmin;
+  color: #fff;
 }
 
 /* ---- Shared type ---- */
 .label {
-  position: absolute;
-  left: 7cqmin;
-  top: 7cqmin;
   font-family: var(--font-mono);
-  font-size: 3.1cqmin;
+  font-size: 2.9cqmin;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   display: inline-flex;
   align-items: center;
   gap: 1.6cqmin;
+  opacity: 0.85;
 }
 .label i {
-  width: 2cqmin;
-  height: 2cqmin;
+  width: 1.8cqmin;
+  height: 1.8cqmin;
   border-radius: 50%;
   background: currentColor;
 }
 .headline {
-  position: absolute;
-  left: 7cqmin;
-  bottom: 8cqmin;
   font-family: var(--font-display);
-  font-weight: 820;
-  letter-spacing: -0.035em;
-  line-height: 0.95;
-  font-size: 9.4cqmin;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-size: 6.6cqmin;
   text-align: left;
 }
-.lineMask { display: block; overflow: hidden; padding: 0.08em 0; margin: -0.08em 0; }
+.lineMask { display: block; overflow: hidden; padding: 0.08em 0; margin: -0.08em 0; white-space: nowrap; }
 .lineInner { display: block; will-change: transform; }
-
-/* ---- Devices ---- */
-.layer { position: absolute; inset: 0; display: grid; place-items: center; }
-.reelStage { position: relative; width: 88cqmin; }
-
-.phone {
-  height: 76cqmin;
-  width: auto;
-  border-radius: 6cqmin;
-  filter: drop-shadow(0 6cqmin 10cqmin rgba(0, 0, 0, 0.34));
-  will-change: transform;
-}
-.stack { position: absolute; display: grid; place-items: center; }
-
-.browser {
-  width: 88cqmin;
-  border-radius: 3.4cqmin;
-  overflow: hidden;
-  background: #0c0b09;
-  border: 0.5cqmin solid #2a2722;
-  box-shadow: 0 7cqmin 16cqmin rgba(0, 0, 0, 0.5);
-  will-change: transform;
-}
-.browserBar {
-  height: 7cqmin;
-  background: #26231e;
-  display: flex;
-  align-items: center;
-  gap: 1.7cqmin;
-  padding: 0 3cqmin;
-}
-.browserBar span { width: 1.8cqmin; height: 1.8cqmin; border-radius: 50%; background: #5b574e; }
-.browserView { position: relative; height: 58cqmin; overflow: hidden; }
-.browserView img { position: absolute; top: 0; left: 0; width: 100%; height: auto; will-change: transform; }
-
-.miniPhone {
-  position: absolute;
-  right: -3cqmin;
-  bottom: -6cqmin;
-  width: 26cqmin;
-  border-radius: 4cqmin;
-  border: 0.6cqmin solid #18181a;
-  background: #18181a;
-  overflow: hidden;
-  box-shadow: 0 5cqmin 12cqmin rgba(0, 0, 0, 0.5);
-  will-change: transform;
-}
-.miniPhone img { display: block; width: 100%; height: auto; }
-
-.cover {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  will-change: transform;
-}
 
 /* ---- Cold open + resolve (theme-aware) ---- */
 .mark {
@@ -249,7 +218,6 @@
 @media (prefers-reduced-motion: reduce) {
   .lineInner,
   .phone,
-  .browser,
-  .cover,
+  .photo,
   .mark { will-change: auto; }
 }
