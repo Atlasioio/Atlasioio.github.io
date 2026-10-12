@@ -1,59 +1,69 @@
-/* Section rhythm: the global .section padding is sized for the home page's
-   big transitions; here it left ~400px between sections, so these are tighter
-   to match the How I work → Beyond gap. */
-.block { padding-top: clamp(40px, 5vw, 72px); padding-bottom: clamp(32px, 4vw, 56px); }
-
-/* Same as the "A bit more human." title in Beyond. */
-.title {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--fs-h2);
-  letter-spacing: -0.035em;
-  line-height: 0.98;
-  color: var(--ink);
-  margin-top: clamp(18px, 1.8vw, 30px);
-  margin-bottom: clamp(28px, 3vw, 46px);
-  max-width: 18ch;
+/* ---- Hero: the page title, with the introduction straight under it ---- */
+.hero {
+  padding-top: clamp(40px, 7vw, 96px);
+  padding-bottom: clamp(24px, 3vw, 40px);
 }
-
-/* Body text: one size, one colour, ink for emphasis. */
-.prose {
+.intro {
   display: flex;
   flex-direction: column;
   gap: 18px;
-  max-width: 62ch;
+  margin-top: clamp(24px, 3vw, 40px);
+  max-width: 58ch;
 }
-.prose p,
-.note {
+.intro p {
+  font-size: var(--fs-lead);
+  line-height: 1.5;
   color: var(--gray-strong);
-  line-height: 1.6;
 }
-.prose strong,
-.note strong { color: var(--ink); font-weight: 500; }
+.intro strong { color: var(--ink); font-weight: 500; }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(28px, 3vw, 40px); }
 
-/* Experience / education rows: name left (as the How I work step names),
-   body text right. */
-.list { list-style: none; margin: 0; padding: 0; }
-.row {
+/* Section rhythm: tighter than the global .section padding, to match the
+   How I work → Beyond gap. */
+.block { padding-top: clamp(40px, 5vw, 72px); padding-bottom: clamp(32px, 4vw, 56px); }
+
+/* ---- Experience / Education: columns styled like the How I work steps ---- */
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: minmax(200px, 0.9fr) 1.6fr;
-  gap: clamp(16px, 3vw, 48px);
-  align-items: baseline;
-  padding: clamp(20px, 2.2vw, 30px) 0;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 3vw, 44px);
+}
+.item {
+  display: flex;
+  flex-direction: column;
+  padding-top: clamp(18px, 2vw, 26px);
   border-top: 1px solid var(--hairline-2);
 }
-.row:last-child { border-bottom: 1px solid var(--hairline-2); }
-.org {
+/* Same as the How I work step names. */
+.name {
   font-family: var(--font-display);
   font-weight: 620;
+  letter-spacing: -0.025em;
   font-size: clamp(24px, 2.4vw, 34px);
   line-height: 1.05;
-  letter-spacing: -0.025em;
   color: var(--ink);
 }
-.note { max-width: 62ch; }
+.role {
+  margin-top: 10px;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--ink);
+}
+/* Same as the How I work step text. */
+.desc {
+  margin-top: 6px;
+  color: var(--gray-strong);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  max-width: 36ch;
+}
 
-@media (max-width: 900px) {
-  .row { grid-template-columns: 1fr; gap: 10px; }
+@media (max-width: 1000px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr; }
 }

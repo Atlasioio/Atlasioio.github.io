@@ -7,9 +7,10 @@
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: clamp(40px, 6vw, 88px);
-  /* Centred: the copy is now short, so top-aligning left the wheel hanging
-     below it. The copy sits level with the middle of the wheel instead. */
-  align-items: center;
+  /* The copy sets the row height, so the heading sits the same distance below
+     the marker as in every other section. The wheel doesn't count: it is
+     centred on the copy and allowed to extend past it (see .visual). */
+  align-items: start;
 }
 .copy {
   display: flex;
@@ -44,12 +45,16 @@
 }
 
 /* ---- Outcomes visual ---------------------------------------------------- */
-.visual { display: block; align-self: center; }
+/* Wide screens: the wheel takes no height of its own. It is centred on the
+   copy's row and spills above and below it, inside the section padding. */
+.visual { position: relative; align-self: stretch; }
 .visualWrap {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
-  max-width: 430px;
-  margin-inline: auto;
+  max-width: clamp(340px, 30vw, 430px);
 }
 .visualSvg {
   display: block;
@@ -269,7 +274,8 @@
     grid-template-columns: 1fr;
     gap: clamp(40px, 7vw, 56px);
   }
-  .visualWrap { max-width: 400px; }
+  /* Stacked: the wheel goes back into the flow below the copy. */
+  .visualWrap { position: relative; top: auto; left: auto; transform: none; max-width: 400px; margin-inline: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hubPulse,

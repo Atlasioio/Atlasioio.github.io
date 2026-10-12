@@ -15,8 +15,11 @@ import { Button } from '../components/ui/Button'
 import caseStyles from './CaseStudy.module.css'
 import styles from './About.module.css'
 
-/** The about page (route "/about"): the longer introduction, where I've worked
- *  and studied, how I work, and the personal bento. */
+/**
+ * The about page (route "/about"). One heading per level, like How I work:
+ * a single page title with the introduction under it, then each section is a
+ * marker and a row of items, each item a name with a short text under it.
+ */
 export function About() {
   useLenis()
   const { hash } = useLocation()
@@ -46,43 +49,22 @@ export function About() {
           </Link>
         </div>
 
-        <header className={`${caseStyles.hero} wrap`}>
-          <Reveal>
-            <Link to="/" className={caseStyles.back} data-cursor>
-              <span aria-hidden="true">←</span> Home
-            </Link>
-          </Reveal>
-          <Reveal as="p" className={caseStyles.eyebrow} i={1}>
-            About
-          </Reveal>
-          <Reveal as="h1" className={caseStyles.title} i={2}>
+        <header className={`wrap ${styles.hero}`}>
+          <Reveal as="h1" className={caseStyles.title}>
             Hi, I'm Lukas.
           </Reveal>
-          <Reveal as="p" className={caseStyles.tagline} i={3}>
-            A product designer in {studio.locationShort}, most recently at Sony / Nimway.
-          </Reveal>
-        </header>
-
-        {/* Three text styles only, borrowed from the sections below: a section
-            title (as "A bit more human."), item names (as the How I work steps)
-            and body text. */}
-        <section className={`section wrap ${styles.block}`} id="intro">
-          <Marker num="01" label="Who I am" />
-          <Reveal as="h2" className={styles.title}>
-            Curious by default.
-          </Reveal>
-          <div className={styles.prose}>
-            <Reveal as="p">
-              At <strong>Sony Nimway</strong> I designed smart-office products used
-              internationally, across web, app and large-format screens.
-            </Reveal>
+          <div className={styles.intro}>
             <Reveal as="p" i={1}>
-              I like understanding <em>why</em> a product should work a certain way, then sweating
-              the details until it feels right for the people using it. I love owning my work and
-              pushing it forward on my own, and I'm every bit as happy building alongside a team.
+              A product designer in {studio.locationShort}. Most recently at{' '}
+              <strong>Sony Nimway</strong>, I designed smart-office products used internationally,
+              across web, app and large-format screens.
             </Reveal>
             <Reveal as="p" i={2}>
-              Lately I've been more hands-on in code, learning where AI actually helps.
+              I'm curious by default: I like understanding why a product should work a certain
+              way, then sweating the details until it feels right for the people using it. I love
+              owning my work and pushing it forward on my own, and I'm every bit as happy building
+              alongside a team. Lately I've been more hands-on in code, learning where AI actually
+              helps.
             </Reveal>
           </div>
           <Reveal className={styles.actions} i={3}>
@@ -93,26 +75,20 @@ export function About() {
               Email me
             </Button>
           </Reveal>
-        </section>
+        </header>
 
         <section className={`section wrap ${styles.block}`} id="experience">
-          <Marker num="02" label="Experience" />
-          <Reveal as="h2" className={styles.title}>
-            Where I've worked.
-          </Reveal>
-          <CvList entries={experience} />
+          <Marker num="01" label="Experience" />
+          <CvGrid entries={experience} />
         </section>
 
         <section className={`section wrap ${styles.block}`} id="education">
-          <Marker num="03" label="Education" />
-          <Reveal as="h2" className={styles.title}>
-            What I studied.
-          </Reveal>
-          <CvList entries={education} />
+          <Marker num="02" label="Education" />
+          <CvGrid entries={education} />
         </section>
 
-        <Process num="04" />
-        <Beyond num="05" />
+        <Process num="03" />
+        <Beyond num="04" />
       </main>
 
       <Footer />
@@ -121,15 +97,15 @@ export function About() {
   )
 }
 
-function CvList({ entries }: { entries: CvEntry[] }) {
+/** Items in columns, styled like the How I work steps: a name, then text. */
+function CvGrid({ entries }: { entries: CvEntry[] }) {
   return (
-    <ul className={styles.list}>
+    <ul className={styles.grid}>
       {entries.map((e, i) => (
-        <Reveal as="li" key={e.org} className={styles.row} i={i}>
-          <h3 className={styles.org}>{e.org}</h3>
-          <p className={styles.note}>
-            <strong>{e.role}.</strong> {e.note}
-          </p>
+        <Reveal as="li" key={e.org} className={styles.item} i={i}>
+          <h2 className={styles.name}>{e.org}</h2>
+          <p className={styles.role}>{e.role}</p>
+          <p className={styles.desc}>{e.note}</p>
         </Reveal>
       ))}
     </ul>
