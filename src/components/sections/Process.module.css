@@ -1,5 +1,7 @@
 .section {
-  /* Tighter bottom so "Beyond the work" sits closer beneath. */
+  /* Tighter on both sides: on /about it sits between Experience and
+     "Beyond the work", and the full section padding left ~400px gaps. */
+  padding-top: clamp(52px, 6vw, 96px);
   padding-bottom: clamp(52px, 6vw, 96px);
 }
 .grid {

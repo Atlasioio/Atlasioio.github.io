@@ -1,6 +1,8 @@
 .section {
-  /* Tighter top so it hugs "How I work"; global padding keeps space before the footer. */
+  /* Tighter top so it hugs "How I work", and a matching bottom so the footer
+     sits at the same distance as everywhere else. */
   padding-top: clamp(40px, 4.5vw, 72px);
+  padding-bottom: clamp(16px, 2vw, 32px);
 }
 
 .title {

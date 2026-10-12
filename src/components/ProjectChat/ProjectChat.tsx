@@ -31,7 +31,7 @@ function deriveActions(text: string, currentId?: string): Action[] {
     if (re.test(lower)) out.push({ label: `View ${p.name}`, to: `/work/${p.id}` })
   }
   if (/design process|how i work|my process|the process\b/.test(lower)) {
-    out.push({ label: 'See my design process', to: '/#process' })
+    out.push({ label: 'See my design process', to: '/about#process' })
   }
   if (/get in touch|reach out|contact me|email me|drop me a/.test(lower)) {
     out.push({ label: 'Get in touch', contact: true })

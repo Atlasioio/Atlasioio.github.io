@@ -1,0 +1,100 @@
+/* Section rhythm: the global .section padding is sized for the home page's
+   big transitions; here it left ~400px between sections, so these are tighter
+   to match the How I work → Beyond gap. */
+.intro { padding-top: clamp(40px, 5vw, 72px); padding-bottom: clamp(40px, 4vw, 64px); }
+.cv { padding-top: clamp(40px, 4vw, 64px); padding-bottom: clamp(24px, 3vw, 48px); }
+
+/* ---- 01 Who I am ---- */
+.introGrid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: clamp(40px, 6vw, 96px);
+  align-items: start;
+}
+.introText {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.introText p {
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  color: var(--gray-strong);
+  max-width: 46ch;
+}
+.introText strong { color: var(--ink); font-weight: 500; }
+
+.introAside {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-top: 6px;
+}
+.facts {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+.facts > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 0;
+  border-top: 1px solid var(--hairline-2);
+}
+.facts > div:last-child { border-bottom: 1px solid var(--hairline-2); }
+.facts dt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.facts dd { margin: 0; color: var(--ink); }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ---- 02 Experience / Education ---- */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.row {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) 1.6fr;
+  gap: clamp(16px, 3vw, 48px);
+  padding: clamp(22px, 2.4vw, 32px) 0;
+  border-top: 1px solid var(--hairline-2);
+}
+.row:last-child { border-bottom: 1px solid var(--hairline-2); }
+.org {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.role {
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.note {
+  color: var(--gray-strong);
+  max-width: 60ch;
+}
+.subhead {
+  margin: clamp(48px, 6vw, 80px) 0 clamp(16px, 2vw, 24px);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-strong);
+}
+
+@media (max-width: 900px) {
+  .introGrid { grid-template-columns: 1fr; }
+  .row { grid-template-columns: 1fr; gap: 8px; }
+}

@@ -11,8 +11,6 @@ import { Studio } from '../components/sections/Studio'
 import { Services } from '../components/sections/Services'
 import { Work } from '../components/sections/Work'
 import { Credibility } from '../components/sections/Credibility'
-import { Process } from '../components/sections/Process'
-import { Beyond } from '../components/sections/Beyond'
 import { Footer } from '../components/sections/Footer'
 
 /** The marketing homepage (route "/"). */
@@ -39,8 +37,6 @@ export function Home() {
         <Services />
         <Work />
         <Credibility />
-        <Process />
-        <Beyond />
         <Footer />
       </main>
     </>

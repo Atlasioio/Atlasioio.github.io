@@ -10,6 +10,7 @@ import { StartProjectModal } from './components/StartProjectModal/StartProjectMo
 import { ServiceModal } from './components/ServiceModal/ServiceModal'
 import { Home } from './pages/Home'
 import { AllWork } from './pages/AllWork'
+import { About } from './pages/About'
 import { CaseStudy } from './pages/CaseStudy'
 
 export default function App() {
@@ -26,6 +27,7 @@ export default function App() {
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/work" element={<AllWork />} />
+                  <Route path="/about" element={<About />} />
                   <Route path="/work/:slug" element={<CaseStudy />} />
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>

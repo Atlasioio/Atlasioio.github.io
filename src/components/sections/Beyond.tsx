@@ -96,12 +96,12 @@ function Tracks() {
 
 /** 05 — Beyond the work. A personal bento: who I am, what's on repeat, what I'm
  *  reading, what I do off the clock, and where I am right now. */
-export function Beyond() {
+export function Beyond({ num = '05' }: { num?: string }) {
   const time = useLocalTime()
 
   return (
     <section className={`section wrap ${styles.section}`} id="beyond">
-      <Marker num="05" label="Beyond the work" />
+      <Marker num={num} label="Beyond the work" />
       <Reveal as="h2" className={styles.title}>
         A bit more human.
       </Reveal>

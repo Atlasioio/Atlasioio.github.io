@@ -22,7 +22,7 @@ export interface NavLink {
 export const topNavLinks: NavLink[] = [
   { label: 'Work', href: '/work' },
   { label: 'Skills', href: '#services' },
-  { label: 'About', href: '#studio' },
+  { label: 'About', href: '/about' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -33,9 +33,8 @@ export interface MenuLink extends NavLink {
 export const menuLinks: MenuLink[] = [
   { no: '01', label: 'Work', href: '/work' },
   { no: '02', label: 'Skills', href: '#services' },
-  { no: '03', label: 'About', href: '#studio' },
-  { no: '04', label: 'How I work', href: '#process' },
-  { no: '05', label: 'Contact', href: '#contact' },
+  { no: '03', label: 'About', href: '/about' },
+  { no: '04', label: 'Contact', href: '#contact' },
 ]
 
 export interface SocialLink {
@@ -187,6 +186,28 @@ export interface CaseDesignSystem {
   /** Optional full design-system sheet image. */
   sheet?: string
 }
+/** The large home-page card: a darkened photo with two phones over it. */
+export interface ProjectCard {
+  /** Short headline, two or three lines at most. */
+  title: string
+  /** Background photo. */
+  bg: string
+  /** background-position / background-size on wide cards, and the position on
+   *  narrow ones (where the card is taller, so the crop is different). */
+  pos?: string
+  size?: string
+  posSm?: string
+  /** RGB triplet ("r g b") the photo darkens towards behind the copy. */
+  scrim: string
+  /** The two phone screens, left then right. */
+  phones: [string, string]
+  /** Optional clips laid over each phone's screen, playing on hover. Each must
+   *  be the 780×1688 'bare' screen recording whose first frame matches the
+   *  phone image (see FeatureCard.module.css). */
+  videos?: [string | null, string | null]
+  /** White line mark beside the name; also picks the card's hover motion. */
+  mark: 'time' | 'sherry' | 'goodreads' | 'ecotrip'
+}
 export interface Project {
   id: string
   index: string
@@ -205,6 +226,8 @@ export interface Project {
   phoneFrame?: boolean
   /** CSS background for the home/work card media band (defaults to the warm mocha). */
   coverBg?: string
+  /** Large photo card for the home "Selected work" strip (featured projects). */
+  card?: ProjectCard
   /** Looping demo videos shown on the case study. */
   videos?: CaseScreen[]
   /** How videos are framed: 'browser' (desktop, default) or 'bare' (mobile clips
@@ -340,6 +363,19 @@ export const projects: Project[] = [
       { src: '/work/time/open-a-day.webm', caption: 'Every day opens into what you actually ran.' },
       { src: '/work/time/open-a-sheet.webm', caption: 'Every figure opens into what it is made of.' },
     ],
+    card: {
+      title: 'A focus timer that keeps an honest record',
+      // Unsplash photo-1581832097738 (free licence), self-hosted.
+      bg: '/work/time/card-bg.webp',
+      size: 'auto 160%',
+      pos: '92% 45%',
+      posSm: '55% 40%',
+      scrim: '12 10 16',
+      phones: ['/work/time/cover-session.webp', '/work/time/cover-me-week.webp'],
+      // Both clips open on exactly the screen the phone image shows.
+      videos: ['/work/time/how-it-went.webm', '/work/time/open-a-day.webm'],
+      mark: 'time',
+    },
     coverScreens: [
       '/work/time/cover-session.webp',
       '/work/time/cover-category.webp',
@@ -444,6 +480,16 @@ export const projects: Project[] = [
         body: 'Put the request-and-collect flow in front of a lender who has had something come back broken, and a borrower who has given up on a Facebook-group loan. The drop-box removes the meeting; whether it removes the worry is the part still to prove.',
       },
     ],
+    card: {
+      title: 'A tool library for Malmö’s neighbourhoods',
+      bg: '/work/sherry/card-bg.webp',
+      size: 'auto 165%',
+      pos: '100% 22%',
+      posSm: '58% 30%',
+      scrim: '40 22 30',
+      phones: ['/work/sherry/cover-browse.webp', '/work/sherry/cover-item.webp'],
+      mark: 'sherry',
+    },
     coverScreens: [
       '/work/sherry/cover-item.webp',
       '/work/sherry/cover-browse.webp',
@@ -573,6 +619,14 @@ export const projects: Project[] = [
     /* Warm paper and terracotta rather than EcoTrip's honey, so each card
        carries its own project's colour. */
     coverBg: 'linear-gradient(150deg, #e0b08a 0%, #f4ebe0 100%)',
+    card: {
+      title: 'Goodreads, rebuilt around reading',
+      // Unsplash photo-1632900182533 (free licence), self-hosted.
+      bg: '/work/goodreads/card-bg.webp',
+      scrim: '28 16 8',
+      phones: ['/work/goodreads/cover-home.webp', '/work/goodreads/cover-book-page.webp'],
+      mark: 'goodreads',
+    },
     coverScreens: [
       '/work/goodreads/cover-my-books.webp',
       '/work/goodreads/cover-home.webp',
@@ -691,6 +745,14 @@ export const projects: Project[] = [
       { src: '/work/ecotrip/EcoTrip-Flow-vid.webm', caption: 'A walk through the core flow — exploring and planning a greener trip.' },
       { src: '/work/ecotrip/why-bees.webm', caption: 'Give back to the hive — the pledge page that funds bee conservation.' },
     ],
+    card: {
+      title: 'A travel app for protecting the hive',
+      bg: '/work/ecotrip/card-bg.webp',
+      pos: '100% 40%',
+      scrim: '18 24 8',
+      phones: ['/work/ecotrip/explore-trips.webp', '/work/ecotrip/profile.webp'],
+      mark: 'ecotrip',
+    },
     coverScreens: [
       '/work/ecotrip/onboarding.webp',
       '/work/ecotrip/explore-trips.webp',
@@ -988,6 +1050,42 @@ export const steps: Step[] = [
 ]
 
 /* ---- Beyond the work (05) — the personal bento --------------------------- */
+/* ---- About page: experience + education (from the CV; no dates on the site) */
+export interface CvEntry {
+  org: string
+  role: string
+  note: string
+}
+export const experience: CvEntry[] = [
+  {
+    org: 'Sony / Nimway',
+    role: 'UX designer',
+    note: 'UX and UI across the smart-office product line: meeting-room panels, the booking app, web, and large-format wayfinding maps, used by companies in several countries. Tested on real hardware in live offices, working closely with product managers and engineers.',
+  },
+  {
+    org: 'Lenus eHealth',
+    role: 'Student content assistant',
+    note: 'Localised nutrition, food and fitness content for the Swedish market: recipes, leaflets and short-form video.',
+  },
+]
+export const education: CvEntry[] = [
+  {
+    org: 'Malmö University',
+    role: 'BSc, Interaction Design',
+    note: 'User research, interaction and visual design, creative coding, and service design.',
+  },
+  {
+    org: 'IT University of Copenhagen',
+    role: 'Supplementary studies',
+    note: 'Closing the gap between design and code: Java and object-oriented programming, agile development, and discrete maths.',
+  },
+  {
+    org: 'Linköping & Scotland',
+    role: 'Foundations',
+    note: 'A non-linear start: business, economics and software engineering before design.',
+  },
+]
+
 export const aboutMe = {
   blurb:
     "I split my time between Malmö and Stockholm, at home (and open to work) in both. I like keeping up with design and AI, and off the clock you'll usually find me with a book, cooking something, or grabbing a matcha.",
@@ -1031,8 +1129,8 @@ export const footerColumns = [
     links: [
       { label: 'Work', href: '#work' },
       { label: 'Skills', href: '#services' },
-      { label: 'About', href: '#studio' },
-      { label: 'How I work', href: '#process' },
+      { label: 'About', href: '/about' },
+      { label: 'How I work', href: '/about#process' },
     ],
   },
   {

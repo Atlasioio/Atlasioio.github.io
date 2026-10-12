@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Marker } from '../ui/Marker'
 import { Reveal } from '../ui/Reveal'
+import { LinkLike } from '../ui/LinkLike'
 import { STUDIO_ART } from './StudioArt'
 import styles from './Studio.module.css'
 
@@ -228,18 +229,14 @@ export function Studio() {
             A product designer who treats research, interface, motion, and the build as{' '}
             <em>one continuous craft.</em>
           </Reveal>
+          {/* The longer introduction lives on /about; the home page only says
+              who and where, then gets out of the way of the work. */}
           <div className={styles.body}>
             <Reveal as="p" i={1}>
-              I'm Lukas Ahlse, a product designer based in Stockholm. Most recently at{' '}
-              <strong>Sony Nimway</strong>, I designed smart-office products deployed
-              internationally — across web, app, and large-format screens.
+              I'm Lukas, a product designer based in Stockholm.
             </Reveal>
-            <Reveal as="p" i={2}>
-              I'm curious by default — I like understanding <em>why</em> a product should work a
-              certain way, then sweating the details until it feels right for the people using it. I
-              love owning my work and pushing it forward independently, and I'm every bit as happy
-              building alongside a team. Lately I've been more hands-on in code, learning where AI
-              actually helps.
+            <Reveal i={2}>
+              <LinkLike to="/about">More about me</LinkLike>
             </Reveal>
           </div>
         </div>
