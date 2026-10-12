@@ -55,7 +55,6 @@ export function FeatureCard({ project, card }: { project: Project; card: Project
             <Mark kind={card.mark} />
             <span className={styles.name}>
               {project.name}
-              <span className={styles.tag}>{project.tag}</span>
             </span>
           </div>
           <h3 className={styles.title}>{card.title}</h3>

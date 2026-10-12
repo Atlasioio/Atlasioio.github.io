@@ -32,8 +32,17 @@
   flex-direction: column;
   gap: clamp(60px, 8vw, 130px);
 }
-/* Photo cards sit close together, like one stack. */
+/* Photo cards sit close together, like one stack. On wide screens the stack
+   breaks out of the text column (headings stay aligned to it) to the window
+   width less a small edge, capped, as the reference site does. 24px clears a
+   classic scrollbar, so 100vw can't cause sideways scrolling. */
 .cards { gap: clamp(12px, 1.4vw, 20px); }
+@media (min-width: 1100px) {
+  .cards {
+    --bleed: min(100vw - 48px, 1480px);
+    margin-inline: calc((100% - var(--bleed)) / 2);
+  }
+}
 
 /* Last card in the stack: the way on to /work. */
 .allCard {
