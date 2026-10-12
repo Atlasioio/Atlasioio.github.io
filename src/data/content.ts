@@ -371,9 +371,10 @@ export const projects: Project[] = [
       pos: '92% 45%',
       posSm: '55% 40%',
       scrim: '12 10 16',
-      phones: ['/work/time/cover-session.webp', '/work/time/cover-me-week.webp'],
-      // Both clips open on exactly the screen the phone image shows.
-      videos: ['/work/time/how-it-went.webm', '/work/time/open-a-day.webm'],
+      phones: ['/work/time/cover-category.webp', '/work/time/cover-me-week.webp'],
+      // Both clips open on exactly the screen the phone image shows: scrolling
+      // the categories into a session, and opening the Held sheet.
+      videos: ['/work/time/session-flow.webm', '/work/time/open-a-sheet.webm'],
       mark: 'time',
     },
     coverScreens: [

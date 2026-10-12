@@ -7,9 +7,9 @@
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: clamp(40px, 6vw, 88px);
-  /* Top-align so the heading sits the same distance below the marker as every
-     other section. The visual stays vertically centred against the copy. */
-  align-items: start;
+  /* Centred: the copy is now short, so top-aligning left the wheel hanging
+     below it. The copy sits level with the middle of the wheel instead. */
+  align-items: center;
 }
 .copy {
   display: flex;
@@ -48,7 +48,7 @@
 .visualWrap {
   position: relative;
   width: 100%;
-  max-width: 480px;
+  max-width: 430px;
   margin-inline: auto;
 }
 .visualSvg {

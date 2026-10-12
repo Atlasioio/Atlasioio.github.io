@@ -59,67 +59,60 @@ export function About() {
             Hi, I'm Lukas.
           </Reveal>
           <Reveal as="p" className={caseStyles.tagline} i={3}>
-            A product designer in {studio.locationShort}. Curious by default, and happiest where
-            craft, the why's and problem-solving overlap.
+            A product designer in {studio.locationShort}, most recently at Sony / Nimway.
           </Reveal>
         </header>
 
-        <section className={`section wrap ${styles.intro}`} id="intro">
+        {/* Three text styles only, borrowed from the sections below: a section
+            title (as "A bit more human."), item names (as the How I work steps)
+            and body text. */}
+        <section className={`section wrap ${styles.block}`} id="intro">
           <Marker num="01" label="Who I am" />
-          <div className={styles.introGrid}>
-            <div className={styles.introText}>
-              <Reveal as="p">
-                Most recently I was at <strong>Sony Nimway</strong>, designing smart-office
-                products used internationally, across web, app and large-format screens.
-              </Reveal>
-              <Reveal as="p" i={1}>
-                I like understanding <em>why</em> a product should work a certain way, then
-                sweating the details until it feels right for the people using it. I love owning
-                my work and pushing it forward on my own, and I'm every bit as happy building
-                alongside a team.
-              </Reveal>
-              <Reveal as="p" i={2}>
-                Lately I've been more hands-on in code, learning where AI actually helps.
-              </Reveal>
-            </div>
-            <Reveal as="aside" className={styles.introAside} i={2}>
-              <dl className={styles.facts}>
-                <div>
-                  <dt>Based in</dt>
-                  <dd>{studio.location}</dd>
-                </div>
-                <div>
-                  <dt>Most recently</dt>
-                  <dd>UX designer, Sony / Nimway</dd>
-                </div>
-                <div>
-                  <dt>Looking for</dt>
-                  <dd>{studio.worldwide}</dd>
-                </div>
-              </dl>
-              <div className={styles.actions}>
-                <Button href="/Lukas-Ahlse-CV.pdf" target="_blank" rel="noopener">
-                  Download CV
-                </Button>
-                <Button href={`mailto:${studio.email}`} variant="light">
-                  Email me
-                </Button>
-              </div>
+          <Reveal as="h2" className={styles.title}>
+            Curious by default.
+          </Reveal>
+          <div className={styles.prose}>
+            <Reveal as="p">
+              At <strong>Sony Nimway</strong> I designed smart-office products used
+              internationally, across web, app and large-format screens.
+            </Reveal>
+            <Reveal as="p" i={1}>
+              I like understanding <em>why</em> a product should work a certain way, then sweating
+              the details until it feels right for the people using it. I love owning my work and
+              pushing it forward on my own, and I'm every bit as happy building alongside a team.
+            </Reveal>
+            <Reveal as="p" i={2}>
+              Lately I've been more hands-on in code, learning where AI actually helps.
             </Reveal>
           </div>
+          <Reveal className={styles.actions} i={3}>
+            <Button href="/Lukas-Ahlse-CV.pdf" target="_blank" rel="noopener">
+              Download CV
+            </Button>
+            <Button href={`mailto:${studio.email}`} variant="light">
+              Email me
+            </Button>
+          </Reveal>
         </section>
 
-        <section className={`section wrap ${styles.cv}`} id="experience">
+        <section className={`section wrap ${styles.block}`} id="experience">
           <Marker num="02" label="Experience" />
+          <Reveal as="h2" className={styles.title}>
+            Where I've worked.
+          </Reveal>
           <CvList entries={experience} />
-          <Reveal as="h3" className={styles.subhead}>
-            Education
+        </section>
+
+        <section className={`section wrap ${styles.block}`} id="education">
+          <Marker num="03" label="Education" />
+          <Reveal as="h2" className={styles.title}>
+            What I studied.
           </Reveal>
           <CvList entries={education} />
         </section>
 
-        <Process num="03" />
-        <Beyond num="04" />
+        <Process num="04" />
+        <Beyond num="05" />
       </main>
 
       <Footer />
@@ -133,11 +126,10 @@ function CvList({ entries }: { entries: CvEntry[] }) {
     <ul className={styles.list}>
       {entries.map((e, i) => (
         <Reveal as="li" key={e.org} className={styles.row} i={i}>
-          <p className={styles.org}>{e.org}</p>
-          <div>
-            <p className={styles.role}>{e.role}</p>
-            <p className={styles.note}>{e.note}</p>
-          </div>
+          <h3 className={styles.org}>{e.org}</h3>
+          <p className={styles.note}>
+            <strong>{e.role}.</strong> {e.note}
+          </p>
         </Reveal>
       ))}
     </ul>
