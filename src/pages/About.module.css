@@ -1,5 +1,14 @@
-/* ---- Hero: the page title, with the introduction straight under it ---- */
+/* The about page borrows the site's own patterns: the blue accent tile and
+   bento cards of Beyond.module.css, and the numbered, icon-led steps of
+   Process.module.css. Values are copied from those files so they stay
+   visually identical. */
+
+/* ---- Hero: title + story left, the blue tile right ---- */
 .hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: end;
   padding-top: clamp(40px, 7vw, 96px);
   padding-bottom: clamp(24px, 3vw, 40px);
 }
@@ -16,29 +25,122 @@
   color: var(--gray-strong);
 }
 .intro strong { color: var(--ink); font-weight: 500; }
-.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(28px, 3vw, 40px); }
+
+/* Same as Beyond's "Hi, I'm Lukas." tile. */
+.nowTile {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(22px, 2.4vw, 32px);
+  padding: clamp(24px, 2.4vw, 36px);
+  border-radius: var(--card-radius);
+  background: var(--accent);
+  color: var(--hero-fg);
+  box-shadow: 0 26px 54px -42px rgba(14, 14, 12, 0.34);
+}
+.nowLabel {
+  display: block;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--hero-fg) 72%, transparent);
+}
+.nowStatus {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(28px, 2.8vw, 40px);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.pulse {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #6bf0a0;
+  box-shadow: 0 0 0 0 rgba(107, 240, 160, 0.6);
+  animation: pulse 2.4s infinite;
+}
+@keyframes pulse {
+  70% { box-shadow: 0 0 0 10px rgba(107, 240, 160, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(107, 240, 160, 0); }
+}
+.nowWhere {
+  margin-top: 8px;
+  color: color-mix(in srgb, var(--hero-fg) 86%, transparent);
+}
+.chips,
+.chipsQuiet {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+.chips span,
+.chipsQuiet span {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  padding: 6px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.chips span {
+  border: 1px solid color-mix(in srgb, var(--hero-fg) 32%, transparent);
+  color: color-mix(in srgb, var(--hero-fg) 92%, transparent);
+}
+.chipsQuiet span {
+  border: 1px solid var(--hairline-2);
+  color: var(--gray-strong);
+}
+.nowActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 20px;
+}
+.nowMail {
+  font-size: var(--fs-sm);
+  color: var(--hero-fg);
+  border-bottom: 1px solid color-mix(in srgb, var(--hero-fg) 45%, transparent);
+  transition: border-color 0.25s;
+}
+.nowMail:hover { border-color: var(--hero-fg); }
 
 /* Section rhythm: tighter than the global .section padding, to match the
    How I work → Beyond gap. */
 .block { padding-top: clamp(40px, 5vw, 72px); padding-bottom: clamp(32px, 4vw, 56px); }
 
-/* ---- Experience / Education: columns styled like the How I work steps ---- */
-.grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+/* ---- Experience: bento cards (Beyond's .tile) ---- */
+.bento {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(24px, 3vw, 44px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 1.4vw, 20px);
 }
-.item {
+.card {
   display: flex;
   flex-direction: column;
-  padding-top: clamp(18px, 2vw, 26px);
-  border-top: 1px solid var(--hairline-2);
+  min-width: 0;
+  padding: clamp(22px, 2.2vw, 34px);
+  background: var(--bg-deep);
+  border: 1px solid var(--hairline);
+  border-radius: var(--card-radius);
+  box-shadow: 0 26px 54px -42px rgba(14, 14, 12, 0.34);
+}
+.cardWide { grid-column: span 2; }
+.cardIcon { width: 52px; height: 52px; color: var(--ink); margin-bottom: clamp(22px, 2.6vw, 36px); }
+.cardRole {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray);
 }
 /* Same as the How I work step names. */
-.name {
+.cardName,
+.stepName {
   font-family: var(--font-display);
   font-weight: 620;
   letter-spacing: -0.025em;
@@ -46,24 +148,79 @@
   line-height: 1.05;
   color: var(--ink);
 }
-.role {
-  margin-top: 10px;
+.cardName { margin-top: 10px; }
+.cardNote {
+  margin-top: 12px;
+  color: var(--gray-strong);
   font-size: var(--fs-sm);
-  font-weight: 500;
-  color: var(--ink);
+  line-height: 1.55;
+  max-width: 58ch;
 }
-/* Same as the How I work step text. */
-.desc {
-  margin-top: 6px;
+.chipsQuiet { margin-top: auto; padding-top: clamp(20px, 2.4vw, 30px); }
+
+/* ---- Education: a numbered path (Process's .step) ---- */
+.path {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 2.5vw, 36px);
+}
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 22px;
+  border-top: 2px solid var(--accent);
+}
+.stepArt { width: 52px; height: 52px; color: var(--ink); }
+.stepNo {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.04em;
+  color: var(--gray-strong);
+}
+.stepName { margin-top: 10px; }
+.stepRole { font-size: var(--fs-sm); font-weight: 500; color: var(--ink); margin-top: -4px; }
+.stepDesc {
   color: var(--gray-strong);
   font-size: var(--fs-sm);
   line-height: 1.5;
-  max-width: 36ch;
+  max-width: 32ch;
+}
+
+/* ---- Icons: ink lines, one blue part, a small motion on hover ---- */
+.svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.accentFill { fill: var(--accent); }
+.accentStroke { stroke: var(--accent); }
+.blink,
+.sway,
+.spin,
+.ripple,
+.codeL,
+.codeR {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.5s var(--ease-out), opacity 0.5s var(--ease-out);
+}
+.sway { transform-origin: left bottom; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card:hover .blink { transform: scale(1.45); }
+  .card:hover .sway { transform: rotate(-7deg); }
+  .step:hover .spin { transform: rotate(135deg); }
+  .step:hover .ripple { transform: scale(1.35); opacity: 0.5; }
+  .step:hover .codeL { transform: translateX(-3px); }
+  .step:hover .codeR { transform: translateX(3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pulse { animation: none; }
 }
 
 @media (max-width: 1000px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
+  .hero { grid-template-columns: 1fr; align-items: start; }
+  .bento { grid-template-columns: 1fr 1fr; }
+  .path { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 640px) {
-  .grid { grid-template-columns: 1fr; }
+  .bento,
+  .path { grid-template-columns: 1fr; }
+  .cardWide { grid-column: auto; }
 }

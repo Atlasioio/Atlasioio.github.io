@@ -1056,20 +1056,30 @@ export interface CvEntry {
   org: string
   role: string
   note: string
+  /** What the work covered, shown as chips. */
+  tags?: string[]
 }
 export const experience: CvEntry[] = [
   {
     org: 'Sony / Nimway',
     role: 'UX designer',
     note: 'UX and UI across the smart-office product line: meeting-room panels, the booking app, web, and large-format wayfinding maps, used by companies in several countries. Tested on real hardware in live offices, working closely with product managers and engineers.',
+    tags: ['Meeting-room panels', 'Booking app', 'Web', 'Wayfinding maps'],
   },
   {
     org: 'Lenus eHealth',
     role: 'Student content assistant',
     note: 'Localised nutrition, food and fitness content for the Swedish market: recipes, leaflets and short-form video.',
+    tags: ['Localisation', 'Recipes', 'Short-form video'],
   },
 ]
+/** In the order it happened: the About page numbers them as a path. */
 export const education: CvEntry[] = [
+  {
+    org: 'Linköping & Scotland',
+    role: 'Foundations',
+    note: 'A non-linear start: business, economics and software engineering before design.',
+  },
   {
     org: 'Malmö University',
     role: 'BSc, Interaction Design',
@@ -1079,11 +1089,6 @@ export const education: CvEntry[] = [
     org: 'IT University of Copenhagen',
     role: 'Supplementary studies',
     note: 'Closing the gap between design and code: Java and object-oriented programming, agile development, and discrete maths.',
-  },
-  {
-    org: 'Linköping & Scotland',
-    role: 'Foundations',
-    note: 'A non-linear start: business, economics and software engineering before design.',
   },
 ]
 
