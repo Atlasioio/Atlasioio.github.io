@@ -303,7 +303,7 @@ export const projects: Project[] = [
     role: 'Design and code',
     outcome: 'A session timer recording completed time, not elapsed time',
     description:
-      'A session timer with no pause control, built for one person and in daily use. It records the length committed to against the amount actually completed.',
+      'A session timer with no pause control, for iOS, Android and the web. It records the length committed to against the amount actually completed.',
     fill: 'b',
     featured: true,
     /* Sampled from the session orb: the app runs on violet-to-magenta
@@ -319,7 +319,7 @@ export const projects: Project[] = [
     tagline:
       'A session timer that records time held rather than time elapsed — the length committed to, against the amount completed.',
     overview:
-      'Time is a session timer, built for one person and used daily. You choose a category, name the session, set a length and start it. There is no pause control, and the only way to stop early is to hold a button for a second, which is recorded rather than hidden. What accumulates is a record of how much time was set aside, how much was completed, what it was spent on, and how each session was rated afterwards.',
+      'Time is a session timer for iOS, Android and the web. You choose a category, name the session, set a length and start it. There is no pause control, and the only way to stop early is to hold a button for a second, which is recorded rather than hidden. What accumulates is a record of how much time was set aside, how much was completed, what it was spent on, and how each session was rated afterwards.',
     sections: [
       {
         heading: 'Discover',

@@ -106,19 +106,19 @@ export function TimeCase() {
               over a second, and that's recorded too. Afterwards it asks one question: how did it go.
             </Reveal>
             <Reveal as="p" i={2}>
-              It's built for one person, me, and I use it every day. What builds up isn't a
-              productivity score, but a record you can read back: how much you set aside, how much of
-              it you actually held, and how it felt.
+              It's for people who already know what they should be doing, and want an honest record
+              of whether they did it. What builds up isn't a productivity score, but a record you can
+              read back: how much you set aside, how much of it you actually held, and how it felt.
             </Reveal>
           </div>
         </section>
 
-        {/* ---- Where it started: what bugged me about what came before ---- */}
+        {/* ---- Where it started: why timers get abandoned ---- */}
         <section className={styles.section} aria-label="Where it started">
-          <Reveal as="h2" className={styles.h2}>Every timer I tried.</Reveal>
+          <Reveal as="h2" className={styles.h2}>Why timers get abandoned.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            Before Time I used Pomodoro apps, the phone's timer and a separate to-do list. These
-            are the things I kept saying about them.
+            Pomodoro apps, the phone's timer, a to-do list on the side. The same complaints come
+            up again and again.
           </Reveal>
           <div className={styles.quotes}>
             {QUOTES.map(([q, size, tone], i) => (
@@ -129,9 +129,9 @@ export function TimeCase() {
           </div>
         </section>
 
-        {/* ---- What using it taught me ---- */}
+        {/* ---- What shaped it ---- */}
         <section className={styles.section} aria-label="Insights">
-          <Reveal as="h2" className={styles.h2}>What using it taught me.</Reveal>
+          <Reveal as="h2" className={styles.h2}>What shaped it.</Reveal>
           <div className={styles.insights}>
             {INSIGHTS.map(([h, t, tone], i) => (
               <Reveal className={styles.insight} key={h} i={i}>
@@ -237,8 +237,8 @@ export function TimeCase() {
         <section className={styles.section} aria-label="Counted, not claimed">
           <Reveal as="h2" className={styles.h2}>Counted, not claimed.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            There are no usage figures, because there are no users to have them. These are counted
-            out of the app itself.
+            Not usage figures: these are counted out of the app itself, where a rule either holds
+            or it doesn't.
           </Reveal>
           <div className={styles.tiles}>
             <Tile big="11 → 1" tone="deep" lead="Eleven dots, one real colour."
@@ -383,7 +383,7 @@ function Phone({ src, clip }: { src: string; clip?: string }) {
 
 /* ---- Where it started ---- */
 type QTone = 'pink' | 'green' | 'blue' | 'gold' | 'white' | 'muted'
-/** [quote, size, colour]. In my own voice, about the timers and lists I used before. */
+/** [quote, size, colour]. Common complaints about timers and to-do lists. */
 const QUOTES: [string, 'xl' | 'l' | 'm' | 's', QTone][] = [
   ['I have no idea where my week went', 'xl', 'pink'],
   ['I’d just ignore it when it rang', 'm', 'white'],
@@ -397,7 +397,7 @@ const QUOTES: [string, 'xl' | 'l' | 'm' | 's', QTone][] = [
   ['It’s a stopwatch, not a record', 's', 'green'],
 ]
 
-/* ---- What using it taught me ---- */
+/* ---- What shaped it ---- */
 const INSIGHTS: [string, string, 'pink' | 'green' | 'blue' | 'gold'][] = [
   ['Hard isn’t one thing.', 'Admin is its own category. Doing your taxes is hard, but it isn’t deep work, and lumping them together hides which kind of hard the week actually was.', 'blue'],
   ['Fun needs a limit too.', 'Play gets its own category because it’s good, and because it’s the one that overruns. For play, the length works as a ceiling, not a target.', 'gold'],
@@ -425,51 +425,91 @@ function Grad({ id, tone }: { id: string; tone: keyof typeof TONE }) {
   )
 }
 
-/** Three principles overlapping, the centre named from the side. */
+/**
+ * Three principles as three glowing orbs, like the session orb: each filled
+ * with its category gradient and blended with screen, so the overlaps get
+ * brighter and the middle, where all three meet, burns almost white.
+ */
 function Venn() {
-  const circles = [
-    { name: 'Honest', tone: 'pink' as const, cx: 380, cy: 210, lx: 380, ly: 165 },
-    { name: 'Intentional', tone: 'green' as const, cx: 300, cy: 345, lx: 262, ly: 400 },
-    { name: 'Calm', tone: 'blue' as const, cx: 460, cy: 345, lx: 498, ly: 400 },
+  const orbs = [
+    { name: 'Honest', tone: 'pink' as const, cx: 380, cy: 205, lx: 380, ly: 30, anchor: 'middle' as const },
+    { name: 'Intentional', tone: 'green' as const, cx: 305, cy: 335, lx: 100, ly: 470, anchor: 'start' as const },
+    { name: 'Calm', tone: 'blue' as const, cx: 455, cy: 335, lx: 660, ly: 470, anchor: 'end' as const },
   ]
   return (
     <svg viewBox="0 0 760 520" className={styles.vennSvg} role="img" aria-label="Honest, Intentional and Calm overlap; where all three meet is Time held.">
-      <defs>{circles.map((c) => <Grad key={c.tone} id={`v-${c.tone}`} tone={c.tone} />)}</defs>
-      {circles.map((c) => (
-        <circle key={c.name} cx={c.cx} cy={c.cy} r="150" fill="none" stroke={`url(#v-${c.tone})`} strokeWidth="2.5" />
+      <defs>
+        {orbs.map((o) => {
+          const [a, b, c] = TONE[o.tone]
+          return (
+            <radialGradient key={o.tone} id={`o-${o.tone}`} cx=".5" cy=".5" r=".5">
+              <stop offset="0" stopColor={a} stopOpacity=".95" />
+              <stop offset=".55" stopColor={b} stopOpacity=".75" />
+              <stop offset="1" stopColor={c} stopOpacity="0" />
+            </radialGradient>
+          )
+        })}
+      </defs>
+      <g style={{ mixBlendMode: 'screen' }}>
+        {orbs.map((o) => <circle key={o.name} cx={o.cx} cy={o.cy} r="165" fill={`url(#o-${o.tone})`} style={{ mixBlendMode: 'screen' }} />)}
+      </g>
+      {/* a ring of ticks round the whole thing, like the session dial */}
+      {Array.from({ length: 72 }, (_, i) => {
+        const a = (i * 5 * Math.PI) / 180
+        const r1 = 236, r2 = i % 6 === 0 ? 250 : 244
+        return <line key={i} x1={380 + r1 * Math.cos(a)} y1={290 + r1 * Math.sin(a)} x2={380 + r2 * Math.cos(a)} y2={290 + r2 * Math.sin(a)} stroke="rgba(244,241,248,.22)" strokeWidth="1.5" strokeLinecap="round" />
+      })}
+      {orbs.map((o) => (
+        <text key={o.name} x={o.lx} y={o.ly} textAnchor={o.anchor} className={styles.vennLabel}>{o.name}</text>
       ))}
-      {circles.map((c) => (
-        <text key={c.name} x={c.lx} y={c.ly} textAnchor="middle" className={styles.vennLabel}>{c.name}</text>
-      ))}
-      <text x="30" y="92" className={styles.vennLabel}>Time held</text>
-      <path d="M120 108 L370 290 M370 290 l-13 -1 M370 290 l-5 -12" stroke="rgba(244,241,248,.55)" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+      <g transform="translate(380 292)">
+        <rect x="-74" y="-21" width="148" height="42" rx="21" fill="#07050b" opacity=".82" />
+        <text y="8" textAnchor="middle" className={styles.vennCentre}>Time held</text>
+      </g>
     </svg>
   )
 }
 
-/** A principle with the six things in the app that make it true. */
+/**
+ * A principle drawn as the session dial: its orb in the middle, a ring of
+ * ticks, and the six things in the app that make it true set round the dial
+ * where the hours would be, each joined to the ring by a longer tick.
+ */
 function Spoke({ name, tone, points }: Pillar) {
-  const C = 310, CY = 300, R = 214
+  const C = 310, CY = 300
+  const [a0, a1] = TONE[tone]
   return (
     <svg viewBox="0 0 620 600" className={styles.spokeSvg} role="img" aria-label={`${name}: ${points.map((p) => p.join(' ')).join(', ')}`}>
-      <defs><Grad id={`s-${tone}`} tone={tone} /></defs>
+      <defs>
+        <Grad id={`s-${tone}`} tone={tone} />
+        <radialGradient id={`so-${tone}`} cx=".5" cy=".5" r=".5">
+          <stop offset="0" stopColor={a0} stopOpacity=".95" />
+          <stop offset=".6" stopColor={a1} stopOpacity=".55" />
+          <stop offset="1" stopColor={a1} stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <circle cx={C} cy={CY} r="118" fill={`url(#so-${tone})`} />
+      {Array.from({ length: 60 }, (_, i) => {
+        const a = (i * 6 * Math.PI) / 180
+        return <line key={i} x1={C + 128 * Math.cos(a)} y1={CY + 128 * Math.sin(a)} x2={C + 138 * Math.cos(a)} y2={CY + 138 * Math.sin(a)} stroke="rgba(244,241,248,.3)" strokeWidth="1.6" strokeLinecap="round" />
+      })}
       {points.map((lines, i) => {
-        const a = ((-90 + i * 60) * Math.PI) / 180
-        const x = C + R * Math.cos(a), y = CY + R * Math.sin(a)
-        const ex = C + 92 * Math.cos(a), ey = CY + 92 * Math.sin(a)
-        const ix = x - 72 * Math.cos(a), iy = y - 72 * Math.sin(a)
+        const deg = -90 + i * 60
+        const a = (deg * Math.PI) / 180
+        const cos = Math.cos(a), sin = Math.sin(a)
+        const x = C + 178 * cos, y = CY + 178 * sin
+        const anchor = Math.abs(cos) < 0.2 ? 'middle' : cos > 0 ? 'start' : 'end'
+        const ty = Math.abs(cos) < 0.2 ? (sin < 0 ? y - 14 - (lines.length - 1) * 23 : y + 26) : y - (lines.length - 1) * 11.5 + 6
         return (
           <g key={lines.join(' ')}>
-            <line x1={ex} y1={ey} x2={ix} y2={iy} stroke={`url(#s-${tone})`} strokeWidth="1.6" opacity=".7" />
-            <circle cx={x} cy={y} r="72" fill="none" stroke="rgba(244,241,248,.32)" strokeWidth="1.4" strokeDasharray="2 5" strokeLinecap="round" />
-            <text x={x} y={y - (lines.length - 1) * 11.5 + 6} textAnchor="middle" className={styles.spokeText}>
+            <line x1={C + 128 * cos} y1={CY + 128 * sin} x2={C + 160 * cos} y2={CY + 160 * sin} stroke={a1} strokeWidth="3" strokeLinecap="round" />
+            <text x={x} y={ty} textAnchor={anchor} className={styles.spokeText}>
               {lines.map((l, k) => <tspan key={l} x={x} dy={k ? 23 : 0}>{l}</tspan>)}
             </text>
           </g>
         )
       })}
-      <circle cx={C} cy={CY} r="92" fill="#07050b" stroke={`url(#s-${tone})`} strokeWidth="3" />
-      <text x={C} y={CY + 10} textAnchor="middle" className={styles.spokeName}>{name}</text>
+      <text x={C} y={CY + 11} textAnchor="middle" className={styles.spokeName}>{name}</text>
     </svg>
   )
 }
