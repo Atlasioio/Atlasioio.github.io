@@ -1,5 +1,5 @@
 import { useEffect, type ReactElement } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { education, experience, studio, type CvEntry } from '../data/content'
 import { useLenis } from '../hooks/useLenis'
 import { FixedControls } from '../components/nav/FixedControls'
@@ -43,15 +43,14 @@ export function About() {
 
   return (
     <>
-      <FixedControls staticDark />
+      <FixedControls staticDark home />
       <LangFixed />
       <Menu />
 
       <main className={caseStyles.page} id="top">
         <div className={`${caseStyles.bar} wrap`}>
-          <Link to="/" className={caseStyles.wordmark} data-cursor aria-label="Lukas Ahlse — home">
-            lukas<span className={caseStyles.dot} />
-          </Link>
+          {/* spacer: the wordmark itself is pinned in FixedControls */}
+          <span className={caseStyles.wordmark} aria-hidden="true" style={{ visibility: 'hidden' }}>lukas</span>
         </div>
 
         {/* Intro: the page title and story on the left, the blue tile on the right */}

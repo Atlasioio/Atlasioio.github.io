@@ -23,15 +23,14 @@ export function AllWork() {
 
   return (
     <>
-      <FixedControls staticDark />
+      <FixedControls staticDark home />
       <LangFixed />
       <Menu />
 
       <main className={caseStyles.page} id="top">
         <div className={`${caseStyles.bar} wrap`}>
-          <Link to="/" className={caseStyles.wordmark} data-cursor aria-label="Lukas Ahlse — home">
-            lukas<span className={caseStyles.dot} />
-          </Link>
+          {/* spacer: the wordmark itself is pinned in FixedControls */}
+          <span className={caseStyles.wordmark} aria-hidden="true" style={{ visibility: 'hidden' }}>lukas</span>
         </div>
 
         <header className={`${caseStyles.hero} wrap`}>

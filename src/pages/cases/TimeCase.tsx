@@ -52,15 +52,14 @@ export function TimeCase() {
   return (
     <>
       <RouteTransition key="time" accent={project.accent} ready={heroReady} />
-      <FixedControls staticLight />
+      <FixedControls staticLight home />
       <LangFixed />
       <Menu />
 
       <main className={styles.page} id="top">
         <div className={styles.bar}>
-          <Link to="/" className={styles.wordmark} data-cursor aria-label="Lukas Ahlse — home">
-            lukas<span className={styles.dot} />
-          </Link>
+          {/* spacer: the wordmark itself is pinned in FixedControls */}
+          <span className={styles.wordmark} aria-hidden="true" style={{ visibility: 'hidden' }}>lukas</span>
         </div>
 
         {/* ---- Hero: the photo, Time's glow over it, two still phones ---- */}

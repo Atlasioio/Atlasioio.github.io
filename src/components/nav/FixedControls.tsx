@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Button } from '../ui/Button'
 import { Hamburger } from './Hamburger'
 import { LinkedInButton } from './LinkedInButton'
@@ -15,7 +16,7 @@ import styles from './FixedControls.module.css'
 /** `staticDark` forces dark controls over a light page (sub-pages with no blue
  *  hero), instead of the hero-driven light→dark flip. `staticLight` forces
  *  light controls, for pages that are dark all the way down (the Time case). */
-export function FixedControls({ staticDark = false, staticLight = false }: { staticDark?: boolean; staticLight?: boolean }) {
+export function FixedControls({ staticDark = false, staticLight = false, home = false }: { staticDark?: boolean; staticLight?: boolean; home?: boolean }) {
   const scrolled = useNavScrolled('hero')
   const { open, toggle } = useMenu()
   const { openModal } = useStartModal()
@@ -32,7 +33,13 @@ export function FixedControls({ staticDark = false, staticLight = false }: { sta
 
   return (
     <div className={styles.navfix} data-ham-left={hamLeft ? '' : undefined}>
-      <div className={styles.inner}>
+      <div className={`${styles.inner} ${home ? styles.withHome : ''}`}>
+        {/* Sub-pages: the wordmark stays pinned top-left, as the way home. */}
+        {home && (
+          <Link to="/" className={`${styles.home} ${dark ? styles.homeDark : ''}`} data-cursor aria-label="Lukas Ahlse — home">
+            lukas<span className={styles.homeDot} />
+          </Link>
+        )}
         <div className={styles.right}>
           <span className={styles.hamWrap}>
             <Hamburger open={open} onClick={toggle} theme={dark ? 'dark' : 'light'} />

@@ -105,7 +105,7 @@ export function CaseStudy() {
   return (
     <>
       <RouteTransition key={slug} accent={project.accent} ready={heroReady} />
-      <FixedControls staticDark />
+      <FixedControls staticDark home />
       <LangFixed />
       <Menu />
 
@@ -116,9 +116,8 @@ export function CaseStudy() {
         data-accent={project.accent}
       >
         <div className={`${styles.bar} wrap`}>
-          <Link to="/" className={styles.wordmark} data-cursor aria-label="Lukas Ahlse — home">
-            lukas<span className={styles.dot} />
-          </Link>
+          {/* spacer: the wordmark itself is pinned in FixedControls */}
+          <span className={styles.wordmark} aria-hidden="true" style={{ visibility: 'hidden' }}>lukas</span>
         </div>
 
         <header className={`${styles.hero} wrap`}>
