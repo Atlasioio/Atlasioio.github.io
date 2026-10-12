@@ -37,15 +37,6 @@
   color: var(--hero-fg);
   box-shadow: 0 26px 54px -42px rgba(14, 14, 12, 0.34);
 }
-.nowLabel {
-  display: block;
-  margin-bottom: 12px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--hero-fg) 72%, transparent);
-}
 .nowStatus {
   display: flex;
   align-items: center;

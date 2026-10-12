@@ -15,8 +15,10 @@ import { Button } from '../components/ui/Button'
 import caseStyles from './CaseStudy.module.css'
 import styles from './About.module.css'
 
-/** The six disciplines from the home page's wheel. */
-const DISCIPLINES = ['Research', 'UX/UI', 'Motion', 'Brand', 'Build', 'AI']
+const capitalise = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
+
+/** Disciplines from the home page's wheel (five, so they sit on one line). */
+const DISCIPLINES = ['Research', 'UX/UI', 'Brand', 'Build', 'AI']
 
 /**
  * The about page (route "/about"), built from the site's own patterns: the
@@ -76,20 +78,16 @@ export function About() {
 
           <Reveal as="aside" className={styles.nowTile} i={2}>
             <div>
-              <span className={styles.nowLabel}>Right now</span>
               <p className={styles.nowStatus}>
                 <span className={styles.pulse} aria-hidden="true" />
                 Open to work
               </p>
-              <p className={styles.nowWhere}>{studio.worldwide.replace(/^Open to work — /, '')}</p>
+              <p className={styles.nowWhere}>{capitalise(studio.worldwide.replace(/^Open to work — /, ''))}</p>
             </div>
-            <div>
-              <span className={styles.nowLabel}>What I bring</span>
-              <div className={styles.chips}>
-                {DISCIPLINES.map((d) => (
-                  <span key={d}>{d}</span>
-                ))}
-              </div>
+            <div className={styles.chips}>
+              {DISCIPLINES.map((d) => (
+                <span key={d}>{d}</span>
+              ))}
             </div>
             <div className={styles.nowActions}>
               <Button href="/Lukas-Ahlse-CV.pdf" target="_blank" rel="noopener" variant="light" onAccent>

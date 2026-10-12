@@ -9,7 +9,7 @@ export const studio = {
   email: 'ahlselukas@gmail.com',
   location: 'Stockholm, Sweden',
   locationShort: 'Stockholm',
-  worldwide: 'Open to work — EU & remote',
+  worldwide: 'Open to work — on-site, hybrid or remote',
 } as const
 
 /* ---- Navigation ---------------------------------------------------------- */
@@ -52,8 +52,10 @@ export const marqueeItems: string[] = [
   'UX/UI',
   'Interaction',
   'Motion design',
+  // Items alternate black/grey by position (even = black): Claude Design
+  // takes a black slot, Brand identity a grey one.
+  'Claude Design',
   'Brand identity',
-  'Framer',
   'Figma',
   'React',
   'AI',
