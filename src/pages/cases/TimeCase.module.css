@@ -302,14 +302,12 @@
 .flowStep figcaption { font-size: 14px; color: var(--t-ink); display: flex; gap: 10px; }
 .flowStep figcaption span { font-family: var(--font-mono); font-size: 12px; color: var(--t-muted); padding-top: 2px; }
 
-/* The system boards: the dark renders from the Time repo (their ground is
-   #0c0c0e), framed by a hairline on the page, side by side. */
+/* The system board: the dark render from the Time repo (its ground is
+   #0c0c0e), framed by a hairline on the page. */
 .boards {
   margin-top: clamp(32px, 3.4vw, 52px);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--t-edge);
-  align-items: start;
+  /* one board now: full width, capped so its small type stays legible-sized */
+  max-width: 1120px;
 }
 .board {
   background: #0c0c0e;
@@ -401,7 +399,7 @@
   .hero { flex-direction: column; justify-content: flex-end; }
   .heroPhones { position: relative; right: auto; bottom: auto; margin: 120px auto 0; }
   .heroPhones .phone { width: 40vw; max-width: 220px; }
-  .twoUp, .tiles, .reflection, .boards { grid-template-columns: 1fr; }
+  .twoUp, .tiles, .reflection { grid-template-columns: 1fr; }
   .built { grid-template-columns: 1fr 1fr; }
   .trio { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 }
