@@ -130,14 +130,46 @@ export function GoodreadsCase() {
         <section className={styles.section} aria-label="The problem">
           <Reveal as="h2" className={styles.h2}>Every feature is there. Reading isn't.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            An audit of the current app, and where a passage actually goes today: from the book,
-            to a screenshot, to a camera roll, to a notes app. Goodreads is the last stop, and gets
-            a number.
+            An audit of the current Android app on a real account with 143 books. Four findings
+            drove the redesign.
           </Reveal>
-          <div className={styles.boards2}>
-            <Board src="process/audit-current.webp" alt="Audit of the current Goodreads app: four findings that drove the redesign." i={2} />
-            <Board src="process/boundary.webp" alt="Where a passage goes today, and the same chain with the app holding the book." i={3} />
+          <div className={styles.audit} role="table" aria-label="Audit findings">
+            <div className={`${styles.auditRow} ${styles.auditHead}`} role="row">
+              <span role="columnheader">What's there</span>
+              <span role="columnheader">What it costs</span>
+              <span role="columnheader">Decision</span>
+            </div>
+            {AUDIT.map(([what, cost, decision], i) => (
+              <Reveal className={styles.auditRow} key={what} i={i % 3} role="row">
+                <b role="cell">{what}</b>
+                <span role="cell">{cost}</span>
+                <span role="cell" className={styles.decision}>{decision}</span>
+              </Reveal>
+            ))}
           </div>
+
+          <Reveal as="h3" className={styles.h3} i={1}>Where a passage goes today.</Reveal>
+          <Reveal className={styles.chain} i={2}>
+            {CHAIN.map(([where, what], i) => (
+              <div className={`${styles.step} ${i === CHAIN.length - 1 ? styles.stepLast : ''}`} key={where}>
+                <span className={styles.stepWhere}>{where}</span>
+                <span className={styles.stepWhat}>{what}</span>
+              </div>
+            ))}
+          </Reveal>
+          <Reveal as="p" className={styles.chainNote} i={1}>Four apps, six steps, nothing searchable.</Reveal>
+          <Reveal className={styles.redrawn} i={2}>
+            <span className={styles.redrawnLabel}>Redrawn: one boundary moved</span>
+            <div className={styles.pills}>
+              <span>You read, in the app</span><i aria-hidden="true">→</i>
+              <span>A highlight becomes a quote</span><i aria-hidden="true">→</i>
+              <span>It becomes the review</span>
+            </div>
+            <p>
+              Because the app knows your page, four features stop needing to be built separately:
+              quote capture, progress, spoiler control, and a finish moment worth marking.
+            </p>
+          </Reveal>
         </section>
 
         {/* ---- The scope: what stayed, what changed ---- */}
@@ -277,7 +309,17 @@ export function GoodreadsCase() {
             compare. The Stack won: your books as a pile you reach into, with the covers doing the
             visual work.
           </Reveal>
-          <Board src="process/explorations.webp" alt="Three home screen explorations side by side." wide i={2} />
+          <Reveal className={styles.explore} i={2}>
+            {EXPLORATIONS.map(([file, name, note, won]) => (
+              <figure key={file} className={won ? styles.won : undefined}>
+                <img src={`${W}/${file}.webp`} alt={`Home exploration: ${name}`} loading="lazy" decoding="async" />
+                <figcaption>
+                  <b>{name}{won ? <em>Chosen</em> : null}</b>
+                  <span>{note}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </Reveal>
         </section>
 
         <section className={styles.section} aria-label="The system">
@@ -461,13 +503,6 @@ function Duo({ items }: { items: [string, string][] }) {
   )
 }
 
-function Board({ src, alt, wide, i }: { src: string; alt: string; wide?: boolean; i?: number }) {
-  return (
-    <Reveal className={`${styles.board} ${wide ? styles.boardWide : ''}`} i={i}>
-      <img src={`${W}/${src}`} alt={alt} loading="lazy" decoding="async" />
-    </Reveal>
-  )
-}
 
 /* ---- Scope ---- */
 const KEEP: [string, string][] = [
@@ -516,4 +551,26 @@ const SWATCHES: [string, string][] = [
   ['Action', '#A24E1C'],
   ['Deep', '#8A3F14'],
   ['Ink', '#3A2A18'],
+]
+
+/* ---- The problem ---- */
+const AUDIT: [string, string, string][] = [
+  ['Home feed', 'Three cards, three events, nothing a person wrote: two by the same user, one a man replying to himself.', 'The feed carries only things people made. Bare activity collapses to one line.'],
+  ['Currently reading', '“0 books”: a hole in the library, because logging progress is manual work with no reward.', 'The app holds the book. Progress becomes a by-product of reading.'],
+  ['My Books', '143 books as three text rows. No sort, no filter, no search inside your shelves; tags empty.', 'Covers at a recognisable size, controls on top, lists and tags up front.'],
+  ['Reading', 'No such screen. It happens in another company’s app and comes back as a typed-in number.', 'A reader, with highlight → quote as the hinge of the whole redesign.'],
+]
+const CHAIN: [string, string][] = [
+  ['Kindle / paper', 'You read'],
+  ['Screenshot', 'A passage lands'],
+  ['Camera roll', 'It’s lost'],
+  ['Notes app', 'Maybe retyped'],
+  ['Goodreads', '“Rated it ★★★”'],
+]
+
+/* ---- Explorations ---- */
+const EXPLORATIONS: [string, string, string, boolean][] = [
+  ['explore-still-reading', 'Still reading', 'Calm and editorial, but progress is still a button you press.', false],
+  ['explore-ledger', 'The Ledger', 'Every number on show. Useful, and it turns reading into homework.', false],
+  ['explore-stack', 'The Stack', 'Your books as a pile you reach into, the covers doing the work.', true],
 ]
