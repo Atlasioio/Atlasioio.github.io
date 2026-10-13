@@ -1,5 +1,5 @@
 /* Home "Selected work" card. The card is a size container, so the layout
-   follows the card's own width (two phones → one phone → stacked), not the
+   follows the card's own width (phone right → stacked below), not the
    viewport's. */
 .card {
   container-type: inline-size;
@@ -95,21 +95,19 @@
   top: 0;
   bottom: 0;
   right: 0;
-  width: 56%;
+  width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2cqi;
-  padding-right: 3cqi;
+  padding-right: 4cqi;
   pointer-events: none;
 }
 .phone {
   position: relative;
   display: block;
   flex: none;
-  width: min(22cqi, calc(var(--h) * 0.78 * var(--ratio)));
-  /* Duration, easing and delay are per phone (set below), so a pair never
-     moves in lockstep. These defaults are the way back when the hover ends. */
+  /* One phone, large enough to read: 84% of the card's height at most. */
+  width: min(30cqi, calc(var(--h) * 0.84 * var(--ratio)));
   transition: transform var(--dur, 0.6s) var(--ease, var(--ease-out)) var(--delay, 0s);
   /* Own compositor layer: the drop shadow is rasterised once and the phone is
      moved as a texture. Without this the shadowed image was repainted every
@@ -135,8 +133,6 @@
   object-fit: cover;
   border-radius: 9% / 4.2%;
 }
-.phones .phone:nth-child(2) { transform: translateY(6%); --dur: 0.7s; }
-/* A softer ease-out for whichever phone should arrive more lazily. */
 .card { --ease-soft: cubic-bezier(0.33, 0.8, 0.3, 1); }
 
 /* ---- Hover: small, and a little different per project ---- */
@@ -146,35 +142,20 @@
   .inner:hover .arrow svg,
   .inner:focus-visible .arrow svg { transform: translateX(2px); }
 
-  /* Each pair is deliberately uneven: one phone starts first, they travel
-     different distances, and they settle at different speeds. The right phone
-     rests at translateY(6%), so its numbers are relative to that. */
-
-  /* Time: the left phone lifts a little; the right one sinks less, later and
-     slower. The mark turns. */
-  [data-motion='time'] .inner:hover .phone:nth-child(1) { transform: translateY(-1.6%); --dur: 0.7s; }
-  [data-motion='time'] .inner:hover .phone:nth-child(2) { transform: translateY(7%); --dur: 0.9s; --delay: 0.06s; --ease: var(--ease-soft); }
+  /* One small lift per card, each a little different. */
+  [data-motion='time'] .inner:hover .phone { transform: translateY(-1.6%); --dur: 0.8s; }
   [data-motion='time'] .mark { transition: transform 1.2s var(--ease-out); }
   [data-motion='time'] .inner:hover .mark { transform: rotate(180deg); }
 
-  /* Sherry: the right phone lifts a touch and leans out; the left one rises
-     further, a beat later. The lid lifts. */
-  [data-motion='sherry'] .inner:hover .phone:nth-child(1) { transform: translateY(-1.8%); --dur: 0.75s; --delay: 0.07s; --ease: var(--ease-soft); }
-  [data-motion='sherry'] .inner:hover .phone:nth-child(2) { transform: translate(0.8%, 5.2%); --dur: 0.65s; }
+  [data-motion='sherry'] .inner:hover .phone { transform: translateY(-1.8%) rotate(-0.6deg); --dur: 0.85s; --ease: var(--ease-soft); }
   [data-motion='sherry'] .lid { transform-box: fill-box; transform-origin: left bottom; transition: transform 0.5s var(--ease-out); }
   [data-motion='sherry'] .inner:hover .lid { transform: rotate(-26deg); }
 
-  /* Goodreads: the phones fan out like pages, the right one a little wider
-     and a beat later. A page turns in the mark. */
-  [data-motion='goodreads'] .inner:hover .phone:nth-child(1) { transform: rotate(-1deg) translateY(-0.8%); --dur: 0.7s; }
-  [data-motion='goodreads'] .inner:hover .phone:nth-child(2) { transform: translateY(5.2%) rotate(1.4deg); --dur: 0.85s; --delay: 0.07s; --ease: var(--ease-soft); }
+  [data-motion='goodreads'] .inner:hover .phone { transform: rotate(-1deg) translateY(-1%); --dur: 0.8s; }
   [data-motion='goodreads'] .page { transform-box: fill-box; transform-origin: left center; transition: transform 0.7s var(--ease-out); }
   [data-motion='goodreads'] .inner:hover .page { transform: scaleX(-1); }
 
-  /* EcoTrip: both rise, the right one first and further, the left one
-     catching up a moment later. The hexagon turns. */
-  [data-motion='ecotrip'] .inner:hover .phone:nth-child(1) { transform: translateY(-1.3%); --dur: 0.75s; --delay: 0.08s; --ease: var(--ease-soft); }
-  [data-motion='ecotrip'] .inner:hover .phone:nth-child(2) { transform: translateY(4.1%); --dur: 0.65s; }
+  [data-motion='ecotrip'] .inner:hover .phone { transform: translateY(-1.4%) rotate(0.5deg); --dur: 0.85s; --ease: var(--ease-soft); }
   [data-motion='ecotrip'] .mark { transition: transform 1s var(--ease-out); }
   [data-motion='ecotrip'] .inner:hover .mark { transform: rotate(120deg); }
 }
@@ -183,11 +164,10 @@
 @container (max-width: 980px) {
   .copy { width: 56%; }
   .phones { width: 44%; padding-right: 0; }
-  .phones .phone:nth-child(2) { display: none; }
-  .phones .phone:nth-child(1) { width: min(30cqi, calc(var(--h) * 0.78 * var(--ratio))); }
+  .phone { width: min(32cqi, calc(var(--h) * 0.8 * var(--ratio))); }
 }
 
-/* ---- Narrow: copy on top, both phones below with room under them ---- */
+/* ---- Narrow: copy on top, the phone below with room under it ---- */
 @container (max-width: 640px) {
   .inner { height: auto; justify-content: flex-start; }
   .bg { background-position: var(--pos-sm, var(--pos, center)); background-size: cover; }
@@ -198,7 +178,6 @@
   .title { font-size: clamp(28px, 8.4cqi, 40px); max-width: 15ch; margin-bottom: 22px; }
   .btn { height: 48px; padding-left: 20px; gap: 12px; font-size: 14px; }
   .arrow { width: 32px; height: 32px; }
-  .phones { position: relative; width: auto; gap: 10px; padding: 32px 18px 40px; align-items: flex-start; }
-  .phones .phone:nth-child(n) { display: block; width: min(calc(50% - 5px), 230px); }
-  .phones .phone:nth-child(2) { transform: translateY(18px); }
+  .phones { position: relative; width: auto; padding: 32px 18px 40px; align-items: flex-start; }
+  .phone { width: min(64%, 260px); }
 }

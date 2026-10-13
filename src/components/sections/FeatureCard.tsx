@@ -6,7 +6,7 @@ import styles from './FeatureCard.module.css'
 
 /**
  * One large home-page card: a darkened photo, the copy centred on the left and
- * two phones on the right. The whole card is the link. `card.mark` picks both
+ * one phone on the right (`card.cardPhone` picks which). The whole card is the link. `card.mark` picks both
  * the white line mark and the card's (small) hover motion.
  */
 export function FeatureCard({ project, card }: { project: Project; card: ProjectCard }) {
@@ -69,7 +69,8 @@ export function FeatureCard({ project, card }: { project: Project; card: Project
         </div>
 
         <div className={styles.phones} aria-hidden="true">
-          {card.phones.map((src, i) => {
+          {[card.cardPhone ?? 0].map((i) => {
+            const src = card.phones[i]
             const clip = card.videos?.[i]
             return (
               <span key={src} className={styles.phone}>

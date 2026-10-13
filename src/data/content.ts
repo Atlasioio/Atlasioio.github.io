@@ -201,8 +201,10 @@ export interface ProjectCard {
   posSm?: string
   /** RGB triplet ("r g b") the photo darkens towards behind the copy. */
   scrim: string
-  /** The two phone screens, left then right. */
+  /** The two phone screens, left then right (the hero reel shows both). */
   phones: [string, string]
+  /** Which of the two the home card shows (default 0). */
+  cardPhone?: 0 | 1
   /** Optional clips laid over each phone's screen, playing on hover. Each must
    *  be the 780×1688 'bare' screen recording whose first frame matches the
    *  phone image (see FeatureCard.module.css). */
@@ -506,6 +508,7 @@ export const projects: Project[] = [
       bg: '/work/goodreads/card-bg.webp',
       scrim: '28 16 8',
       phones: ['/work/goodreads/cover-home.webp', '/work/goodreads/cover-book-page.webp'],
+      cardPhone: 1,
       mark: 'goodreads',
     },
     coverScreens: [
