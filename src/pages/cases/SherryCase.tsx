@@ -115,10 +115,8 @@ export function SherryCase() {
           </Reveal>
 
           <div className={styles.workshop}>
-            <Reveal as="figure" className={styles.photo} i={1}>
-              <img src={`${W}/process/workshop-2.webp`} alt="A card-sorting game on a library table, with picture cards of tools and kitchen gear." loading="lazy" />
-            </Reveal>
-            <Reveal className={styles.workshopText} i={2}>
+            <div className={styles.workshopLeft}>
+            <Reveal className={styles.workshopText} i={1}>
               <span className={styles.label}>At the library</span>
               <h3>A card game about who you'd lend to.</h3>
               <p>
@@ -135,9 +133,13 @@ export function SherryCase() {
                 to whoever visits.
               </p>
             </Reveal>
-            <Reveal as="figure" className={`${styles.photo} ${styles.photoSmall}`} i={3}>
-              <img src={`${W}/process/workshop-1.webp`} alt="The same game from above, with the rows labelled who lends, what is lent and who borrows." loading="lazy" />
-            </Reveal>
+              <Reveal as="figure" className={`${styles.photo} ${styles.photoSmall}`} i={2}>
+                <img src={`${W}/process/workshop-1.webp`} alt="The same game from above, with the rows labelled who lends, what is lent and who borrows." loading="lazy" />
+              </Reveal>
+            </div>
+            <Reveal as="figure" className={`${styles.photo} ${styles.photoBig}`} i={1}>
+                <img src={`${W}/process/workshop-2.webp`} alt="A card-sorting game on a library table, with picture cards of tools and kitchen gear." loading="lazy" />
+              </Reveal>
           </div>
         </section>
 

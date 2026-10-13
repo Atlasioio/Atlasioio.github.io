@@ -41,7 +41,7 @@
     linear-gradient(180deg, rgba(40, 14, 20, 0.45) 0%, rgba(40, 14, 20, 0) 32%, rgba(40, 14, 20, 0.2) 60%, rgba(40, 14, 20, 0.88) 100%),
     linear-gradient(90deg, rgba(40, 14, 20, 0.72) 0%, rgba(40, 14, 20, 0) 58%);
 }
-.heroPhones { position: absolute; right: clamp(16px, 7vw, 120px); bottom: clamp(104px, 14vh, 150px); display: flex; align-items: flex-end; gap: clamp(10px, 1.6vw, 28px); }
+.heroPhones { position: absolute; right: clamp(16px, 7vw, 120px); bottom: calc(clamp(104px, 14vh, 150px) - clamp(150px, 15vw, 270px) * 0.095 - 8px); /* the cover images carry ~9.5% transparent padding below the phone; this sets the visible phone just under the credits line */ display: flex; align-items: flex-end; gap: clamp(10px, 1.6vw, 28px); }
 .heroPhones .cover { width: clamp(150px, 15vw, 270px); }
 .heroPhones .cover:first-child { transform: translateY(-7%); }
 .heroCopy { position: relative; padding: 0 var(--s-gutter) clamp(104px, 14vh, 150px); max-width: 1000px; }
@@ -68,10 +68,13 @@
 .place { display: flex; flex-direction: column; gap: 8px; padding: 22px; border-radius: 20px; background: var(--s-panel); }
 .place b { font-family: var(--font-display); font-weight: 650; font-size: 20px; letter-spacing: -0.02em; }
 .place span { font-size: 15px; line-height: 1.5; color: var(--s-muted); }
-.workshop { margin-top: clamp(40px, 4.6vw, 72px); display: grid; grid-template-columns: 1.1fr 1fr 0.7fr; gap: clamp(20px, 3vw, 48px); align-items: center; }
+.workshop { margin-top: clamp(40px, 4.6vw, 72px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 88px); align-items: start; }
+/* text with the overhead shot under it on the left; the big photo alone on the right */
+.workshopLeft { display: flex; flex-direction: column; gap: clamp(28px, 3vw, 44px); }
+.photoBig { justify-self: end; width: 100%; max-width: 560px; }
 .photo { margin: 0; border-radius: 24px; overflow: hidden; box-shadow: 0 30px 60px -36px rgba(42, 20, 24, 0.5); }
 .photo img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
-.photoSmall { transform: rotate(2deg); }
+.photoSmall img { aspect-ratio: 16 / 10; object-position: center 40%; }
 .workshopText h3 { margin-top: 12px; font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 2.4vw, 34px); line-height: 1.1; letter-spacing: -0.025em; }
 .workshopText p { margin-top: 14px; font-size: 16px; line-height: 1.6; color: var(--s-muted); }
 .tokens { margin: 18px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
@@ -216,8 +219,8 @@
 
 @media (max-width: 1000px) {
   .places { grid-template-columns: 1fr 1fr; }
-  .workshop { grid-template-columns: 1fr 1fr; }
-  .photoSmall { display: none; }
+  .workshop { grid-template-columns: 1fr; }
+  .photoBig { justify-self: start; }
   .findings { grid-template-columns: 1fr 1fr; }
   .tabs { grid-template-columns: repeat(3, 1fr); }
   .paper { grid-template-columns: 1fr 1fr; }

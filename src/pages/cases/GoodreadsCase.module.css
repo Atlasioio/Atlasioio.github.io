@@ -52,7 +52,7 @@
 .heroPhones {
   position: absolute;
   right: clamp(16px, 7vw, 120px);
-  bottom: clamp(104px, 14vh, 150px);
+  bottom: calc(clamp(104px, 14vh, 150px) - clamp(150px, 15vw, 270px) * 0.095 - 8px); /* the cover images carry ~9.5% transparent padding below the phone; this sets the visible phone just under the credits line */
   display: flex;
   align-items: flex-end;
   gap: clamp(10px, 1.6vw, 28px);
