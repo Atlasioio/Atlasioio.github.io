@@ -11,7 +11,7 @@
   --g-line: rgba(42, 26, 16, 0.12);
   --g-edge: clamp(10px, 1.6vw, 24px);
   --g-gutter: clamp(20px, 5vw, 88px);
-  --g-serif: 'Newsreader', Georgia, serif;
+  --g-serif: 'Literata', Georgia, serif; /* the app's own reading face */
   --accent: var(--g-rust);
   background: var(--g-paper);
   color: var(--g-ink);
@@ -137,6 +137,74 @@
 .trio figcaption,
 .duo figcaption { font-size: 14px; opacity: 0.85; }
 
+/* ---- Scope: keep / fix ---- */
+.scope { margin-top: clamp(32px, 3.6vw, 56px); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 72px); }
+.scopeHead { font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 2vw, 28px); letter-spacing: -0.02em; padding-bottom: 14px; border-bottom: 3px solid var(--g-ink); }
+.scopeFix .scopeHead { color: var(--g-rust); border-color: var(--g-rust); }
+.scopeCol ul { list-style: none; margin: 0; padding: 0; }
+.scopeCol li { display: grid; grid-template-columns: minmax(150px, 0.8fr) 1.4fr; gap: 16px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--g-line); }
+.scopeCol li b { font-weight: 600; font-size: 16px; }
+.scopeCol li span { font-size: 15px; line-height: 1.5; color: var(--g-muted); }
+.test {
+  margin-top: clamp(40px, 5vw, 72px);
+  max-width: 24ch;
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: clamp(26px, 2.8vw, 40px);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--g-rust);
+}
+
+/* ---- Structure: tab rows ---- */
+.ia { margin-top: clamp(32px, 3.6vw, 52px); }
+.iaLabel { display: block; margin-bottom: 14px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--g-muted); }
+.iaRow { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 10px; }
+.tab { display: flex; flex-direction: column; gap: 8px; padding: 16px 16px 20px; border-radius: 18px; background: var(--g-paper-2); }
+.tabName { font-family: var(--font-display); font-weight: 650; font-size: 18px; letter-spacing: -0.01em; }
+.job { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--g-rust); }
+.tab p { font-size: 14px; line-height: 1.45; color: var(--g-muted); }
+.tabMissing { background: transparent; border: 1.5px dashed rgba(162, 78, 28, 0.55); }
+.tabMissing .tabName { color: var(--g-rust); }
+.tabAfter { background: #fbf6ef; border: 1px solid var(--g-line); }
+.tabAfter .tabName { display: inline-block; align-self: flex-start; padding: 6px 14px; border-radius: 999px; background: var(--g-ink); color: #fbf6ef; font-size: 16px; }
+.tabNew .tabName { background: var(--g-rust); }
+.absorbed { margin-top: clamp(28px, 3vw, 44px); }
+.absorbed ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.absorbed li { padding: 8px 14px; border-radius: 999px; border: 1px solid var(--g-line); font-size: 14px; }
+.absorbed li span { color: var(--g-rust); margin: 0 4px; }
+
+/* ---- System, built from the system ---- */
+.swatches { margin-top: clamp(32px, 3.6vw, 52px); display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--g-edge); }
+.swatch { display: flex; flex-direction: column; gap: 4px; }
+.chip { display: block; aspect-ratio: 16 / 10; border-radius: 18px; border: 1px solid var(--g-line); margin-bottom: 10px; }
+.swatch b { font-weight: 600; font-size: 15px; }
+.swatch > span:last-child { font-family: var(--font-mono); font-size: 12px; color: var(--g-muted); }
+.sysGrid { margin-top: clamp(40px, 4.6vw, 72px); display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 3vw, 52px); }
+.sysCol { padding-top: 20px; border-top: 1px solid var(--g-line); }
+.specSerif { font: 500 clamp(30px, 2.8vw, 40px)/1.1 var(--g-serif); margin-top: 6px; }
+.specDisplay { font: 800 clamp(28px, 2.6vw, 38px)/1.1 'Bricolage Grotesque', var(--font-display); letter-spacing: -0.02em; margin-top: 18px; }
+.specSans { font: 500 18px/1.3 'DM Sans', var(--font-body); margin-top: 18px; }
+.specNote { margin-top: 6px; font-size: 14px; color: var(--g-muted); }
+.btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.btns span { padding: 10px 18px; border-radius: 999px; font-weight: 600; font-size: 15px; }
+.btnPrimary { background: var(--g-rust); color: #fff; }
+.btnSecondary { background: #f3dfd3; color: var(--g-rust); }
+.btnQuiet { background: #ede7da; color: var(--g-ink); font-weight: 500 !important; }
+.rating { margin-top: 20px; font-weight: 600; color: var(--g-rust); font-size: 18px; }
+.rating > span { letter-spacing: 2px; margin-right: 8px; }
+.halfStar { background: linear-gradient(90deg, var(--g-rust) 50%, rgba(162, 78, 28, 0.25) 50%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.rules { margin-top: 18px; font-size: 15px; line-height: 1.6; }
+.doDont { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.doDont p { margin-top: 10px; font-size: 14px; line-height: 1.5; color: var(--g-muted); }
+.doDont b { color: var(--g-rust); font-weight: 600; }
+.mini { display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 14px; background: #fbf6ef; border: 1px solid var(--g-line); }
+.miniBook { width: 30px; height: 42px; border-radius: 3px; flex: none; background: linear-gradient(160deg, #7fbf6a 0%, #4f8bc4 100%); }
+.miniGreen,
+.miniRust { padding: 7px 12px; border-radius: 999px; color: #fff; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.miniGreen { background: #3c7a4a; }
+.miniRust { background: var(--g-rust); }
+
 /* ---- Reflection ---- */
 .reflection { margin-top: clamp(32px, 3.4vw, 52px); display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--g-edge); }
 .reflectionItem { padding: clamp(22px, 2.4vw, 36px); border-radius: 22px; background: var(--g-paper-2); }
@@ -172,7 +240,10 @@
   .hero { flex-direction: column; justify-content: flex-end; }
   .heroPhones { position: relative; right: auto; bottom: auto; margin: 120px auto 0; }
   .heroPhones .cover { width: 40vw; max-width: 220px; }
-  .readers, .boards2, .twoUp, .reflection { grid-template-columns: 1fr; }
+  .readers, .boards2, .twoUp, .reflection, .scope, .sysGrid { grid-template-columns: 1fr; }
+  .iaRow { grid-template-columns: 1fr 1fr; }
+  .swatches { grid-template-columns: repeat(3, 1fr); }
+  .scopeCol li { grid-template-columns: 1fr; gap: 4px; }
   .change { grid-template-columns: 1fr; gap: 8px; }
   .trio { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
   .duo { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }

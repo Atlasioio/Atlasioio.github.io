@@ -140,6 +140,29 @@ export function GoodreadsCase() {
           </div>
         </section>
 
+        {/* ---- The scope: what stayed, what changed ---- */}
+        <section className={styles.section} aria-label="Scope">
+          <Reveal as="h2" className={styles.h2}>What stayed, and what changed.</Reveal>
+          <Reveal as="p" className={styles.sub} i={1}>
+            Readers aren't leaving because Goodreads looks like Goodreads. Sorting it into what's
+            loved and what's broken decided the scope, and is why this is a redesign, not a rebrand.
+          </Reveal>
+          <div className={styles.scope}>
+            <Reveal className={styles.scopeCol} i={1}>
+              <h3 className={styles.scopeHead}>Keep</h3>
+              <ul>{KEEP.map(([h, t]) => <li key={h}><b>{h}</b><span>{t}</span></li>)}</ul>
+            </Reveal>
+            <Reveal className={`${styles.scopeCol} ${styles.scopeFix}`} i={2}>
+              <h3 className={styles.scopeHead}>Fix</h3>
+              <ul>{FIX.map(([h, t]) => <li key={h}><b>{h}</b><span>{t}</span></li>)}</ul>
+            </Reveal>
+          </div>
+          <Reveal as="p" className={styles.test} i={1}>
+            The test every change had to pass: would a reader coming back after two years still know
+            where they are?
+          </Reveal>
+        </section>
+
         {/* ---- Five changes ---- */}
         <section className={styles.section} aria-label="Five changes">
           <Reveal as="h2" className={styles.h2}>Five changes, one idea.</Reveal>
@@ -158,20 +181,51 @@ export function GoodreadsCase() {
           </div>
         </section>
 
-        {/* ---- The shift in structure ---- */}
+        {/* ---- Structure: today vs after, as tab bars ---- */}
         <section className={styles.section} aria-label="Structure">
           <Reveal as="h2" className={styles.h2}>Four tabs, each job in one place.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
             Readers come to keep track, to find the next book, and to talk about books. Today each
-            of those is split across five tabs and a drawer. Nothing was deleted for tidiness:
-            everything in the old drawer went somewhere it belongs, and the missing tab became the
-            first one.
+            job is split across five tabs and ends in a drawer, and the one thing the app is named
+            after has no tab at all.
           </Reveal>
-          <div className={styles.boards2}>
-            <Board src="process/ia-before.webp" alt="The structure today: three jobs, five tabs and a More drawer." i={2} />
-            <Board src="process/ia-after.webp" alt="The structure after: Reading, My Books, Discover and Community." i={3} />
-          </div>
-          <Board src="process/split.webp" alt="What not to touch, written down first: what readers love, and what is cluttered and fixable." wide i={1} />
+          <Reveal className={styles.ia} i={2}>
+            <span className={styles.iaLabel}>Today</span>
+            <div className={styles.iaRow} style={{ '--n': 6 } as CSSProperties}>
+              <div className={`${styles.tab} ${styles.tabMissing}`}>
+                <span className={styles.tabName}>Reading</span>
+                <span className={styles.job}>Missing</span>
+                <p>No tab, no screen, no data.</p>
+              </div>
+              {BEFORE.map(([name, job, note]) => (
+                <div className={styles.tab} key={name}>
+                  <span className={styles.tabName}>{name}</span>
+                  <span className={styles.job}>{job}</span>
+                  <p>{note}</p>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+          <Reveal className={styles.ia} i={3}>
+            <span className={styles.iaLabel}>After</span>
+            <div className={styles.iaRow} style={{ '--n': 4 } as CSSProperties}>
+              {AFTER.map(([name, job, note], k) => (
+                <div className={`${styles.tab} ${styles.tabAfter} ${k === 0 ? styles.tabNew : ''}`} key={name}>
+                  <span className={styles.tabName}>{name}</span>
+                  <span className={styles.job}>{k === 0 ? 'New · ' : ''}{job}</span>
+                  <p>{note}</p>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+          <Reveal className={styles.absorbed} i={1}>
+            <span className={styles.iaLabel}>Moved, not cut</span>
+            <ul>
+              {ABSORBED.map(([from, to]) => (
+                <li key={from}>{from} <span aria-hidden="true">→</span> {to}</li>
+              ))}
+            </ul>
+          </Reveal>
         </section>
 
         {/* ---- Key moments ---- */}
@@ -229,11 +283,55 @@ export function GoodreadsCase() {
         <section className={styles.section} aria-label="The system">
           <Reveal as="h2" className={styles.h2}>Paper to brown, so the covers are the colour.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            One warm family and one action colour. An earlier pass used a green accent and it fought
-            every cover on the page; cutting every hue outside paper and brown let the books be the
-            loudest thing on every screen.
+            Book covers are the loudest thing in the product. The system stays out of their way, and
+            spends its one saturated colour on one action per screen.
           </Reveal>
-          <Board src="process/design-system.webp" alt="The design system: palette, type and components." wide i={2} />
+          <div className={styles.swatches}>
+            {SWATCHES.map(([name, hex], i) => (
+              <Reveal className={styles.swatch} key={name} i={i % 3}>
+                <span className={styles.chip} style={{ background: hex }} />
+                <b>{name}</b>
+                <span>{hex}</span>
+              </Reveal>
+            ))}
+          </div>
+          <div className={styles.sysGrid}>
+            <Reveal className={styles.sysCol} i={1}>
+              <span className={styles.iaLabel}>Type</span>
+              <p className={styles.specSerif}>Red Country</p>
+              <p className={styles.specNote}>Literata 500 · titles, book text, quotes</p>
+              <p className={styles.specDisplay}>My Books</p>
+              <p className={styles.specNote}>Bricolage Grotesque 800 · screen titles, numbers</p>
+              <p className={styles.specSans}>Interface copy, metadata, buttons</p>
+              <p className={styles.specNote}>DM Sans · everything functional</p>
+            </Reveal>
+            <Reveal className={styles.sysCol} i={2}>
+              <span className={styles.iaLabel}>Components</span>
+              <div className={styles.btns}>
+                <span className={styles.btnPrimary}>Primary</span>
+                <span className={styles.btnSecondary}>Secondary</span>
+                <span className={styles.btnQuiet}>Quiet</span>
+              </div>
+              <p className={styles.rating}>
+                <span aria-hidden="true">★★★★<span className={styles.halfStar}>★</span></span> 4.5 · Loved it
+              </p>
+              <p className={styles.specNote}>Half stars, and a word attached to every value.</p>
+              <p className={styles.rules}>Cards are fills, never borders · radius 16–22 · shadow only on floating chrome · every tap target at least 44pt.</p>
+            </Reveal>
+            <Reveal className={styles.sysCol} i={3}>
+              <span className={styles.iaLabel}>The call that simplified everything</span>
+              <div className={styles.doDont}>
+                <div>
+                  <div className={styles.mini}><span className={styles.miniBook} /><span className={styles.miniGreen}>Want to read</span></div>
+                  <p><b>Don't.</b> A green accent puts a second loud colour beside every cover. The covers lose.</p>
+                </div>
+                <div>
+                  <div className={styles.mini}><span className={styles.miniBook} /><span className={styles.miniRust}>Want to read</span></div>
+                  <p><b>Do.</b> Rust sits inside the paper-to-brown family, so it reads as the app's own voice.</p>
+                </div>
+              </div>
+            </Reveal>
+          </div>
         </section>
 
         {/* ---- Reflection ---- */}
@@ -370,3 +468,52 @@ function Board({ src, alt, wide, i }: { src: string; alt: string; wide?: boolean
     </Reveal>
   )
 }
+
+/* ---- Scope ---- */
+const KEEP: [string, string][] = [
+  ['The catalogue', 'Nobody fails to find a book here.'],
+  ['The social graph', 'Years of friends and shelves: why readers stay.'],
+  ['The five-star scale', 'The language readers already speak.'],
+  ['Shelf vocabulary', 'Want to read, Currently reading, Read.'],
+  ['Paper and brown ink', 'Warm and bookish already. Updated, not swapped.'],
+]
+const FIX: [string, string][] = [
+  ['A feed of events', '“Rated it ★★★” can’t be replied to. Now it’s things people made.'],
+  ['Five tabs and a drawer', 'Four tabs. Everything in More moved, nothing cut.'],
+  ['A library of text rows', 'Covers, counts, sort, filter, lists and tags on the surface.'],
+  ['Whole stars only', 'Half stars, and a word for what a rating means.'],
+  ['Discovery left for video', 'Book Talk brings it inside, so a video can land on a shelf.'],
+  ['No reading', 'A reader, so quotes, notes and progress follow.'],
+]
+
+/* ---- Structure ---- */
+const BEFORE: [string, string, string][] = [
+  ['Home', 'Talk', 'An event feed with nothing to reply to.'],
+  ['My Books', 'Keep track', 'Three text rows. No sort, no filter.'],
+  ['Discover', 'Find next', 'Impersonal lists, not based on taste.'],
+  ['Search', 'Find next', 'A tab repeating the search bar above it.'],
+  ['More', 'All three', 'Groups, quotes, challenges, settings, in a drawer.'],
+]
+const AFTER: [string, string, string][] = [
+  ['Reading', 'Read', 'Opens the book itself: reader, highlights, quotes, notes, progress.'],
+  ['My Books', 'Keep track', 'Shelves, lists, tags and quotes, with sort and filter on top.'],
+  ['Discover', 'Find next', 'Browse and Book Talk under one search field. Recommendations say why.'],
+  ['Community', 'Talk', 'Things people made, and clubs. Chat locked to your chapter.'],
+]
+const ABSORBED: [string, string][] = [
+  ['Search', 'Discover'],
+  ['Groups', 'Clubs'],
+  ['Quotes', 'My Books'],
+  ['Challenges', 'the goal row'],
+  ['Notifications', 'the bell on every tab'],
+]
+
+/* ---- System ---- */
+const SWATCHES: [string, string][] = [
+  ['Paper', '#F7F4ED'],
+  ['Card', '#FFFDF8'],
+  ['Quiet fill', '#EDE7DA'],
+  ['Action', '#A24E1C'],
+  ['Deep', '#8A3F14'],
+  ['Ink', '#3A2A18'],
+]
