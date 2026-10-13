@@ -772,6 +772,8 @@ export const projects: Project[] = [
       { src: '/work/ecotrip/community.webp', caption: 'The Hive — shared progress, your trips and everyone’s.' },
       { src: '/work/ecotrip/community-trip.webp', caption: 'A shared trip — the full breakdown, ready to copy.' },
       { src: '/work/ecotrip/profile.webp', caption: 'Profile — impact surfaced ahead of stats.' },
+      { src: '/work/ecotrip/give-back.webp', caption: 'Give back — 5% of every trip to wild bees, and your own pledge on top.' },
+      { src: '/work/ecotrip/why-bees.webp', caption: 'Why bees — what pollinators do, and why they need help.' },
     ],
     designSystem: {
       intro:
