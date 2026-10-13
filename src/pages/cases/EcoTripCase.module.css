@@ -91,8 +91,10 @@
 .loopPillLight { fill: #fffaf0; font-family: var(--font-display); font-weight: 650; font-size: 15px; }
 
 /* Personas + principle */
-.personas { margin-top: clamp(32px, 3.6vw, 52px); display: grid; grid-template-columns: 1fr 1fr; gap: var(--e-edge); }
-.persona { display: flex; flex-direction: column; gap: 16px; padding: clamp(24px, 2.8vw, 40px); border-radius: 24px; background: var(--e-card); border: 1px solid var(--e-line); }
+/* the two cards share rows (subgrid), so name, intro, "set the…" and the
+   toggle line up across both, open or closed */
+.personas { margin-top: clamp(32px, 3.6vw, 52px); display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(4, auto); column-gap: var(--e-edge); row-gap: 0; }
+.persona { display: grid; grid-row: span 4; grid-template-rows: subgrid; row-gap: 16px; align-content: start; padding: clamp(24px, 2.8vw, 40px); border-radius: 24px; background: var(--e-card); border: 1px solid var(--e-line); }
 .who { display: flex; align-items: center; gap: 14px; }
 .who b { display: block; font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 2vw, 28px); letter-spacing: -0.02em; }
 .who span:not(.avatar) { font-size: 15px; color: var(--e-muted); }
@@ -102,6 +104,23 @@
 .wants { font-size: 17px; line-height: 1.5; }
 .sets { font-size: 15px; line-height: 1.55; color: var(--e-muted); }
 .sets b { color: var(--e-ink); }
+/* "More about…": a quiet toggle; the persona opens below it */
+.more { border-top: 1px solid var(--e-line); }
+.more summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 0 2px; list-style: none; cursor: pointer; font-weight: 600; font-size: 15px; }
+.more summary::-webkit-details-marker { display: none; }
+.more summary i { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--e-panel); font-style: normal; font-size: 18px; line-height: 1; transition: transform 0.35s var(--ease-out), background 0.25s; }
+.more summary:hover i { background: var(--e-honey-soft); }
+.more[open] summary i { transform: rotate(45deg); }
+.more summary:focus-visible { outline: 2px solid var(--e-honey-deep); outline-offset: 4px; border-radius: 6px; }
+.moreBody { padding-top: 18px; display: flex; flex-direction: column; gap: 20px; animation: moreIn 0.4s var(--ease-out); }
+@keyframes moreIn { from { opacity: 0; transform: translateY(-6px); } }
+.voice { margin: 0; padding-left: 16px; border-left: 3px solid var(--e-honey); font-size: 17px; line-height: 1.5; font-style: italic; }
+.pTerra .voice { border-color: var(--e-terra); }
+.facts { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 24px; }
+.facts dt { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--e-muted); }
+.facts dd { margin: 6px 0 0; font-size: 15px; line-height: 1.5; }
+@media (prefers-reduced-motion: reduce) { .moreBody { animation: none; } .more summary i { transition: none; } }
+@media (max-width: 600px) { .facts { grid-template-columns: 1fr; } }
 .principle { margin-top: clamp(56px, 6vw, 96px); font-family: var(--font-display); font-weight: 800; font-size: clamp(40px, 6vw, 96px); line-height: 0.98; letter-spacing: -0.045em; max-width: 14ch; }
 .principleSub { margin-top: 18px; max-width: 34em; font-size: clamp(16px, 1.3vw, 19px); line-height: 1.6; color: var(--e-muted); }
 
@@ -246,7 +265,7 @@
   .hero { flex-direction: column; justify-content: flex-end; }
   .heroPhones { position: relative; right: auto; bottom: auto; margin: 120px auto 0; }
   .heroPhones .shot { width: 40vw; max-width: 220px; }
-  .blockers, .after, .personas, .nudge, .twoUp, .explore2, .reflection, .variants { grid-template-columns: 1fr; }
+  .blockers, .after, .nudge, .twoUp, .explore2, .reflection, .variants { grid-template-columns: 1fr; }
   .nudgePhone .shot { margin: 0 auto; max-width: 260px; }
   .trio { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
   .duo { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
@@ -265,4 +284,9 @@
   .lanes { grid-template-columns: 1fr; }
   /* an odd last card takes the full row */
   .fstep:last-child:nth-child(odd) { grid-column: span 2; }
+}
+
+@media (max-width: 900px) {
+  .personas { grid-template-columns: 1fr; grid-template-rows: none; row-gap: var(--e-edge); }
+  .persona { grid-row: auto; grid-template-rows: none; }
 }

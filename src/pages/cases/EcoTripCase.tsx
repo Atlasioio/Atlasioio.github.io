@@ -30,6 +30,7 @@ export function EcoTripCase() {
   const idx = projects.findIndex((p) => p.id === 'ecotrip')
   const next = projects[(idx + 1) % projects.length]
 
+  const [morePersonas, setMorePersonas] = useState(false)
   const [heroReady, setHeroReady] = useState(false)
   useEffect(() => {
     let done = false
@@ -155,6 +156,24 @@ export function EcoTripCase() {
                 </div>
                 <p className={styles.wants}>{p.wants}</p>
                 <p className={styles.sets}><b>{p.sets}</b> {p.because}</p>
+                {/* The fuller persona, closed by default. Opening one opens both, so they read side by side. */}
+                <details className={styles.more} open={morePersonas} onToggle={(e) => setMorePersonas(e.currentTarget.open)}>
+                  <summary>
+                    <span>More about {p.name}</span>
+                    <i aria-hidden="true">+</i>
+                  </summary>
+                  <div className={styles.moreBody}>
+                    <blockquote className={styles.voice}>“{p.voice}”</blockquote>
+                    <dl className={styles.facts}>
+                      {p.facts.map(([k, v]) => (
+                        <div key={k}>
+                          <dt>{k}</dt>
+                          <dd>{v}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+                </details>
               </Reveal>
             ))}
           </div>
@@ -335,8 +354,30 @@ const BLOCKERS: [string, string, string][] = [
   ['Alone, it feels pointless', 'One train ride instead of one flight doesn’t feel like it changes anything.', 'Every trip adds to a shared comb, so you can see what everyone saved together.'],
 ]
 const PERSONAS = [
-  { name: 'Jane', tag: 'the activist', tone: 'pTerra', wants: 'Cuts carbon at every step, and wants the bad option to feel like one.', sets: 'Jane set the floor:', because: 'friction belongs on the high-carbon choice, never on her own path.' },
-  { name: 'John', tag: 'the casual', tone: 'pHoney', wants: 'Takes bigger trips and won’t trade much convenience for a smaller footprint.', sets: 'John set the ceiling:', because: 'show the greener option, and never block the route.' },
+  {
+    name: 'Jane', tag: 'the activist', tone: 'pTerra',
+    wants: 'Cuts carbon at every step, and wants the bad option to feel like one.',
+    sets: 'Jane set the floor:', because: 'friction belongs on the high-carbon choice, never on her own path.',
+    voice: 'I already take the train. I don’t need an app telling me I’m good, I need it to stop making the flight the easy default.',
+    facts: [
+      ['How she travels', 'Trains and buses wherever they go, a few longer trips a year, mostly within Europe.'],
+      ['What she wants', 'To compare the real footprint of her options without digging, and to plan the whole trip in one place.'],
+      ['What gets in her way', 'Booking sites put the cheapest flight first, and the greener route takes three tabs to piece together.'],
+      ['What EcoTrip gives her', 'Greener options first, a score that means something, and a nudge that lands on the flight, not on her.'],
+    ],
+  },
+  {
+    name: 'John', tag: 'the casual', tone: 'pHoney',
+    wants: 'Takes bigger trips and won’t trade much convenience for a smaller footprint.',
+    sets: 'John set the ceiling:', because: 'show the greener option, and never block the route.',
+    voice: 'If it’s not much slower or pricier, sure, I’ll take the train. But if an app lectures me, I’m booking somewhere else.',
+    facts: [
+      ['How he travels', 'A handful of city breaks and one big holiday a year, flying by default because it’s quick.'],
+      ['What he wants', 'A good trip without extra effort. He’ll pick the greener option when it costs him little.'],
+      ['What gets in his way', 'Green apps feel preachy, and he can’t tell if a cut in CO₂ is worth an extra few hours.'],
+      ['What EcoTrip gives him', 'One honest, dismissible line about the flight, a comparison he can read at a glance, and a route that’s never blocked.'],
+    ],
+  },
 ] as const
 const VARIANTS = [
   { id: 'vGreen', name: 'Eco-green, leaves', score: '132 kg CO₂', why: 'Virtue at the palette level, and a lecture before you’ve read anything.', chosen: false },
