@@ -605,7 +605,7 @@ export const projects: Project[] = [
       },
       {
         heading: 'What I would do differently',
-        body: 'I would have tested the terms sheet with someone who reads Swedish slowly. The library asked for exactly that in week two, it went into the findings, and I still wrote the terms in English first and checked the reading level last.',
+        body: 'Put the terms sheet in front of people who are still learning Swedish, at the library, while it was still being written. We wrote it to their reading level; watching them read it would have shown where it still trips people up.',
       },
       {
         heading: 'What is next',
