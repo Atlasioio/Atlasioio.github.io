@@ -14,6 +14,7 @@ import { About } from './pages/About'
 import { CaseStudy } from './pages/CaseStudy'
 import { TimeCase } from './pages/cases/TimeCase'
 import { GoodreadsCase } from './pages/cases/GoodreadsCase'
+import { SherryCase } from './pages/cases/SherryCase'
 
 export default function App() {
   return (
@@ -47,5 +48,6 @@ function CaseRoute() {
   const { slug } = useParams()
   if (slug === 'time') return <TimeCase />
   if (slug === 'goodreads') return <GoodreadsCase />
+  if (slug === 'sherry') return <SherryCase />
   return <CaseStudy />
 }
