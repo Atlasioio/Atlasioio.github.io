@@ -40,7 +40,7 @@ export function FixedControls({ staticDark = false, staticLight = false, home = 
   // On phones, once scrolled past the hero (home only — sub-pages have a
   // top-left back link the hamburger would collide with), the hamburger slides
   // over to the top-left corner; back at the top it slides home next to Contact.
-  const hamLeft = scrolled && !staticDark && !staticLight
+  const hamLeft = scrolled && !staticDark && !staticLight && !home
 
   return (
     <div className={styles.navfix} data-ham-left={hamLeft ? '' : undefined}>

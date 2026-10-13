@@ -1,0 +1,179 @@
+/* The Goodreads case study: warm paper, brown ink, one rust accent, as in the
+   redesign. Type is the site's; the serif (Newsreader) is only for quotes and
+   reading moments. */
+.page {
+  --g-paper: #f4ece1;
+  --g-paper-2: #ebe0d1;
+  --g-ink: #2a1a10;
+  --g-muted: #6e5848;
+  --g-rust: #a24e1c;
+  --g-rust-deep: #7c3a14;
+  --g-line: rgba(42, 26, 16, 0.12);
+  --g-edge: clamp(10px, 1.6vw, 24px);
+  --g-gutter: clamp(20px, 5vw, 88px);
+  --g-serif: 'Newsreader', Georgia, serif;
+  --accent: var(--g-rust);
+  background: var(--g-paper);
+  color: var(--g-ink);
+  overflow-x: clip;
+}
+
+/* ---- Phones ---- */
+.phone {
+  display: block;
+  width: 100%;
+  border-radius: 13% / 6%;
+  padding: 2.2%;
+  background: #1c140e;
+  box-shadow: 0 40px 70px -30px rgba(42, 26, 16, 0.55);
+}
+.phone img { display: block; width: 100%; height: auto; border-radius: 11% / 5%; }
+.cover { display: block; }
+.cover img { display: block; width: 100%; height: auto; filter: drop-shadow(0 40px 50px rgba(0, 0, 0, 0.45)); }
+
+/* ---- 1. Hero ---- */
+.hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; isolation: isolate; color: #fbf6ef; }
+.heroPhoto {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: url('/work/goodreads/card-bg.webp') center 40% / cover no-repeat;
+  filter: brightness(0.62) saturate(0.85);
+}
+.heroFade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(28, 16, 8, 0.45) 0%, rgba(28, 16, 8, 0) 32%, rgba(28, 16, 8, 0.15) 60%, rgba(28, 16, 8, 0.85) 100%),
+    linear-gradient(90deg, rgba(28, 16, 8, 0.7) 0%, rgba(28, 16, 8, 0) 58%);
+}
+/* The lower phone ends on the credits line, as on Time. */
+.heroPhones {
+  position: absolute;
+  right: clamp(16px, 7vw, 120px);
+  bottom: clamp(104px, 14vh, 150px);
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(10px, 1.6vw, 28px);
+}
+.heroPhones .cover { width: clamp(150px, 15vw, 270px); }
+.heroPhones .cover:first-child { transform: translateY(-7%); }
+.heroCopy { position: relative; padding: 0 var(--g-gutter) clamp(104px, 14vh, 150px); max-width: 1040px; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.8; }
+.title {
+  margin-top: 18px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(44px, 5vw, 92px);
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+}
+/* the one serif word in the title: reading, the product's own voice */
+.title em { font: italic 500 1.06em/1 var(--g-serif); letter-spacing: -0.02em; }
+.lede { margin-top: 22px; font-size: clamp(18px, 1.6vw, 22px); line-height: 1.45; max-width: 30em; opacity: 0.9; }
+.credits { margin-top: 24px; font-size: 14px; opacity: 0.72; }
+
+/* ---- 2. Story ---- */
+.story { display: grid; place-items: center; padding: clamp(96px, 14vw, 190px) var(--g-gutter); }
+.story > div { max-width: 36em; display: flex; flex-direction: column; gap: 1.1em; font-size: clamp(17px, 1.35vw, 20px); line-height: 1.62; color: var(--g-muted); }
+.storyLead { font-family: var(--font-display); font-weight: 600; font-size: clamp(26px, 2.6vw, 36px); line-height: 1.2; letter-spacing: -0.02em; color: var(--g-ink); }
+
+/* ---- Text sections ---- */
+.section { padding: 0 var(--g-gutter) clamp(96px, 12vw, 170px); }
+.h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(34px, 4.4vw, 64px); line-height: 1; letter-spacing: -0.035em; max-width: 17ch; color: var(--g-ink); }
+.sub { margin-top: 18px; max-width: 42em; font-size: clamp(16px, 1.2vw, 18px); line-height: 1.6; color: var(--g-muted); }
+
+/* Two readers */
+.readers { margin-top: clamp(32px, 3.6vw, 56px); display: grid; grid-template-columns: 1fr 1fr; gap: var(--g-edge); }
+.reader { display: flex; flex-direction: column; gap: 18px; padding: clamp(26px, 3vw, 46px); border-radius: 24px; background: var(--g-paper-2); }
+.who { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.who b { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 2.4vw, 34px); letter-spacing: -0.025em; }
+.who span { font-size: 15px; color: var(--g-muted); }
+.quote { padding-left: 18px; border-left: 3px solid var(--g-rust); font: italic 400 clamp(22px, 2vw, 30px)/1.3 var(--g-serif); color: var(--g-ink); }
+.reader dl { margin: 6px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 10px 18px; font-size: 15px; line-height: 1.5; }
+.reader dt { font-family: var(--font-mono); font-size: 11px; line-height: 1.9; letter-spacing: 0.1em; text-transform: uppercase; color: var(--g-muted); }
+.reader dd { margin: 0; }
+
+/* Boards: the process artboards, framed on paper */
+.boards2 { margin-top: clamp(32px, 3.6vw, 56px); display: grid; grid-template-columns: 1fr 1fr; gap: var(--g-edge); align-items: start; }
+.board { border-radius: 20px; overflow: hidden; border: 1px solid var(--g-line); background: #fff; }
+.board img { display: block; width: 100%; height: auto; }
+.boardWide { margin-top: var(--g-edge); }
+.section > .boardWide:first-of-type { margin-top: clamp(32px, 3.6vw, 56px); }
+
+/* Five changes */
+.changes { margin-top: clamp(32px, 3.6vw, 56px); border-top: 1px solid var(--g-line); }
+.change { display: grid; grid-template-columns: 70px 1fr 1.25fr; gap: clamp(16px, 3vw, 48px); align-items: baseline; padding: clamp(22px, 2.4vw, 32px) 0; border-bottom: 1px solid var(--g-line); }
+.n { font-family: var(--font-mono); font-size: 13px; color: var(--g-rust); }
+.change h3 { font-family: var(--font-display); font-weight: 650; font-size: clamp(22px, 2vw, 30px); line-height: 1.1; letter-spacing: -0.025em; }
+.change p { font-size: 16px; line-height: 1.55; color: var(--g-muted); }
+.change strong { font-weight: 500; color: var(--g-ink); }
+
+/* ---- Panels ---- */
+.panels { display: grid; gap: var(--g-edge); padding: 0 var(--g-edge) clamp(96px, 12vw, 170px); }
+.twoUp { display: grid; grid-template-columns: 1fr 1fr; gap: var(--g-edge); }
+.panel { display: flex; flex-direction: column; align-items: center; overflow: hidden; border-radius: 28px; padding: clamp(48px, 6vw, 96px) var(--g-gutter) clamp(36px, 5vw, 64px); }
+.panel > .phone { width: clamp(180px, 18vw, 290px); }
+.twoUp .panel > .phone { width: clamp(160px, 15vw, 250px); }
+.rust { background: radial-gradient(70% 60% at 50% 30%, #c1662c 0%, var(--g-rust) 45%, var(--g-rust-deep) 100%); color: #fbf6ef; }
+.rustDeep { background: radial-gradient(70% 60% at 50% 30%, #8f4318 0%, #6a2f10 60%, #4a200b 100%); color: #fbf6ef; }
+.ink { background: radial-gradient(70% 60% at 50% 30%, #3a2618 0%, #24160c 70%); color: #fbf6ef; }
+.paper { background: #fbf6ef; border: 1px solid var(--g-line); }
+.deep { background: var(--g-paper-2); }
+.cap { margin-top: clamp(30px, 3vw, 46px); text-align: center; max-width: 32em; }
+.no { display: block; margin-bottom: 14px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75; }
+.paper .no, .deep .no { color: var(--g-rust); opacity: 1; }
+.cap h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.2vw, 48px); line-height: 1.04; letter-spacing: -0.03em; }
+.cap p { margin-top: 14px; font-size: clamp(15px, 1.15vw, 17px); line-height: 1.55; opacity: 0.85; }
+.book { margin-top: 20px; font: italic 400 clamp(19px, 1.6vw, 24px)/1.4 var(--g-serif); opacity: 0.95 !important; }
+.book span { display: block; margin-top: 8px; font-family: var(--font-mono); font-style: normal; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7; }
+.trio,
+.duo { display: grid; gap: clamp(16px, 3vw, 52px); align-items: start; }
+.trio { grid-template-columns: repeat(3, minmax(0, clamp(150px, 16vw, 260px))); }
+.duo { grid-template-columns: repeat(2, minmax(0, clamp(160px, 17vw, 270px))); }
+.trio figure,
+.duo figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.trio figcaption,
+.duo figcaption { font-size: 14px; opacity: 0.85; }
+
+/* ---- Reflection ---- */
+.reflection { margin-top: clamp(32px, 3.4vw, 52px); display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--g-edge); }
+.reflectionItem { padding: clamp(22px, 2.4vw, 36px); border-radius: 22px; background: var(--g-paper-2); }
+.reflectionItem h3 { font-family: var(--font-display); font-weight: 650; font-size: clamp(19px, 1.6vw, 24px); letter-spacing: -0.02em; }
+.reflectionItem p { margin-top: 12px; font-size: 15px; line-height: 1.6; color: var(--g-muted); }
+.honest { margin-top: 24px; font-size: 14px; color: var(--g-muted); }
+
+/* ---- Next ---- */
+.nextWrap { padding: 0 var(--g-edge) clamp(56px, 6vw, 96px); }
+.next {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+  min-height: clamp(240px, 30vw, 420px);
+  padding: clamp(28px, 4vw, 60px) var(--g-gutter);
+  border-radius: 28px;
+  overflow: hidden;
+  color: #fff;
+  background: linear-gradient(90deg, rgba(10, 8, 6, 0.78), rgba(10, 8, 6, 0.25)), var(--next-bg) center / cover no-repeat;
+}
+.nextLabel { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255, 255, 255, 0.75); }
+.nextName { font-family: var(--font-display); font-weight: 800; font-size: clamp(44px, 7vw, 110px); line-height: 0.95; letter-spacing: -0.045em; }
+.nextName span { display: inline-block; transition: transform 0.5s var(--ease-out); }
+@media (hover: hover) { .next:hover .nextName span { transform: translateX(10px); } }
+.exits { display: flex; justify-content: center; gap: 28px; margin-top: 28px; }
+.exits a { font-size: 15px; color: var(--g-muted); border-bottom: 1px solid var(--g-line); padding-bottom: 2px; transition: color 0.25s, border-color 0.25s; }
+.exits a:hover { color: var(--g-ink); border-color: var(--g-ink); }
+
+/* ---- Narrow screens ---- */
+@media (max-width: 900px) {
+  .hero { flex-direction: column; justify-content: flex-end; }
+  .heroPhones { position: relative; right: auto; bottom: auto; margin: 120px auto 0; }
+  .heroPhones .cover { width: 40vw; max-width: 220px; }
+  .readers, .boards2, .twoUp, .reflection { grid-template-columns: 1fr; }
+  .change { grid-template-columns: 1fr; gap: 8px; }
+  .trio { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .duo { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+}

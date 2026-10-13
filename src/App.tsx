@@ -13,6 +13,7 @@ import { AllWork } from './pages/AllWork'
 import { About } from './pages/About'
 import { CaseStudy } from './pages/CaseStudy'
 import { TimeCase } from './pages/cases/TimeCase'
+import { GoodreadsCase } from './pages/cases/GoodreadsCase'
 
 export default function App() {
   return (
@@ -44,5 +45,7 @@ export default function App() {
 /** Case studies with their own bespoke page; the rest use the shared template. */
 function CaseRoute() {
   const { slug } = useParams()
-  return slug === 'time' ? <TimeCase /> : <CaseStudy />
+  if (slug === 'time') return <TimeCase />
+  if (slug === 'goodreads') return <GoodreadsCase />
+  return <CaseStudy />
 }
