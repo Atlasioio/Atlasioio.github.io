@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { projects, type Project } from '../../data/content'
 import { useStartModal } from '../../context/StartModalContext'
@@ -12,6 +12,8 @@ interface Action {
   to?: string
   /** Opens the contact form modal instead of navigating. */
   contact?: boolean
+  /** A case study: shown as a row with its thumbnail. */
+  project?: Project
 }
 interface Msg {
   role: 'user' | 'assistant'
@@ -20,6 +22,12 @@ interface Msg {
   actions?: Action[]
   /** Suggested next questions, from the reply's FOLLOW-UPS line. */
   followUps?: string[]
+}
+/** A hover preview of a mentioned project, placed inside the chat window. */
+interface Peek {
+  project: Project
+  left: number
+  top: number
 }
 
 /** Splits the reply from its trailing "FOLLOW-UPS: a | b | c" line. */
@@ -30,34 +38,64 @@ function splitFollowUps(text: string): { body: string; followUps: string[] } {
   return { body: text.slice(0, m.index).trim(), followUps }
 }
 
+/* ---- Project names ------------------------------------------------------ */
+
+/** What a project is called in conversation: "Goodreads Redesign" is usually
+ *  just "Goodreads", and "Sony / Nimway" either half. */
+const shortName = (p: Project) => p.name.replace(/\s+Redesign$/, '')
+const NAME_TO_PROJECT = new Map<string, Project>()
+for (const p of projects) {
+  for (const n of [p.name, shortName(p), ...p.name.split(' / ')]) NAME_TO_PROJECT.set(n.trim(), p)
+}
+const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+// Case-sensitive on the name as written, so ordinary words don't match ("time" isn't Time).
+// Longest first, so "Goodreads Redesign" wins over "Goodreads".
+const NAME_RE = new RegExp(
+  `\\b(${[...NAME_TO_PROJECT.keys()].sort((a, b) => b.length - a.length).map(escape).join('|')})\\b`,
+  'g',
+)
+
+type RenderName = (name: string, key: string) => ReactNode | null
+
+/** Plain text with project names swapped for mention pills. */
+function withMentions(text: string, key: string, renderName?: RenderName): ReactNode[] {
+  if (!renderName) return [text]
+  return text.split(NAME_RE).map((part, i) => (i % 2 === 1 ? renderName(part, `${key}-${i}`) ?? part : part))
+}
+
 /** **bold** and *italic*, nothing else; returns React nodes (never HTML). */
-function inline(text: string): ReactNode[] {
+function inline(text: string, renderName?: RenderName): ReactNode[] {
   return text.split(/(\*\*[^*]+\*\*|\*[^*\s][^*]*\*)/g).map((part, i) => {
-    if (/^\*\*[^*]+\*\*$/.test(part)) return <strong key={i}>{part.slice(2, -2)}</strong>
+    if (/^\*\*[^*]+\*\*$/.test(part)) {
+      const inner = part.slice(2, -2)
+      // a bolded project name becomes its mention, not bold text
+      const named = NAME_TO_PROJECT.has(inner) && renderName?.(inner, `b${i}`)
+      return named || <strong key={i}>{withMentions(inner, `b${i}`, renderName)}</strong>
+    }
     if (/^\*[^*\s][^*]*\*$/.test(part)) return <em key={i}>{part.slice(1, -1)}</em>
-    return part
+    return <Fragment key={i}>{withMentions(part, `t${i}`, renderName)}</Fragment>
   })
 }
 
 /** Paragraphs, line breaks, and simple bulleted or numbered lists. */
-function Rich({ text }: { text: string }) {
+function Rich({ text, renderName }: { text: string; renderName?: RenderName }) {
   const blocks = text.replace(/\r/g, '').split(/\n{2,}/)
   return (
     <>
       {blocks.map((block, b) => {
         const lines = block.split('\n').filter((l) => l.trim())
         if (lines.length && lines.every((l) => /^\s*[-*•]\s+/.test(l))) {
-          return <ul key={b}>{lines.map((l, i) => <li key={i}>{inline(l.replace(/^\s*[-*•]\s+/, ''))}</li>)}</ul>
+          return <ul key={b}>{lines.map((l, i) => <li key={i}>{inline(l.replace(/^\s*[-*•]\s+/, ''), renderName)}</li>)}</ul>
         }
         if (lines.length && lines.every((l) => /^\s*\d+[.)]\s+/.test(l))) {
-          return <ol key={b}>{lines.map((l, i) => <li key={i}>{inline(l.replace(/^\s*\d+[.)]\s+/, ''))}</li>)}</ol>
+          return <ol key={b}>{lines.map((l, i) => <li key={i}>{inline(l.replace(/^\s*\d+[.)]\s+/, ''), renderName)}</li>)}</ol>
         }
         return (
           <p key={b}>
             {lines.map((l, i) => (
               <Fragment key={i}>
                 {i > 0 && <br />}
-                {inline(l.replace(/^#+\s*/, ''))}
+                {inline(l.replace(/^#+\s*/, ''), renderName)}
               </Fragment>
             ))}
           </p>
@@ -72,11 +110,12 @@ function Rich({ text }: { text: string }) {
 function deriveActions(text: string, currentId?: string): Action[] {
   const out: Action[] = []
   const lower = text.toLowerCase()
+  const named = new Set<Project>()
+  for (const m of text.matchAll(NAME_RE)) named.add(NAME_TO_PROJECT.get(m[1])!)
+  // in the order the site lists them
   for (const p of projects) {
-    if (p.id === currentId) continue
-    // Case-sensitive on the name as written, so ordinary words don't match ("time" isn't Time).
-    const re = new RegExp(`\\b${p.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`)
-    if (re.test(text)) out.push({ label: `View ${p.name}`, to: `/work/${p.id}` })
+    if (p.id === currentId || !named.has(p)) continue
+    out.push({ label: shortName(p), to: `/work/${p.id}`, project: p })
   }
   if (/design process|how i work|my process|the process\b/.test(lower)) {
     out.push({ label: 'See my design process', to: '/about#process' })
@@ -89,6 +128,21 @@ function deriveActions(text: string, currentId?: string): Action[] {
 
 const AVATAR = '/images/profile-sketch.webp'
 
+/** A project's home card in miniature: its backdrop with the phone peeking in. */
+function Thumb({ project: p, className = '' }: { project: Project; className?: string }) {
+  const phone = p.card ? p.card.phones[p.card.cardPhone ?? 0] : undefined
+  const bg = p.card?.bg ?? p.image?.src
+  return (
+    <span
+      className={`${styles.thumb} ${className}`}
+      style={{ background: bg ? `center / cover no-repeat url(${bg})` : p.coverBg }}
+      aria-hidden="true"
+    >
+      {phone && <img src={phone} alt="" loading="lazy" />}
+    </span>
+  )
+}
+
 const ChevronUp = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6" /></svg>
 )
@@ -100,6 +154,15 @@ const CloseX = () => (
 )
 const SendIcon = () => (
   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 12l16-8-6 16-3-7-7-1z" /></svg>
+)
+const ArrowDown = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" /></svg>
+)
+const MailIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" /><path d="M4 7l8 6 8-6" /></svg>
+)
+const StepsIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="6" cy="18" r="2" /><circle cx="12" cy="12" r="2" /><circle cx="18" cy="6" r="2" /><path d="M7.5 16.5l3-3M13.5 10.5l3-3" /></svg>
 )
 
 /**
@@ -115,8 +178,14 @@ export function ProjectChat({ project }: { project?: Project }) {
   const [messages, setMessages] = useState<Msg[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [moreBelow, setMoreBelow] = useState(false)
+  const [peek, setPeek] = useState<Peek | null>(null)
   const dockRef = useRef<HTMLDivElement>(null)
+  const windowRef = useRef<HTMLDivElement>(null)
   const logRef = useRef<HTMLDivElement>(null)
+  const lastQuestionRef = useRef<HTMLDivElement>(null)
+  const spacerRef = useRef<HTMLDivElement>(null)
+  const prevMode = useRef<Mode>(mode)
   const inputRef = useRef<HTMLInputElement>(null)
 
   // Reset when the scope changes (navigating between case studies).
@@ -125,12 +194,38 @@ export function ProjectChat({ project }: { project?: Project }) {
     setInput('')
   }, [cfg])
 
-  // Keep the log pinned to the latest message.
-  useEffect(() => {
-    if (mode === 'open' && logRef.current) {
-      logRef.current.scrollTop = logRef.current.scrollHeight
+  /** True when part of the conversation sits below the fold (the spacer doesn't count). */
+  const checkMore = () => {
+    const log = logRef.current
+    if (!log) return
+    const spacer = spacerRef.current?.offsetHeight ?? 0
+    setMoreBelow(log.scrollHeight - spacer - log.scrollTop - log.clientHeight > 40)
+  }
+
+  // A new question moves to the top of the window and its answer reads down
+  // from there, instead of the log jumping to the end of a long reply. The
+  // spacer after the last message makes room for that when the turn is short.
+  useLayoutEffect(() => {
+    const log = logRef.current
+    const spacer = spacerRef.current
+    if (mode !== 'open' || !log || !spacer) return
+    const justOpened = prevMode.current !== 'open'
+    prevMode.current = mode
+    const q = lastQuestionRef.current
+    spacer.style.height = '0px'
+    if (!q) return checkMore()
+    const top = q.offsetTop - 12
+    spacer.style.height = `${Math.max(0, top + log.clientHeight - log.scrollHeight)}px`
+    const asked = messages[messages.length - 1]?.role === 'user'
+    if (asked || justOpened) {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      log.scrollTo({ top, behavior: asked && !reduce ? 'smooth' : 'auto' })
     }
+    checkMore()
   }, [messages, loading, mode])
+  useEffect(() => {
+    if (mode !== 'open') prevMode.current = mode
+  }, [mode])
 
   // Keep the window sitting above the mobile on-screen keyboard: the
   // VisualViewport shrinks when the keyboard opens, so we expose that height as
@@ -168,6 +263,7 @@ export function ProjectChat({ project }: { project?: Project }) {
     const next: Msg[] = [...messages, { role: 'user', content: q }]
     setMessages(next)
     setInput('')
+    setPeek(null)
     setLoading(true)
     try {
       const res = await fetch('/api/chat', {
@@ -193,6 +289,40 @@ export function ProjectChat({ project }: { project?: Project }) {
       setLoading(false)
     }
   }
+
+  /** Shows a mentioned project's preview above (or below) its pill. */
+  const showPeek = (p: Project, el: HTMLElement) => {
+    const win = windowRef.current?.getBoundingClientRect()
+    if (!win) return
+    const r = el.getBoundingClientRect()
+    const W = 232, H = 172
+    const left = Math.max(12, Math.min(r.left - win.left, win.width - W - 12))
+    const top = r.top - win.top > H + 70 ? r.top - win.top - H - 8 : r.bottom - win.top + 8
+    setPeek({ project: p, left, top })
+  }
+
+  /** A project name in an answer, as a pill linking to its case study. */
+  const renderName: RenderName = (name, key) => {
+    const p = NAME_TO_PROJECT.get(name)
+    if (!p || p.id === project?.id) return null
+    return (
+      <Link
+        key={key}
+        to={`/work/${p.id}`}
+        className={styles.mention}
+        onMouseEnter={(e) => showPeek(p, e.currentTarget)}
+        onMouseLeave={() => setPeek(null)}
+        onFocus={(e) => showPeek(p, e.currentTarget)}
+        onBlur={() => setPeek(null)}
+        data-cursor
+      >
+        <Thumb project={p} className={styles.mentionThumb} />
+        {name}
+      </Link>
+    )
+  }
+
+  const lastUser = messages.map((m) => m.role).lastIndexOf('user')
 
   return (
     <div className={styles.dock} data-mode={mode} ref={dockRef}>
@@ -221,7 +351,7 @@ export function ProjectChat({ project }: { project?: Project }) {
         </button>
 
         {/* Chat window */}
-        <div className={styles.windowContent} role="dialog" aria-label="Project assistant" aria-hidden={mode !== 'open'}>
+        <div className={styles.windowContent} role="dialog" aria-label="Project assistant" aria-hidden={mode !== 'open'} ref={windowRef}>
           <header className={styles.head}>
           <div className={styles.who}>
             <span className={styles.whoAvatar}>
@@ -243,43 +373,66 @@ export function ProjectChat({ project }: { project?: Project }) {
         </header>
 
         {/* data-lenis-prevent: wheel and touch scroll this list, not the page behind it. */}
-        <div className={styles.log} ref={logRef} data-lenis-prevent>
+        <div
+          className={styles.log}
+          ref={logRef}
+          onScroll={() => {
+            checkMore()
+            if (peek) setPeek(null)
+          }}
+          data-lenis-prevent
+        >
           <p className={styles.intro}>{cfg.greeting}</p>
 
           {messages.map((m, i) => (
             <Fragment key={i}>
               {m.role === 'user' ? (
-                <div className={`${styles.msg} ${styles.user}`}>{m.content}</div>
+                <div className={`${styles.msg} ${styles.user}`} ref={i === lastUser ? lastQuestionRef : undefined}>{m.content}</div>
               ) : (
                 <div className={styles.row}>
                   <img className={styles.face} src={AVATAR} alt="" width={28} height={28} />
                   <div className={`${styles.msg} ${styles.assistant} ${m.error ? styles.err : ''}`}>
-                    <Rich text={m.content} />
+                    <Rich text={m.content} renderName={m.error ? undefined : renderName} />
                   </div>
                 </div>
               )}
+              {/* Where to go next: case studies with their thumbnail, then any other links. */}
               {m.actions && m.actions.length > 0 && (
-                <div className={styles.actions}>
-                  {m.actions.map((a) =>
-                    a.contact ? (
-                      <button key={a.label} type="button" className={styles.action} onClick={() => openModal()} data-cursor>
-                        {a.label}
-                        <span aria-hidden="true">→</span>
+                <div className={styles.links}>
+                  {m.actions.map((a) => {
+                    const body = (
+                      <>
+                        {a.project ? (
+                          <Thumb project={a.project} className={styles.linkThumb} />
+                        ) : (
+                          <span className={styles.linkIcon} aria-hidden="true">{a.contact ? <MailIcon /> : <StepsIcon />}</span>
+                        )}
+                        <span className={styles.linkText}>
+                          <b>{a.label}</b>
+                          {a.project && <span>{a.project.outcome}</span>}
+                        </span>
+                        <span className={styles.linkGo} aria-hidden="true">→</span>
+                      </>
+                    )
+                    return a.contact ? (
+                      <button key={a.label} type="button" className={styles.link} onClick={() => openModal()} data-cursor>
+                        {body}
                       </button>
                     ) : (
-                      <Link key={a.to} to={a.to!} className={styles.action} data-cursor>
-                        {a.label}
-                        <span aria-hidden="true">→</span>
+                      <Link key={a.to} to={a.to!} className={styles.link} data-cursor>
+                        {body}
                       </Link>
-                    ),
-                  )}
+                    )
+                  })}
                 </div>
               )}
               {/* Follow-up questions, under the latest answer only. */}
               {i === messages.length - 1 && !loading && m.followUps && m.followUps.length > 0 && (
                 <div className={styles.followUps}>
+                  <p className={styles.askNext}>Ask next</p>
                   {m.followUps.map((q) => (
-                    <button key={q} type="button" className={styles.suggest} onClick={() => send(q)} data-cursor>
+                    <button key={q} type="button" className={styles.followUp} onClick={() => send(q)} data-cursor>
+                      <i aria-hidden="true">↳</i>
                       {q}
                     </button>
                   ))}
@@ -308,7 +461,33 @@ export function ProjectChat({ project }: { project?: Project }) {
               ))}
             </div>
           )}
+
+          <div className={styles.spacer} ref={spacerRef} aria-hidden="true" />
         </div>
+
+        <button
+          type="button"
+          className={`${styles.moreBelow} ${moreBelow ? styles.moreOn : ''}`}
+          onClick={() => logRef.current?.scrollBy({ top: logRef.current.clientHeight * 0.8, behavior: 'smooth' })}
+          tabIndex={moreBelow ? 0 : -1}
+          aria-hidden={!moreBelow}
+          data-cursor
+        >
+          <ArrowDown />
+          More below
+        </button>
+
+        {peek && (
+          <div className={styles.peek} style={{ left: peek.left, top: peek.top }} aria-hidden="true">
+            <Thumb project={peek.project} className={styles.peekThumb} />
+            <div>
+              <b>
+                {shortName(peek.project)} · {peek.project.year}
+              </b>
+              {peek.project.outcome}
+            </div>
+          </div>
+        )}
 
         <form
           className={styles.inputRow}
