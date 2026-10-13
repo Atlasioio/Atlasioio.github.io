@@ -45,7 +45,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        max_tokens: 700,
+        max_tokens: 800,
         system: typeof system === 'string' ? system.slice(0, 16000) : undefined,
         messages: trimmed,
       }),
@@ -57,7 +57,10 @@ export default async function handler(req, res) {
       // live-only failure while local dev works); a 400 often means billing/credits.
       const detail = await r.text().catch(() => '')
       console.error(`Anthropic API ${r.status}:`, detail.slice(0, 600))
-      res.status(502).json({ error: 'The assistant is unavailable right now.' })
+      // The upstream status code is safe to return (no key or detail in it) and
+      // tells you the cause straight away: 401 = key rejected, 400 = usually
+      // billing/credits, 404 = model name, 429 = rate limit.
+      res.status(502).json({ error: 'The assistant is unavailable right now.', upstream: r.status })
       return
     }
 

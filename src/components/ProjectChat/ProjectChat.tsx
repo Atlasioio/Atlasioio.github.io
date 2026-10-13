@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
+import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { projects, type Project } from '../../data/content'
 import { useStartModal } from '../../context/StartModalContext'
@@ -18,6 +18,53 @@ interface Msg {
   content: string
   error?: boolean
   actions?: Action[]
+  /** Suggested next questions, from the reply's FOLLOW-UPS line. */
+  followUps?: string[]
+}
+
+/** Splits the reply from its trailing "FOLLOW-UPS: a | b | c" line. */
+function splitFollowUps(text: string): { body: string; followUps: string[] } {
+  const m = text.match(/\n?\s*FOLLOW-?UPS?:\s*(.+)\s*$/i)
+  if (!m) return { body: text.trim(), followUps: [] }
+  const followUps = m[1].split('|').map((q) => q.trim().replace(/^[-*\d.\s]+/, '')).filter((q) => q.length > 3).slice(0, 3)
+  return { body: text.slice(0, m.index).trim(), followUps }
+}
+
+/** **bold** and *italic*, nothing else; returns React nodes (never HTML). */
+function inline(text: string): ReactNode[] {
+  return text.split(/(\*\*[^*]+\*\*|\*[^*\s][^*]*\*)/g).map((part, i) => {
+    if (/^\*\*[^*]+\*\*$/.test(part)) return <strong key={i}>{part.slice(2, -2)}</strong>
+    if (/^\*[^*\s][^*]*\*$/.test(part)) return <em key={i}>{part.slice(1, -1)}</em>
+    return part
+  })
+}
+
+/** Paragraphs, line breaks, and simple bulleted or numbered lists. */
+function Rich({ text }: { text: string }) {
+  const blocks = text.replace(/\r/g, '').split(/\n{2,}/)
+  return (
+    <>
+      {blocks.map((block, b) => {
+        const lines = block.split('\n').filter((l) => l.trim())
+        if (lines.length && lines.every((l) => /^\s*[-*•]\s+/.test(l))) {
+          return <ul key={b}>{lines.map((l, i) => <li key={i}>{inline(l.replace(/^\s*[-*•]\s+/, ''))}</li>)}</ul>
+        }
+        if (lines.length && lines.every((l) => /^\s*\d+[.)]\s+/.test(l))) {
+          return <ol key={b}>{lines.map((l, i) => <li key={i}>{inline(l.replace(/^\s*\d+[.)]\s+/, ''))}</li>)}</ol>
+        }
+        return (
+          <p key={b}>
+            {lines.map((l, i) => (
+              <Fragment key={i}>
+                {i > 0 && <br />}
+                {inline(l.replace(/^#+\s*/, ''))}
+              </Fragment>
+            ))}
+          </p>
+        )
+      })}
+    </>
+  )
 }
 
 /** Turns an assistant reply into tappable follow-ups: any project it names links
@@ -27,8 +74,9 @@ function deriveActions(text: string, currentId?: string): Action[] {
   const lower = text.toLowerCase()
   for (const p of projects) {
     if (p.id === currentId) continue
-    const re = new RegExp(`\\b${p.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').toLowerCase()}\\b`)
-    if (re.test(lower)) out.push({ label: `View ${p.name}`, to: `/work/${p.id}` })
+    // Case-sensitive on the name as written, so ordinary words don't match ("time" isn't Time).
+    const re = new RegExp(`\\b${p.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`)
+    if (re.test(text)) out.push({ label: `View ${p.name}`, to: `/work/${p.id}` })
   }
   if (/design process|how i work|my process|the process\b/.test(lower)) {
     out.push({ label: 'See my design process', to: '/about#process' })
@@ -129,8 +177,8 @@ export function ProjectChat({ project }: { project?: Project }) {
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) throw new Error(data.error || 'error')
-      const reply = data.reply || '…'
-      setMessages((m) => [...m, { role: 'assistant', content: reply, actions: deriveActions(reply, project?.id) }])
+      const { body, followUps } = splitFollowUps(data.reply || '…')
+      setMessages((m) => [...m, { role: 'assistant', content: body, actions: deriveActions(body, project?.id), followUps }])
     } catch {
       setMessages((m) => [
         ...m,
@@ -194,14 +242,22 @@ export function ProjectChat({ project }: { project?: Project }) {
           </div>
         </header>
 
-        <div className={styles.log} ref={logRef}>
+        {/* data-lenis-prevent: wheel and touch scroll this list, not the page behind it. */}
+        <div className={styles.log} ref={logRef} data-lenis-prevent>
           <p className={styles.intro}>{cfg.greeting}</p>
 
           {messages.map((m, i) => (
             <Fragment key={i}>
-              <div className={`${styles.msg} ${m.role === 'user' ? styles.user : styles.assistant} ${m.error ? styles.err : ''}`}>
-                {m.content}
-              </div>
+              {m.role === 'user' ? (
+                <div className={`${styles.msg} ${styles.user}`}>{m.content}</div>
+              ) : (
+                <div className={styles.row}>
+                  <img className={styles.face} src={AVATAR} alt="" width={28} height={28} />
+                  <div className={`${styles.msg} ${styles.assistant} ${m.error ? styles.err : ''}`}>
+                    <Rich text={m.content} />
+                  </div>
+                </div>
+              )}
               {m.actions && m.actions.length > 0 && (
                 <div className={styles.actions}>
                   {m.actions.map((a) =>
@@ -219,14 +275,27 @@ export function ProjectChat({ project }: { project?: Project }) {
                   )}
                 </div>
               )}
+              {/* Follow-up questions, under the latest answer only. */}
+              {i === messages.length - 1 && !loading && m.followUps && m.followUps.length > 0 && (
+                <div className={styles.followUps}>
+                  {m.followUps.map((q) => (
+                    <button key={q} type="button" className={styles.suggest} onClick={() => send(q)} data-cursor>
+                      {q}
+                    </button>
+                  ))}
+                </div>
+              )}
             </Fragment>
           ))}
 
           {loading && (
-            <div className={`${styles.msg} ${styles.assistant} ${styles.typing}`} aria-label="Assistant is typing">
-              <span className={styles.dot} />
-              <span className={`${styles.dot} ${styles.dot2}`} />
-              <span className={`${styles.dot} ${styles.dot3}`} />
+            <div className={styles.row}>
+              <img className={styles.face} src={AVATAR} alt="" width={28} height={28} />
+              <div className={`${styles.msg} ${styles.assistant} ${styles.typing}`} aria-label="Assistant is typing">
+                <span className={styles.dot} />
+                <span className={`${styles.dot} ${styles.dot2}`} />
+                <span className={`${styles.dot} ${styles.dot3}`} />
+              </div>
             </div>
           )}
 
