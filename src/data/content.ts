@@ -857,50 +857,8 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 'sony',
-    index: 'W/06',
-    name: 'Sony / Nimway',
-    tag: 'Smart office · Client',
-    role: 'UX design',
-    outcome: 'One product across panels, kiosks, wayfinding & app',
-    description:
-      'Smart-office product line for the Sony group — meeting-room panels, a booking app and website, and large-format wayfinding maps. Real, shipping client work; the visuals are under NDA.',
-    fill: 'c',
-    image: { src: '/work/sony/cover-nimway.webp', alt: 'Sony / Nimway — smart-office product line' },
-    year: '2025 — 2026',
-    client: 'Sony / Nimway (under NDA)',
-    services: ['UX design', 'Design systems', 'Cross-surface'],
-    tagline:
-      'Keeping one product feeling like one product — across a door panel, a lobby kiosk, a floor-plan wall, and a phone.',
-    overview:
-      'Nimway is Sony’s smart-office platform, used by thousands of people across multiple countries. I designed flows that span four very different surfaces — eye-level meeting-room panels, no-login lobby kiosks, large-format wayfinding screens read from across a room, and the mobile booking app — keeping them coherent without flattening each into the same screen. This is real, shipping client work, so the visuals are under NDA: what follows is the story rather than the screens.',
-    sections: [
-      {
-        heading: 'The brief',
-        body: 'A smart-office system lives on hardware as much as in an app. The challenge wasn’t any single screen — it was four contexts at once: a door panel you read at arm’s length, a lobby kiosk a stranger uses with no login, a floor-plan display legible from across the room, and a phone in your pocket. Each has its own distance, attention span, and input.',
-      },
-      {
-        heading: 'One product, four surfaces',
-        body: 'The work was holding a single product language across all of them without pretending they’re the same screen. Shared logic and a shared system — but type, density, and interaction tuned to each surface’s distance and context. A panel states; a kiosk guides; a wayfinding screen orients; the app manages.',
-      },
-      {
-        heading: 'What I designed',
-        body: 'Meeting-room panels (booking, status, occupancy), TouchPlan lobby kiosks (visitor navigation and resource booking), wayfinding screens (floor-plan availability at a glance), and the booking app (find a room, manage it from your phone) — designed in Figma against Sony’s design system and tested on real devices.',
-      },
-      {
-        heading: 'Shipping',
-        body: 'The flows ship in upcoming Nimway releases across panels, kiosks, wayfinding, and the booking app — my first time designing for a real product at this scale, for users I’ll never meet but who’ll touch it every working day.',
-      },
-    ],
-    results: [
-      { value: 'Sony', label: 'Real, shipping client work' },
-      { value: '4 surfaces', label: 'Panel · kiosk · wayfinding · app' },
-      { value: '1 system', label: 'Coherent across all of them' },
-    ],
-  },
-  {
     id: 'teem',
-    index: 'W/07',
+    index: 'W/06',
     name: 'Teem',
     tag: 'Brand · Concept',
     role: 'Brand & packaging design',
@@ -970,7 +928,7 @@ export const projects: Project[] = [
   },
   {
     id: 'reel',
-    index: 'W/08',
+    index: 'W/07',
     name: 'Reel',
     tag: 'Web · Concept',
     role: 'Design & Framer build',
@@ -1019,6 +977,48 @@ export const projects: Project[] = [
       { src: '/work/reel/m-services.webp', caption: 'Services' },
       { src: '/work/reel/m-projects.webp', caption: 'Projects' },
       { src: '/work/reel/m-contact.webp', caption: 'Contact' },
+    ],
+  },
+  {
+    id: 'sony',
+    index: 'W/08',
+    name: 'Sony / Nimway',
+    tag: 'Smart office · Client',
+    role: 'UX design',
+    outcome: 'One product across panels, kiosks, wayfinding & app',
+    description:
+      'Smart-office product line for the Sony group — meeting-room panels, a booking app and website, and large-format wayfinding maps. Real, shipping client work; the visuals are under NDA.',
+    fill: 'c',
+    image: { src: '/work/sony/cover-nimway.webp', alt: 'Sony / Nimway — smart-office product line' },
+    year: '2025 — 2026',
+    client: 'Sony / Nimway (under NDA)',
+    services: ['UX design', 'Design systems', 'Cross-surface'],
+    tagline:
+      'Keeping one product feeling like one product — across a door panel, a lobby kiosk, a floor-plan wall, and a phone.',
+    overview:
+      'Nimway is Sony’s smart-office platform, used by thousands of people across multiple countries. I designed flows that span four very different surfaces — eye-level meeting-room panels, no-login lobby kiosks, large-format wayfinding screens read from across a room, and the mobile booking app — keeping them coherent without flattening each into the same screen. This is real, shipping client work, so the visuals are under NDA: what follows is the story rather than the screens.',
+    sections: [
+      {
+        heading: 'The brief',
+        body: 'A smart-office system lives on hardware as much as in an app. The challenge wasn’t any single screen — it was four contexts at once: a door panel you read at arm’s length, a lobby kiosk a stranger uses with no login, a floor-plan display legible from across the room, and a phone in your pocket. Each has its own distance, attention span, and input.',
+      },
+      {
+        heading: 'One product, four surfaces',
+        body: 'The work was holding a single product language across all of them without pretending they’re the same screen. Shared logic and a shared system — but type, density, and interaction tuned to each surface’s distance and context. A panel states; a kiosk guides; a wayfinding screen orients; the app manages.',
+      },
+      {
+        heading: 'What I designed',
+        body: 'Meeting-room panels (booking, status, occupancy), TouchPlan lobby kiosks (visitor navigation and resource booking), wayfinding screens (floor-plan availability at a glance), and the booking app (find a room, manage it from your phone) — designed in Figma against Sony’s design system and tested on real devices.',
+      },
+      {
+        heading: 'Shipping',
+        body: 'The flows ship in upcoming Nimway releases across panels, kiosks, wayfinding, and the booking app — my first time designing for a real product at this scale, for users I’ll never meet but who’ll touch it every working day.',
+      },
+    ],
+    results: [
+      { value: 'Sony', label: 'Real, shipping client work' },
+      { value: '4 surfaces', label: 'Panel · kiosk · wayfinding · app' },
+      { value: '1 system', label: 'Coherent across all of them' },
     ],
   },
 ]
