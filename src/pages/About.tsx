@@ -53,12 +53,21 @@ export function About() {
           <span className={caseStyles.wordmark} aria-hidden="true" style={{ visibility: 'hidden' }}>lukas</span>
         </div>
 
-        {/* Intro: the page title and story on the left, the blue tile on the right */}
+        {/* Intro: the title on one line across the top, then the story on the
+            left and the blue tile on the right */}
         <header className={`wrap ${styles.hero}`}>
+          <Reveal as="h1" className={`${caseStyles.title} ${styles.heroTitle}`}>
+            Hi, I'm Lukas.
+            <img
+              className={styles.heroAvatar}
+              src="/images/profile-sketch.webp"
+              alt=""
+              aria-hidden="true"
+              width={256}
+              height={256}
+            />
+          </Reveal>
           <div className={styles.heroText}>
-            <Reveal as="h1" className={caseStyles.title}>
-              Hi, I'm Lukas.
-            </Reveal>
             <div className={styles.intro}>
               <Reveal as="p" i={1}>
                 A product designer in {studio.locationShort}. Most recently at{' '}
