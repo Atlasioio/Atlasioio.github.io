@@ -705,11 +705,7 @@ export const projects: Project[] = [
     sections: [
       {
         heading: 'Discover',
-        body: 'EcoTrip began as an earlier build of my own, so the honest first move was to audit it. The file had grown to 126 frames hanging off four tabs with no route between them, where duplicates and unlinked experiments outnumbered the real paths. There was no onboarding, no way to give back, and no way to compare one trip against another. The interface had its own tells: a single saturated yellow doing every job, leaves scoring the trip, and a bare "132 KgCO2" with nothing to measure it against.',
-        media: [
-          { src: '/work/ecotrip/process/audit-old-ui.webp', caption: 'Audit of the earlier build. Four findings, each turned into a decision that shaped the redesign.' },
-          { src: '/work/ecotrip/process/ia-before.webp', caption: 'The old architecture: 126 frames across four dead-end tabs, with no route between them.' },
-        ],
+        body: 'Wanting to travel lighter is rarely the hard part. Three things get in the way. A carbon figure on its own means nothing: nobody can tell whether 132 kg is a lot. Green design reads as a lecture, and lectures get skipped. And one greener trip alone feels pointless. Each of those became a decision: every figure is paired with a comparison, the palette is warm honey and earth rather than eco-green, and every trip adds to a shared hive.',
       },
       {
         heading: 'Define',
@@ -720,9 +716,9 @@ export const projects: Project[] = [
       },
       {
         heading: 'Develop',
-        body: "126 frames became nine screens on a single loop: onboarding sets the posture, every trip ends in the Hive, and the Hive feeds the next trip, with giving back as its own branch. The visual direction took three passes. Eco-green read as a virtue sticker, SaaS-clean had no warmth and no sense of the collective, so honey and warm earth won: about the hive’s progress rather than a halo. Scoring went the same way, with leaves too generic and a bar too flat, until honeycomb cells won because they scale from five on a card to a full comb for the whole hive.",
+        body: "Nine screens on a single loop: onboarding sets the posture, every trip ends in the Hive, and the Hive feeds the next trip, with giving back as its own branch. The visual direction took three passes. Eco-green read as a virtue sticker, SaaS-clean had no warmth and no sense of the collective, so honey and warm earth won: about the hive’s progress rather than a halo. Scoring went the same way, with leaves too generic and a bar too flat, until honeycomb cells won because they scale from five on a card to a full comb for the whole hive.",
         media: [
-          { src: '/work/ecotrip/process/ia-after.webp', caption: 'The redesigned architecture: nine screens on one loop, with giving back as a new branch.' },
+          { src: '/work/ecotrip/process/ia-after.webp', caption: 'Nine screens on one loop, with giving back as its own branch.' },
           { src: '/work/ecotrip/process/explorations.webp', caption: 'Palette, type and scoring explored in parallel. Eco-green and SaaS-clean were rejected for the reasons noted.' },
         ],
       },

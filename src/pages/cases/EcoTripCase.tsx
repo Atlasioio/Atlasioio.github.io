@@ -14,8 +14,8 @@ import styles from './EcoTripCase.module.css'
 /**
  * The EcoTrip case study, built for EcoTrip alone (route "/work/ecotrip").
  * Cream, honey, brown and moss, with the honeycomb cell as the recurring
- * shape. The story: an audit of my own earlier build, two personas, and one
- * principle, friction only where it counts.
+ * shape. The story: what gets in the way of greener travel, two personas, and
+ * one principle, friction only where it counts.
  */
 
 const W = '/work/ecotrip'
@@ -97,37 +97,20 @@ export function EcoTripCase() {
           </div>
         </section>
 
-        {/* ---- Audit of the old build ---- */}
-        <section className={styles.section} aria-label="Audit">
-          <Reveal as="h2" className={styles.h2}>It started with my own broken build.</Reveal>
+        {/* ---- What gets in the way ---- */}
+        <section className={styles.section} aria-label="What gets in the way">
+          <Reveal as="h2" className={styles.h2}>Why greener travel doesn't stick.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            EcoTrip began as an earlier version of mine, so the honest first move was to audit it.
-            Here's one of its screens, recreated, and what it was telling people.
+            Wanting to travel lighter isn't the hard part. Three things get in the way, and each one
+            shaped a decision in the app.
           </Reveal>
-          <div className={styles.audit}>
-            <Reveal className={styles.oldWrap} i={1}>
-              <span className={styles.label}>Before · recreated</span>
-              <OldCard />
-            </Reveal>
-            <ol className={styles.findings}>
-              {FINDINGS.map(([h, was, now], i) => (
-                <Reveal as="li" className={styles.finding} key={h} i={i}>
-                  <span className={styles.pin}>{i + 1}</span>
-                  <div>
-                    <h3>{h}</h3>
-                    <p>{was}</p>
-                    <p className={styles.now}><Hex size={12} fill="var(--e-honey)" /> {now}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </ol>
-          </div>
-          <div className={styles.counts}>
-            {COUNTS.map(([n, h, t], i) => (
-              <Reveal className={styles.count} key={h} i={i}>
-                <span className={styles.big}>{n}</span>
-                <b>{h}</b>
+          <div className={styles.blockers}>
+            {BLOCKERS.map(([h, t, d], i) => (
+              <Reveal className={styles.blocker} key={h} i={i}>
+                <span className={styles.blockerHex}><Hex size={34} fill="var(--e-honey)" /><b>{i + 1}</b></span>
+                <h3>{h}</h3>
                 <p>{t}</p>
+                <p className={styles.now}>{d}</p>
               </Reveal>
             ))}
           </div>
@@ -135,33 +118,14 @@ export function EcoTripCase() {
 
         {/* ---- Structure ---- */}
         <section className={styles.section} aria-label="Structure">
-          <Reveal as="h2" className={styles.h2}>Four dead ends became one loop.</Reveal>
+          <Reveal as="h2" className={styles.h2}>Nine screens, one loop.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            Every screen hung off one of four tabs, with no route between them. A finished trip led
-            nowhere, and nothing carried you from planning into the community.
-          </Reveal>
-          <Reveal className={styles.before} i={2}>
-            <span className={styles.label}>Before · 126 frames</span>
-            <div className={styles.cols}>
-              {BEFORE.map(([tab, items]) => (
-                <div className={styles.col} key={tab}>
-                  <span className={styles.colHead}>{tab}</span>
-                  {items.map(([t, bad]) => (
-                    <span key={t} className={`${styles.node} ${bad ? styles.nodeBad : ''}`}>{t}</span>
-                  ))}
-                </div>
-              ))}
-              <div className={styles.orphans}>
-                <span className={styles.label}>Unlinked</span>
-                <div>
-                  {['Frame 1–15', 'Bee theme', 'Colour palette', '+ 100 more'].map((t) => <span key={t}>{t}</span>)}
-                </div>
-              </div>
-            </div>
+            Planning, sharing and giving back aren't separate corners of the app. Each one leads into
+            the next.
           </Reveal>
           <Reveal className={styles.after} i={2}>
             <div className={styles.afterText}>
-              <span className={styles.label}>After · nine screens</span>
+              <span className={styles.label}>How it fits together</span>
               <h3>Every trip ends in the Hive, and the Hive feeds the next trip.</h3>
               <p>
                 Onboarding sets up the idea. Explore and Create both lead to a trip, every trip can be
@@ -212,31 +176,30 @@ export function EcoTripCase() {
             <div>
               <Reveal as="span" className={styles.label}>Plan a trip</Reveal>
               <Reveal as="h3" className={styles.h3} i={1}>One question, in one place.</Reveal>
-              <Reveal className={styles.flow} i={2}>
-                <FlowStep n="01" t="Destination" />
-                <i aria-hidden="true">→</i>
-                <FlowStep n="02" t="Transport" hot />
-                <i aria-hidden="true">→</i>
-                <div className={styles.branch}>
-                  <span className={styles.branchHex}><Hex size={64} fill="var(--e-ink)" /><span>High carbon?</span></span>
-                  <div className={styles.branchOut}>
-                    <p className={styles.no}><b>No</b> Straight through. Cells light up, nothing to dismiss.</p>
-                    <p className={styles.yes}><b>Yes</b> “Adds ~180 kg CO₂. A sleeper train cuts it to ~60 kg.”</p>
-                    <div className={styles.choice}>
-                      <span>✓ Keep it, no guilt</span>
-                      <span className={styles.choiceDark}>See alternatives →</span>
-                    </div>
+              <Reveal className={styles.flowRow} i={2}>
+                <FlowStep n="Step 01" t="Destination" />
+                <FlowStep n="Step 02" t="Transport" tone="hot" />
+                <FlowStep n="The check" t="High carbon?" tone="ink" hex />
+              </Reveal>
+              <Reveal className={styles.lanes} i={3}>
+                <div className={`${styles.lane} ${styles.laneNo}`}>
+                  <span className={styles.laneTag}>No</span>
+                  <p>Straight through. The honeycomb fills, and there's nothing to dismiss.</p>
+                </div>
+                <div className={`${styles.lane} ${styles.laneYes}`}>
+                  <span className={styles.laneTag}>Yes</span>
+                  <p>“Adds ~180 kg CO₂. A sleeper train cuts it to ~60 kg.”</p>
+                  <div className={styles.choice}>
+                    <span>Keep it</span>
+                    <span className={styles.choiceDark}>See alternatives →</span>
                   </div>
                 </div>
               </Reveal>
-              <Reveal className={styles.flow2} i={3}>
-                <FlowStep n="03" t="Stay" />
-                <i aria-hidden="true">→</i>
-                <FlowStep n="04" t="Activities" />
-                <i aria-hidden="true">→</i>
-                <span className={styles.result}>EcoScore 5 / 5</span>
-                <i aria-hidden="true">→</i>
-                <span className={styles.post}>Post to the Hive</span>
+              <Reveal className={styles.flowRow} i={4}>
+                <FlowStep n="Step 03" t="Stay" />
+                <FlowStep n="Step 04" t="Activities" />
+                <FlowStep n="Result" t="EcoScore 5 / 5" tone="ink" />
+                <FlowStep n="Then" t="Post to the Hive" tone="soft" />
               </Reveal>
             </div>
           </div>
@@ -244,11 +207,11 @@ export function EcoTripCase() {
 
         {/* ---- The hive as a system ---- */}
         <section className={styles.section} aria-label="The hive">
-          <Reveal as="h2" className={styles.h2}>One cell, at every scale.</Reveal>
+          <Reveal as="h2" className={styles.h2}>One honeycomb, at every scale.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            Leaves scored the trip in the old build: generic eco-green, unrelated to anything.
-            Honeycomb cells replaced them because they scale. Five on a trip, a comb on your profile,
-            and one shared comb for everyone.
+            A trip's score is a row of hexagons, not leaves or a bar, because a honeycomb scales and
+            belongs to the idea: five on a trip, a honeycomb on your profile, and one shared
+            honeycomb for everyone.
           </Reveal>
           <HiveScales />
         </section>
@@ -260,9 +223,9 @@ export function EcoTripCase() {
             <Trio items={[['onboarding', 'Onboarding'], ['explore', 'Explore'], ['explore-trips', 'A trip']]} />
           </Panel>
 
-          <Panel tone="clip" no="In motion" title="From exploring to a finished trip."
+          <Panel tone="cream" no="In motion" title="From exploring to a finished trip."
             text="The core flow, start to finish.">
-            <video className={styles.clip} src={`${W}/EcoTrip-Flow-vid.webm`} muted loop playsInline autoPlay preload="none" aria-label="A walk through exploring and planning a trip in EcoTrip." />
+            <video className={styles.clipVideo} src={`${W}/flow-phone.webm`} muted loop playsInline autoPlay preload="none" aria-label="A walk through exploring and planning a trip in EcoTrip." />
           </Panel>
 
           <div className={styles.twoUp}>
@@ -271,60 +234,50 @@ export function EcoTripCase() {
               <Duo items={[['community', 'The Hive'], ['community-trip', 'A trip post']]} />
             </Panel>
             <Panel tone="cream" no="Profile" title="Impact before stats."
-              text="The old profile led with trips and days away. Now your impact comes first, then badges, then the numbers.">
+              text="Your impact comes first, in flights’ worth of CO₂, then badges, and only then the numbers.">
               <Duo items={[['profile', 'Profile']]} single />
             </Panel>
           </div>
 
           <Panel tone="moss" no="Give back" title="5% of every trip, to wild bees."
             text="On every booking, no matter how you travel. Anything you pledge on top goes 100% to the bees, and EcoTrip covers the fees.">
-            <div className={styles.giveRow}>
-              <Duo items={[['give-back', 'Give back'], ['why-bees', 'Why bees']]} />
-              <video className={styles.clipSmall} src={`${W}/why-bees.webm`} muted loop playsInline autoPlay preload="none" aria-label="Scrolling the Why bees page." />
-            </div>
+            <Duo items={[['give-back', 'Give back'], ['why-bees', 'Why bees']]} />
           </Panel>
         </section>
 
-        {/* ---- Explorations ---- */}
+        {/* ---- Explorations: the same trip card, three ways ---- */}
         <section className={styles.section} aria-label="Explorations">
           <Reveal as="h2" className={styles.h2}>Neither SaaS-plain nor eco-green.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            Travel defaults to white and blue, and anything environmental defaults to green. Both
-            signal virtue before a word is read. The bees gave a third way.
+            Travel apps default to white and blue, and anything environmental defaults to green.
+            Both signal virtue before a word is read. Here's the same trip, three ways.
           </Reveal>
-          <div className={styles.palettes}>
-            {PALETTES.map((p, i) => (
-              <Reveal className={`${styles.palette} ${p.chosen ? styles.chosen : ''}`} key={p.name} i={i}>
-                <div className={styles.chips}>{p.colors.map((c) => <span key={c} style={{ background: c }} />)}</div>
-                <div className={styles.paletteHead}>
-                  <b>{p.name}</b>
-                  <span className={p.chosen ? styles.stampIn : styles.stampOut}>{p.chosen ? 'Chosen' : 'Rejected'}</span>
+          <div className={styles.variants}>
+            {VARIANTS.map((v, i) => (
+              <Reveal as="figure" className={`${styles.variant} ${v.chosen ? styles.variantChosen : ''}`} key={v.id} i={i}>
+                <div className={`${styles.stage} ${styles[v.id]}`}>
+                  <div className={styles.trip}>
+                    <span className={styles.tripImg} />
+                    <div className={styles.tripTop}>
+                      <span className={styles.tripName}>Swiss Roadtrip</span>
+                      <span className={styles.tripPrice}>€185</span>
+                    </div>
+                    <span className={styles.tripMeta}>Electric camper · 4 days</span>
+                    <div className={styles.tripScore}>
+                      {v.id === 'vGreen' && <Leaves />}
+                      {v.id === 'vBlue' && <span className={styles.vBar}><i /></span>}
+                      {v.id === 'vHoney' && <span className={styles.cells}>{[1, 1, 1, 1, 0].map((f, k) => <Hex key={k} size={18} fill={f ? '#f0a70f' : '#f6e3b4'} />)}</span>}
+                      <span>{v.score}</span>
+                    </div>
+                  </div>
                 </div>
-                <p>{p.why}</p>
+                <figcaption>
+                  <span className={v.chosen ? styles.stampIn : styles.stampOut}>{v.chosen ? 'Chosen' : 'Rejected'}</span>
+                  <b>{v.name}</b>
+                  <p>{v.why}</p>
+                </figcaption>
               </Reveal>
             ))}
-          </div>
-          <div className={styles.explore2}>
-            <Reveal className={styles.typeCol} i={1}>
-              <span className={styles.label}>Type</span>
-              <div className={`${styles.typeRow} ${styles.typeOut}`}>
-                <span className={styles.typeInter}>Travel light</span>
-                <span className={styles.stampOut}>Out</span>
-              </div>
-              <div className={`${styles.typeRow} ${styles.typeIn}`}>
-                <span className={styles.app}>Travel light. Together.</span>
-                <span className={styles.stampIn}>In</span>
-              </div>
-              <p className={styles.note}>Fredoka for display, Nunito for text: rounded, warm, and nothing like a booking site.</p>
-            </Reveal>
-            <Reveal className={styles.scoreCol} i={2}>
-              <span className={styles.label}>Scoring a trip</span>
-              <div className={styles.scores}>
-                <div><Leaves /><span>Leaves</span></div>
-                <div><span className={styles.bar}><i /></span><span>A bar</span></div>
-                <div className={styles.scoreWin}><span className={styles.cells}>{[1, 1, 1, 0, 0].map((f, k) => <Hex key={k} size={22} fill={f ? 'var(--e-honey)' : 'var(--e-honey-soft)'} />)}</span><span>Honeycomb cells</span></div>
-              </div>
-            </Reveal>
           </div>
         </section>
 
@@ -376,31 +329,19 @@ export function EcoTripCase() {
 }
 
 /* ---- Content ---- */
-const FINDINGS: [string, string, string][] = [
-  ['One yellow doing every job', 'Background, button and active tab shared a colour, so nothing led.', 'Honey kept for actions; warm earth carries the rest.'],
-  ['Leaves scored the trip', 'Generic eco-green, unrelated to the bees or the hive.', 'Honeycomb cells that fill, tying one trip to the hive.'],
-  ['A number with nothing to compare', '“132 KgCO2” meant nothing on its own.', 'Always paired with a reference: 82% less than flying.'],
-  ['Stats above impact', 'The profile led with trips and days away; the point came last.', 'Impact first, then badges, then stats.'],
-]
-const COUNTS: [string, string, string][] = [
-  ['4', 'Isolated tabs', 'A finished trip led nowhere.'],
-  ['0', 'Entry points', 'No onboarding: people met a tab bar, not an idea.'],
-  ['104', 'of 126 frames orphaned', 'Duplicates, experiments and dead states outnumbered the 22 screens actually in a path.'],
-]
-const BEFORE: [string, [string, boolean][]][] = [
-  ['Profile', [['User profile', false], ['Stats, no impact', true]]],
-  ['Community', [['Community', false], ['Community 2 · duplicate', true]]],
-  ['Explore', [['Explore trips', false], ['Trip overview · no way back', true]]],
-  ['Create', [['Destination', false], ['Accommodation', false], ['Activities', false], ['Steps don’t connect', true]]],
+const BLOCKERS: [string, string, string][] = [
+  ['A number means nothing alone', '“132 kg CO₂” is impossible to judge. Too much? Good?', 'Every figure comes with a comparison: 82% less than flying the same route.'],
+  ['Green reads as guilt', 'Eco-green and leaf icons feel like a lecture, and lectures get skipped.', 'Warm honey and earth, and a hive you add to, instead of a halo you earn.'],
+  ['Alone, it feels pointless', 'One train ride instead of one flight doesn’t feel like it changes anything.', 'Every trip adds to a shared comb, so you can see what everyone saved together.'],
 ]
 const PERSONAS = [
   { name: 'Jane', tag: 'the activist', tone: 'pTerra', wants: 'Cuts carbon at every step, and wants the bad option to feel like one.', sets: 'Jane set the floor:', because: 'friction belongs on the high-carbon choice, never on her own path.' },
   { name: 'John', tag: 'the casual', tone: 'pHoney', wants: 'Takes bigger trips and won’t trade much convenience for a smaller footprint.', sets: 'John set the ceiling:', because: 'show the greener option, and never block the route.' },
 ] as const
-const PALETTES = [
-  { name: 'Eco-green', colors: ['#7fae7c', '#a0d6a0', '#dcefd9', '#f4faf2'], why: 'Virtue at the palette level. Reads as a sticker.', chosen: false },
-  { name: 'SaaS-clean', colors: ['#6a9bd6', '#85c5f5', '#eaf4fd', '#ffffff'], why: 'Every travel app. No warmth, nothing collective.', chosen: false },
-  { name: 'Honey and warm earth', colors: ['#f0a70f', '#c6870e', '#c4693a', '#6b7b35', '#221a10'], why: 'Warm and collective, about the hive’s progress rather than a halo.', chosen: true },
+const VARIANTS = [
+  { id: 'vGreen', name: 'Eco-green, leaves', score: '132 kg CO₂', why: 'Virtue at the palette level, and a lecture before you’ve read anything.', chosen: false },
+  { id: 'vBlue', name: 'SaaS-clean, a bar', score: '38 kg CO₂', why: 'Every booking site. Clear, but cold, and nothing about it is shared.', chosen: false },
+  { id: 'vHoney', name: 'Honey and earth, a honeycomb', score: '82% less than flying', why: 'Warm, about the hive’s progress, and the score has something to compare it to.', chosen: true },
 ]
 
 /* ---- Pieces ---- */
@@ -445,11 +386,15 @@ function Duo({ items, single }: { items: [string, string][]; single?: boolean })
   )
 }
 
-function FlowStep({ n, t, hot }: { n: string; t: string; hot?: boolean }) {
+function FlowStep({ n, t, tone, hex }: { n: string; t: string; tone?: 'hot' | 'ink' | 'soft'; hex?: boolean }) {
+  const cls = tone === 'hot' ? styles.fhot : tone === 'ink' ? styles.fink : tone === 'soft' ? styles.fsoft : ''
   return (
-    <span className={`${styles.fstep} ${hot ? styles.fhot : ''}`}>
-      <small>Step {n}</small>
-      {t}
+    <span className={`${styles.fstep} ${cls}`}>
+      <small>{n}</small>
+      <span className={styles.fstepT}>
+        {hex && <Hex size={18} fill="var(--e-honey)" />}
+        {t}
+      </span>
     </span>
   )
 }
@@ -461,28 +406,6 @@ function Hex({ size, fill, stroke }: { size: number; fill: string; stroke?: stri
     <svg width={w} height={h} viewBox="0 0 86.6 100" aria-hidden="true" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
       <path d="M43.3 0 86.6 25v50L43.3 100 0 75V25z" fill={fill} stroke={stroke} strokeWidth={stroke ? 4 : 0} />
     </svg>
-  )
-}
-
-/** The old Explore card, recreated, with its four problems pinned to it. */
-function OldCard() {
-  return (
-    <div className={styles.old}>
-      <span className={styles.oldTitle}>Explore trips</span>
-      <div className={styles.oldCard}>
-        <span className={styles.oldImg} />
-        <span className={styles.oldName}>Swiss Roadtrip</span>
-        <div className={styles.oldRow}>
-          <Leaves />
-          <span>132 KgCO2</span>
-        </div>
-        <span className={`${styles.oldPin} ${styles.p2}`}>2</span>
-        <span className={`${styles.oldPin} ${styles.p3}`}>3</span>
-      </div>
-      <div className={styles.oldNav}><i /><i /><i className={styles.oldOn} /><i /></div>
-      <span className={`${styles.oldPin} ${styles.p1}`}>1</span>
-      <span className={`${styles.oldPin} ${styles.p4}`}>4</span>
-    </div>
   )
 }
 
@@ -562,9 +485,9 @@ function HiveScales() {
   }, [])
   return (
     <div ref={ref} className={`${styles.scales} ${on ? styles.on : ''}`}>
-      <Scale label="A trip" note="Five cells on every trip card: the EcoScore." rows={[5]} filled={4} size={28} />
-      <Scale label="You" note="A full comb on your profile, filling with every trip." rows={[4, 5, 6, 5, 4]} filled={15} size={30} />
-      <Scale label="The hive" note="One shared comb for everyone: what we saved together." rows={[7, 8, 9, 10, 9, 8, 7]} filled={44} size={22} />
+      <Scale label="A trip" note="Five hexagons on every trip card: the EcoScore." rows={[5]} filled={4} size={30} />
+      <Scale label="You" note="A full honeycomb on your profile, filling with every trip." rows={[4, 5, 6, 5, 4]} filled={15} size={30} />
+      <Scale label="The hive" note="One shared honeycomb for everyone: what we saved together." rows={[6, 7, 8, 9, 8, 7, 6]} filled={38} size={24} />
     </div>
   )
 }
@@ -572,11 +495,14 @@ function HiveScales() {
 function Scale({ label, note, rows, filled, size }: { label: string; note: string; rows: number[]; filled: number; size: number }) {
   let k = 0
   const w = size * 0.866
+  // pointy-top hexagons: rows overlap by a quarter, so this vertical step
+  // keeps the gap between every pair of neighbours the same as across a row
+  const gap = Math.max(2, Math.round(size * 0.1))
   return (
     <figure className={styles.scale}>
       <div className={styles.comb}>
         {rows.map((n, r) => (
-          <div key={r} className={styles.combRow} style={{ marginTop: r ? -size * 0.25 : 0 }}>
+          <div key={r} className={styles.combRow} style={{ marginTop: r ? -size * 0.25 + gap * 0.866 : 0, '--g': `${gap}px` } as CSSProperties}>
             {Array.from({ length: n }, () => {
               const i = k++
               const lit = i < filled

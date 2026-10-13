@@ -75,7 +75,9 @@
 .credits { margin-top: 24px; font-size: 14px; opacity: 0.72; }
 
 /* ---- 2. Story ---- */
-.story { display: grid; place-items: center; padding: clamp(96px, 14vw, 190px) var(--g-gutter); }
+/* Its own quiet moment between the hero and the work, spaced like Time's:
+   the next section adds no top padding here, so the room lives on the story. */
+.story { display: grid; place-items: center; min-height: 72svh; padding: clamp(120px, 16vw, 240px) var(--g-gutter) clamp(160px, 22vw, 320px); }
 .story > div { max-width: 36em; display: flex; flex-direction: column; gap: 1.1em; font-size: clamp(17px, 1.35vw, 20px); line-height: 1.62; color: var(--g-muted); }
 .storyLead { font-family: var(--font-display); font-weight: 600; font-size: clamp(26px, 2.6vw, 36px); line-height: 1.2; letter-spacing: -0.02em; color: var(--g-ink); }
 
