@@ -1,0 +1,182 @@
+/* The work index: four case studies as large cards (the home cards' photo and
+   phone, smaller), then the rest as a row of small cards on their shared covers. */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+  padding-top: clamp(24px, 4vw, 56px);
+  padding-bottom: clamp(40px, 5vw, 72px);
+}
+.title {
+  margin-top: 22px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(56px, 9vw, 136px);
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  color: var(--ink);
+}
+.lede {
+  margin-top: 18px;
+  max-width: 44ch;
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  color: var(--gray-strong);
+}
+.count {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray-strong);
+}
+.count b {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(40px, 4.4vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+
+.group + .group { margin-top: clamp(64px, 7vw, 112px); }
+.group:last-of-type { padding-bottom: clamp(80px, 9vw, 140px); }
+.groupHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+  margin-bottom: 22px;
+}
+.groupHead p {
+  max-width: 46ch;
+  font-size: 14px;
+  color: var(--gray-strong);
+  text-align: right;
+}
+
+.big { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 1.6vw, 24px); }
+.small { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(14px, 1.4vw, 20px); }
+
+/* ---- A card ---- */
+.card { display: flex; flex-direction: column; gap: 16px; color: var(--ink); text-decoration: none; }
+.art {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  aspect-ratio: 1.12;
+  border-radius: 16px;
+  background: var(--bg-deep);
+}
+.cardBig .art { aspect-ratio: 1.36; border-radius: 20px; }
+/* a little shade at the top so the tag reads on any photo */
+.cardBig .art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.18), transparent 30%);
+}
+.photo {
+  position: absolute;
+  inset: -2%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: transform 1.2s var(--ease-out);
+}
+.phone {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: -26%;
+  height: 104%;
+  width: auto;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.35));
+  transition: transform 0.9s var(--ease-out);
+}
+.tag {
+  position: absolute;
+  z-index: 2;
+  left: 14px;
+  top: 14px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+.cardBig .tag { left: 16px; top: 16px; color: #fff; background: rgba(255, 255, 255, 0.18); border-color: rgba(255, 255, 255, 0.28); }
+.go {
+  position: absolute;
+  z-index: 2;
+  right: 14px;
+  bottom: 14px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  color: #0e0e0c;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.3s, transform 0.5s var(--ease-out);
+}
+.meta { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; padding: 0 4px; }
+.meta h2 {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: 21px;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  transition: color 0.25s;
+}
+.cardBig .meta h2 { font-size: clamp(24px, 2.2vw, 32px); }
+.idx { align-self: center; font-family: var(--font-mono); font-size: 12px; color: var(--gray); }
+.meta p { grid-column: 1 / -1; font-size: 14px; line-height: 1.5; color: var(--gray-strong); }
+.cardBig .meta p { font-size: 15px; }
+.nda {
+  grid-column: 1 / -1;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.nda::before { content: '● '; }
+
+@media (hover: hover) {
+  .card:hover .photo { transform: scale(1.04); }
+  .card:hover .phone { transform: translateX(-50%) translateY(-6%); }
+  .card:hover .go { opacity: 1; transform: none; }
+  .card:hover .meta h2 { color: var(--accent); }
+}
+.card:focus-visible { outline: none; }
+.card:focus-visible .art { outline: 2px solid var(--accent); outline-offset: 4px; }
+.card:focus-visible .go { opacity: 1; transform: none; }
+
+@media (max-width: 1000px) { .small { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; }
+  .count { text-align: left; }
+  .big { grid-template-columns: 1fr; }
+  .groupHead { flex-direction: column; gap: 10px; }
+  .groupHead p { text-align: left; }
+}
+@media (max-width: 480px) { .small { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) {
+  .photo, .phone, .go { transition: none; }
+}

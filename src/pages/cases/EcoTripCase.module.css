@@ -27,7 +27,9 @@
 .shot img { display: block; width: 100%; height: auto; filter: drop-shadow(0 34px 44px rgba(34, 26, 16, 0.32)); }
 
 /* ---- Hero ---- */
-.hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; isolation: isolate; color: #fffaf0; }
+.hero { --fade: clamp(160px, 26vh, 300px); position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; isolation: isolate; color: #fffaf0; }
+/* The photo melts into the page below, as on Goodreads. */
+.hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: var(--fade); z-index: -1; pointer-events: none; background: linear-gradient(180deg, rgba(250, 244, 232, 0) 0%, rgba(250, 244, 232, 0.22) 30%, rgba(250, 244, 232, 0.66) 62%, rgba(250, 244, 232, 0.93) 86%, var(--e-bg) 100%); }
 .heroPhoto { position: absolute; inset: 0; z-index: -2; background: url('/work/ecotrip/card-bg.webp') 70% 40% / cover no-repeat; filter: brightness(0.66) saturate(0.95); }
 .heroFade {
   position: absolute;
@@ -41,14 +43,14 @@
   position: absolute;
   right: clamp(16px, 7vw, 120px);
   /* the images carry ~4% transparent space under the phone */
-  bottom: calc(clamp(104px, 14vh, 150px) - clamp(150px, 15vw, 270px) * 0.045 - 8px);
+  bottom: calc(clamp(104px, 14vh, 150px) + var(--fade) * 0.55 - clamp(150px, 15vw, 270px) * 0.045 - 8px);
   display: flex;
   align-items: flex-end;
   gap: clamp(10px, 1.6vw, 28px);
 }
 .heroPhones .shot { width: clamp(150px, 15vw, 270px); }
 .heroPhones .shot:first-child { transform: translateY(-7%); }
-.heroCopy { position: relative; padding: 0 var(--e-gutter) clamp(104px, 14vh, 150px); max-width: 1000px; }
+.heroCopy { position: relative; padding: 0 var(--e-gutter) calc(clamp(104px, 14vh, 150px) + var(--fade) * 0.55); max-width: 1000px; }
 .eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.8; }
 .title { margin-top: 18px; font-family: var(--font-display); font-weight: 800; font-size: clamp(48px, 6vw, 104px); line-height: 0.94; letter-spacing: -0.045em; }
 .title .app { color: var(--e-honey); font-size: 1.02em; }
@@ -58,7 +60,7 @@
 /* ---- Story ---- */
 /* Its own quiet moment between the hero and the work, spaced like Time's:
    the next section adds no top padding here, so the room lives on the story. */
-.story { display: grid; place-items: center; min-height: 72svh; padding: clamp(120px, 16vw, 240px) var(--e-gutter) clamp(160px, 22vw, 320px); }
+.story { display: grid; place-items: center; min-height: 72svh; padding: clamp(64px, 9vw, 150px) var(--e-gutter) clamp(160px, 22vw, 320px); }
 .story > div { max-width: 36em; display: flex; flex-direction: column; gap: 1.1em; font-size: clamp(17px, 1.35vw, 20px); line-height: 1.62; color: var(--e-muted); }
 .storyLead { font-family: var(--font-display); font-weight: 650; font-size: clamp(26px, 2.6vw, 36px); line-height: 1.2; letter-spacing: -0.02em; color: var(--e-ink); }
 

@@ -260,6 +260,8 @@ export interface Project {
   accent?: string
   /** Live site URL — shows a "Visit live site" button in the case-study hero. */
   liveUrl?: string
+  /** Client work whose visuals can't be shown; the work index says so. */
+  nda?: boolean
   /* ---- Optional rich media (real projects) ---- */
   /** Phone screens for the cover device-band (warm gradient behind them). */
   coverScreens?: string[]
@@ -984,6 +986,7 @@ export const projects: Project[] = [
     index: 'W/08',
     name: 'Sony / Nimway',
     tag: 'Smart office · Client',
+    nda: true,
     role: 'UX design',
     outcome: 'One product across panels, kiosks, wayfinding & app',
     description:
