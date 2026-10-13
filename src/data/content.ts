@@ -538,9 +538,9 @@ export const projects: Project[] = [
         src: '/work/goodreads/discover-browse.webp',
         group: 'discover',
         caption: 'Discover — two halves of finding a book',
-        note: 'Recommendations lead with why: because of the book in your hands, or because someone you trust finished it, rather than a bestseller wall. Shorts brings back the half of discovery that left for short video, with the book one tap from your shelf. Search is pinned above both, and the books already on your shelves come first.',
+        note: 'Recommendations lead with why: because of the book in your hands, or because someone you trust finished it, rather than a bestseller wall. Book Talk brings back the half of discovery that left for short video, with the book one tap from your shelf. Search is pinned above both, and the books already on your shelves come first.',
       },
-      { src: '/work/goodreads/discover-shorts.webp', group: 'discover', caption: 'Shorts — reader-made clips, the book one tap from your shelf' },
+      { src: '/work/goodreads/discover-shorts.webp', group: 'discover', caption: 'Book Talk — videos about books, the book one tap from your shelf' },
       { src: '/work/goodreads/search.webp', group: 'discover', caption: 'Search — global, but the books on your shelves come first' },
       {
         src: '/work/goodreads/book-page.webp',
