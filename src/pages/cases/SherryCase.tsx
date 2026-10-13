@@ -83,10 +83,10 @@ export function SherryCase() {
         <section className={styles.story} aria-label="The story">
           <div>
             <Reveal as="p" className={styles.storyLead}>
-              A wallpaper table costs around 2,000 kr. It gets used for one hallway.
+              Every flat on the street has its own drill. Most of them sit in a drawer.
             </Reveal>
             <Reveal as="p" i={1}>
-              Everyone can do that maths, and buying still wins. Not because people won't share, but
+              Everyone knows one would do for the whole street, and buying still wins. Not because people won't share, but
               because everything around the object is harder than buying it: finding who has one,
               knowing if it's free this weekend, and above all arranging to collect it from a
               stranger's home.

@@ -579,11 +579,11 @@ export const projects: Project[] = [
     tagline:
       'A tool library that runs on the library itself, because sharing between neighbours dies at the handover.',
     overview:
-      'A whole district buying 2 000 kr machines to use them for one weekend. Kirseberg already shares — it has even run its own temporary local currency — but it had no way to hand things over without knocking on a stranger’s door. Sherry moves every handover into the neighbourhood library’s drop-box, and builds the product around that one decision.',
+      'A whole street of drills, each used a few times a year. Kirseberg already shares — it has even run its own temporary local currency — but it had no way to hand things over without knocking on a stranger’s door. Sherry moves every handover into the neighbourhood library’s drop-box, and builds the product around that one decision.',
     sections: [
       {
         heading: 'Discover',
-        body: 'A wallpaper table costs around 2 000 kr and gets used for one hallway. The maths is obvious to everyone, and the default is still to buy, because everything around the object is harder than buying it: finding who has one, learning whether it is free this weekend, and above all arranging to stand in a stranger’s hallway. Rather than surveying, we spent time in the places Kirseberg already gathers — the library, the language café, the sports club, the neighbourhood café — and let the people running them say what the district needs.',
+        body: 'Every flat on the street has its own drill, and most of them sit in a drawer. Sharing one is obvious to everyone, and the default is still to buy, because everything around the object is harder than buying it: finding who has one, learning whether it is free this weekend, and above all arranging to stand in a stranger’s hallway. Rather than surveying, we spent time in the places Kirseberg already gathers — the library, the language café, the sports club, the neighbourhood café — and let the people running them say what the district needs.',
       },
       {
         heading: 'Define',
