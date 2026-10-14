@@ -19,6 +19,7 @@ import { EcoTripCase } from './pages/cases/EcoTripCase'
 import { TeemCase } from './pages/cases/TeemCase'
 import { JobquestCase } from './pages/cases/JobquestCase'
 import { ReelCase } from './pages/cases/ReelCase'
+import { SonyCase } from './pages/cases/SonyCase'
 
 export default function App() {
   return (
@@ -57,5 +58,6 @@ function CaseRoute() {
   if (slug === 'jobquest') return <JobquestCase />
   if (slug === 'teem') return <TeemCase />
   if (slug === 'reel') return <ReelCase />
+  if (slug === 'sony') return <SonyCase />
   return <CaseStudy />
 }
