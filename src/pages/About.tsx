@@ -58,14 +58,6 @@ export function About() {
         <header className={`wrap ${styles.hero}`}>
           <Reveal as="h1" className={`${caseStyles.title} ${styles.heroTitle}`}>
             Hi, I'm Lukas.
-            <img
-              className={styles.heroAvatar}
-              src="/images/profile-sketch.webp"
-              alt=""
-              aria-hidden="true"
-              width={256}
-              height={256}
-            />
           </Reveal>
           <div className={styles.heroText}>
             <div className={styles.intro}>
@@ -85,12 +77,21 @@ export function About() {
           </div>
 
           <Reveal as="aside" className={styles.nowTile} i={2}>
-            <div>
+            <div className={styles.nowHead}>
+              <div>
               <p className={styles.nowStatus}>
                 <span className={styles.pulse} aria-hidden="true" />
                 Open to work
               </p>
               <p className={styles.nowWhere}>{capitalise(studio.worldwide.replace(/^Open to work — /, ''))}</p>
+              </div>
+              <img
+                className={styles.heroAvatar}
+                src="/images/profile-sketch.webp"
+                alt="Hand-drawn sketch portrait of Lukas"
+                width={256}
+                height={256}
+              />
             </div>
             <div className={styles.chips}>
               {DISCIPLINES.map((d) => (
