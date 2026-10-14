@@ -9,9 +9,89 @@ import { useEffect, useLayoutEffect, useRef } from 'react'
  * The IntersectionObserver can occasionally fail to fire under Lenis
  * smooth-scroll, which would leave an element stuck at `opacity: 0` forever
  * (an invisible element still takes layout space → a phantom gap). To stay
- * robust we pair the observer with a lightweight scroll/resize fallback, an
- * initial in-view check, and a couple of post-mount frames.
+ * robust we pair the observer with a scroll/resize fallback and an initial
+ * in-view check.
+ *
+ * Everything is shared: one observer and one throttled scroll check for every
+ * element still waiting. (Each element once had its own scroll listener that
+ * measured itself on every frame; with 30–40 waiting below a case-study hero,
+ * that made the top of every case page stutter until they had all revealed.)
  */
+interface Pending {
+  el: HTMLElement
+  reveal: () => void
+}
+
+const pending = new Set<Pending>()
+const byEl = new Map<Element, Pending>()
+let io: IntersectionObserver | null = null
+let timer = 0
+let frame = 0
+let lastCheck = 0
+
+/** Reads every waiting element's position in one pass, then reveals the ones in
+ *  view. Mirrors the observer's trigger zone: within the lower ~92% of the
+ *  viewport, and not scrolled past the top. */
+function check() {
+  frame = 0
+  lastCheck = performance.now()
+  const line = window.innerHeight * 0.92
+  const hits: Pending[] = []
+  for (const p of pending) {
+    const r = p.el.getBoundingClientRect()
+    if (r.top < line && r.bottom > 0) hits.push(p)
+  }
+  hits.forEach((p) => p.reveal())
+}
+
+/** The scroll fallback: at most one check every ~150ms, in an animation frame. */
+function onScroll() {
+  if (timer || frame) return
+  const wait = Math.max(0, 150 - (performance.now() - lastCheck))
+  timer = window.setTimeout(() => {
+    timer = 0
+    frame = requestAnimationFrame(check)
+  }, wait)
+}
+
+/** A check over the next two frames, for newly mounted elements. On a route
+ *  change the page often resets to the top just after mount, sometimes without
+ *  a scroll event, so the second frame catches it once the page settles. */
+function kick() {
+  if (frame) return
+  frame = requestAnimationFrame(() => {
+    check()
+    frame = requestAnimationFrame(check)
+  })
+}
+
+function register(p: Pending) {
+  if (!pending.size) {
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+  }
+  pending.add(p)
+  byEl.set(p.el, p)
+  if ('IntersectionObserver' in window) {
+    io ??= new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && byEl.get(e.target)?.reveal()),
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    )
+    io.observe(p.el)
+  }
+  kick()
+}
+
+function unregister(p: Pending) {
+  if (!pending.delete(p)) return
+  byEl.delete(p.el)
+  io?.unobserve(p.el)
+  if (!pending.size) {
+    window.removeEventListener('scroll', onScroll)
+    window.removeEventListener('resize', onScroll)
+  }
+}
+
 export function useReveal<T extends HTMLElement = HTMLDivElement>() {
   const ref = useRef<T>(null)
   const done = useRef(false)
@@ -29,62 +109,17 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>() {
     if (done.current) return
     const el = ref.current
     if (!el) return
-
-    let io: IntersectionObserver | null = null
-
-    const reveal = () => {
-      if (done.current) return
-      done.current = true
-      el.classList.add('is-in')
-      io?.disconnect()
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
+    const entry: Pending = {
+      el,
+      reveal: () => {
+        if (done.current) return
+        done.current = true
+        el.classList.add('is-in')
+        unregister(entry)
+      },
     }
-
-    // Mirrors the observer's trigger zone: visible within the lower ~92% of the
-    // viewport (and not scrolled past the top).
-    const inView = () => {
-      const r = el.getBoundingClientRect()
-      return r.top < window.innerHeight * 0.92 && r.bottom > 0
-    }
-    const onScroll = () => {
-      if (inView()) reveal()
-    }
-
-    if ('IntersectionObserver' in window) {
-      io = new IntersectionObserver(
-        (entries) => {
-          if (entries.some((entry) => entry.isIntersecting)) reveal()
-        },
-        { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
-      )
-      io.observe(el)
-    }
-
-    // Fallback + initial check (covers observer misfires and already-in-view
-    // content on load).
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
-    onScroll()
-
-    // Re-check across the next couple of frames. On a route change the page often
-    // scroll-resets to the top just after mount — sometimes without a scroll event
-    // we'd catch — so an element that mounts out of view still reveals once the
-    // page settles at the top.
-    let raf1 = 0
-    let raf2 = 0
-    raf1 = requestAnimationFrame(() => {
-      onScroll()
-      raf2 = requestAnimationFrame(onScroll)
-    })
-
-    return () => {
-      io?.disconnect()
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-      cancelAnimationFrame(raf1)
-      cancelAnimationFrame(raf2)
-    }
+    register(entry)
+    return () => unregister(entry)
   }, [])
 
   return ref

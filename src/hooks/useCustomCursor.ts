@@ -34,6 +34,7 @@ export function useCustomCursor(): void {
     let lastX = -1
     let lastY = -1
     let lastScroll = -1
+    let lastHit = 0
 
     const onMove = (e: MouseEvent) => {
       mx = e.clientX
@@ -48,6 +49,12 @@ export function useCustomCursor(): void {
     const DARK = '#hero, #contact, #menu'
     const updateColour = () => {
       if (mx === lastX && my === lastY && window.scrollY === lastScroll) return
+      // While only the page is scrolling, hit-test a few times a second rather
+      // than every frame: elementsFromPoint is a full hit-test, and doing it per
+      // frame made scrolling over the big photo heroes stutter.
+      const now = performance.now()
+      if (mx === lastX && my === lastY && now - lastHit < 90) return
+      lastHit = now
       lastX = mx
       lastY = my
       lastScroll = window.scrollY
@@ -76,13 +83,15 @@ export function useCustomCursor(): void {
     }
 
     const loop = () => {
+      // read (hit-test) before writing the transforms, so the frame doesn't
+      // force a style/layout recalc between the two
+      updateColour()
       dx += (mx - dx) * 0.9
       dy += (my - dy) * 0.9
       rx += (mx - rx) * 0.18
       ry += (my - ry) * 0.18
       dot.style.transform = `translate(${dx}px, ${dy}px)`
       ring.style.transform = `translate(${rx}px, ${ry}px)`
-      updateColour()
       frame = requestAnimationFrame(loop)
     }
     frame = requestAnimationFrame(loop)

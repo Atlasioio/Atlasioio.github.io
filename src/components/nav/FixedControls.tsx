@@ -25,7 +25,11 @@ export function FixedControls({ staticDark = false, staticLight = false, home = 
   const [pastTop, setPastTop] = useState(false)
   useEffect(() => {
     if (!home) return
-    const on = () => setPastTop(window.scrollY > 40)
+    let last: boolean | null = null
+    const on = () => {
+      const next = window.scrollY > 40
+      if (next !== last) setPastTop((last = next))
+    }
     on()
     window.addEventListener('scroll', on, { passive: true })
     return () => window.removeEventListener('scroll', on)

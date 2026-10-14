@@ -14,7 +14,12 @@ export function useNavScrolled(heroId = 'hero'): boolean {
       const hero = document.getElementById(heroId)
       threshold = hero ? hero.offsetTop + hero.offsetHeight - 70 : 80
     }
-    const onScroll = () => setScrolled(window.scrollY > threshold)
+    // only tell React when it actually flips, not on every scroll frame
+    let last: boolean | null = null
+    const onScroll = () => {
+      const next = window.scrollY > threshold
+      if (next !== last) setScrolled((last = next))
+    }
     const onResize = () => {
       recompute()
       onScroll()
