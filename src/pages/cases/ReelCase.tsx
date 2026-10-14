@@ -140,8 +140,8 @@ export function ReelCase() {
         <section className={styles.section} aria-label="Responsive">
           <Reveal as="h2" className={styles.h2}>Drag the edge.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            The site is built to hold its calm at any width. Pull the handle, or pick a size, and watch
-            it change from a wide display to a phone.
+            The site is built to hold its calm at any width. Pull the handle or pick a size, and the
+            notes beside it say what moves.
           </Reveal>
           <Reveal>
             <Resizer liveUrl={project.liveUrl} />
@@ -272,23 +272,63 @@ function Browser({ src, alt = '' }: { src: string; alt?: string }) {
   )
 }
 
-/** A window you drag (or set) from desktop width down to a phone. It shows a
- *  picture of the page until asked; the live Framer site only loads on click,
- *  since Framer's page runs Framer's own analytics. */
+/** What changes at each of Framer's three sizes, read off the live site. */
+const SIZES = {
+  Desktop: {
+    width: 1440,
+    img: `${W}/d-full-hero.webp`,
+    line: 'Room to spread out, so sections sit side by side.',
+    points: [
+      'Services sit beside their photo, the list on the right.',
+      'Projects pair the numbers with a two-by-two grid of homes.',
+      'The team reads as one row of four.',
+    ],
+  },
+  Tablet: {
+    width: 810,
+    img: `${W}/t-full.webp`,
+    line: 'Less width, the same order: things move rather than shrink.',
+    points: [
+      'The services photo moves above the list, full width.',
+      'Projects become two columns: the numbers beside a stack of cards.',
+      'The team still fits four across.',
+    ],
+  },
+  Phone: {
+    width: 390,
+    img: `${W}/m-full.webp`,
+    line: 'One column, top to bottom, with the type rescaled to fit.',
+    points: [
+      'Every section stacks; nothing sits side by side.',
+      'The team goes one by one, each photo full width.',
+      'Projects become full-width cards you scroll past.',
+    ],
+  },
+} as const
+type Size = keyof typeof SIZES
+
+/** A window you drag (or set) from desktop width down to a phone, with notes
+ *  beside it on what changes. The page inside scrolls. It's a capture of the
+ *  site until asked; the live Framer site only loads on click, since Framer's
+ *  page runs Framer's own analytics. */
 function Resizer({ liveUrl }: { liveUrl?: string }) {
-  const MIN = 360
-  const MAX = 1100
-  const stageRef = useRef<HTMLDivElement>(null)
-  const [width, setWidth] = useState(MAX)
-  const [max, setMax] = useState(MAX)
+  const MIN = 340
+  const rowRef = useRef<HTMLDivElement>(null)
+  const [max, setMax] = useState(900)
+  const [width, setWidth] = useState(Infinity)
   const [dragging, setDragging] = useState(false)
   const [live, setLive] = useState(false)
   const drag = useRef<{ x: number; w: number } | null>(null)
 
+  // The window can grow until the notes beside it are at their narrowest
+  // (stacked layouts give it the full row).
   useLayoutEffect(() => {
-    const el = stageRef.current
+    const el = rowRef.current
     if (!el) return
-    const measure = () => setMax(Math.max(MIN, Math.min(MAX, el.clientWidth - 44)))
+    const measure = () => {
+      const stacked = window.innerWidth < 900
+      setMax(Math.max(MIN, el.clientWidth - (stacked ? 0 : 300)))
+    }
     measure()
     const ro = new ResizeObserver(measure)
     ro.observe(el)
@@ -296,17 +336,20 @@ function Resizer({ liveUrl }: { liveUrl?: string }) {
   }, [])
 
   const w = Math.round(Math.max(MIN, Math.min(max, width)))
-  const size = w >= 1000 ? 'Desktop' : w >= 700 ? 'Tablet' : 'Phone'
-  const presets: [string, number][] = [['Desktop', MAX], ['Tablet', 810], ['Phone', 390]]
+  // the window's share of its range, mapped onto Framer's sizes (390 → 1440)
+  const sim = Math.round(390 + ((w - MIN) / Math.max(1, max - MIN)) * (1440 - 390))
+  const size: Size = sim >= 1200 ? 'Desktop' : sim >= 700 ? 'Tablet' : 'Phone'
+  const info = SIZES[size]
+  // each button lands exactly on that size's Framer width
+  const presetW = (s: Size) => MIN + ((SIZES[s].width - 390) / (1440 - 390)) * (max - MIN)
 
   const onDown = (e: RPointerEvent<HTMLSpanElement>) => {
     drag.current = { x: e.clientX, w }
     e.currentTarget.setPointerCapture(e.pointerId)
     setDragging(true)
   }
-  // the window is centred, so the edge moves half as far as the width changes
   const onMove = (e: RPointerEvent<HTMLSpanElement>) => {
-    if (drag.current) setWidth(drag.current.w + (e.clientX - drag.current.x) * 2)
+    if (drag.current) setWidth(drag.current.w + (e.clientX - drag.current.x))
   }
   const onUp = () => {
     drag.current = null
@@ -314,58 +357,65 @@ function Resizer({ liveUrl }: { liveUrl?: string }) {
   }
 
   return (
-    <div className={styles.resize}>
-      <div className={styles.rbar}>
-        <p className={styles.readout} aria-live="polite">
-          <b>{w}px</b>
-          <span>{size}</span>
-        </p>
+    <div className={styles.resize} ref={rowRef}>
+      <div className={`${styles.rwin} ${dragging ? styles.rwinDragging : ''}`} style={{ width: w }}>
+        <div className={styles.chrome} aria-hidden="true">
+          <i />
+          <i />
+          <i />
+          <span>reeldesign</span>
+        </div>
+        {/* data-lenis-prevent: the wheel scrolls the page inside, not this one */}
+        <div className={styles.rview} data-lenis-prevent>
+          {live && liveUrl ? (
+            <iframe src={liveUrl} title="The live Reel site" />
+          ) : (
+            <img key={size} src={info.img} alt={`The Reel site at ${size.toLowerCase()} width`} loading="lazy" />
+          )}
+        </div>
+        <span
+          className={styles.handle}
+          role="slider"
+          tabIndex={0}
+          aria-label="Window width"
+          aria-valuemin={MIN}
+          aria-valuemax={max}
+          aria-valuenow={w}
+          aria-valuetext={`${size}, about ${sim} pixels`}
+          onPointerDown={onDown}
+          onPointerMove={onMove}
+          onPointerUp={onUp}
+          onPointerCancel={onUp}
+          onKeyDown={(e) => {
+            if (e.key === 'ArrowLeft') setWidth(w - 40)
+            if (e.key === 'ArrowRight') setWidth(w + 40)
+          }}
+          data-cursor
+        />
+      </div>
+
+      <aside className={styles.rside}>
         <div className={styles.presets} role="group" aria-label="Window size">
-          {presets.map(([n, pw]) => (
-            <button key={n} type="button" aria-pressed={size === n} onClick={() => setWidth(pw)} data-cursor>
-              {n}
+          {(Object.keys(SIZES) as Size[]).map((s) => (
+            <button key={s} type="button" aria-pressed={size === s} onClick={() => setWidth(presetW(s))} data-cursor>
+              {s}
             </button>
           ))}
         </div>
-      </div>
-      <div className={styles.rstage} ref={stageRef}>
-        <div className={`${styles.rwin} ${dragging ? styles.rwinDragging : ''}`} style={{ width: w }}>
-          <div className={styles.chrome} aria-hidden="true">
-            <i />
-            <i />
-            <i />
-            <span>reeldesign</span>
-          </div>
-          <div className={`${styles.rview} ${size === 'Phone' ? styles.isPhone : ''}`}>
-            {live && liveUrl ? (
-              <iframe src={liveUrl} title="The live Reel site" />
-            ) : (
-              <>
-                <img className={styles.rDesk} src={`${W}/d-hero.webp`} alt="The Reel site at desktop width" loading="lazy" />
-                <img className={styles.rPhone} src={`${W}/m-hero.webp`} alt="The Reel site at phone width" loading="lazy" />
-              </>
-            )}
-          </div>
-          <span
-            className={styles.handle}
-            role="slider"
-            tabIndex={0}
-            aria-label="Window width"
-            aria-valuemin={MIN}
-            aria-valuemax={max}
-            aria-valuenow={w}
-            onPointerDown={onDown}
-            onPointerMove={onMove}
-            onPointerUp={onUp}
-            onPointerCancel={onUp}
-            onKeyDown={(e) => {
-              if (e.key === 'ArrowLeft') setWidth(w - 40)
-              if (e.key === 'ArrowRight') setWidth(w + 40)
-            }}
-            data-cursor
-          />
+        <p className={styles.readout} aria-live="polite">
+          <b>{sim}px</b>
+          <span>{size}</span>
+        </p>
+        <div className={styles.rnotes} key={size}>
+          <p className={styles.rline}>{info.line}</p>
+          <ul>
+            {info.points.map((pt) => (
+              <li key={pt}>{pt}</li>
+            ))}
+          </ul>
         </div>
-        {!live && liveUrl && (
+        <p className={styles.rhint}>Drag the handle, or scroll the page inside the window.</p>
+        {liveUrl && !live && (
           <div className={styles.loadLive}>
             <button type="button" onClick={() => setLive(true)} data-cursor>
               Load the live site <span aria-hidden="true">↗</span>
@@ -373,8 +423,7 @@ function Resizer({ liveUrl }: { liveUrl?: string }) {
             <small>Opens the real page from Framer, which runs Framer’s own analytics.</small>
           </div>
         )}
-      </div>
-      <p className={styles.rnote}>Until you load it, this is a picture of the page. Loaded, it’s the real site, scrolling and all.</p>
+      </aside>
     </div>
   )
 }
