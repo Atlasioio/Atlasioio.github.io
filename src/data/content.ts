@@ -345,7 +345,7 @@ export const projects: Project[] = [
       },
       {
         heading: 'Deliver',
-        body: 'Time ships as a PWA, stores everything on the device, and has no account, server or analytics. A design document in the repository is paired with a script that checks the app against it, counting radii, surface alpha values, type weights, page gutters, tap targets and accessibility labels, and reporting which are standard, which are near-standard and which are one-off. There are no usage figures in this case study, because the app has one user. What can be evidenced is what the audit counts.',
+        body: 'Time ships as a PWA, stores everything on the device, and has no account, server or analytics. A design document in the repository is paired with a script that checks the app against it, counting radii, surface alpha values, type weights, page gutters, tap targets and accessibility labels, and reporting which are standard, which are near-standard and which are one-off. The numbers in this case study come from that audit: things that can be counted in the app itself.',
       },
     ],
     reflection: [

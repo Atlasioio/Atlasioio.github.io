@@ -236,8 +236,7 @@ export function TimeCase() {
         <section className={styles.section} aria-label="Counted, not claimed">
           <Reveal as="h2" className={styles.h2}>Counted, not claimed.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            Not usage figures: these are counted out of the app itself, where a rule either holds
-            or it doesn't.
+            Counted straight out of the app itself, where a rule either holds or it doesn't.
           </Reveal>
           <div className={styles.tiles}>
             <Tile big="11 → 1" tone="deep" lead="Eleven dots, one real colour."
