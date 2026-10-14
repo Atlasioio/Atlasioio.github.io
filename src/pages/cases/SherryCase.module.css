@@ -31,9 +31,7 @@
 .cover img { display: block; width: 100%; height: auto; filter: drop-shadow(0 40px 50px rgba(0, 0, 0, 0.45)); }
 
 /* ---- Hero ---- */
-.hero { --fade: clamp(160px, 26vh, 300px); position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; isolation: isolate; color: #fff8f6; }
-/* The photo melts into the page below, as on Goodreads. */
-.hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: var(--fade); z-index: -1; pointer-events: none; background: linear-gradient(180deg, rgba(248, 241, 238, 0) 0%, rgba(248, 241, 238, 0.22) 30%, rgba(248, 241, 238, 0.66) 62%, rgba(248, 241, 238, 0.93) 86%, var(--s-bg) 100%); }
+.hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; isolation: isolate; color: #fff8f6; }
 .heroPhoto { position: absolute; inset: 0; z-index: -2; background: url('/work/sherry/card-bg.webp') 70% 25% / cover no-repeat; filter: brightness(0.7) saturate(0.9); }
 .heroFade {
   position: absolute;
@@ -43,10 +41,10 @@
     linear-gradient(180deg, rgba(40, 14, 20, 0.45) 0%, rgba(40, 14, 20, 0) 32%, rgba(40, 14, 20, 0.2) 60%, rgba(40, 14, 20, 0.88) 100%),
     linear-gradient(90deg, rgba(40, 14, 20, 0.72) 0%, rgba(40, 14, 20, 0) 58%);
 }
-.heroPhones { position: absolute; right: clamp(16px, 7vw, 120px); bottom: calc(clamp(104px, 14vh, 150px) + var(--fade) * 0.55 - clamp(150px, 15vw, 270px) * 0.095 - 8px); /* the cover images carry ~9.5% transparent padding below the phone; this sets the visible phone just under the credits line */ display: flex; align-items: flex-end; gap: clamp(10px, 1.6vw, 28px); }
+.heroPhones { position: absolute; right: clamp(16px, 7vw, 120px); bottom: calc(clamp(104px, 14vh, 150px) - clamp(150px, 15vw, 270px) * 0.095 - 8px); /* the cover images carry ~9.5% transparent padding below the phone; this sets the visible phone just under the credits line */ display: flex; align-items: flex-end; gap: clamp(10px, 1.6vw, 28px); }
 .heroPhones .cover { width: clamp(150px, 15vw, 270px); }
 .heroPhones .cover:first-child { transform: translateY(-7%); }
-.heroCopy { position: relative; padding: 0 var(--s-gutter) calc(clamp(104px, 14vh, 150px) + var(--fade) * 0.55); max-width: 1000px; }
+.heroCopy { position: relative; padding: 0 var(--s-gutter) clamp(104px, 14vh, 150px); max-width: 1000px; }
 .eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.8; }
 .title { margin-top: 18px; font-family: var(--font-display); font-weight: 800; font-size: clamp(48px, 6vw, 104px); line-height: 0.94; letter-spacing: -0.045em; }
 .lede { margin-top: 22px; font-size: clamp(18px, 1.6vw, 22px); line-height: 1.45; max-width: 30em; opacity: 0.92; }
@@ -55,7 +53,7 @@
 /* ---- Story ---- */
 /* Its own quiet moment between the hero and the work, spaced like Time's:
    the next section adds no top padding here, so the room lives on the story. */
-.story { display: grid; place-items: center; min-height: 72svh; padding: clamp(64px, 9vw, 150px) var(--s-gutter) clamp(160px, 22vw, 320px); }
+.story { display: grid; place-items: center; min-height: 72svh; padding: clamp(120px, 16vw, 240px) var(--s-gutter) clamp(160px, 22vw, 320px); }
 .story > div { max-width: 36em; display: flex; flex-direction: column; gap: 1.1em; font-size: clamp(17px, 1.35vw, 20px); line-height: 1.62; color: var(--s-muted); }
 .storyLead { font-family: var(--font-display); font-weight: 650; font-size: clamp(26px, 2.6vw, 36px); line-height: 1.2; letter-spacing: -0.02em; color: var(--s-ink); }
 
