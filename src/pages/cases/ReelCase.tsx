@@ -337,7 +337,7 @@ function Resizer({ liveUrl }: { liveUrl?: string }) {
 
   const w = Math.round(Math.max(MIN, Math.min(max, width)))
   // the window's share of its range, mapped onto Framer's sizes (390 → 1440)
-  const sim = Math.round(390 + ((w - MIN) / Math.max(1, max - MIN)) * (1440 - 390))
+  const sim = Math.round((390 + ((w - MIN) / Math.max(1, max - MIN)) * (1440 - 390)) / 10) * 10
   const size: Size = sim >= 1200 ? 'Desktop' : sim >= 700 ? 'Tablet' : 'Phone'
   const info = SIZES[size]
   // each button lands exactly on that size's Framer width
@@ -358,21 +358,34 @@ function Resizer({ liveUrl }: { liveUrl?: string }) {
 
   return (
     <div className={styles.resize} ref={rowRef}>
-      <div className={`${styles.rwin} ${dragging ? styles.rwinDragging : ''}`} style={{ width: w }}>
-        <div className={styles.chrome} aria-hidden="true">
-          <i />
-          <i />
-          <i />
-          <span>reeldesign</span>
-        </div>
-        {/* data-lenis-prevent: the wheel scrolls the page inside, not this one */}
-        <div className={styles.rview} data-lenis-prevent>
-          {live && liveUrl ? (
-            <iframe src={liveUrl} title="The live Reel site" />
+      {/* The frame becomes a laptop, a tablet or a phone with the size. */}
+      <div className={`${styles.rwin} ${dragging ? styles.rwinDragging : ''}`} data-device={size} style={{ width: w }}>
+        <span className={styles.camera} aria-hidden="true" />
+        <div className={styles.rscreen}>
+          {size === 'Phone' ? (
+            <div className={styles.statusBar} aria-hidden="true">
+              <span>9:41</span>
+              <i />
+              <span>●●●</span>
+            </div>
           ) : (
-            <img key={size} src={info.img} alt={`The Reel site at ${size.toLowerCase()} width`} loading="lazy" />
+            <div className={styles.chrome} aria-hidden="true">
+              <i />
+              <i />
+              <i />
+              <span>reeldesign</span>
+            </div>
           )}
+          {/* data-lenis-prevent: the wheel scrolls the page inside, not this one */}
+          <div className={styles.rview} data-lenis-prevent>
+            {live && liveUrl ? (
+              <iframe src={liveUrl} title="The live Reel site" />
+            ) : (
+              <img key={size} src={info.img} alt={`The Reel site at ${size.toLowerCase()} width`} loading="lazy" />
+            )}
+          </div>
         </div>
+        <span className={styles.base} aria-hidden="true" />
         <span
           className={styles.handle}
           role="slider"
