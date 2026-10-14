@@ -34,7 +34,7 @@
 .browser img { display: block; width: 100%; height: auto; }
 
 /* ---- Hero ---- */
-.hero { --fade: clamp(110px, 16vh, 190px); position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; isolation: isolate; color: #fbfaf6; }
+.hero { --fade: clamp(140px, 22vh, 240px); position: relative; min-height: calc(100svh + var(--fade)); display: flex; align-items: flex-end; overflow: hidden; isolation: isolate; color: #fbfaf6; }
 /* The photo dissolves into the page below (eased, so there's no visible band). */
 .heroPhoto,
 .heroFade {
@@ -47,12 +47,12 @@
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(180deg, rgba(20, 22, 14, 0.55) 0%, rgba(20, 22, 14, 0) 30%, rgba(20, 22, 14, 0.25) 60%, rgba(20, 22, 14, 0.9) 100%),
+    linear-gradient(180deg, rgba(20, 22, 14, 0.55) 0%, rgba(20, 22, 14, 0) 30%, rgba(20, 22, 14, 0.25) 60%, rgba(20, 22, 14, 0.9) calc(100% - var(--fade)), rgba(20, 22, 14, 0.9) 100%),
     linear-gradient(90deg, rgba(20, 22, 14, 0.78) 0%, rgba(20, 22, 14, 0) 60%);
 }
 /* The app in a browser window stands where the other cases put their phones. */
-.heroApp { position: absolute; right: clamp(16px, 5vw, 96px); bottom: calc(clamp(104px, 14vh, 150px) + var(--fade) * 0.45); width: min(46vw, 760px); }
-.heroCopy { position: relative; padding: 0 var(--j-gutter) calc(clamp(104px, 14vh, 150px) + var(--fade) * 0.45); max-width: 780px; }
+.heroApp { position: absolute; right: clamp(16px, 5vw, 96px); bottom: calc(clamp(104px, 14vh, 150px) + var(--fade)); width: min(46vw, 760px); }
+.heroCopy { position: relative; padding: 0 var(--j-gutter) calc(clamp(104px, 14vh, 150px) + var(--fade)); max-width: 780px; }
 .eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.85; }
 .title { margin-top: 18px; font-family: var(--font-display); font-weight: 800; font-size: clamp(48px, 5.6vw, 96px); line-height: 0.94; letter-spacing: -0.045em; }
 .title em { font-style: normal; color: var(--j-lime); }
@@ -60,7 +60,7 @@
 .credits { margin-top: 24px; font-size: 14px; opacity: 0.75; }
 
 /* ---- Story ---- */
-.story { display: grid; place-items: center; min-height: 72svh; padding: clamp(64px, 9vw, 150px) var(--j-gutter) clamp(160px, 22vw, 320px); }
+.story { display: grid; place-items: center; min-height: 72svh; padding: clamp(40px, 6vw, 110px) var(--j-gutter) clamp(160px, 22vw, 320px); }
 .story > div { max-width: 36em; display: flex; flex-direction: column; gap: 1.1em; font-size: clamp(17px, 1.35vw, 20px); line-height: 1.62; color: var(--j-muted); }
 .storyLead { font-family: var(--font-display); font-weight: 650; font-size: clamp(26px, 2.6vw, 36px); line-height: 1.2; letter-spacing: -0.02em; color: var(--j-ink); }
 

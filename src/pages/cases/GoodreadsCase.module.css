@@ -32,7 +32,7 @@
 .cover img { display: block; width: 100%; height: auto; filter: drop-shadow(0 40px 50px rgba(0, 0, 0, 0.45)); }
 
 /* ---- 1. Hero ---- */
-.hero { --fade: clamp(110px, 16vh, 190px); position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; isolation: isolate; color: #fbf6ef; }
+.hero { --fade: clamp(140px, 22vh, 240px); position: relative; min-height: calc(100svh + var(--fade)); display: flex; align-items: flex-end; overflow: hidden; isolation: isolate; color: #fbf6ef; }
 /* The photo dissolves into the page below (eased, so there's no visible band). */
 .heroPhoto,
 .heroFade {
@@ -51,21 +51,21 @@
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(180deg, rgba(28, 16, 8, 0.45) 0%, rgba(28, 16, 8, 0) 32%, rgba(28, 16, 8, 0.15) 60%, rgba(28, 16, 8, 0.85) 100%),
+    linear-gradient(180deg, rgba(28, 16, 8, 0.45) 0%, rgba(28, 16, 8, 0) 32%, rgba(28, 16, 8, 0.15) 60%, rgba(28, 16, 8, 0.85) calc(100% - var(--fade)), rgba(28, 16, 8, 0.85) 100%),
     linear-gradient(90deg, rgba(28, 16, 8, 0.7) 0%, rgba(28, 16, 8, 0) 58%);
 }
 /* The lower phone ends on the credits line, as on Time. */
 .heroPhones {
   position: absolute;
   right: clamp(16px, 7vw, 120px);
-  bottom: calc(clamp(104px, 14vh, 150px) + var(--fade) * 0.45 - clamp(150px, 15vw, 270px) * 0.095 - 8px); /* the cover images carry ~9.5% transparent padding below the phone; this sets the visible phone just under the credits line */
+  bottom: calc(clamp(104px, 14vh, 150px) + var(--fade) - clamp(150px, 15vw, 270px) * 0.095 - 8px); /* the cover images carry ~9.5% transparent padding below the phone; this sets the visible phone just under the credits line */
   display: flex;
   align-items: flex-end;
   gap: clamp(10px, 1.6vw, 28px);
 }
 .heroPhones .cover { width: clamp(150px, 15vw, 270px); }
 .heroPhones .cover:first-child { transform: translateY(-7%); }
-.heroCopy { position: relative; padding: 0 var(--g-gutter) calc(clamp(104px, 14vh, 150px) + var(--fade) * 0.45); max-width: 1040px; }
+.heroCopy { position: relative; padding: 0 var(--g-gutter) calc(clamp(104px, 14vh, 150px) + var(--fade)); max-width: 1040px; }
 .eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.8; }
 .title {
   margin-top: 18px;
@@ -83,7 +83,7 @@
 /* ---- 2. Story ---- */
 /* Its own quiet moment between the hero and the work, spaced like Time's:
    the next section adds no top padding here, so the room lives on the story. */
-.story { display: grid; place-items: center; min-height: 72svh; padding: clamp(64px, 9vw, 150px) var(--g-gutter) clamp(160px, 22vw, 320px); }
+.story { display: grid; place-items: center; min-height: 72svh; padding: clamp(40px, 6vw, 110px) var(--g-gutter) clamp(160px, 22vw, 320px); }
 .story > div { max-width: 36em; display: flex; flex-direction: column; gap: 1.1em; font-size: clamp(17px, 1.35vw, 20px); line-height: 1.62; color: var(--g-muted); }
 .storyLead { font-family: var(--font-display); font-weight: 600; font-size: clamp(26px, 2.6vw, 36px); line-height: 1.2; letter-spacing: -0.02em; color: var(--g-ink); }
 

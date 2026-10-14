@@ -18,6 +18,7 @@ import { SherryCase } from './pages/cases/SherryCase'
 import { EcoTripCase } from './pages/cases/EcoTripCase'
 import { TeemCase } from './pages/cases/TeemCase'
 import { JobquestCase } from './pages/cases/JobquestCase'
+import { ReelCase } from './pages/cases/ReelCase'
 
 export default function App() {
   return (
@@ -55,5 +56,6 @@ function CaseRoute() {
   if (slug === 'ecotrip') return <EcoTripCase />
   if (slug === 'jobquest') return <JobquestCase />
   if (slug === 'teem') return <TeemCase />
+  if (slug === 'reel') return <ReelCase />
   return <CaseStudy />
 }

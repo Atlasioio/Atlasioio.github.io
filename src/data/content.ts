@@ -955,7 +955,7 @@ export const projects: Project[] = [
       },
       {
         heading: 'The system',
-        body: 'A single display face does the heavy lifting — set large and tight — and everything else stays quiet. Black, white, and the warmth of the architectural photography are the whole palette. Sections breathe, one idea per screen: vision, studio, services, work.',
+        body: 'Urbanist does the heavy lifting, set light and large, and Inter carries everything you read. Black, white, and the warmth of the architectural photography are the whole palette. Sections breathe, one idea per screen: vision, studio, services, work.',
       },
       {
         heading: 'Responsive by design',
@@ -964,7 +964,7 @@ export const projects: Project[] = [
     ],
     results: [
       { value: 'Mobile-up', label: 'Responsive at every width' },
-      { value: '1 face', label: 'Type carries the design' },
+      { value: '2 faces', label: 'Urbanist and Inter carry the design' },
       { value: 'Framer', label: 'Designed & built, no hand-off' },
     ],
     desktop: [
