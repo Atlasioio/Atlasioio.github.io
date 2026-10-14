@@ -17,6 +17,7 @@ import { GoodreadsCase } from './pages/cases/GoodreadsCase'
 import { SherryCase } from './pages/cases/SherryCase'
 import { EcoTripCase } from './pages/cases/EcoTripCase'
 import { TeemCase } from './pages/cases/TeemCase'
+import { JobquestCase } from './pages/cases/JobquestCase'
 
 export default function App() {
   return (
@@ -52,6 +53,7 @@ function CaseRoute() {
   if (slug === 'goodreads') return <GoodreadsCase />
   if (slug === 'sherry') return <SherryCase />
   if (slug === 'ecotrip') return <EcoTripCase />
+  if (slug === 'jobquest') return <JobquestCase />
   if (slug === 'teem') return <TeemCase />
   return <CaseStudy />
 }

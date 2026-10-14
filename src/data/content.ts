@@ -816,11 +816,11 @@ export const projects: Project[] = [
     tagline:
       'A job-search tracker for today’s market — built to make the hunt feel calm and clear.',
     overview:
-      'Jobquest is a web app I designed and built — a job-search tracker that came out of running my own search. Three views answer three different questions, status reads as colour rather than noise, and a local-first architecture keeps it quick and frictionless. Built in React/TypeScript, pair-built with Claude Code.',
+      'Jobquest is a web app I designed and built: a job-search tracker for people in the middle of a search. Three views answer three different questions, status reads as colour rather than noise, and a local-first architecture keeps it quick and frictionless. Built in React/TypeScript, pair-built with Claude Code.',
     sections: [
       {
         heading: 'The problem',
-        body: 'A job search is a pipeline, but a spreadsheet flattens it. Going through my own search, I wanted to see status at a glance and switch between “what’s in flight”, “where is everything”, and “what’s nearby” without re-reading rows — not a generic CRM bent into the role.',
+        body: 'A job search is a pipeline, but a spreadsheet flattens it. Job seekers need to see status at a glance and switch between “what’s in flight”, “where is everything”, and “what’s nearby” without re-reading rows — not a generic CRM bent into the role.',
       },
       {
         heading: 'The approach',
@@ -836,7 +836,7 @@ export const projects: Project[] = [
       },
       {
         heading: 'What I’d do differently',
-        body: 'Built fast and scratch-my-own-itch first, so a few decisions are narrow. The next pass would broaden the data model and views to fit searches that don’t look like mine — and test the flows with other job-seekers.',
+        body: 'Built fast, so a few decisions are still narrow. The next pass would widen the data model and views for searches of every shape, and put the flows in front of more job seekers.',
       },
     ],
     results: [
