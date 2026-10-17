@@ -198,3 +198,14 @@
   .btnText { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .arrow { background: transparent; color: #111; width: 52px; height: 52px; }
 }
+
+/* ---- Narrow: the project's colour instead of the photo, as on the case page
+   the card opens (the same gradients as the case heroes on phones) ---- */
+[data-motion='time'] { --grad: radial-gradient(120% 80% at 50% 30%, #6b1f8f 0%, #2a0d3d 55%, #0b0710 100%); }
+[data-motion='goodreads'] { --grad: radial-gradient(120% 80% at 50% 30%, #a24e1c 0%, #5a2a10 55%, #1c1008 100%); }
+[data-motion='sherry'] { --grad: radial-gradient(120% 80% at 50% 30%, #8a3442 0%, #4a1520 55%, #1e0a0f 100%); }
+[data-motion='ecotrip'] { --grad: radial-gradient(120% 80% at 50% 30%, #c7900a 0%, #5a3f05 55%, #1c1408 100%); }
+@container (max-width: 640px) {
+  .bg { background: var(--grad, #111) !important; }
+  .scrim { background: linear-gradient(180deg, transparent 55%, rgb(0 0 0 / 0.35) 100%); }
+}

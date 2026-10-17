@@ -77,6 +77,16 @@ export function ReelCase() {
         <header className={styles.hero} id="hero">
           <div className={styles.heroPhoto} />
           <div className={styles.heroFade} />
+          {/* phones only: the live link sits on top of the device */}
+          {project.liveUrl && (
+            <a className={styles.livePill} href={project.liveUrl} target="_blank" rel="noopener noreferrer" data-cursor>
+              <i aria-hidden="true" />
+              Visit the live site
+              <span aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 11.5l7-7M6 4.5h5.5V10" /></svg>
+              </span>
+            </a>
+          )}
           <div className={styles.heroDevices} aria-hidden="true">
             <Browser src={`${W}/d-hero.webp`} />
             <span className={styles.heroPhone}>
