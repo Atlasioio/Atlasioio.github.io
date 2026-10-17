@@ -296,3 +296,20 @@
   .personas { grid-template-columns: 1fr; grid-template-rows: none; row-gap: var(--e-edge); }
   .persona { grid-row: auto; grid-template-rows: none; }
 }
+
+/* Phones: a row of three phones swipes sideways at a readable size instead of
+   shrinking to fit; the next one peeks in so it reads as a row. */
+@media (max-width: 600px) {
+  .trio {
+    display: flex;
+    gap: 14px;
+    width: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .trio::-webkit-scrollbar { display: none; }
+  .trio figure { flex: 0 0 62%; scroll-snap-align: center; }
+}

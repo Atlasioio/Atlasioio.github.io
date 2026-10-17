@@ -233,3 +233,8 @@
 @media (prefers-reduced-motion: reduce) {
   .job, .jobMark, .jobText, .jobStatus, .furniture > *, .stp, .bar i, .tgt { transition: none; }
 }
+
+@media (max-width: 1000px) {
+  .shot { height: auto; min-height: 0; }
+  .shot img { height: auto; object-fit: contain; }
+}

@@ -152,8 +152,9 @@ export function ReelCase() {
         <section className={styles.section} aria-label="Desktop and phone">
           <Reveal as="h2" className={styles.h2}>The same page, two widths.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            Scroll on, and the desktop and phone versions scroll with you, section by section. The
-            order and the ideas stay the same; only the arrangement changes.
+            Scroll on, and the desktop and phone versions scroll with you, section by section (on a
+            phone, scroll inside it). The order and the ideas stay the same; only the arrangement
+            changes.
           </Reveal>
           <TwoWidths />
         </section>
@@ -503,7 +504,7 @@ function TwoWidths() {
           </div>
         </div>
         <div className={styles.pwin}>
-          <div className={styles.view}>
+          <div className={styles.view} data-lenis-prevent>
             <img ref={phoneRef} src={`${W}/m-full.webp`} alt="The whole Reel page at phone width" loading="lazy" />
           </div>
         </div>

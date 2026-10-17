@@ -217,3 +217,11 @@
   .rwin, .rscreen, .base, .camera, .live i, .rail li { transition: none; }
   .rview img, .rnotes { animation: none; }
 }
+
+@media (max-width: 640px) {
+  .sync { height: auto; }
+  .syncSticky { position: static; height: auto; display: flex; justify-content: center; }
+  .pwin { height: min(72vh, 600px); }
+  .pwin .view { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+  .pwin .view img { position: static; transform: none !important; }
+}
