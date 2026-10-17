@@ -332,15 +332,15 @@
    bottom edge, cut by it. ---- */
 .ledeShort { display: none; }
 @media (max-width: 640px) {
-  .hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; padding-top: 120px; background: radial-gradient(120% 70% at 50% 100%, #a24e1c 0%, #5a2a10 45%, #1c1008 100%); -webkit-mask-image: none; mask-image: none; }
+  .hero { position: relative; z-index: 2; overflow: visible; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; padding-top: 120px; background: radial-gradient(120% 70% at 50% 100%, #a24e1c 0%, #5a2a10 45%, #1c1008 100%); -webkit-mask-image: none; mask-image: none; }
   .heroPhoto, .heroFade { display: none; }
   .heroCopy { order: 0; position: relative; max-width: none; padding: 0 var(--g-gutter); }
   .eyebrow, .credits { display: none; }
   .lede { display: none; }
   .ledeShort { display: block; margin-top: 16px; font-size: 17px; line-height: 1.4; max-width: 30em; opacity: 0.92; }
   .title { margin-top: 0; }
-  .heroPhones { order: 1; position: relative; inset: auto; width: auto; display: flex; justify-content: center; margin: 40px 0 0; transform: none; }
+  .heroPhones { order: 1; position: relative; inset: auto; width: auto; display: flex; justify-content: center; margin: auto 0 0; padding-top: 40px; transform: none; }
   .heroPhones .cover:first-child { display: none; }
-  .heroPhones .cover:last-child { position: relative; inset: auto; width: min(70vw, 310px); max-width: none; transform: none; margin: 0 0 -42%; }
-  .story { padding-top: clamp(72px, 18vw, 110px); }
+  .heroPhones .cover:last-child { position: relative; inset: auto; width: min(70vw, 310px); max-width: none; transform: none; margin: 0 0 -46%; }
+  .story { padding-top: calc(46vw + 56px); }
 }
