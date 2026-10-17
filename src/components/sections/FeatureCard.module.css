@@ -209,3 +209,12 @@
   .bg { background: var(--grad, #111) !important; }
   .scrim { background: linear-gradient(180deg, transparent 55%, rgb(0 0 0 / 0.35) 100%); }
 }
+
+/* Hover arrow: white on the project colour, except EcoTrip's light honey,
+   where a dark arrow reads better (at every width). */
+@container (max-width: 640px) {
+  .inner:hover .arrow,
+  .inner:focus-visible .arrow { color: #fff; }
+}
+[data-motion='ecotrip'] .inner:hover .arrow,
+[data-motion='ecotrip'] .inner:focus-visible .arrow { color: #111; }
