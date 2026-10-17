@@ -74,6 +74,10 @@ export function GoodreadsCase() {
               The largest book app in the world, where you can't actually read. A redesign that
               puts the book back in the middle and keeps everything people love about Goodreads.
             </Reveal>
+            {/* phones get one short line instead */}
+            <Reveal as="p" className={styles.ledeShort} i={2}>
+              The largest book app in the world, rebuilt so you can actually read in it.
+            </Reveal>
             <Reveal as="p" className={styles.credits} i={3}>
               Product design · Research, structure, interaction, visual system
             </Reveal>

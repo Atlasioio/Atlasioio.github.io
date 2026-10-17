@@ -94,6 +94,10 @@ export function ReelCase() {
               A concept site for a contemporary architecture and interior studio: near-monochrome,
               typographic, and out of the way of the photography. Designed and built in Framer.
             </Reveal>
+            {/* phones get one short line instead */}
+            <Reveal as="p" className={styles.ledeShort} i={2}>
+              A calm, photography-led site for an architecture studio, built in Framer.
+            </Reveal>
             <Reveal className={styles.heroRow} i={3}>
               {project.liveUrl && (
                 <a className={styles.live} href={project.liveUrl} target="_blank" rel="noreferrer" data-cursor>

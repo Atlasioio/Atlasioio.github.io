@@ -115,6 +115,10 @@ export function TeemCase() {
               A brand for a cold-brew matcha latte: the name, the mark, the can and a printed
               leaflet, made to feel calm and tactile.
             </Reveal>
+            {/* phones get one short line instead */}
+            <Reveal as="p" className={styles.ledeShort} i={2}>
+              A cold-brew matcha brand: the name, the mark, the can and a leaflet.
+            </Reveal>
             <Reveal as="p" className={styles.credits} i={3}>
               Brand, packaging and print · Solo
             </Reveal>

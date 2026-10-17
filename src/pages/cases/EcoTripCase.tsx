@@ -74,6 +74,10 @@ export function EcoTripCase() {
               A travel app that makes the lower-carbon choice a shared one: every trip adds a cell to
               the hive, and 5% of every booking goes to protecting wild bees.
             </Reveal>
+            {/* phones get one short line instead */}
+            <Reveal as="p" className={styles.ledeShort} i={2}>
+              A travel app where the greener choice is the shared one.
+            </Reveal>
             <Reveal as="p" className={styles.credits} i={3}>
               End-to-end UX/UI and brand · Solo
             </Reveal>

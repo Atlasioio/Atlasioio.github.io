@@ -238,3 +238,19 @@
   .shot { height: auto; min-height: 0; }
   .shot img { height: auto; object-fit: contain; }
 }
+
+/* ---- Phone hero (option B): no photo, the project's colour, three rows of
+   copy (title, one line, the button if any) and one device rising from the
+   bottom edge, cut by it. ---- */
+.ledeShort { display: none; }
+@media (max-width: 640px) {
+  .hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; padding-top: 120px; background: radial-gradient(120% 70% at 50% 100%, #3f7a2a 0%, #163300 45%, #0b1406 100%); -webkit-mask-image: none; mask-image: none; }
+  .heroPhoto, .heroFade { display: none; }
+  .heroCopy { order: 0; position: relative; max-width: none; padding: 0 var(--j-gutter); }
+  .eyebrow, .credits { display: none; }
+  .lede { display: none; }
+  .ledeShort { display: block; margin-top: 16px; font-size: 17px; line-height: 1.4; max-width: 30em; opacity: 0.92; }
+  .title { margin-top: 0; }
+  .heroApp { order: 1; position: relative; inset: auto; width: auto; margin: 40px var(--j-gutter) -22%; transform: none; }
+  .story { padding-top: clamp(72px, 18vw, 110px); }
+}

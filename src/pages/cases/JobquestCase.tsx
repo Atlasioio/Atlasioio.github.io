@@ -121,6 +121,10 @@ export function JobquestCase() {
               A job-search tracker that shows where every application stands, on a board, a grid or a
               map, with the CV, cover letter and offer for each one in the same place.
             </Reveal>
+            {/* phones get one short line instead */}
+            <Reveal as="p" className={styles.ledeShort} i={2}>
+              Every application, offer and CV in one place: on a board, a grid or a map.
+            </Reveal>
             <Reveal as="p" className={styles.credits} i={3}>
               Product design and build · React, TypeScript
             </Reveal>

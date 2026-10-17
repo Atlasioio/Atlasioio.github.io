@@ -73,6 +73,10 @@ export function SherryCase() {
               A tool library for Malmö's neighbourhoods. Every handover goes through the local
               library's drop-box, so nobody has to stand in a stranger's hallway.
             </Reveal>
+            {/* phones get one short line instead */}
+            <Reveal as="p" className={styles.ledeShort} i={2}>
+              A tool library where every handover goes through the local library.
+            </Reveal>
             <Reveal as="p" className={styles.credits} i={3}>
               Research and interaction design · a team of three
             </Reveal>

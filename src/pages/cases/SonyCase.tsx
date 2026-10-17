@@ -120,6 +120,10 @@ export function SonyCase() {
         <header className={styles.hero} id="hero">
           <div className={styles.heroPhoto} />
           <div className={styles.heroFade} />
+          {/* phones: no photo, so the drawn panel stands in for it */}
+          <div className={styles.heroDevice} aria-hidden="true">
+            <Panel status="free" />
+          </div>
           <div className={styles.heroCopy}>
             <Reveal as="p" className={styles.eyebrow}>
               <i aria-hidden="true" />
@@ -134,6 +138,10 @@ export function SonyCase() {
               Nimway is Sony’s smart-office platform, used by companies in several countries. I designed
               across its meeting-room panels, wayfinding maps and booking app and web, so the same rooms
               read right at the door, across the lobby and in your hand.
+            </Reveal>
+            {/* phones get one short line instead */}
+            <Reveal as="p" className={styles.ledeShort} i={2}>
+              Sony’s smart-office platform: room panels, wayfinding maps and the booking app.
             </Reveal>
             <Reveal as="p" className={styles.credits} i={3}>
               UX and UI design · Sony Nimway
