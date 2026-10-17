@@ -59,7 +59,7 @@ export function FeatureCard({ project, card }: { project: Project; card: Project
           </div>
           <h3 className={styles.title}>{card.title}</h3>
           <span className={styles.btn}>
-            View case study
+            <span className={styles.btnText}>View case study</span>
             <span className={styles.arrow} aria-hidden="true">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" />

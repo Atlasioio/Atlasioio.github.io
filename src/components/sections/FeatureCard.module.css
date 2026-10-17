@@ -5,6 +5,9 @@
   container-type: inline-size;
   border-radius: 20px;
   overflow: hidden;
+  /* clip-path as well as overflow: the clip video on its own layer (Time) could
+     otherwise paint past the rounded corners */
+  clip-path: inset(0 round 20px);
 }
 
 .inner {
@@ -171,17 +174,27 @@
   .phone { width: min(32cqi, calc(var(--h) * 0.8 * var(--ratio))); }
 }
 
-/* ---- Narrow: copy on top, the phone below with room under it ---- */
+/* ---- Narrow: the phone on top, then one row: name and title, a round arrow ---- */
 @container (max-width: 640px) {
   .inner { height: auto; justify-content: flex-start; }
   .bg { background-position: var(--pos-sm, var(--pos, center)); background-size: cover; }
-  .scrim { background: linear-gradient(180deg, rgb(var(--s) / 0.84) 0%, rgb(var(--s) / 0.56) 45%, rgb(var(--s) / 0.38) 100%); }
-  .copy { width: auto; padding: 28px 22px 0; }
-  .brand { margin-bottom: 16px; }
-  .mark { width: 28px; height: 28px; }
-  .title { font-size: clamp(28px, 8.4cqi, 40px); max-width: 15ch; margin-bottom: 22px; }
-  .btn { height: 48px; padding-left: 20px; gap: 12px; font-size: 14px; }
-  .arrow { width: 32px; height: 32px; }
-  .phones { position: relative; width: auto; padding: 32px 18px 40px; align-items: flex-start; justify-content: center; }
-  .phone { width: min(64%, 260px); }
+  .scrim { background: linear-gradient(180deg, rgb(var(--s) / 0.3) 0%, rgb(var(--s) / 0.2) 40%, rgb(var(--s) / 0.92) 80%); }
+  .phones { order: -1; position: relative; width: auto; padding: 24px 18px 0; align-items: flex-start; justify-content: center; }
+  .phone { width: min(58%, 240px); }
+  [data-motion='time'] .phone { margin-right: 0; }
+  .copy {
+    width: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 10px 14px;
+    padding: 18px 20px 20px;
+  }
+  .brand { grid-column: 1 / -1; margin-bottom: 0; }
+  .mark { width: 26px; height: 26px; }
+  .title { margin: 0; max-width: 15ch; font-size: clamp(24px, 7cqi, 30px); }
+  /* the button shrinks to its arrow: a 52px white disc */
+  .btn { width: 52px; height: 52px; padding: 0; justify-content: center; }
+  .btnText { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .arrow { background: transparent; color: #111; width: 52px; height: 52px; }
 }
