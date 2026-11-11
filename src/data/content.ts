@@ -351,15 +351,15 @@ export const projects: Project[] = [
     reflection: [
       {
         heading: 'What I learned',
-        body: 'Written design rules drift when there is no way to verify them. The document specified three type weights; counting the codebase found five in use, and the most frequent of them — 700 Bold — was not listed at all. The document was corrected rather than the app.',
+        body: 'Honest doesn’t have to mean harsh. A record people avoid is no record, so ending early is logged but never red, and every figure sits beside something to compare it with: last week, a usual day, a total. A number on its own only judges.',
       },
       {
         heading: 'What I would do differently',
-        body: 'The audit should have been written before the design document rather than after it. Of the five problems its first run reported, three were faults in the audit itself: it could not distinguish a pill from a card, and counted correct code as violations.',
+        body: 'Draw the options before building, not after. The keypad for setting a length shipped, then read 1-3-0 as 90 minutes and had to be replaced by two wheels. The thirteen option sheets all came after the first build; drawn first, they would have caught it.',
       },
       {
         heading: 'What is next',
-        body: 'Tinted surfaces have no defined rule yet, and backup works only in the web build. Accessibility labels are in place throughout but have not been tested with VoiceOver or TalkBack on a device. And a session cannot be edited or deleted: a record you can edit is not a record, but that has never been decided on purpose.',
+        body: 'Onboarding, left until last on purpose: working backwards from the finished app shows what it actually has to teach. It will explain the idea, let you choose which categories fit you and make your own, and end on something real: starting a first session, adding a first to-do, or setting a goal, whichever fits. After that, testing with VoiceOver and TalkBack on a device.',
       },
     ],
     videoFrame: 'bare',
