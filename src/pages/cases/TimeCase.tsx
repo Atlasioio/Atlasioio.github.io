@@ -1,4 +1,5 @@
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type Dispatch, type SetStateAction } from 'react'
+import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { projects, preloadCover, type Project } from '../../data/content'
 import { useLenis } from '../../hooks/useLenis'
@@ -9,17 +10,19 @@ import { Footer } from '../../components/sections/Footer'
 import { RouteTransition } from '../../components/RouteTransition/RouteTransition'
 import { ProjectChat } from '../../components/ProjectChat/ProjectChat'
 import { Reveal } from '../../components/ui/Reveal'
+import { DIRECTIONS, EDGES, FLOWS, ITERATIONS, K, PROBLEMS, TIMELINE, type Shot, type Track } from './timeShots'
 import styles from './TimeCase.module.css'
 
 /**
- * The Time case study, built for Time alone (route "/work/time"). Dark, like
- * the app: Time's near-black ground, its category gradients as the light in
- * each panel, and the story told mostly through the screens. Every other
- * project still uses the shared CaseStudy template.
+ * The Koitto case study (route "/work/time", kept from when the app was called
+ * Time). Dark, like the app: its near-black ground, its category gradients as
+ * the light in each panel. The page runs problem → solution (the flows) →
+ * process → looking back, and every strip of screens opens full size.
  */
 
 const W = '/work/time'
 const LIVE = 'https://time-lac-kappa.vercel.app'
+const img = (src: string) => `${K}/${src}.webp`
 
 export function TimeCase() {
   useLenis()
@@ -42,9 +45,9 @@ export function TimeCase() {
         setHeroReady(true)
       }
     }
-    const img = new Image()
-    img.src = `${W}/card-bg.webp`
-    img.decode().then(ready, ready)
+    const im = new Image()
+    im.src = `${W}/card-bg.webp`
+    im.decode().then(ready, ready)
     const safety = window.setTimeout(ready, 2500)
     return () => window.clearTimeout(safety)
   }, [])
@@ -62,19 +65,19 @@ export function TimeCase() {
           <span className={styles.wordmark} aria-hidden="true" style={{ visibility: 'hidden' }}>lukas</span>
         </div>
 
-        {/* ---- Hero: the photo, Time's glow over it, two still phones ---- */}
+        {/* ---- Hero: the photo, the app's glow over it, two still phones ---- */}
         <header className={styles.hero}>
           <div className={styles.heroPhoto} />
           <div className={styles.heroGlow} />
           <div className={styles.heroFade} />
           {/* phones only: the live link sits on top of the device */}
           <a className={styles.livePill} href={LIVE} target="_blank" rel="noopener noreferrer" data-cursor>
-              <i aria-hidden="true" />
-              Try it live
-              <span aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 11.5l7-7M6 4.5h5.5V10" /></svg>
-              </span>
-            </a>
+            <i aria-hidden="true" />
+            Try it live
+            <span aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 11.5l7-7M6 4.5h5.5V10" /></svg>
+            </span>
+          </a>
           <div className={styles.heroPhones} aria-hidden="true">
             <span className={`${styles.phone} ${styles.cover}`}>
               <img src={`${W}/cover-category.webp`} alt="" />
@@ -89,7 +92,7 @@ export function TimeCase() {
               Shipped · in daily use
             </Reveal>
             <Reveal as="h1" className={styles.title} i={1}>
-              Time
+              Koitto
             </Reveal>
             <Reveal as="p" className={styles.lede} i={2}>
               A focus timer that keeps an honest record.
@@ -101,31 +104,55 @@ export function TimeCase() {
           </div>
         </header>
 
-        {/* ---- The story ---- */}
-        <section className={styles.story} aria-label="The story">
+        {/* ---- The facts: role, time, where it runs ---- */}
+        <section className={styles.facts} aria-label="Project facts">
+          {[
+            ['Role', 'Solo: research, design and code'],
+            ['Timeline', '15 Sep – 25 Oct 2026'],
+            ['Platforms', 'iOS, Android and the web, one codebase'],
+            ['Status', 'Live as an installable web app'],
+          ].map(([k, v], i) => (
+            <Reveal className={styles.fact} key={k} i={i}>
+              <span>{k}</span>
+              <p>{v}</p>
+            </Reveal>
+          ))}
+        </section>
+
+        {/* ================= 01 · The problem ================= */}
+        <Chapter no="01" title="The problem" lead="People set time aside, then drift." tone="pink" />
+
+        <section className={styles.story} aria-label="The problem">
           <div>
             <Reveal as="p">
               <strong>Most timers measure time passing. I wanted one that measures time held.</strong>
             </Reveal>
             <Reveal as="p" i={1}>
-              Time is a session timer with no pause button. You pick what kind of work you're about
-              to do, name it, set a length and start. Stopping early means holding a button down for
-              over a second, and that's recorded too. Afterwards it asks one question: how did it go.
+              The tools meant to help either let people off too easily or punish them for slipping,
+              and they only count work as time well spent, so rest, exercise and play look like time
+              lost. By the end of the day people feel busy, but can’t say where their time went, or
+              what to change.
             </Reveal>
             <Reveal as="p" i={2}>
-              It's for people who already know what they should be doing, and want an honest record
-              of whether they did it. What builds up isn't a productivity score, but a record you can
-              read back: how much you set aside, how much of it you actually held, and how it felt.
+              Koitto is for people who already know what they should be doing but feel scattered,
+              and want an honest record of how much time they set aside, how much of it they held,
+              and how it felt.
+            </Reveal>
+            <Reveal as="p" className={styles.hmw} i={3}>
+              <span>How might we</span>
+              help people keep the time they chose, for anything they choose it for, and see
+              honestly where it went?
             </Reveal>
           </div>
         </section>
 
-        {/* ---- Where it started: why timers get abandoned ---- */}
-        <section className={styles.section} aria-label="Where it started">
-          <Reveal as="h2" className={styles.h2}>Why timers get abandoned.</Reveal>
+        {/* The evidence: complaints, then the four problems behind them */}
+        <section className={styles.sectionFirst} aria-label="Why timers get abandoned">
+          <Reveal as="h3" className={styles.h2}>Why timers get abandoned.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            Pomodoro apps, the phone's timer, a to-do list on the side. The same complaints come
-            up again and again.
+            Pomodoro apps, the phone’s timer, a to-do list on the side. From desktop research:
+            app-store reviews of timers and to-do apps, Reddit threads, and people I know. The same
+            complaints came up again and again.
           </Reveal>
           <div className={styles.quotes}>
             {QUOTES.map(([q, size, tone], i) => (
@@ -136,26 +163,124 @@ export function TimeCase() {
           </div>
         </section>
 
-        {/* ---- What shaped it ---- */}
-        <section className={styles.section} aria-label="Insights">
-          <Reveal as="h2" className={styles.h2}>What shaped it.</Reveal>
-          <div className={styles.insights}>
-            {INSIGHTS.map(([h, t, tone], i) => (
-              <Reveal className={styles.insight} key={h} i={i}>
-                <span className={`${styles.insightDot} ${styles[`d_${tone}`]}`} aria-hidden="true" />
-                <h3>{h}</h3>
-                <p>{t}</p>
+        <section className={styles.section} aria-label="Four problems">
+          <Reveal as="h3" className={styles.h2}>Four problems behind them.</Reveal>
+          <Reveal as="p" className={styles.sub} i={1}>
+            Sorted, the complaints come down to four things. Each one became a decision in the app.
+          </Reveal>
+          <div className={styles.problems}>
+            {PROBLEMS.map((p, i) => (
+              <Reveal className={styles.problem} key={p.h} i={i}>
+                <span className={`${styles.insightDot} ${styles[`d_${p.tone}`]}`} aria-hidden="true" />
+                <h4>{p.h}</h4>
+                <ul>
+                  {p.quotes.map((q) => <li key={q}>“{q}”</li>)}
+                </ul>
+                <p className={styles.so}><span>So</span>{p.so}</p>
               </Reveal>
             ))}
           </div>
         </section>
 
-        {/* ---- What it had to be: three principles, then what each means in the app ---- */}
-        <section className={styles.section} aria-label="Principles">
-          <Reveal as="h2" className={styles.h2}>What it had to be.</Reveal>
+        <section className={styles.section} aria-label="When it's used">
+          <Reveal as="h3" className={styles.h2}>When someone reaches for it.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            Three principles, and where they meet. Every point around them is something that is
-            actually in the app.
+            One week, as the app is designed to be used: planning, working, putting the phone away,
+            looking back.
+          </Reveal>
+          <ol className={styles.moments}>
+            {MOMENTS.map(([when, h, t, shot], i) => (
+              <Reveal as="li" className={styles.moment} key={when} i={i}>
+                <Screen src={img(shot)} />
+                <div>
+                  <span className={styles.momentWhen}>{when}</span>
+                  <h4>{h}</h4>
+                  <p>{t}</p>
+                </div>
+              </Reveal>
+            ))}
+          </ol>
+        </section>
+
+        {/* ================= 02 · The solution ================= */}
+        <Chapter no="02" title="The solution" lead="One timer and one list, keeping one honest record." tone="green" />
+
+        <section className={styles.panels} aria-label="Four decisions">
+          <Panel tone="deep" no="01 · No pause" title="The only way out is to hold."
+            text="While a session runs there is nothing to press except a control you hold for over a second. A paused timer measures attendance; the thing worth knowing is whether you stayed.">
+            <Screen src={img('01-session-flow/15-hold-to-end-early')} />
+          </Panel>
+
+          <div className={styles.twoUp}>
+            <Panel tone="move" no="02 · Intent first" title="What kind of time, before how long."
+              text="The first screen asks what you’re about to do. The length is the last decision, not the first.">
+              <Screen src={img('01-session-flow/01-pick-a-category')} />
+            </Panel>
+            <Panel tone="dark" no="03 · One question" title="How did it go?"
+              text="Four cards, Rough to Perfect, tinted by the session you just finished and picked from the same arc you started on.">
+              <Screen src={img('01-session-flow/10-how-did-it-go')} />
+            </Panel>
+          </div>
+
+          <Panel tone="calm" no="04 · Stopping early" title="Ending early isn’t failing."
+            text="It’s recorded as what you kept, it shows in the week as a shorter column, and it’s never red. Going down is information, not an error.">
+            <Screen src={img('01-session-flow/16-ended-early-never-red')} />
+          </Panel>
+        </section>
+
+        <section className={styles.section} aria-label="The key flows">
+          <Reveal as="h3" className={styles.h2}>The key flows.</Reveal>
+          <Reveal as="p" className={styles.sub} i={1}>
+            Four journeys, each starting from a real situation. Every screen opens full size.
+          </Reveal>
+          <Reveal i={2}>
+            <Gallery tracks={FLOWS} label="Key flows" numbered />
+          </Reveal>
+        </section>
+
+        <section className={styles.section} aria-label="Edge cases">
+          <Reveal as="h3" className={styles.h2}>When it doesn’t go to plan.</Reveal>
+          <Reveal as="p" className={styles.sub} i={1}>
+            The cases a timer usually gets wrong, and what Koitto does in each.
+          </Reveal>
+          <div className={styles.edges}>
+            {EDGES.map((e, i) => (
+              <Reveal className={`${styles.edge} ${e.shot ? styles.edgeShot : ''}`} key={e.q} i={i % 3}>
+                {e.shot && <Screen src={img(e.shot)} />}
+                <div>
+                  <h4>{e.q}</h4>
+                  <p>{e.a}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        {/* ================= 03 · The process ================= */}
+        <Chapter no="03" title="The process" lead="Six weeks, from a canvas to a shipped app." tone="blue" />
+
+        <section className={styles.sectionFirst} aria-label="Timeline">
+          <Reveal as="h3" className={styles.h2}>How it went.</Reveal>
+          <Reveal as="p" className={styles.sub} i={1}>
+            Designed on a canvas and a clickable prototype first, then built, with every open
+            question drawn as options side by side before anything was decided.
+          </Reveal>
+          <ol className={styles.timeline}>
+            {TIMELINE.map(([d, t], i) => (
+              <Reveal as="li" key={d} i={i % 4}>
+                <span>{d}</span>
+                <p>{t}</p>
+              </Reveal>
+            ))}
+          </ol>
+        </section>
+
+        {/* What it had to be: three principles, then what each means in the app */}
+        <section className={styles.section} aria-label="Principles">
+          <Reveal as="h3" className={styles.h2}>What it had to be.</Reveal>
+          <Reveal as="p" className={styles.sub} i={1}>
+            The four problems became three principles, and where they meet. Every point around them
+            is something that is actually in the app.
           </Reveal>
           <Reveal className={styles.venn} i={2}>
             <Venn />
@@ -169,65 +294,20 @@ export function TimeCase() {
           </div>
         </section>
 
-        {/* ---- The idea, in four decisions ---- */}
-        <section className={styles.panels} aria-label="Four decisions">
-          <Panel tone="deep" no="01 · No pause" title="The only way out is to hold."
-            text="While a session runs there is nothing to press except a control you hold for over a second. A paused timer measures attendance; the thing worth knowing is whether you stayed.">
-            <Phone src={`${W}/session-running.webp`} clip={`${W}/how-it-went.webm`} />
-          </Panel>
-
-          <div className={styles.twoUp}>
-            <Panel tone="move" no="02 · Intent first" title="What kind of work, before how long."
-              text="The first screen asks what you're about to do. The length is the last decision, not the first.">
-              <Phone src={`${W}/pick-a-category.webp`} clip={`${W}/session-flow.webm`} />
-            </Panel>
-            <Panel tone="dark" no="03 · One question" title="How did it go?"
-              text="Four cards, Rough to Perfect, tinted by the session you just finished and picked from the same arc you started on.">
-              <Phone src={`${W}/how-it-went.webp`} />
-            </Panel>
-          </div>
-
-          <Panel tone="calm" no="04 · Stopping early" title="Ending early isn't failing."
-            text="It's recorded, it shows up in the week as a short column, and it's never red. Going down is information, not an error.">
-            <Phone src={`${W}/me-week.webp`} clip={`${W}/open-a-sheet.webm`} />
-          </Panel>
-        </section>
-
-        {/* ---- One session, start to finish ---- */}
-        <section className={styles.section} aria-label="The session">
-          <Reveal as="h2" className={styles.h2}>One session, start to finish.</Reveal>
-          <div className={styles.flow}>
-            {[
-              ['pick-a-category', 'Pick a category'],
-              ['name-it', 'Name it'],
-              ['set-the-length', 'Set the length'],
-              ['session-running', 'Hold to end'],
-              ['session-done', 'Done'],
-              ['how-it-went', 'How did it go'],
-            ].map(([file, label], i) => (
-              <Reveal as="figure" className={styles.flowStep} key={file} i={i}>
-                <Phone src={`${W}/${file}.webp`} />
-                <figcaption><span>{String(i + 1).padStart(2, '0')}</span>{label}</figcaption>
-              </Reveal>
-            ))}
-          </div>
-        </section>
-
-        {/* ---- The record ---- */}
-        <section className={styles.panelsTight} aria-label="The record">
-          <Panel tone="ember" no="The record" title="A record you can read back."
-            text="Every figure opens into what it's made of, and every day opens into what you actually ran. Patterns sit behind a button, because they're a question you ask now and then.">
-            <div className={styles.trio}>
-              <figure><Phone src={`${W}/me-month.webp`} /><figcaption>The month</figcaption></figure>
-              <figure><Phone src={`${W}/day.webp`} /><figcaption>A day</figcaption></figure>
-              <figure><Phone src={`${W}/patterns.webp`} /><figcaption>Patterns</figcaption></figure>
-            </div>
-          </Panel>
+        <section className={styles.sectionTight} aria-label="Iterations">
+          <Reveal as="h3" className={styles.h2}>How each decision got there.</Reveal>
+          <Reveal as="p" className={styles.sub} i={1}>
+            Real frames from the canvas, the prototype and the builds. Where an original wasn’t
+            kept it is redrawn or rebuilt, and labelled as such.
+          </Reveal>
+          <Reveal i={2}>
+            <Gallery tracks={ITERATIONS} label="Iterations" />
+          </Reveal>
         </section>
 
         {/* ---- The system ---- */}
         <section className={styles.section} aria-label="The system">
-          <Reveal as="h2" className={styles.h2}>One colour, at every size.</Reveal>
+          <Reveal as="h3" className={styles.h2}>One colour, at every size.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
             Eleven palettes of four stops. A mark big enough to show the gradient shows it; one
             under 24pt takes a single named stop. So a bar, a card, the session orb and an 8pt
@@ -242,9 +322,9 @@ export function TimeCase() {
 
         {/* ---- Counted, not claimed ---- */}
         <section className={styles.section} aria-label="Counted, not claimed">
-          <Reveal as="h2" className={styles.h2}>Counted, not claimed.</Reveal>
+          <Reveal as="h3" className={styles.h2}>Counted, not claimed.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            Counted straight out of the app itself, where a rule either holds or it doesn't.
+            Counted straight out of the app itself, where a rule either holds or it doesn’t.
           </Reveal>
           <div className={styles.tiles}>
             <Tile big="11 → 1" tone="deep" lead="Eleven dots, one real colour."
@@ -252,42 +332,54 @@ export function TimeCase() {
             <Tile big="36 / 14" tone="move" lead="36 borders, 14 opacities."
               text="Not a system, accretion. Cards now have no border at all: the fill is the edge." i={1} />
             <Tile big="3 → 5" tone="calm" lead="The doc was wrong about its own type."
-              text="It claimed three weights. Counting found five, and the most used wasn't listed. The document changed, not the app." i={2} />
+              text="It claimed three weights. Counting found five, and the most used wasn’t listed. The document changed, not the app." i={2} />
           </div>
         </section>
 
         {/* ---- How it's built ---- */}
         <section className={styles.section} aria-label="How it's built">
-          <Reveal as="h2" className={styles.h2}>How it's built.</Reveal>
+          <Reveal as="h3" className={styles.h2}>How it’s built.</Reveal>
           <div className={styles.built}>
             {[
               ['Expo and React Native', 'One codebase for iOS, Android and the web.'],
-              ['Local-first', "Everything lives on the device, written twice over so an interrupted write can't lose a record. No account, no server, no analytics."],
+              ['Local-first', 'Everything lives on the device, written twice over so an interrupted write can’t lose a record. No account, no server, no analytics.'],
               ['An installable web app', 'The web build is a PWA, deployed on Vercel. It is the version linked here.'],
-              ['Checked against its own rules', "A script counts radii, surface opacities, type weights, gutters, tap targets and accessibility labels, and prints what's standard and what's one-off."],
+              ['Checked against its own rules', 'A script counts radii, surface opacities, type weights, gutters, tap targets and accessibility labels, and prints what’s standard and what’s one-off.'],
             ].map(([h, t], i) => (
               <Reveal className={styles.builtItem} key={h} i={i}>
-                <h3>{h}</h3>
+                <h4>{h}</h4>
                 <p>{t}</p>
               </Reveal>
             ))}
           </div>
         </section>
 
-        {/* ---- Reflection ---- */}
+        {/* ================= 04 · Looking back ================= */}
+        <Chapter no="04" title="Looking back" lead="What it taught me, and where I’d take it next." tone="gold" />
+
         {project.reflection && (
-          <section className={styles.section} aria-label="Reflection">
-            <Reveal as="h2" className={styles.h2}>Looking back.</Reveal>
+          <section className={styles.sectionFirst} aria-label="Reflection">
             <div className={styles.reflection}>
               {project.reflection.map((r, i) => (
                 <Reveal className={styles.reflectionItem} key={r.heading} i={i}>
-                  <h3>{r.heading}</h3>
+                  <h4>{r.heading}</h4>
                   <p>{r.body}</p>
                 </Reveal>
               ))}
             </div>
           </section>
         )}
+
+        <section className={styles.section} aria-label="New directions">
+          <Reveal as="h3" className={styles.h2}>If I picked it up again.</Reveal>
+          <Reveal as="p" className={styles.sub} i={1}>
+            Drawn in November 2026, after the app shipped. None of these were part of the original
+            work; each says what it would gain and what it would cost.
+          </Reveal>
+          <Reveal i={2}>
+            <Gallery tracks={DIRECTIONS} label="New directions" />
+          </Reveal>
+        </section>
 
         {/* ---- Close: try it, then the next project ---- */}
         <section className={styles.close} aria-label="Try it">
@@ -340,13 +432,27 @@ function TryLive() {
 
 type Tone = 'deep' | 'move' | 'calm' | 'ember' | 'dark'
 
+/** A chapter opener: the number, the title, and the one line it argues. */
+function Chapter({ no, title, lead, tone }: { no: string; title: string; lead: string; tone: 'pink' | 'green' | 'blue' | 'gold' }) {
+  return (
+    <header className={styles.chapter}>
+      <Reveal as="p" className={styles.chapterNo}>
+        <i className={styles[`d_${tone}`]} aria-hidden="true" />
+        {no}
+      </Reveal>
+      <Reveal as="h2" className={styles.chapterTitle} i={1}>{title}</Reveal>
+      <Reveal as="p" className={styles.chapterLead} i={2}>{lead}</Reveal>
+    </header>
+  )
+}
+
 function Panel({ tone, no, title, text, children }: { tone: Tone; no: string; title: string; text: string; children: React.ReactNode }) {
   return (
     <Reveal as="article" className={`${styles.panel} ${styles[tone]}`}>
       {children}
       <div className={styles.cap}>
         <span className={styles.no}>{no}</span>
-        <h2>{title}</h2>
+        <h3>{title}</h3>
         <p>{text}</p>
       </div>
     </Reveal>
@@ -363,27 +469,201 @@ function Tile({ big, tone, lead, text, i }: { big: string; tone: Tone; lead: str
 }
 
 /**
- * A gallery screen (824×1732: a 780×1688 screen in a 22px frame). With `clip`,
- * the recording plays over the screen while the phone is on screen, and pauses
- * when it scrolls away; with reduced motion it stays on the still.
+ * A screen in a device frame. The frames are plain 390×844 screens, so the
+ * bezel is drawn here; a `detail` is a partial board shown as a card instead,
+ * and a `tall` full-length page is cropped to its first screen.
  */
-function Phone({ src, clip }: { src: string; clip?: string }) {
-  const ref = useRef<HTMLVideoElement>(null)
-  useEffect(() => {
-    const v = ref.current
-    if (!v || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const io = new IntersectionObserver(
-      ([e]) => (e.isIntersecting ? v.play().catch(() => {}) : v.pause()),
-      { threshold: 0.35 },
+function Screen({ src, alt = '', detail, tall }: { src: string; alt?: string; detail?: boolean; tall?: boolean }) {
+  if (detail) {
+    return (
+      <span className={styles.detail}>
+        <img src={src} alt={alt} loading="lazy" decoding="async" />
+      </span>
     )
-    io.observe(v)
-    return () => io.disconnect()
-  }, [])
+  }
   return (
-    <span className={styles.phone}>
-      <img src={src} alt="" loading="lazy" decoding="async" />
-      {clip && <video ref={ref} src={clip} muted loop playsInline preload="none" disablePictureInPicture />}
+    <span className={`${styles.screen} ${tall ? styles.screenTall : ''}`}>
+      <img src={src} alt={alt} loading="lazy" decoding="async" />
     </span>
+  )
+}
+
+const ORIGIN: Record<string, string> = {
+  real: 'Real',
+  redrawn: 'Redrawn from memory',
+  rebuilt: 'Rebuilt from code',
+  new: 'New direction',
+  built: 'Real wording',
+}
+const VERDICT: Record<string, string> = {
+  chosen: 'Chosen',
+  'set aside': 'Set aside',
+  moved: 'Moved to Patterns',
+  shipped: 'Shipped',
+}
+
+function Chips({ shot }: { shot: Shot }) {
+  if (!shot.origin && !shot.date && !shot.verdict) return null
+  return (
+    <span className={styles.chips}>
+      {shot.verdict && (
+        <span className={`${styles.chip} ${styles[`v_${shot.verdict.replace(' ', '_')}`]}`}>{VERDICT[shot.verdict]}</span>
+      )}
+      {shot.origin && <span className={`${styles.chip} ${styles[`o_${shot.origin}`]}`}>{ORIGIN[shot.origin]}</span>}
+      {shot.date && <span className={styles.chip}>{shot.date}</span>}
+    </span>
+  )
+}
+
+const pad = (n: number) => String(n).padStart(2, '0')
+
+/**
+ * Tabs over a sideways strip of screens. Each tab is one flow or one decision;
+ * any screen opens full size, and the arrows page the strip for a mouse.
+ */
+function Gallery({ tracks, label, numbered = false }: { tracks: Track[]; label: string; numbered?: boolean }) {
+  const id = useId()
+  const [t, setT] = useState(0)
+  const [open, setOpen] = useState<number | null>(null)
+  const strip = useRef<HTMLDivElement>(null)
+  const track = tracks[t]
+
+  useEffect(() => {
+    strip.current?.scrollTo({ left: 0 })
+  }, [t])
+
+  const page = (dir: 1 | -1) => {
+    const el = strip.current
+    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' })
+  }
+
+  return (
+    <div className={styles.gallery}>
+      <div className={styles.galleryBar}>
+        <div className={styles.tabs} role="tablist" aria-label={label}>
+          {tracks.map((tr, i) => (
+            <button
+              key={tr.id}
+              type="button"
+              role="tab"
+              id={`${id}-tab-${i}`}
+              aria-selected={i === t}
+              aria-controls={`${id}-panel`}
+              tabIndex={i === t ? 0 : -1}
+              className={`${styles.tab} ${i === t ? styles.tabOn : ''}`}
+              onClick={() => setT(i)}
+              onKeyDown={(e) => {
+                if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return
+                const n = (i + (e.key === 'ArrowRight' ? 1 : tracks.length - 1)) % tracks.length
+                setT(n)
+                document.getElementById(`${id}-tab-${n}`)?.focus()
+              }}
+              data-cursor
+            >
+              {tr.tab}
+            </button>
+          ))}
+        </div>
+        <div className={styles.arrows}>
+          <button type="button" onClick={() => page(-1)} aria-label="Scroll the screens back" data-cursor>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M13.5 8h-11M7 3.5 2.5 8 7 12.5" /></svg>
+          </button>
+          <button type="button" onClick={() => page(1)} aria-label="Scroll the screens on" data-cursor>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" /></svg>
+          </button>
+        </div>
+      </div>
+
+      <div role="tabpanel" id={`${id}-panel`} aria-labelledby={`${id}-tab-${t}`}>
+        <div className={styles.trackHead}>
+          {track.when && (
+            <p className={styles.when}>
+              <span>When</span>
+              {track.when}
+            </p>
+          )}
+          <p className={styles.trackIntro}>{track.intro}</p>
+        </div>
+        <div className={styles.strip} ref={strip}>
+          {track.shots.map((s, i) => (
+            <figure className={`${styles.shot} ${s.detail ? styles.shotDetail : ''}`} key={s.src}>
+              <button type="button" className={styles.shotBtn} onClick={() => setOpen(i)} aria-label={`Open “${s.label}” full size`} data-cursor>
+                <Screen src={img(s.src)} detail={s.detail} tall={s.tall} />
+              </button>
+              <figcaption>
+                <span className={styles.shotHead}>
+                  {numbered && <span className={styles.shotNo}>{pad(i + 1)}</span>}
+                  {s.label}
+                </span>
+                <Chips shot={s} />
+                {s.note && <span className={styles.shotNote}>{s.note}</span>}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+
+      {open != null && (
+        <Lightbox shots={track.shots} index={open} setIndex={setOpen} />
+      )}
+    </div>
+  )
+}
+
+/**
+ * One screen at full height, with its caption, stepping through its strip.
+ * Esc or a click outside closes it; the arrow keys step.
+ */
+function Lightbox({ shots, index, setIndex }: { shots: Shot[]; index: number; setIndex: Dispatch<SetStateAction<number | null>> }) {
+  const s = shots[index]
+  const closeRef = useRef<HTMLButtonElement>(null)
+  const close = () => setIndex(null)
+  const step = (d: 1 | -1) => setIndex((i) => (i == null ? i : Math.min(shots.length - 1, Math.max(0, i + d))))
+
+  useEffect(() => {
+    const before = document.activeElement as HTMLElement | null
+    closeRef.current?.focus()
+    const lenis = (window as unknown as { __lenis?: { stop(): void; start(): void } }).__lenis
+    lenis?.stop()
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIndex(null)
+      else if (e.key === 'ArrowRight') setIndex((i) => (i == null ? i : Math.min(shots.length - 1, i + 1)))
+      else if (e.key === 'ArrowLeft') setIndex((i) => (i == null ? i : Math.max(0, i - 1)))
+    }
+    window.addEventListener('keydown', onKey)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      lenis?.start()
+      before?.focus()
+    }
+  }, [setIndex, shots.length])
+
+  return createPortal(
+    <div className={styles.lightbox} role="dialog" aria-modal="true" aria-label={s.label} data-lenis-prevent onClick={close}>
+      <div className={styles.lbInner} onClick={(e) => e.stopPropagation()}>
+        <div className={`${styles.lbImage} ${s.tall ? styles.lbTall : ''} ${s.detail ? styles.lbDetail : ''}`} data-lenis-prevent>
+          <img src={img(s.src)} alt={s.label} />
+        </div>
+        <div className={styles.lbSide}>
+          <p className={styles.lbCount}>{pad(index + 1)} / {pad(shots.length)}</p>
+          <h4 className={styles.lbTitle}>{s.label}</h4>
+          <Chips shot={s} />
+          {s.note && <p className={styles.lbNote}>{s.note}</p>}
+          <div className={styles.lbNav}>
+            <button type="button" onClick={() => step(-1)} disabled={index === 0} aria-label="Previous screen" data-cursor>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M13.5 8h-11M7 3.5 2.5 8 7 12.5" /></svg>
+            </button>
+            <button type="button" onClick={() => step(1)} disabled={index === shots.length - 1} aria-label="Next screen" data-cursor>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" /></svg>
+            </button>
+          </div>
+        </div>
+        <button ref={closeRef} type="button" className={styles.lbClose} onClick={close} aria-label="Close" data-cursor>
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" /></svg>
+        </button>
+      </div>
+    </div>,
+    document.body,
   )
 }
 
@@ -403,12 +683,13 @@ const QUOTES: [string, 'xl' | 'l' | 'm' | 's', QTone][] = [
   ['It’s a stopwatch, not a record', 's', 'green'],
 ]
 
-/* ---- What shaped it ---- */
-const INSIGHTS: [string, string, 'pink' | 'green' | 'blue' | 'gold'][] = [
-  ['Hard isn’t one thing.', 'Admin is its own category. Doing your taxes is hard, but it isn’t deep work, and lumping them together hides which kind of hard the week actually was.', 'blue'],
-  ['Fun needs a limit too.', 'Play gets its own category because it’s good, and because it’s the one that overruns. For play, the length works as a ceiling, not a target.', 'gold'],
-  ['The list and the timer belong together.', 'Start a session straight from a to-do, and the tick lands on the day you did it. Two apps became one.', 'green'],
-  ['A session isn’t done until you say how it went.', 'Time held is half the record. One question at the end, how did it go, is the other half.', 'pink'],
+/** [when, what is happening, what Koitto does, screen]. One week of use. */
+const MOMENTS: [string, string, string, string][] = [
+  ['Sunday evening', 'Planning the week.', '“Go for a swim” goes on the list as Move: 30 minutes, every weekend.', '02-todo-flow/05-repeat-on-weekends'],
+  ['Sunday, 20:00', 'Sitting down to work.', '“Research case” starts from the list: deep work, 50 minutes, done by 20:50.', '01-session-flow/07-running'],
+  ['Sunday, 20:18', 'The phone goes in a pocket.', 'The session keeps running. At 20:50 the lock screen asks how it went.', '08-notifications/01-built-ios-lock-screen-session-ends'],
+  ['Friday', '“Where did my week go?”', 'Me opens on the week: 8h 22m, against the week before, and what it went on.', '03-me-flow/04-by-week'],
+  ['Saturday, 09:00', 'The swim comes round.', 'A reminder, only on the days it’s due: “30 min, when you are ready.”', '08-notifications/02-built-ios-lock-screen-todo-reminder'],
 ]
 
 /* ---- What it had to be ---- */

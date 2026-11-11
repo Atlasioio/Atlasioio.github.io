@@ -302,7 +302,7 @@ export const projects: Project[] = [
   {
     id: 'time',
     index: 'W/01',
-    name: 'Time',
+    name: 'Koitto',
     tag: 'Tool · Shipped',
     role: 'Design and code',
     outcome: 'A session timer recording completed time, not elapsed time',
@@ -323,7 +323,7 @@ export const projects: Project[] = [
     tagline:
       'A session timer that records time held rather than time elapsed — the length committed to, against the amount completed.',
     overview:
-      'Time is a session timer for iOS, Android and the web. You choose a category, name the session, set a length and start it. There is no pause control, and the only way to stop early is to hold a button for a second, which is recorded rather than hidden. What accumulates is a record of how much time was set aside, how much was completed, what it was spent on, and how each session was rated afterwards.',
+      'Koitto is a session timer for iOS, Android and the web. You choose a category, name the session, set a length and start it. There is no pause control, and the only way to stop early is to hold a button for a second, which is recorded rather than hidden. What accumulates is a record of how much time was set aside, how much was completed, what it was spent on, and how each session was rated afterwards.',
     sections: [
       {
         heading: 'Discover',
@@ -345,7 +345,7 @@ export const projects: Project[] = [
       },
       {
         heading: 'Deliver',
-        body: 'Time ships as a PWA, stores everything on the device, and has no account, server or analytics. A design document in the repository is paired with a script that checks the app against it, counting radii, surface alpha values, type weights, page gutters, tap targets and accessibility labels, and reporting which are standard, which are near-standard and which are one-off. The numbers in this case study come from that audit: things that can be counted in the app itself.',
+        body: 'Koitto ships as a PWA, stores everything on the device, and has no account, server or analytics. A design document in the repository is paired with a script that checks the app against it, counting radii, surface alpha values, type weights, page gutters, tap targets and accessibility labels, and reporting which are standard, which are near-standard and which are one-off. The numbers in this case study come from that audit: things that can be counted in the app itself.',
       },
     ],
     reflection: [
@@ -359,7 +359,7 @@ export const projects: Project[] = [
       },
       {
         heading: 'What is next',
-        body: 'Tinted surfaces have no defined rule yet. The completion chime and the backup function work only in the web build. Accessibility labels are in place throughout but have not been tested with VoiceOver or TalkBack on a device.',
+        body: 'Tinted surfaces have no defined rule yet, and backup works only in the web build. Accessibility labels are in place throughout but have not been tested with VoiceOver or TalkBack on a device. And a session cannot be edited or deleted: a record you can edit is not a record, but that has never been decided on purpose.',
       },
     ],
     videoFrame: 'bare',
