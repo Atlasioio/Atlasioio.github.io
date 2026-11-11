@@ -113,7 +113,7 @@ export const ITERATIONS: Track[] = [
     id: 'category',
     tab: 'Choosing the category',
     intro:
-      'Simpler pickers came first; the originals weren’t saved, so those six are redrawn from memory. The arc won because it gives one category the whole card, so its colour leads, makes the choice feel like a moment rather than a form, and is the same gesture a session ends on. On 14 Oct the app also stopped guessing the category for you.',
+      'Simpler pickers came first; the originals weren’t saved, so those six are redrawn from memory. The arc won because it gives one category the whole card, so its colour leads, makes the choice feel like a moment rather than a form, and is the same gesture a session ends on. Later, the app also stopped guessing the category for you.',
     shots: [
       { src: '04-category-iterations/01-redrawn-a-plain-list', label: 'A plain list', note: 'Fastest to scan, but the card and its colour disappear.', origin: 'redrawn' },
       { src: '04-category-iterations/02-redrawn-chips-on-the-timer', label: 'Chips on the timer', origin: 'redrawn' },
@@ -121,10 +121,10 @@ export const ITERATIONS: Track[] = [
       { src: '04-category-iterations/04-redrawn-a-hand-of-cards', label: 'A hand of cards', origin: 'redrawn' },
       { src: '04-category-iterations/05-redrawn-a-stack-of-cards', label: 'A stack of cards', origin: 'redrawn' },
       { src: '04-category-iterations/06-redrawn-one-card-with-arrows', label: 'One card, with arrows', origin: 'redrawn' },
-      { src: '04-category-iterations/07-real-15-sep-the-first-arc', label: 'The first arc', note: 'On the session-flow canvas.', origin: 'real', date: '15 Sep' },
-      { src: '04-category-iterations/08-real-16-sep-the-prototype', label: 'The prototype', note: 'Clickable, the next day.', origin: 'real', date: '16 Sep' },
-      { src: '04-category-iterations/09-rebuilt-just-before-github-tall-cards-glow', label: 'Tall cards, a glow', note: 'No icons and no reflection yet.', origin: 'rebuilt', date: 'Before 7 Oct' },
-      { src: '04-category-iterations/10-real-7-oct-first-commit', label: 'The first commit', note: 'On a slightly violet black.', origin: 'real', date: '7 Oct' },
+      { src: '04-category-iterations/07-real-15-sep-the-first-arc', label: 'The first arc', note: 'On the session-flow canvas.', origin: 'real' },
+      { src: '04-category-iterations/08-real-16-sep-the-prototype', label: 'The prototype', note: 'Clickable, the next day.', origin: 'real' },
+      { src: '04-category-iterations/09-rebuilt-just-before-github-tall-cards-glow', label: 'Tall cards, a glow', note: 'No icons and no reflection yet.', origin: 'rebuilt' },
+      { src: '04-category-iterations/10-real-7-oct-first-commit', label: 'The first commit', note: 'On a slightly violet black.', origin: 'real' },
       { src: '04-category-iterations/11-real-shipped-today', label: 'Shipped', note: 'The same arc on neutral black.', origin: 'real', verdict: 'shipped' },
     ],
   },
@@ -132,15 +132,15 @@ export const ITERATIONS: Track[] = [
     id: 'time',
     tab: 'Setting the time',
     intro:
-      'At first the length came before the name. The order flipped, so a session is named before it is measured. A keypad read digits like a clock, so 1-3-0 meant 1:30, or 90 minutes, and it had to validate a string. Two wheels replaced it on 15 Oct.',
+      'At first the length came before the name. The order flipped, so a session is named before it is measured. A keypad read digits like a clock, so 1-3-0 meant 1:30, or 90 minutes, and it had to validate a string. Two wheels replaced it.',
     shots: [
-      { src: '05-time-iterations/01-real-15-sep-the-canvas', label: 'Length before name', note: 'A dense ruler, then “Name it”.', origin: 'real', date: '15 Sep' },
-      { src: '05-time-iterations/02-real-16-sep-the-prototype', label: 'The prototype', origin: 'real', date: '16 Sep' },
-      { src: '05-time-iterations/03-real-7-oct-to-today-the-ruler', label: 'The order flipped', note: 'Category, name, then length. Sparse ticks, and Start.', origin: 'real', date: '7 Oct on', verdict: 'shipped' },
-      { src: '05-time-iterations/04-real-until-14-oct-tap-the-number-a-keypad', label: 'Tap the number: a keypad', origin: 'real', date: '7–14 Oct', verdict: 'set aside' },
-      { src: '05-time-iterations/05-real-until-14-oct-keypad-one-digit', label: 'One digit', note: 'Capped at 5 min to 3 h, so one digit said “At least 5 min”.', origin: 'real', date: '7–14 Oct', verdict: 'set aside' },
-      { src: '05-time-iterations/06-real-until-14-oct-keypad-reads-1-30-as-90-min', label: '1-3-0 reads as 90 min', note: 'Typed like a clock, read as a duration.', origin: 'real', date: '7–14 Oct', verdict: 'set aside' },
-      { src: '05-time-iterations/07-real-from-15-oct-two-wheels', label: 'Two wheels', note: 'Hours and minutes. Nothing to validate.', origin: 'real', date: '15 Oct on', verdict: 'shipped' },
+      { src: '05-time-iterations/01-real-15-sep-the-canvas', label: 'Length before name', note: 'A dense ruler, then “Name it”.', origin: 'real' },
+      { src: '05-time-iterations/02-real-16-sep-the-prototype', label: 'The prototype', origin: 'real' },
+      { src: '05-time-iterations/03-real-7-oct-to-today-the-ruler', label: 'The order flipped', note: 'Category, name, then length. Sparse ticks, and Start.', origin: 'real', verdict: 'shipped' },
+      { src: '05-time-iterations/04-real-until-14-oct-tap-the-number-a-keypad', label: 'Tap the number: a keypad', origin: 'real', verdict: 'set aside' },
+      { src: '05-time-iterations/05-real-until-14-oct-keypad-one-digit', label: 'One digit', note: 'Capped at 5 min to 3 h, so one digit said “At least 5 min”.', origin: 'real', verdict: 'set aside' },
+      { src: '05-time-iterations/06-real-until-14-oct-keypad-reads-1-30-as-90-min', label: '1-3-0 reads as 90 min', note: 'Typed like a clock, read as a duration.', origin: 'real', verdict: 'set aside' },
+      { src: '05-time-iterations/07-real-from-15-oct-two-wheels', label: 'Two wheels', note: 'Hours and minutes. Nothing to validate.', origin: 'real', verdict: 'shipped' },
     ],
   },
   {
@@ -149,14 +149,14 @@ export const ITERATIONS: Track[] = [
     intro:
       'Every round asked the same question of a figure: compared to what? Four treatments were drawn for the week’s figures. A small mark beside each one won; the others said the same thing three times, crowded a quiet page, or gave it two headlines.',
     shots: [
-      { src: '06-data-viz-iterations/08-real-6-oct-figures-0-as-it-was', label: 'As it was', origin: 'real', date: '6 Oct' },
-      { src: '06-data-viz-iterations/09-real-6-oct-figures-1-a-change-not-a-number-set-aside', label: 'A change, not a number', note: 'Said the same kind of thing three times.', origin: 'real', date: '6 Oct', verdict: 'set aside' },
-      { src: '06-data-viz-iterations/10-real-6-oct-figures-2-a-mark-beside-it-chosen', label: 'A mark beside it', note: 'One small drawing per figure.', origin: 'real', date: '6 Oct', verdict: 'chosen' },
-      { src: '06-data-viz-iterations/11-real-6-oct-figures-3-mark-and-change-set-aside', label: 'Mark and change', note: '80pt rows instead of 62, and the busiest thing on a quiet page.', origin: 'real', date: '6 Oct', verdict: 'set aside' },
-      { src: '06-data-viz-iterations/12-real-6-oct-figures-4-one-promoted-set-aside', label: 'One promoted', note: 'Gave the page two headlines.', origin: 'real', date: '6 Oct', verdict: 'set aside' },
-      { src: '06-data-viz-iterations/25-real-15-oct-me-page-a-week-led-full-page', label: 'Me, led by the week', note: 'The whole page drawn three ways.', origin: 'real', date: '15 Oct', tall: true },
-      { src: '06-data-viz-iterations/26-real-15-oct-me-page-b-two-acts-full-page', label: 'Me, in two acts', origin: 'real', date: '15 Oct', tall: true },
-      { src: '06-data-viz-iterations/27-real-15-oct-me-page-c-cumulative-led-full-page', label: 'Me, led by the total', origin: 'real', date: '15 Oct', tall: true },
+      { src: '06-data-viz-iterations/08-real-6-oct-figures-0-as-it-was', label: 'As it was', origin: 'real' },
+      { src: '06-data-viz-iterations/09-real-6-oct-figures-1-a-change-not-a-number-set-aside', label: 'A change, not a number', note: 'Said the same kind of thing three times.', origin: 'real', verdict: 'set aside' },
+      { src: '06-data-viz-iterations/10-real-6-oct-figures-2-a-mark-beside-it-chosen', label: 'A mark beside it', note: 'One small drawing per figure.', origin: 'real', verdict: 'chosen' },
+      { src: '06-data-viz-iterations/11-real-6-oct-figures-3-mark-and-change-set-aside', label: 'Mark and change', note: '80pt rows instead of 62, and the busiest thing on a quiet page.', origin: 'real', verdict: 'set aside' },
+      { src: '06-data-viz-iterations/12-real-6-oct-figures-4-one-promoted-set-aside', label: 'One promoted', note: 'Gave the page two headlines.', origin: 'real', verdict: 'set aside' },
+      { src: '06-data-viz-iterations/25-real-15-oct-me-page-a-week-led-full-page', label: 'Me, led by the week', note: 'The whole page drawn three ways.', origin: 'real', tall: true },
+      { src: '06-data-viz-iterations/26-real-15-oct-me-page-b-two-acts-full-page', label: 'Me, in two acts', origin: 'real', tall: true },
+      { src: '06-data-viz-iterations/27-real-15-oct-me-page-c-cumulative-led-full-page', label: 'Me, led by the total', origin: 'real', tall: true },
     ],
   },
   {
@@ -165,14 +165,14 @@ export const ITERATIONS: Track[] = [
     intro:
       'A month with dates was the familiar option, but “what about the 14th?” isn’t a question anyone asks a timer. Half a year answered a different question, whether the habit is taking, so it moved to Patterns. On the bars, a gradient everywhere turned into a blob at 11pt.',
     shots: [
-      { src: '06-data-viz-iterations/16-real-6-oct-streak-a-runs-welded-chosen', label: 'Runs joined up', note: 'Five weeks of days.', origin: 'real', date: '6 Oct', verdict: 'chosen' },
-      { src: '06-data-viz-iterations/17-real-6-oct-streak-b-the-month-with-dates-set-aside', label: 'The month, with dates', note: 'Familiar from other apps; the wrong question for a timer.', origin: 'real', date: '6 Oct', verdict: 'set aside' },
-      { src: '06-data-viz-iterations/18-real-6-oct-streak-c-half-a-year-moved-to-patterns', label: 'Half a year', note: 'Whether the habit is taking. A different question.', origin: 'real', date: '6 Oct', verdict: 'moved' },
-      { src: '06-data-viz-iterations/22-real-6-oct-bars-a-flat-colour-detail', label: 'Bars: flat colour', origin: 'real', date: '6 Oct', detail: true },
-      { src: '06-data-viz-iterations/23-real-6-oct-bars-b-gradient-on-the-bar-chosen-detail', label: 'Bars: gradient on the bar', note: 'Shipped 9 Oct.', origin: 'real', date: '6 Oct', verdict: 'chosen', detail: true },
-      { src: '06-data-viz-iterations/24-real-6-oct-bars-c-gradient-everywhere-set-aside-detail', label: 'Bars: gradient everywhere', note: 'At 11pt, four stops read as a blob.', origin: 'real', date: '6 Oct', verdict: 'set aside', detail: true },
-      { src: '06-data-viz-iterations/28-real-18-oct-empty-day-b-ghost-figures-detail', label: 'An empty day: ghosts', origin: 'real', date: '18 Oct', detail: true },
-      { src: '06-data-viz-iterations/29-real-18-oct-empty-day-d-real-values-detail', label: 'An empty day: real zeros', note: 'With one line under them.', origin: 'real', date: '18 Oct', detail: true },
+      { src: '06-data-viz-iterations/16-real-6-oct-streak-a-runs-welded-chosen', label: 'Runs joined up', note: 'Five weeks of days.', origin: 'real', verdict: 'chosen' },
+      { src: '06-data-viz-iterations/17-real-6-oct-streak-b-the-month-with-dates-set-aside', label: 'The month, with dates', note: 'Familiar from other apps; the wrong question for a timer.', origin: 'real', verdict: 'set aside' },
+      { src: '06-data-viz-iterations/18-real-6-oct-streak-c-half-a-year-moved-to-patterns', label: 'Half a year', note: 'Whether the habit is taking. A different question.', origin: 'real', verdict: 'moved' },
+      { src: '06-data-viz-iterations/22-real-6-oct-bars-a-flat-colour-detail', label: 'Bars: flat colour', origin: 'real', detail: true },
+      { src: '06-data-viz-iterations/23-real-6-oct-bars-b-gradient-on-the-bar-chosen-detail', label: 'Bars: gradient on the bar', origin: 'real', verdict: 'chosen', detail: true },
+      { src: '06-data-viz-iterations/24-real-6-oct-bars-c-gradient-everywhere-set-aside-detail', label: 'Bars: gradient everywhere', note: 'At 11pt, four stops read as a blob.', origin: 'real', verdict: 'set aside', detail: true },
+      { src: '06-data-viz-iterations/28-real-18-oct-empty-day-b-ghost-figures-detail', label: 'An empty day: ghosts', origin: 'real', detail: true },
+      { src: '06-data-viz-iterations/29-real-18-oct-empty-day-d-real-values-detail', label: 'An empty day: real zeros', note: 'With one line under them.', origin: 'real', detail: true },
     ],
   },
 ]
@@ -249,9 +249,9 @@ export const EDGES: Edge[] = [
     shot: '08-notifications/01-built-ios-lock-screen-session-ends',
   },
   {
-    q: 'The day is empty',
-    a: 'Today asks what you’ll sit down with. A past day says “Nothing on this day. Which is sometimes the right answer.”',
-    shot: '02-todo-flow/19-empty-past-day',
+    q: 'Nothing is planned yet',
+    a: 'An empty day isn’t an empty list. It asks “What will this day be for?”, with every kind of time one tap from a new to-do.',
+    shot: '02-todo-flow/20-empty-day-ahead',
   },
   {
     q: 'A task never ends',
@@ -304,14 +304,14 @@ export const PROBLEMS: { h: string; quotes: string[]; so: string; tone: 'pink' |
   },
 ]
 
-/* ---- The process, dated ---- */
+/* ---- The process, step by step ---- */
 export const TIMELINE: [string, string][] = [
-  ['15 Sep', 'The session flow on a canvas: the arc, the ruler, naming, the session, the rating, the summary.'],
-  ['16 Sep', 'A clickable prototype.'],
-  ['1–9 Oct', 'Option boards for naming, the to-do list, and the three figures on Me.'],
-  ['7 Oct', 'First commit.'],
-  ['14 Oct', 'The app stops guessing the category for you.'],
-  ['15 Oct', 'Two wheels replace the keypad. Me is drawn three ways.'],
-  ['15–20 Oct', 'Thirteen option sheets, each with the current screen beside its alternatives and what each would cost.'],
-  ['25 Oct', 'Last commit: 206 in all, on 13 days.'],
+  ['Canvas', 'The whole session flow on one canvas: the arc, the ruler, naming, the session, the rating, the summary.'],
+  ['Prototype', 'A clickable prototype of the same flow.'],
+  ['Option boards', 'Naming, the to-do list and the three figures on Me, each drawn as options.'],
+  ['First build', 'The app in code, built from the canvas.'],
+  ['Stop guessing', 'The app stops guessing the category for you.'],
+  ['Two wheels', 'Wheels replace the keypad, and Me is drawn three ways.'],
+  ['Option sheets', 'Thirteen sheets, each putting the current screen beside its alternatives and what each would cost.'],
+  ['Shipped', 'Live as an installable web app, 206 commits in.'],
 ]

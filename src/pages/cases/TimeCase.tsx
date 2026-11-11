@@ -108,7 +108,7 @@ export function TimeCase() {
         <section className={styles.facts} aria-label="Project facts">
           {[
             ['Role', 'Solo: research, design and code'],
-            ['Timeline', '15 Sep – 25 Oct 2026'],
+            ['Timeline', 'Six weeks, from first sketch to shipped'],
             ['Platforms', 'iOS, Android and the web, one codebase'],
             ['Status', 'Live as an installable web app'],
           ].map(([k, v], i) => (
@@ -257,7 +257,7 @@ export function TimeCase() {
         </section>
 
         {/* ================= 03 · The process ================= */}
-        <Chapter no="03" title="The process" lead="Six weeks, from a canvas to a shipped app." tone="blue" />
+        <Chapter no="03" title="The process" lead="From a canvas to a shipped app." tone="blue" />
 
         <section className={styles.sectionFirst} aria-label="Timeline">
           <Reveal as="h3" className={styles.h2}>How it went.</Reveal>
@@ -268,7 +268,7 @@ export function TimeCase() {
           <ol className={styles.timeline}>
             {TIMELINE.map(([d, t], i) => (
               <Reveal as="li" key={d} i={i % 4}>
-                <span>{d}</span>
+                <span>{pad(i + 1)} · {d}</span>
                 <p>{t}</p>
               </Reveal>
             ))}
@@ -320,22 +320,6 @@ export function TimeCase() {
           </div>
         </section>
 
-        {/* ---- Counted, not claimed ---- */}
-        <section className={styles.section} aria-label="Counted, not claimed">
-          <Reveal as="h3" className={styles.h2}>Counted, not claimed.</Reveal>
-          <Reveal as="p" className={styles.sub} i={1}>
-            Counted straight out of the app itself, where a rule either holds or it doesn’t.
-          </Reveal>
-          <div className={styles.tiles}>
-            <Tile big="11 → 1" tone="deep" lead="Eleven dots, one real colour."
-              text="A day in the month grid spliced three palettes into one gradient. Read back off a real month, one dot in eleven was a colour the palette actually contains." i={0} />
-            <Tile big="36 / 14" tone="move" lead="36 borders, 14 opacities."
-              text="Not a system, accretion. Cards now have no border at all: the fill is the edge." i={1} />
-            <Tile big="3 → 5" tone="calm" lead="The doc was wrong about its own type."
-              text="It claimed three weights. Counting found five, and the most used wasn’t listed. The document changed, not the app." i={2} />
-          </div>
-        </section>
-
         {/* ---- How it's built ---- */}
         <section className={styles.section} aria-label="How it's built">
           <Reveal as="h3" className={styles.h2}>How it’s built.</Reveal>
@@ -373,8 +357,8 @@ export function TimeCase() {
         <section className={styles.section} aria-label="New directions">
           <Reveal as="h3" className={styles.h2}>If I picked it up again.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            Drawn in November 2026, after the app shipped. None of these were part of the original
-            work; each says what it would gain and what it would cost.
+            Drawn after the app shipped. None of these were part of the original work; each says
+            what it would gain and what it would cost.
           </Reveal>
           <Reveal i={2}>
             <Gallery tracks={DIRECTIONS} label="New directions" />
@@ -455,15 +439,6 @@ function Panel({ tone, no, title, text, children }: { tone: Tone; no: string; ti
         <h3>{title}</h3>
         <p>{text}</p>
       </div>
-    </Reveal>
-  )
-}
-
-function Tile({ big, tone, lead, text, i }: { big: string; tone: Tone; lead: string; text: string; i: number }) {
-  return (
-    <Reveal className={styles.tile} i={i}>
-      <div className={`${styles.big} ${styles[`g_${tone}`]}`}>{big}</div>
-      <p><strong>{lead}</strong> {text}</p>
     </Reveal>
   )
 }
