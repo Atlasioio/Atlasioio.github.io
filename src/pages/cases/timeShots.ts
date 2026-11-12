@@ -316,3 +316,22 @@ export const TIMELINE: [string, string][] = [
   ['On the web', 'Live as an installable web app, 206 commits in.'],
   ['Next: the stores', 'iOS and Android builds for the App Store and Google Play.'],
 ]
+
+/* ---- Details that make it yours ---- */
+export const DETAILS: Edge[] = [
+  {
+    q: 'Colours that start right, and end up yours.',
+    a: 'Every kind of time comes with a suggested colour, and it follows that time everywhere: the card you pick, the running session, the bars in your week, the dot on a day. Change any of them, hide the ones you don’t use, or add your own. Reading, Cooking or Study come ready with an icon and a colour that won’t clash.',
+    shot: '03-me-flow/17-settings',
+  },
+  {
+    q: 'An aim that doesn’t nag.',
+    a: 'Set how many hours you want to hold in a week. It shows on Me, and nothing pings you about it. How a session ends is up to you as well: a chime, a buzz, or both.',
+    shot: '03-me-flow/18-settings-further-down',
+  },
+  {
+    q: 'Your record stays yours.',
+    a: 'No account and no server. Everything lives on your phone, updates never touch it, and a backup is one tap. Hide a category you’ve stopped using and its history stays.',
+    shot: '03-me-flow/13-since-you-started',
+  },
+]

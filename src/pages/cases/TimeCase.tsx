@@ -10,7 +10,7 @@ import { RouteTransition } from '../../components/RouteTransition/RouteTransitio
 import { ProjectChat } from '../../components/ProjectChat/ProjectChat'
 import { Reveal } from '../../components/ui/Reveal'
 import { Lightbox } from '../../components/Lightbox/Lightbox'
-import { DIRECTIONS, EDGES, FLOWS, ITERATIONS, K, PROBLEMS, TIMELINE, type Shot, type Track } from './timeShots'
+import { DETAILS, DIRECTIONS, EDGES, FLOWS, ITERATIONS, K, PROBLEMS, TIMELINE, type Shot, type Track } from './timeShots'
 import styles from './TimeCase.module.css'
 
 /**
@@ -256,6 +256,24 @@ export function TimeCase() {
           </div>
         </section>
 
+        <section className={styles.section} aria-label="Details">
+          <Reveal as="h3" className={styles.h2}>Details that make it yours.</Reveal>
+          <Reveal as="p" className={styles.sub} i={1}>
+            Koitto starts with sensible defaults, then lets each person bend it to how they work.
+          </Reveal>
+          <div className={styles.details}>
+            {DETAILS.map((d, i) => (
+              <Reveal className={styles.detailCard} key={d.q} i={i}>
+                {d.shot && <Screen src={img(d.shot)} />}
+                <div>
+                  <h4>{d.q}</h4>
+                  <p>{d.a}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
         {/* ================= 03 · The process ================= */}
         <Chapter no="03" title="The process" lead="From a canvas to a shipped app." tone="blue" />
 
@@ -305,21 +323,6 @@ export function TimeCase() {
           </Reveal>
         </section>
 
-        {/* ---- The system ---- */}
-        <section className={styles.section} aria-label="The system">
-          <Reveal as="h3" className={styles.h2}>One colour, at every size.</Reveal>
-          <Reveal as="p" className={styles.sub} i={1}>
-            Eleven palettes of four stops. A mark big enough to show the gradient shows it; one
-            under 24pt takes a single named stop. So a bar, a card, the session orb and an 8pt
-            legend dot all read as the same category.
-          </Reveal>
-          <div className={styles.boards}>
-            <Reveal className={styles.board} i={2}>
-              <img src={`${W}/process/the-system-dark.webp`} alt="The eleven category palettes and Nunito in five weights." loading="lazy" />
-            </Reveal>
-          </div>
-        </section>
-
         {/* ---- How it's built ---- */}
         <section className={styles.section} aria-label="How it's built">
           <Reveal as="h3" className={styles.h2}>How it’s built.</Reveal>
@@ -328,7 +331,7 @@ export function TimeCase() {
               ['Expo and React Native', 'One codebase for iOS, Android and the web.'],
               ['Local-first', 'Everything lives on the device, written twice over so an interrupted write can’t lose a record. No account, no server, no analytics.'],
               ['An installable web app', 'The web build is a PWA, deployed on Vercel. It is the version linked here.'],
-              ['Checked against its own rules', 'A script counts radii, surface opacities, type weights, gutters, tap targets and accessibility labels, and prints what’s standard and what’s one-off.'],
+              ['Checked against its own rules', 'A script checks the app against its design rules, so spacing, type and colour stay consistent as it grows.'],
             ].map(([h, t], i) => (
               <Reveal className={styles.builtItem} key={h} i={i}>
                 <h4>{h}</h4>

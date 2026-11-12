@@ -345,11 +345,11 @@ export const projects: Project[] = [
     reflection: [
       {
         heading: 'What I learned',
-        body: 'Honest doesn’t have to mean harsh. A record people avoid is no record, so ending early is logged but never red, and every figure sits beside something to compare it with: last week, a usual day, a total. A number on its own only judges.',
+        body: 'A clear vision isn’t a design system. I knew early on how Koitto should look: dark, calm, every kind of time with its own gradient. But I never turned that into rules, so sizes, spacing and colours drifted from screen to screen, and I only tidied them up late in the project.',
       },
       {
         heading: 'What I would do differently',
-        body: 'Prototype the controls, not just the screens. The keypad for setting a length read digits like a clock, so 1-3-0 meant 90 minutes, and it had to check a typed string. It was built before that showed, and two wheels replaced it. Trying that one control in a clickable prototype would have caught it first.',
+        body: 'Set up the system before the screens. A few type sizes, a spacing scale and clear colour rules from the start would have kept every new screen consistent, instead of fixing them all at the end.',
       },
       {
         heading: 'What is next',
