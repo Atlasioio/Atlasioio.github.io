@@ -798,3 +798,29 @@
 @media (max-width: 900px) {
   .contextGrid { grid-template-columns: 1fr; }
 }
+
+/* ---- What I looked at first ---- */
+.looks { margin-top: clamp(32px, 3.4vw, 52px); display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--t-edge); }
+.look {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(14px, 1.4vw, 20px) clamp(14px, 1.4vw, 20px) clamp(18px, 1.8vw, 26px);
+  border-radius: 22px;
+  background: var(--t-panel);
+  border: 1px solid var(--t-line);
+}
+.lookShot { display: block; width: 100%; padding: 0; border: 0; border-radius: 14px; overflow: hidden; background: #fff; cursor: zoom-in; }
+.lookShot img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: top; transition: transform 0.6s var(--ease-out); }
+.lookShot:focus-visible { outline: 2px solid var(--t-ink); outline-offset: 3px; }
+@media (hover: hover) { .lookShot:hover img { transform: scale(1.03); } }
+.lookKind { margin-top: 18px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--t-muted); }
+.lookSaw { margin-top: 10px; font-size: 15px; line-height: 1.55; color: var(--t-ink); }
+.look .so { font-size: 14px; color: var(--t-muted); }
+@media (max-width: 1100px) {
+  .looks { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .looks { display: flex; margin-inline: calc(-1 * var(--t-gutter)); padding: 0 var(--t-gutter) 4px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--t-gutter); scrollbar-width: none; }
+  .looks::-webkit-scrollbar { display: none; }
+  .look { flex: 0 0 72%; scroll-snap-align: start; }
+}

@@ -325,3 +325,39 @@ export const DETAILS: Edge[] = [
     shot: '03-me-flow/13-since-you-started',
   },
 ]
+
+/* ---- What I looked at first: apps people already use for their time ---- */
+export type Look = { src: string; kind: string; saw: string; so: string; focus?: string }
+export const LOOKED_AT: Look[] = [
+  {
+    src: 'research/phone-timer',
+    kind: 'The phone’s own timer',
+    saw: 'Pause sits right beside Cancel, one tap each, and the ring only shows time running out.',
+    so: 'No pause at all, and a record of the time you kept, not just the time that passed.',
+    focus: 'center',
+  },
+  {
+    src: 'research/day-planner',
+    kind: 'A day planner',
+    saw: 'The day in blocks, every task with an icon and a length, and ticking one off feels good.',
+    so: 'To-dos carry a kind of time and a length, so starting one is a single tap.',
+  },
+  {
+    src: 'research/habit-tracker',
+    kind: 'A habit app',
+    saw: 'A strip of days along the top, and a streak counted on each habit.',
+    so: 'I kept the strip of days, and drew the streak as runs rather than a calendar of dates.',
+  },
+  {
+    src: 'research/health-data',
+    kind: 'A health-data app',
+    saw: 'A day summed up in rings and scores, with a line of coaching under them.',
+    so: 'No score to live up to. Figures say what happened, and patterns wait behind a button.',
+  },
+  {
+    src: 'research/health-data-load',
+    kind: 'The same app, in depth',
+    saw: 'A load shown against an optimal range, so a number means something at a glance.',
+    so: 'Every figure sits beside something to compare it with: last week, a usual day, a total.',
+  },
+]

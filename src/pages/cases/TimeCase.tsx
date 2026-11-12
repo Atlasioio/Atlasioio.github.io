@@ -9,8 +9,8 @@ import { Footer } from '../../components/sections/Footer'
 import { RouteTransition } from '../../components/RouteTransition/RouteTransition'
 import { ProjectChat } from '../../components/ProjectChat/ProjectChat'
 import { Reveal } from '../../components/ui/Reveal'
-import { Lightbox } from '../../components/Lightbox/Lightbox'
-import { DETAILS, DIRECTIONS, EDGES, FLOWS, ITERATIONS, K, PROBLEMS, TIMELINE, type Shot, type Track } from './timeShots'
+import { Lightbox, type LightboxShot } from '../../components/Lightbox/Lightbox'
+import { DETAILS, DIRECTIONS, EDGES, FLOWS, ITERATIONS, K, LOOKED_AT, PROBLEMS, TIMELINE, type Shot, type Track } from './timeShots'
 import styles from './TimeCase.module.css'
 
 /**
@@ -317,6 +317,16 @@ export function TimeCase() {
           </ol>
         </section>
 
+        <section className={styles.section} aria-label="What I looked at first">
+          <Reveal as="h3" className={styles.h2}>What I looked at first.</Reveal>
+          <Reveal as="p" className={styles.sub} i={1}>
+            The apps people already use for their time: the phone's own timer, focus and
+            productivity apps, day planners, habit and schedule apps, and apps that turn data into
+            a picture of your day. What I kept, and what I did the opposite of.
+          </Reveal>
+          <LookedAt />
+        </section>
+
         {/* What it had to be: three principles, then what each means in the app */}
         <section className={styles.section} aria-label="Principles">
           <Reveal as="h3" className={styles.h2}>What it had to be.</Reveal>
@@ -443,6 +453,30 @@ function TryLive() {
 }
 
 type Tone = 'deep' | 'move' | 'calm' | 'ember' | 'dark'
+
+/** Other apps, each with what it does and what Koitto took from it. Every
+ *  screenshot opens full size. */
+function LookedAt() {
+  const [at, setAt] = useState<number | null>(null)
+  const shots: LightboxShot[] = LOOKED_AT.map((l) => ({ src: `${K}/${l.src}.webp`, label: l.kind, note: l.saw, detail: true }))
+  return (
+    <>
+      <div className={styles.looks}>
+        {LOOKED_AT.map((l, i) => (
+          <Reveal className={styles.look} key={l.src} i={i}>
+            <button type="button" className={styles.lookShot} onClick={() => setAt(i)} aria-label={`Open ${l.kind} full size`} data-cursor>
+              <img src={`${K}/${l.src}.webp`} alt="" loading="lazy" style={l.focus ? { objectPosition: l.focus } : undefined} />
+            </button>
+            <span className={styles.lookKind}>{l.kind}</span>
+            <p className={styles.lookSaw}>{l.saw}</p>
+            <p className={styles.so}><span>So</span>{l.so}</p>
+          </Reveal>
+        ))}
+      </div>
+      {at != null && <Lightbox shots={shots} index={at} setIndex={setAt} />}
+    </>
+  )
+}
 
 /** A chapter opener: the number, the title, and the one line it argues. */
 function Chapter({ no, title, lead, tone }: { no: string; title: string; lead: string; tone: 'pink' | 'green' | 'blue' | 'gold' }) {
