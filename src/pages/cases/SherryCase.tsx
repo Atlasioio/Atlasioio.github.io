@@ -54,7 +54,10 @@ export function SherryCase() {
     setBoxShots(shots)
     setBoxAt(Math.max(0, shots.findIndex((s) => s.src === src)))
   }
-  const openFlow = (flow: FlowKey) => (src: string) => open(FLOWS[flow], `${W}/${src}.webp`)
+  const openFlow = (flow: FlowKey, i: number) => {
+    setBoxShots(FLOWS[flow])
+    setBoxAt(i)
+  }
 
   return (
     <>
@@ -97,8 +100,8 @@ export function SherryCase() {
         <section className={styles.facts} aria-label="Project facts">
           {[
             ['Role', 'Research, interaction and visual design'],
+            ['Context', 'Service design course on the circular economy'],
             ['Where', 'Kirseberg in Malmö, with its library'],
-            ['Platform', 'A mobile app and a library drop-box'],
             ['Status', 'Concept: researched, designed, then rebuilt'],
           ].map(([k, v], i) => (
             <Reveal className={styles.fact} key={k} i={i}>
@@ -106,6 +109,24 @@ export function SherryCase() {
               <p>{v}</p>
             </Reveal>
           ))}
+        </section>
+
+        {/* ================= 00 · Context ================= */}
+        <Chapter no="00" title="Context" lead="A service design course on the circular economy." />
+
+        <section className={styles.context} aria-label="Context">
+          <Reveal as="p" className={styles.contextLead}>
+            The brief: find a problem in a Malmö neighbourhood, go and talk to the people who live and
+            work there, and design a service around what they say.
+          </Reveal>
+          <div className={styles.contextGrid}>
+            {CONTEXT.map(([k, v], i) => (
+              <Reveal className={styles.contextItem} key={k} i={i}>
+                <span>{k}</span>
+                <p>{v}</p>
+              </Reveal>
+            ))}
+          </div>
         </section>
 
         {/* ================= 01 · The problem ================= */}
@@ -232,37 +253,36 @@ export function SherryCase() {
         <section className={`${styles.section} ${styles.sectionHead}`} aria-label="The key flows">
           <Reveal as="h3" className={styles.h2}>The key flows.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            Five moments, each from a real situation. Every screen opens full size, with the rest
-            of its flow behind it.
+            Five flows, every screen in each, starting from a real situation. Any screen opens full
+            size; the arrow keys step through the rest.
           </Reveal>
         </section>
 
-        <section className={styles.panels} aria-label="Key moments">
+        <section className={styles.panels} aria-label="Key flows">
           <Panel tone="wine" no="Getting started" when="The first time you open it." title="It ends by choosing your drop-box."
-            text="The first thing the app learns is the one thing that decides what you can actually collect: the box you can walk to.">
-            <Trio items={[['welcome', 'Welcome'], ['onboarding-dropbox', 'How it works'], ['onboarding-area', 'Your box']]} onOpen={openFlow('start')} />
+            text="Five steps that explain the idea, not the app: what's nearby, how the box works, who covers a breakage, and the one box you can walk to.">
+            <FlowRow flow="start" onOpen={openFlow} />
           </Panel>
 
           <Panel tone="cream" no="Borrowing" when="Saturday morning, a shelf to hang and no drill." title="One number instead of an awkward conversation."
             text="Borrowing is free. Instead of a price, each thing has an insured value, and four numbered terms say exactly what you're agreeing to.">
-            <Trio items={[['browse', 'Browse'], ['item', 'The item'], ['terms', 'Four terms']]} onOpen={openFlow('borrow')} />
+            <FlowRow flow="borrow" onOpen={openFlow} />
           </Panel>
 
-          <Panel tone="moss" no="Collecting" when="On the way home, when the code arrives." title="A code, and a box you can walk to."
-            text="When the lender drops it off, a one-time code arrives. Open the box whenever the library is open; each loan carries its own timeline.">
-            <Trio items={[['request-sent', 'Sent'], ['dropbox-code', 'The code'], ['borrowing', 'Your loans']]} onOpen={openFlow('collect')} />
+          <Panel tone="moss" no="Collecting and returning" when="On the way home, when the code arrives." title="A code, and a box you can walk to."
+            text="The lender says when it's in. Loans has the code, the box opens whenever the library is open, and every loan ends with a review.">
+            <FlowRow flow="collect" onOpen={openFlow} />
           </Panel>
 
-          <div className={styles.twoUp}>
-            <Panel tone="cream" no="Lending" when="A neighbour asks for the putty set you used once." title="The other side, on your own schedule."
-              text="Who's asking, why, and what they're agreeing to. Drop it in the box when it suits you.">
-              <Duo items={[['handle-request', 'A request'], ['list-item', 'List something']]} onOpen={openFlow('lend')} />
-            </Panel>
-            <Panel tone="wineDeep" no="Impact" when="Wondering whether it was worth it." title="Was it worth it?"
-              text="Kronor saved, storage freed and CO₂ not emitted, before any badges. Half the badges are for lending.">
-              <Duo items={[['impact', 'Impact'], ['badges', 'Badges']]} onOpen={openFlow('impact')} />
-            </Panel>
-          </div>
+          <Panel tone="cream" no="Lending" when="A neighbour asks for the putty set you used once." title="The other side, on your own schedule."
+            text="List something in one screen. Requests arrive with who's asking, why, and what they're agreeing to; drop it in the box when it suits you.">
+            <FlowRow flow="lend" onOpen={openFlow} />
+          </Panel>
+
+          <Panel tone="wineDeep" no="Impact" when="Wondering whether it was worth it." title="Was it worth it?"
+            text="Kronor saved, storage freed and CO₂ not emitted, before any badges. Half the badges are for lending.">
+            <FlowRow flow="impact" onOpen={openFlow} />
+          </Panel>
         </section>
 
         <section className={styles.section} aria-label="Edge cases">
@@ -476,6 +496,12 @@ export function SherryCase() {
 }
 
 /* ---- Content ---- */
+const CONTEXT: [string, string][] = [
+  ['The course', 'Service design, on the circular economy: keeping things in use instead of buying new.'],
+  ['The brief', 'Find a real problem in a neighbourhood through fieldwork and interviews, then design for it.'],
+  ['What I made', 'A service: a mobile app, and a drop-box at the local library where every handover happens.'],
+]
+
 const PLACES: [string, string][] = [
   ['The library', 'Already trusted, already open, and keen to be more than books.'],
   ['The language café', 'Where I learned who the writing had to work for.'],
@@ -563,26 +589,32 @@ type FlowKey = 'start' | 'borrow' | 'collect' | 'lend' | 'impact'
 const FLOWS: Record<FlowKey, LightboxShot[]> = {
   start: [
     shot('welcome', 'Welcome', 'Borrow from the neighbours you already walk past.'),
-    shot('onboarding-dropbox', 'How it works', 'The lender drops it in the box; you open it with a one-time code.'),
-    shot('onboarding-area', 'Your box', 'The one you can walk to. It decides what the feed shows.'),
+    shot('onboarding-nearby', 'What’s nearby', '340 things within a ten-minute walk. Search for the thing, not the shop.'),
+    shot('onboarding-dropbox', 'How the box works', 'The lender drops it in; you open it with a one-time code, whenever the library is open.'),
+    shot('onboarding-trust', 'No money changes hands', 'An insured value instead of a price, reviews, and people verified at the library.'),
+    shot('onboarding-area', 'Your box', 'The one you can walk to. It decides what the feed shows, and can change any time.'),
   ],
   borrow: [
     shot('browse', 'Browse', 'What’s ready to collect first, then what’s fresh nearby.'),
+    shot('browse-change-area', 'Where you’re looking', 'Each area has its own box, so you only see what you could actually collect.'),
     shot('search', 'Search', 'With how many of each thing are nearby, and rooms to browse by.'),
     shot('results', 'Results', 'Sorted by distance, with what’s already in the box marked.'),
     shot('item', 'The item', 'Longest loan, insured value and distance up front: 14 days, 499 kr, 400 m.'),
     shot('terms', 'Four terms', 'Plain promises that name the lender and the amount. Agreeing sends the request.'),
+    shot('request-sent', 'Sent', 'He usually answers within a few hours. The code arrives in Loans once he says yes.'),
   ],
   collect: [
-    shot('request-sent', 'Sent', 'The code arrives in Loans once the lender says yes.'),
-    shot('dropbox-code', 'The code', 'Valid until the library closes, with every step of the loan below it.'),
+    shot('inbox-messages', 'Messages', 'Every conversation sits with the loan it belongs to.'),
+    shot('chat-thread', 'It’s in the box', '“It’s in. Battery is charged.” The code comes automatically.'),
     shot('borrowing', 'Your loans', 'Split by direction, leading with what needs you: collect today, return in 3 days.'),
+    shot('dropbox-code', 'The code', 'Valid until the library closes, with every step of the loan below it.'),
     shot('review', 'Back in the box', 'A quick review: the handover, the condition, the communication.'),
   ],
   lend: [
-    shot('lending-out', 'What you have out', 'Requests to answer, things waiting in the box, things out now.'),
-    shot('handle-request', 'A request', 'Who’s asking, why, and what they agree to if you say yes.'),
     shot('list-item', 'List something', 'Photos, condition, insured value, and the box it goes through.'),
+    shot('inbox-requests', 'Requests', 'Who wants what, and for how long. Accept or decline from the list.'),
+    shot('handle-request', 'A request', 'Who’s asking, why, and what they agree to if you say yes.'),
+    shot('lending-out', 'What you have out', 'Waiting for your answer, out now, waiting in the box, and finished.'),
   ],
   impact: [
     shot('profile', 'You', 'Borrows, lends and rating, verified at the library.'),
@@ -644,37 +676,21 @@ function Phone({ src }: { src: string }) {
   )
 }
 
-/** A screen that opens its flow full size. */
-function OpenPhone({ src, label, onOpen }: { src: string; label: string; onOpen: (src: string) => void }) {
+/** A whole flow in a row, numbered; any screen opens it full size. Centred when
+ *  it fits, and scrolls sideways when it doesn't. */
+function FlowRow({ flow, onOpen }: { flow: FlowKey; onOpen: (flow: FlowKey, i: number) => void }) {
   return (
-    <button type="button" className={styles.openBtn} onClick={() => onOpen(src)} aria-label={`Open “${label}” full size`} data-cursor>
-      <Phone src={src} />
-    </button>
-  )
-}
-
-function Trio({ items, onOpen }: { items: [string, string][]; onOpen: (src: string) => void }) {
-  return (
-    <div className={styles.trio}>
-      {items.map(([src, label]) => (
-        <figure key={src}>
-          <OpenPhone src={src} label={label} onOpen={onOpen} />
-          <figcaption>{label}</figcaption>
-        </figure>
-      ))}
-    </div>
-  )
-}
-
-function Duo({ items, onOpen }: { items: [string, string][]; onOpen: (src: string) => void }) {
-  return (
-    <div className={styles.duo}>
-      {items.map(([src, label]) => (
-        <figure key={src}>
-          <OpenPhone src={src} label={label} onOpen={onOpen} />
-          <figcaption>{label}</figcaption>
-        </figure>
-      ))}
+    <div className={styles.flowRow}>
+      <ol className={styles.flowTrack}>
+        {FLOWS[flow].map((s, i) => (
+          <li key={s.src}>
+            <button type="button" className={styles.openBtn} onClick={() => onOpen(flow, i)} aria-label={`Open “${s.label}” full size`} data-cursor>
+              <span className={styles.phone}><img src={s.src} alt="" loading="lazy" decoding="async" /></span>
+            </button>
+            <span className={styles.flowCap}><b>{String(i + 1).padStart(2, '0')}</b>{s.label}</span>
+          </li>
+        ))}
+      </ol>
     </div>
   )
 }

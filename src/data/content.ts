@@ -571,7 +571,7 @@ export const projects: Project[] = [
        clear of EcoTrip’s honey and Goodreads’ terracotta. */
     coverBg: 'linear-gradient(150deg, #d8a6ac 0%, #f2e9e7 100%)',
     year: '2024',
-    client: 'Kirseberg, Malmö — neighbourhood fieldwork project',
+    client: 'Service design course on the circular economy — fieldwork in Kirseberg, Malmö',
     services: ['User research', 'Service design', 'Interaction design'],
     tools: ['Figma', 'Claude'],
     tagline:
