@@ -113,7 +113,7 @@ export const ITERATIONS: Track[] = [
     id: 'category',
     tab: 'Choosing the category',
     intro:
-      'Simpler pickers came first; the originals weren’t saved, so those six are redrawn from memory. The arc won because it gives one category the whole card, so its colour leads, makes the choice feel like a moment rather than a form, and is the same gesture a session ends on. Later, the app also stopped guessing the category for you.',
+      'Simpler pickers came first: a list, chips, tiles, a hand of cards, a stack, arrows. The arc won because it gives one category the whole card, so its colour leads, makes the choice feel like a moment rather than a form, and is the same gesture a session ends on. Later, the app also stopped guessing the category for you.',
     shots: [
       { src: '04-category-iterations/01-redrawn-a-plain-list', label: 'A plain list', note: 'Fastest to scan, but the card and its colour disappear.', origin: 'redrawn' },
       { src: '04-category-iterations/02-redrawn-chips-on-the-timer', label: 'Chips on the timer', origin: 'redrawn' },
@@ -132,7 +132,7 @@ export const ITERATIONS: Track[] = [
     id: 'time',
     tab: 'Setting the time',
     intro:
-      'At first the length came before the name. The order flipped, so a session is named before it is measured. A keypad read digits like a clock, so 1-3-0 meant 1:30, or 90 minutes, and it had to validate a string. Two wheels replaced it.',
+      'At first the length came before the name. The order flipped, so a session is named before it is measured. A keypad read digits like a clock, so 1-3-0 meant 1:30, or 90 minutes, and it had to validate a string. Another version offered the usual lengths as chips, different for each kind of time. Two wheels replaced them.',
     shots: [
       { src: '05-time-iterations/01-real-15-sep-the-canvas', label: 'Length before name', note: 'A dense ruler, then “Name it”.', origin: 'real' },
       { src: '05-time-iterations/02-real-16-sep-the-prototype', label: 'The prototype', origin: 'real' },
@@ -140,6 +140,7 @@ export const ITERATIONS: Track[] = [
       { src: '05-time-iterations/04-real-until-14-oct-tap-the-number-a-keypad', label: 'Tap the number: a keypad', origin: 'real', verdict: 'set aside' },
       { src: '05-time-iterations/05-real-until-14-oct-keypad-one-digit', label: 'One digit', note: 'Capped at 5 min to 3 h, so one digit said “At least 5 min”.', origin: 'real', verdict: 'set aside' },
       { src: '05-time-iterations/06-real-until-14-oct-keypad-reads-1-30-as-90-min', label: '1-3-0 reads as 90 min', note: 'Typed like a clock, read as a duration.', origin: 'real', verdict: 'set aside' },
+      { src: '05-time-iterations/06b-presets-per-category', label: 'Presets for each kind of time', note: 'The usual lengths as chips, different for each category, and the number to type any other.', verdict: 'set aside' },
       { src: '05-time-iterations/07-real-from-15-oct-two-wheels', label: 'Two wheels', note: 'Hours and minutes. Nothing to validate.', origin: 'real', verdict: 'shipped' },
     ],
   },

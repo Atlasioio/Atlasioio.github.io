@@ -708,8 +708,6 @@
 .v_chosen, .v_shipped { color: #0d1f16; background: #6bf0a0; }
 .v_set_aside { color: #2a1a05; background: #ffc46b; }
 .v_moved { color: #12163a; background: #a9b6ff; }
-.o_redrawn, .o_rebuilt { background: transparent; border: 1px dashed rgba(244, 241, 248, 0.4); }
-.o_new { color: #ffb0c4; background: transparent; border: 1px dashed rgba(255, 111, 143, 0.6); }
 
 /* ---- Edge cases ---- */
 .edges { margin-top: clamp(32px, 3.4vw, 52px); display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--t-edge); }

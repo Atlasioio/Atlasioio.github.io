@@ -206,25 +206,25 @@ export function TimeCase() {
         <Chapter no="02" title="The solution" lead="One timer and one list, keeping one honest record." tone="green" />
 
         <section className={styles.panels} aria-label="Four decisions">
-          <Panel tone="deep" no="01 · No pause" title="The only way out is to hold."
-            text="While a session runs there is nothing to press except a control you hold for over a second. A paused timer measures attendance; the thing worth knowing is whether you stayed.">
-            <Screen src={img('01-session-flow/15-hold-to-end-early')} />
+          <Panel tone="move" no="01 · Intent first" title="What kind of time, before how long."
+            text="The first screen asks what you’re about to do. The length is the last decision, not the first.">
+            <Screen src={img('01-session-flow/01-pick-a-category')} />
           </Panel>
 
           <div className={styles.twoUp}>
-            <Panel tone="move" no="02 · Intent first" title="What kind of time, before how long."
-              text="The first screen asks what you’re about to do. The length is the last decision, not the first.">
-              <Screen src={img('01-session-flow/01-pick-a-category')} />
+            <Panel tone="deep" no="02 · No pause" title="The only way out is to hold."
+              text="While a session runs there is nothing to press except a control you hold for over a second. A paused timer measures attendance; the thing worth knowing is whether you stayed.">
+              <Screen src={img('01-session-flow/15-hold-to-end-early')} />
             </Panel>
-            <Panel tone="dark" no="03 · One question" title="How did it go?"
-              text="Four cards, Rough to Perfect, tinted by the session you just finished and picked from the same arc you started on.">
-              <Screen src={img('01-session-flow/10-how-did-it-go')} />
+            <Panel tone="calm" no="03 · Stopping early" title="Ending early isn’t failing."
+              text="It’s recorded as what you kept, it shows in the week as a shorter column, and it’s never red. Going down is information, not an error.">
+              <Screen src={img('01-session-flow/16-ended-early-never-red')} />
             </Panel>
           </div>
 
-          <Panel tone="calm" no="04 · Stopping early" title="Ending early isn’t failing."
-            text="It’s recorded as what you kept, it shows in the week as a shorter column, and it’s never red. Going down is information, not an error.">
-            <Screen src={img('01-session-flow/16-ended-early-never-red')} />
+          <Panel tone="ember" no="04 · One question" title="How did it go?"
+            text="Four cards, Rough to Perfect, tinted by the session you just finished and picked from the same arc you started on.">
+            <Screen src={img('01-session-flow/10-how-did-it-go')} />
           </Panel>
         </section>
 
@@ -297,8 +297,8 @@ export function TimeCase() {
         <section className={styles.sectionTight} aria-label="Iterations">
           <Reveal as="h3" className={styles.h2}>How each decision got there.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            Real frames from the canvas, the prototype and the builds. Where an original wasn’t
-            kept it is redrawn or rebuilt, and labelled as such.
+            The versions each decision went through: what was chosen, what was set aside, and
+            why.
           </Reveal>
           <Reveal i={2}>
             <Gallery tracks={ITERATIONS} label="Iterations" />
@@ -463,13 +463,6 @@ function Screen({ src, alt = '', detail, tall }: { src: string; alt?: string; de
   )
 }
 
-const ORIGIN: Record<string, string> = {
-  real: 'Real',
-  redrawn: 'Redrawn from memory',
-  rebuilt: 'Rebuilt from code',
-  new: 'New direction',
-  built: 'Real wording',
-}
 const VERDICT: Record<string, string> = {
   chosen: 'Chosen',
   'set aside': 'Set aside',
@@ -478,13 +471,12 @@ const VERDICT: Record<string, string> = {
 }
 
 function Chips({ shot }: { shot: Shot }) {
-  if (!shot.origin && !shot.date && !shot.verdict) return null
+  if (!shot.date && !shot.verdict) return null
   return (
     <span className={styles.chips}>
       {shot.verdict && (
         <span className={`${styles.chip} ${styles[`v_${shot.verdict.replace(' ', '_')}`]}`}>{VERDICT[shot.verdict]}</span>
       )}
-      {shot.origin && <span className={`${styles.chip} ${styles[`o_${shot.origin}`]}`}>{ORIGIN[shot.origin]}</span>}
       {shot.date && <span className={styles.chip}>{shot.date}</span>}
     </span>
   )
