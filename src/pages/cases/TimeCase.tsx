@@ -119,6 +119,29 @@ export function TimeCase() {
           ))}
         </section>
 
+        {/* ================= 00 · Context ================= */}
+        <Chapter no="00" title="Context" lead="A timer for myself that grew into an app for anyone." tone="gold" />
+
+        <section className={styles.context} aria-label="Context">
+          <Reveal as="p" className={styles.contextLead}>
+            I wanted a better way to manage my own time, so I designed myself a session timer. When
+            I decided to open it up to other people, the questions changed: why would anyone come
+            back to it, and what would make it worth their while? That turned a timer into an app.
+          </Reveal>
+          <div className={styles.contextGrid}>
+            {[
+              ['Where it started', 'A session timer for myself: pick the kind of time, set a length, hold to the end.'],
+              ['The turning point', 'Opening it up meant thinking about retention and value. That is when the to-do list and the record of where your time went arrived.'],
+              ['What I did', 'All of it: the research, the design, the build, and shipping it to the web.'],
+            ].map(([k, v], i) => (
+              <Reveal className={styles.contextItem} key={k} i={i}>
+                <span>{k}</span>
+                <p>{v}</p>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
         {/* ================= 01 · The problem ================= */}
         <Chapter no="01" title="The problem" lead="People set time aside, then drift." tone="pink" />
 
