@@ -599,15 +599,15 @@ export const projects: Project[] = [
     reflection: [
       {
         heading: 'What I learned',
-        body: 'The handover was the whole problem. I could have designed a better catalogue for months and changed nothing, because what stopped people was never finding the thing, it was arranging to collect it. Moving that one step into the library made most of the rest fall out on its own.',
+        body: 'The obvious problem wasn’t the real one. It looked like people didn’t want to share, but the people I met did. What stopped them was the handover, and the worry of lending something out. So the work went into trust rather than features: the library box, an insured value, four plain promises and a review after every loan.',
       },
       {
         heading: 'What I would do differently',
-        body: 'Put the terms sheet in front of people who are still learning Swedish, at the library, while it was still being written. I wrote it to their reading level; watching them read it would have shown where it still trips people up.',
+        body: 'Talk to people outside the places that already share. I met people at the library, a language café, a sports club and a neighbourhood café, and they were open to sharing almost by definition. I’d also find the neighbours who never come to those places, and ask what it would take for them.',
       },
       {
         heading: 'What is next',
-        body: 'Put the request-and-collect flow in front of a lender who has had something come back broken, and a borrower who has given up on a Facebook-group loan. The drop-box removes the meeting; whether it removes the worry is the part still to prove.',
+        body: 'Getting people to lend. Borrowing is easy to want; the service only works if enough people put things in. I’d test what gets things listed: neighbours asking for what they need, so lending answers a real request; the library stocking the boxes to start; and showing lenders what their things have done.',
       },
     ],
     card: {
