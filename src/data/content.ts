@@ -345,11 +345,11 @@ export const projects: Project[] = [
     reflection: [
       {
         heading: 'What I learned',
-        body: 'A clear vision isn’t a design system. I knew early on how Koitto should look: dark, calm, every kind of time with its own gradient. But I never turned that into rules, so sizes, spacing and colours drifted from screen to screen, and I only tidied them up late in the project.',
+        body: 'A clear vision isn’t a design system. I knew early on how Koitto should look: dark, calm, every kind of time with its own gradient. But I never turned that into rules, so sizes, spacing and colours drifted from screen to screen, and I only tidied them up late. Next time, the system comes before the screens.',
       },
       {
         heading: 'What I would do differently',
-        body: 'Set up the system before the screens. A few type sizes, a spacing scale and clear colour rules from the start would have kept every new screen consistent, instead of fixing them all at the end.',
+        body: 'Design for other people from the start. Koitto began as an app for my own days and grew into one for anyone, so choices that only fit me had to be opened up later, like categories you can recolour, hide and add. Starting from a few other people’s days would have got there sooner.',
       },
       {
         heading: 'What is next',
