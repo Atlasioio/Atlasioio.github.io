@@ -353,7 +353,7 @@ export const projects: Project[] = [
       },
       {
         heading: 'What is next',
-        body: 'Onboarding, left until last on purpose: working backwards from the finished app shows what it actually has to teach. It will explain the idea, let you choose which categories fit you and make your own, and end on something real: starting a first session, adding a first to-do, or setting a goal, whichever fits. After that, testing with VoiceOver and TalkBack on a device.',
+        body: 'A proper onboarding. I left it until last on purpose, so I’d know exactly what it has to teach. It will explain how Koitto works while you set it up: pick the kinds of time that fit your days, change their colours or add your own, and finish by doing something real, like starting a first session, adding a to-do or setting a weekly aim. Then the App Store and Google Play.',
       },
     ],
     videoFrame: 'bare',
