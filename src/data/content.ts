@@ -573,7 +573,6 @@ export const projects: Project[] = [
     year: '2024',
     client: 'Kirseberg, Malmö — neighbourhood fieldwork project',
     services: ['User research', 'Service design', 'Interaction design'],
-    team: 'Three',
     tools: ['Figma', 'Claude'],
     tagline:
       'A tool library that runs on the library itself, because sharing between neighbours dies at the handover.',
@@ -582,7 +581,7 @@ export const projects: Project[] = [
     sections: [
       {
         heading: 'Discover',
-        body: 'Every flat on the street has its own drill, and most of them sit in a drawer. Sharing one is obvious to everyone, and the default is still to buy, because everything around the object is harder than buying it: finding who has one, learning whether it is free this weekend, and above all arranging to stand in a stranger’s hallway. Rather than surveying, we spent time in the places Kirseberg already gathers — the library, the language café, the sports club, the neighbourhood café — and let the people running them say what the district needs.',
+        body: 'Every flat on the street has its own drill, and most of them sit in a drawer. Sharing one is obvious to everyone, and the default is still to buy, because everything around the object is harder than buying it: finding who has one, learning whether it is free this weekend, and above all arranging to stand in a stranger’s hallway. Rather than surveying, I spent time in the places Kirseberg already gathers — the library, the language café, the sports club, the neighbourhood café — and let the people running them say what the district needs.',
       },
       {
         heading: 'Define',
@@ -600,11 +599,11 @@ export const projects: Project[] = [
     reflection: [
       {
         heading: 'What I learned',
-        body: 'The handover was the whole problem. We could have designed a better catalogue for months and changed nothing, because what stopped people was never finding the thing, it was arranging to collect it. Moving that one step into the library made most of the rest fall out on its own.',
+        body: 'The handover was the whole problem. I could have designed a better catalogue for months and changed nothing, because what stopped people was never finding the thing, it was arranging to collect it. Moving that one step into the library made most of the rest fall out on its own.',
       },
       {
         heading: 'What I would do differently',
-        body: 'Put the terms sheet in front of people who are still learning Swedish, at the library, while it was still being written. We wrote it to their reading level; watching them read it would have shown where it still trips people up.',
+        body: 'Put the terms sheet in front of people who are still learning Swedish, at the library, while it was still being written. I wrote it to their reading level; watching them read it would have shown where it still trips people up.',
       },
       {
         heading: 'What is next',

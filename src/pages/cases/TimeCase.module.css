@@ -634,8 +634,7 @@
 .tab:focus-visible { outline: 2px solid var(--t-ink); outline-offset: 2px; }
 .tabOn, .tabOn:hover { background: #fff; color: #111; }
 .arrows { display: flex; gap: 8px; flex: none; }
-.arrows button,
-.lbNav button {
+.arrows button {
   display: grid;
   place-items: center;
   width: 44px;
@@ -646,9 +645,7 @@
   border: 1px solid var(--t-line);
   transition: background 0.25s, opacity 0.25s;
 }
-.arrows button:hover,
-.lbNav button:hover:not(:disabled) { background: rgba(244, 241, 248, 0.14); }
-.lbNav button:disabled { opacity: 0.3; }
+.arrows button:hover { background: rgba(244, 241, 248, 0.14); }
 
 .trackHead { margin-top: clamp(24px, 2.6vw, 36px); max-width: 46em; }
 .when {
@@ -735,57 +732,6 @@
 .timeline span { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.06em; color: var(--t-ink); }
 .timeline p { margin-top: 10px; font-size: 15px; line-height: 1.55; color: var(--t-muted); }
 
-/* ---- Lightbox (portalled to <body>, so it carries its own colours) ---- */
-.lightbox {
-  --t-ink: #f4f1f8;
-  --t-muted: rgba(244, 241, 248, 0.64);
-  --t-line: rgba(244, 241, 248, 0.1);
-  position: fixed;
-  inset: 0;
-  z-index: 1500;
-  display: grid;
-  place-items: center;
-  padding: clamp(16px, 3vw, 48px);
-  background: rgba(7, 5, 11, 0.94);
-  backdrop-filter: blur(8px);
-  color: var(--t-ink);
-  animation: lbIn 0.3s var(--ease-out) both;
-}
-@keyframes lbIn { from { opacity: 0; } to { opacity: 1; } }
-.lbInner {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: clamp(28px, 4vw, 64px);
-  max-height: 100%;
-}
-.lbImage { flex: none; height: min(86vh, 900px); aspect-ratio: 390 / 844; }
-.lbImage img { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 6% / 2.8%; }
-.lbTall { height: min(86vh, 900px); width: min(420px, 80vw); aspect-ratio: auto; overflow-y: auto; border-radius: 18px; overscroll-behavior: contain; }
-.lbTall img { height: auto; border-radius: 0; }
-.lbDetail { height: auto; width: min(620px, 70vw); aspect-ratio: auto; }
-.lbDetail img { height: auto; border-radius: 16px; }
-.lbSide { width: min(300px, 32vw); display: flex; flex-direction: column; gap: 12px; }
-.lbCount { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; color: var(--t-muted); }
-.lbTitle { display: flex; gap: 10px; font-family: var(--font-display); font-weight: 650; font-size: clamp(22px, 2vw, 30px); line-height: 1.15; letter-spacing: -0.02em; }
-
-.lbNote { font-size: 15px; line-height: 1.55; color: var(--t-muted); }
-.lbNav { display: flex; gap: 8px; margin-top: 10px; }
-.lbClose {
-  position: fixed;
-  top: clamp(14px, 2vw, 28px);
-  right: clamp(14px, 2vw, 28px);
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  color: var(--t-ink);
-  background: rgba(244, 241, 248, 0.1);
-  transition: background 0.25s;
-}
-.lbClose:hover { background: rgba(244, 241, 248, 0.2); }
-
 /* ---- Narrow screens, for the new parts ---- */
 @media (max-width: 1100px) {
   .moments { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -813,12 +759,6 @@
   .problems, .edges { grid-template-columns: 1fr; }
   .shot { flex-basis: 62%; }
   .shotDetail { flex-basis: 80%; }
-  .lightbox { place-items: start center; overflow-y: auto; }
-  .lbInner { flex-direction: column; align-items: stretch; gap: 18px; padding-top: 56px; }
-  .lbImage { height: auto; width: min(100%, 360px); margin: 0 auto; }
-  .lbTall { height: 70vh; width: 100%; }
-  .lbDetail { width: 100%; }
-  .lbSide { width: auto; }
 }
 @media (max-width: 480px) {
   .facts, .timeline { grid-template-columns: 1fr; }

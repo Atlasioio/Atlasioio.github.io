@@ -1,0 +1,72 @@
+/* The full-size viewer for case-study screens. Dark on every page, so a screen
+   reads the same whether the case is dark (Koitto) or light (Sherry). */
+.lightbox {
+  --lb-ink: #f4f1f8;
+  --lb-muted: rgba(244, 241, 248, 0.64);
+  --lb-line: rgba(244, 241, 248, 0.1);
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 3vw, 48px);
+  background: rgba(7, 5, 11, 0.94);
+  backdrop-filter: blur(8px);
+  color: var(--lb-ink);
+  animation: lbIn 0.3s var(--ease-out) both;
+}
+@keyframes lbIn { from { opacity: 0; } to { opacity: 1; } }
+.inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: clamp(28px, 4vw, 64px);
+  max-height: 100%;
+}
+.image { flex: none; height: min(86vh, 900px); aspect-ratio: 390 / 844; }
+.image img { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 6% / 2.8%; }
+.tall { height: min(86vh, 900px); width: min(420px, 80vw); aspect-ratio: auto; overflow-y: auto; border-radius: 18px; overscroll-behavior: contain; }
+.tall img { height: auto; border-radius: 0; }
+.detail { height: auto; width: min(760px, 62vw); aspect-ratio: auto; }
+.detail img { height: auto; max-height: 86vh; object-fit: contain; border-radius: 16px; }
+.side { width: min(300px, 32vw); display: flex; flex-direction: column; gap: 12px; }
+.count { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; color: var(--lb-muted); }
+.title { font-family: var(--font-display); font-weight: 650; font-size: clamp(22px, 2vw, 30px); line-height: 1.15; letter-spacing: -0.02em; color: var(--lb-ink); }
+.note { font-size: 15px; line-height: 1.55; color: var(--lb-muted); }
+.nav { display: flex; gap: 8px; margin-top: 10px; }
+.nav button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--lb-ink);
+  background: rgba(244, 241, 248, 0.06);
+  border: 1px solid var(--lb-line);
+  transition: background 0.25s, opacity 0.25s;
+}
+.nav button:hover:not(:disabled) { background: rgba(244, 241, 248, 0.14); }
+.nav button:disabled { opacity: 0.3; }
+.close {
+  position: fixed;
+  top: clamp(14px, 2vw, 28px);
+  right: clamp(14px, 2vw, 28px);
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: var(--lb-ink);
+  background: rgba(244, 241, 248, 0.1);
+  transition: background 0.25s;
+}
+.close:hover { background: rgba(244, 241, 248, 0.2); }
+
+@media (max-width: 640px) {
+  .lightbox { place-items: start center; overflow-y: auto; }
+  .inner { flex-direction: column; align-items: stretch; gap: 18px; padding-top: 56px; }
+  .image { height: auto; width: min(100%, 360px); margin: 0 auto; }
+  .tall { height: 70vh; width: 100%; }
+  .detail { width: 100%; }
+  .side { width: auto; }
+}
