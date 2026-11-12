@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { projects, type Project } from '../../data/content'
 import { useStartModal } from '../../context/StartModalContext'
@@ -37,6 +37,17 @@ function splitFollowUps(text: string): { body: string; followUps: string[] } {
   const followUps = m[1].split('|').map((q) => q.trim().replace(/^[-*\d.\s]+/, '')).filter((q) => q.length > 3).slice(0, 3)
   return { body: text.slice(0, m.index).trim(), followUps }
 }
+
+/** The first `n` characters of a reply, with an open **bold** closed so the
+ *  half-typed text still renders as formatting rather than asterisks. */
+function typedPart(text: string, n: number): string {
+  let s = text.slice(0, n)
+  if ((s.match(/\*\*/g) || []).length % 2) s += '**'
+  return s
+}
+
+/** How long a reply takes to type out: quick, and never long for a long one. */
+const typeMs = (len: number) => Math.min(2000, Math.max(450, len * 4))
 
 /* ---- Project names ------------------------------------------------------ */
 
@@ -180,6 +191,8 @@ export function ProjectChat({ project }: { project?: Project }) {
   const [loading, setLoading] = useState(false)
   const [moreBelow, setMoreBelow] = useState(false)
   const [peek, setPeek] = useState<Peek | null>(null)
+  /** The reply being typed out: which message, and how much of it shows. */
+  const [typing, setTyping] = useState<{ i: number; text: string; n: number } | null>(null)
   const dockRef = useRef<HTMLDivElement>(null)
   const windowRef = useRef<HTMLDivElement>(null)
   const logRef = useRef<HTMLDivElement>(null)
@@ -212,10 +225,16 @@ export function ProjectChat({ project }: { project?: Project }) {
     const justOpened = prevMode.current !== 'open'
     prevMode.current = mode
     const q = lastQuestionRef.current
-    spacer.style.height = '0px'
-    if (!q) return checkMore()
+    if (!q) {
+      spacer.style.height = '0px'
+      return checkMore()
+    }
     const top = q.offsetTop - 12
-    spacer.style.height = `${Math.max(0, top + log.clientHeight - log.scrollHeight)}px`
+    // Measured around the spacer rather than by zeroing it first: a reply that
+    // starts empty (it types out) would otherwise shrink the log for a moment,
+    // clamp the scroll and drop the question from the top.
+    const content = log.scrollHeight - spacer.offsetHeight
+    spacer.style.height = `${Math.max(0, top + log.clientHeight - content)}px`
     const asked = messages[messages.length - 1]?.role === 'user'
     if (asked || justOpened) {
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -226,6 +245,41 @@ export function ProjectChat({ project }: { project?: Project }) {
   useEffect(() => {
     if (mode !== 'open') prevMode.current = mode
   }, [mode])
+
+  // Type the newest reply out, a word at a time, then let its links and
+  // follow-ups in. Keyed on the message, so a re-render never restarts it.
+  const typingKey = typing ? `${typing.i}:${typing.text.length}` : ''
+  useEffect(() => {
+    if (!typing) return
+    const { i, text } = typing
+    const dur = typeMs(text.length)
+    const t0 = performance.now()
+    let raf = 0
+    const tick = (now: number) => {
+      const k = Math.min(1, (now - t0) / dur)
+      if (k >= 1) return setTyping(null)
+      // whole words only, so nothing reads as a typo mid-way
+      const at = text.indexOf(' ', Math.round(text.length * k))
+      const n = at === -1 ? text.length : at
+      setTyping((t) => (t && t.i === i ? { ...t, n } : t))
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [typingKey])
+
+  // While a reply types out, the spacer gives back the room it takes, so the
+  // log ends where the answer ends; nothing scrolls on its own.
+  useLayoutEffect(() => {
+    const log = logRef.current
+    const spacer = spacerRef.current
+    const q = lastQuestionRef.current
+    if (!typing || mode !== 'open' || !log || !spacer || !q) return
+    const content = log.scrollHeight - spacer.offsetHeight
+    spacer.style.height = `${Math.max(0, q.offsetTop - 12 + log.clientHeight - content)}px`
+    checkMore()
+  }, [typing?.n, mode])
 
   // Keep the window sitting above the mobile on-screen keyboard: the
   // VisualViewport shrinks when the keyboard opens, so we expose that height as
@@ -264,6 +318,7 @@ export function ProjectChat({ project }: { project?: Project }) {
     setMessages(next)
     setInput('')
     setPeek(null)
+    setTyping(null)
     setLoading(true)
     try {
       const res = await fetch('/api/chat', {
@@ -275,6 +330,9 @@ export function ProjectChat({ project }: { project?: Project }) {
       if (!res.ok) throw new Error(data.error || 'error')
       const { body, followUps } = splitFollowUps(data.reply || '…')
       setMessages((m) => [...m, { role: 'assistant', content: body, actions: deriveActions(body, project?.id), followUps }])
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        setTyping({ i: next.length, text: body, n: 0 })
+      }
     } catch {
       setMessages((m) => [
         ...m,
@@ -391,15 +449,18 @@ export function ProjectChat({ project }: { project?: Project }) {
               ) : (
                 <div className={styles.row}>
                   <img className={styles.face} src={AVATAR} alt="" width={28} height={28} />
-                  <div className={`${styles.msg} ${styles.assistant} ${m.error ? styles.err : ''}`}>
-                    <Rich text={m.content} renderName={m.error ? undefined : renderName} />
+                  <div className={`${styles.msg} ${styles.assistant} ${m.error ? styles.err : ''}`} aria-busy={typing?.i === i}>
+                    <Rich
+                      text={typing?.i === i ? typedPart(m.content, typing.n) : m.content}
+                      renderName={m.error ? undefined : renderName}
+                    />
                   </div>
                 </div>
               )}
               {/* Where to go next: case studies with their thumbnail, then any other links. */}
-              {m.actions && m.actions.length > 0 && (
+              {m.actions && m.actions.length > 0 && typing?.i !== i && (
                 <div className={styles.links}>
-                  {m.actions.map((a) => {
+                  {m.actions.map((a, k) => {
                     const body = (
                       <>
                         {a.project ? (
@@ -415,11 +476,11 @@ export function ProjectChat({ project }: { project?: Project }) {
                       </>
                     )
                     return a.contact ? (
-                      <button key={a.label} type="button" className={styles.link} onClick={() => openModal()} data-cursor>
+                      <button key={a.label} type="button" className={`${styles.link} ${styles.popIn}`} style={{ '--i': k } as CSSProperties} onClick={() => openModal()} data-cursor>
                         {body}
                       </button>
                     ) : (
-                      <Link key={a.to} to={a.to!} className={styles.link} data-cursor>
+                      <Link key={a.to} to={a.to!} className={`${styles.link} ${styles.popIn}`} style={{ '--i': k } as CSSProperties} data-cursor>
                         {body}
                       </Link>
                     )
@@ -427,11 +488,12 @@ export function ProjectChat({ project }: { project?: Project }) {
                 </div>
               )}
               {/* Follow-up questions, under the latest answer only. */}
-              {i === messages.length - 1 && !loading && m.followUps && m.followUps.length > 0 && (
+              {i === messages.length - 1 && !loading && typing?.i !== i && m.followUps && m.followUps.length > 0 && (
                 <div className={styles.followUps}>
-                  <p className={styles.askNext}>Ask next</p>
-                  {m.followUps.map((q) => (
-                    <button key={q} type="button" className={styles.followUp} onClick={() => send(q)} data-cursor>
+                  {/* after the links above, one at a time */}
+                  <p className={`${styles.askNext} ${styles.popIn}`} style={{ '--i': (m.actions?.length ?? 0) } as CSSProperties}>Ask next</p>
+                  {m.followUps.map((q, k) => (
+                    <button key={q} type="button" className={`${styles.followUp} ${styles.popIn}`} style={{ '--i': (m.actions?.length ?? 0) + 1 + k } as CSSProperties} onClick={() => send(q)} data-cursor>
                       <i aria-hidden="true">↳</i>
                       {q}
                     </button>

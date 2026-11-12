@@ -305,9 +305,9 @@ export const projects: Project[] = [
     name: 'Koitto',
     tag: 'Tool · Shipped',
     role: 'Design and code',
-    outcome: 'A session timer recording completed time, not elapsed time',
+    outcome: 'A focus timer that records time held, not time elapsed',
     description:
-      'A session timer with no pause control, for iOS, Android and the web. It records the length committed to against the amount actually completed.',
+      'A session timer for being intentional with your time, for iOS, Android and the web. No pause button: it records the time you set aside against the time you actually held, and how it felt.',
     fill: 'b',
     featured: true,
     /* Sampled from the session orb: the app runs on violet-to-magenta
@@ -316,36 +316,30 @@ export const projects: Project[] = [
     coverBg: 'linear-gradient(150deg, #cfc6e0 0%, #f0edf4 100%)',
     liveUrl: 'https://time-lac-kappa.vercel.app',
     year: '2026',
-    client: 'Self-initiated — shipped and in daily use',
+    client: 'Self-initiated — live on the web, App Store and Google Play next',
     services: ['Product design', 'Design system', 'Build'],
     team: 'Solo',
     tools: ['Expo', 'React Native'],
     tagline:
-      'A session timer that records time held rather than time elapsed — the length committed to, against the amount completed.',
+      'A session timer that records time held rather than time elapsed: the time you set aside, against the time you actually stayed with it.',
     overview:
-      'Koitto is a session timer for iOS, Android and the web. You choose a category, name the session, set a length and start it. There is no pause control, and the only way to stop early is to hold a button for a second, which is recorded rather than hidden. What accumulates is a record of how much time was set aside, how much was completed, what it was spent on, and how each session was rated afterwards.',
+      'Koitto is a session timer for being intentional with your time, inspired by pomodoro and to-do apps. You pick what kind of time it is (admin, deep work, move, rest or play), name it, set a length and start. There is no pause button; stopping early means holding a button down, and that is recorded too. Afterwards it asks one question: how did it go. It is for people who know what they should be doing but feel scattered, and want an honest record of how much time they set aside, how much they held, and how it felt. I did it solo: research, design and code. It is live on the web as an installable app; App Store and Google Play builds are next.',
     sections: [
       {
-        heading: 'Discover',
-        body: 'Most timers report elapsed time, which shows that a session ran but not whether it was finished. A second problem was in the interface. An audit of the codebase counted thirty-five borders across thirteen files at fourteen different alpha values between 0.07 and 0.2 — differences too small to see individually, but numerous enough to need maintaining. The month grid had a related fault: each day’s dot blended colour stops taken from up to three different categories, so most dots rendered in colours the palette does not contain.',
+        heading: 'The problem',
+        body: 'People set time aside, then drift. The tools meant to help either let them off too easily or punish them for slipping, and they only count work as time well spent, so rest, exercise and play look like time lost. By the end of the day people feel busy but cannot say where their time went, or what to change. How might we help people keep the time they chose, for anything they choose it for, and see honestly where it went? The evidence came from desktop research: app-store reviews of timers and to-do apps, Reddit threads, and people I know. The complaints sorted into four problems. Nothing holds you to the session ("I paused it and never came back"). Nothing is kept afterwards ("I have no idea where my week went"). No sense of whether it went well ("Did that session even go well?"). And the tools do not fit how the day splits ("Doing my taxes counted the same as deep work", "My to-do list and my timer don\u2019t know each other").',
       },
       {
-        heading: 'Define',
-        body: 'The app records time held rather than time elapsed: the length committed to, against the amount completed. That determines most of the interface. There is no pause control, because pausing allows a session to stay open while no work is happening. Ending early is recorded as an outcome rather than a failure — it appears in the week view as a shorter column and is never marked in red. The first screen asks which category the session belongs to; the length is chosen last.',
+        heading: 'The solution',
+        body: 'Four decisions carry it. Intent first: the first screen asks what kind of time it is, and the length is chosen last. No pause: while a session runs the only control is one you hold for over a second. Stopping early is recorded as what you kept and shown as a shorter column, never in red. And one question at the end: how did it go, from Rough to Perfect. The key flows: running a session (category, name, length, running, rating, summary); planning with to-dos that carry a category, a length and a repeat, so starting one is a single tap and the tick lands on the day you did it; reading the record, where every figure is stated against last week, a usual day or a total and every figure or day opens into what it is made of, with patterns behind a button; and leaving the app mid-session, where the end is handed to the system the moment a session starts so the notification lands on time with the phone asleep. Edge cases include stopping early, leaving mid-session (reopening returns to the running session), empty days (a day with nothing planned asks what it will be for), to-dos that never end (each tick is logged and the hours under it are its progress), play running long (its length is a ceiling), being offline (everything is local and written twice), reminders not running in a browser, and status never relying on colour alone.',
       },
       {
-        heading: 'Develop',
-        body: 'Each of the eleven categories is defined as four colour stops rather than one hue. Marks large enough to show a gradient use the full set; anything below 24pt takes a single named stop from it, so a bar, a card, a session orb and an eight-point legend dot all read as the same category. Cards carry no border. Raising their fill from 5.5% to 9% white over the near-black ground brings them to 1.20 : 1 against it, which separates them more clearly than the bordered version did. No figure is shown on its own — each is stated against the previous week, a typical day, or a total.',
-        media: [
-          { src: '/work/time/process/category-colour.webp', caption: 'A category as four stops rather than one hue, so every size of mark stays recognisable.' },
-          { src: '/work/time/process/the-system.webp', caption: 'The system the app is checked against.' },
-          { src: '/work/time/process/the-week.webp', caption: 'The week: every figure saying what it did against something else.' },
-          { src: '/work/time/process/a-day.webp', caption: 'A day, opened into what was actually run.' },
-        ],
+        heading: 'The process',
+        body: 'Step by step: the whole session flow on one canvas; option sheets, view by view, putting the current design beside its alternatives and what each would cost; a clickable prototype; the first build; then refinements in the app. Picking the category went through a plain list, chips, tiles, a hand of cards, a stack and one card with arrows before the arc, which gives one category the whole card so its colour leads, makes the choice feel like a moment rather than a form, and is the same gesture a session ends on; the app also stopped guessing the category for you. Setting the time started with the length before the name, then the order flipped so a session is named before it is measured. A keypad read 1-3-0 as 90 minutes and had to validate a string; another version offered the usual lengths as chips for each kind of time; two wheels replaced them, beside the ruler. For the record, four treatments of the weekly figures were drawn and a small mark beside each won; a streak month with dates was set aside as the wrong question for a timer; and a gradient on every mark became a blob at small sizes, so only the bars carry it. The principles behind it: honest, intentional and calm.',
       },
       {
-        heading: 'Deliver',
-        body: 'Koitto ships as a PWA, stores everything on the device, and has no account, server or analytics. A design document in the repository is paired with a script that checks the app against it, counting radii, surface alpha values, type weights, page gutters, tap targets and accessibility labels, and reporting which are standard, which are near-standard and which are one-off. The numbers in this case study come from that audit: things that can be counted in the app itself.',
+        heading: 'Built and shipped',
+        body: 'Built in Expo and React Native, one codebase for iOS, Android and the web. Local-first: no account, no server, no analytics. Live on the web as an installable app; App Store and Google Play builds are next. Each category is a gradient of four colour stops rather than one hue, so a bar, a card, the session orb and a small dot all read as the same category, and the app is checked against its own design rules by a script.',
       },
     ],
     reflection: [
