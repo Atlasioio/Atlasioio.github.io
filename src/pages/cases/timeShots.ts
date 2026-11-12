@@ -1,19 +1,10 @@
 /**
  * The Koitto case's screens, grouped into the strips the page shows: the key
- * flows, how each decision got there, and the directions drawn afterwards.
- *
- * Every frame keeps the label it was made under, so nothing drawn later reads
- * as past process:
- *   real     captured from the repo, a build or a design canvas from that date
- *   redrawn  rebuilt from memory in Nov 2026; the original wasn't saved
- *   rebuilt  a reconstruction from the app's own code
- *   new      drawn in Nov 2026; never part of the original work
- *   built    a notification the app really sends, drawn on a lock screen
+ * flows, how each decision got there, and other ways it could go.
  */
 
 export const K = '/work/time/koitto'
 
-export type Origin = 'real' | 'redrawn' | 'rebuilt' | 'new' | 'built'
 export type Verdict = 'chosen' | 'set aside' | 'moved' | 'shipped'
 
 export type Shot = {
@@ -21,8 +12,6 @@ export type Shot = {
   src: string
   label: string
   note?: string
-  origin?: Origin
-  date?: string
   verdict?: Verdict
   /** a partial board rather than a whole phone screen */
   detail?: boolean
@@ -66,7 +55,7 @@ export const FLOWS: Track[] = [
       'A to-do carries a category and a length, so starting one is a single tap. Ticking it lands on the day you did it, and the time spent on it stays with it.',
     shots: [
       { src: '02-todo-flow/01-todo-list', label: 'Today’s list', note: 'Grouped by category. Every row can start a session.' },
-      { src: '02-todo-flow/03-new-todo-typed', label: 'A new to-do', note: '“Go for a swim”, as Move.' },
+      { src: '02-todo-flow/03-todo-typed', label: 'A new to-do', note: '“Go for a swim”, as Move.' },
       { src: '02-todo-flow/04-pick-a-duration', label: 'How long it takes', note: 'The length a session from it will start at.' },
       { src: '02-todo-flow/05-repeat-on-weekends', label: 'When it comes back', note: 'Here, every weekend.' },
       { src: '02-todo-flow/06-added-to-the-list', label: 'On the list', note: 'Tagged Weekends, under Move.' },
@@ -97,12 +86,28 @@ export const FLOWS: Track[] = [
     tab: 'Away from the app',
     when: '20:18. The phone goes in a pocket, mid-session.',
     intro:
-      'The end of a session is handed to the system the moment it starts, so it lands on the second with the phone asleep. To-do reminders arrive only on the days the to-do is due. The lock screens are drawn; the wording is the app’s own.',
+      'The end of a session is handed to the system the moment it starts, so it lands on the second with the phone asleep. To-do reminders arrive only on the days the to-do is due.',
     shots: [
-      { src: '08-notifications/01-built-ios-lock-screen-session-ends', label: 'The session ends', note: '“50 min done. Say how it went?”', origin: 'built' },
-      { src: '08-notifications/02-built-ios-lock-screen-todo-reminder', label: 'A to-do is due', note: '“30 min, when you are ready.”', origin: 'built' },
-      { src: '08-notifications/03-built-android-lock-screen-session-ends', label: 'The same, on Android', note: 'Its own sound, on a “Session end” channel.', origin: 'built' },
-      { src: '08-notifications/04-built-android-lock-screen-todo-reminder', label: 'A reminder, on Android', note: 'One repeating trigger per day it’s due.', origin: 'built' },
+      { src: '08-notifications/01-ios-lock-screen-session-ends', label: 'The session ends', note: '“50 min done. Say how it went?”' },
+      { src: '08-notifications/02-ios-lock-screen-todo-reminder', label: 'A to-do is due', note: '“30 min, when you are ready.”' },
+      { src: '08-notifications/03-android-lock-screen-session-ends', label: 'The same, on Android', note: 'Its own sound, on a “Session end” channel.' },
+      { src: '08-notifications/04-android-lock-screen-todo-reminder', label: 'A reminder, on Android', note: 'One repeating trigger per day it’s due.' },
+    ],
+  },
+  {
+    id: 'leaving',
+    tab: 'The lock screen, next',
+    when: '20:18. A glance at a locked phone, mid-session.',
+    intro:
+      'Next for iOS and Android: a session you leave keeps running where you can see it, on the lock screen, in the Dynamic Island and in the status bar. There is still no pause or stop button anywhere; ending early stays a hold inside the app. The bar draws down like the ring, and the end asks how it went.',
+    shots: [
+      { src: '08-notifications/05-ios-lock-screen-live-session', label: 'Lock screen, running', note: '“32:14 left of 50 min.”' },
+      { src: '08-notifications/06-ios-dynamic-island-compact', label: 'Dynamic Island, compact' },
+      { src: '08-notifications/07-ios-dynamic-island-expanded', label: 'Dynamic Island, expanded', note: 'No pausing. Ends 20:50.' },
+      { src: '08-notifications/08-ios-dynamic-island-session-ends', label: 'Dynamic Island, the end', note: 'Say how it went.' },
+      { src: '08-notifications/09-ios-lock-screen-session-ended', label: 'Lock screen, ended' },
+      { src: '08-notifications/10-android-ongoing-notification', label: 'Android, ongoing' },
+      { src: '08-notifications/11-android-status-bar-chip', label: 'Android, status bar' },
     ],
   },
 ]
@@ -115,17 +120,17 @@ export const ITERATIONS: Track[] = [
     intro:
       'Simpler pickers came first: a list, chips, tiles, a hand of cards, a stack, arrows. The arc won because it gives one category the whole card, so its colour leads, makes the choice feel like a moment rather than a form, and is the same gesture a session ends on. Later, the app also stopped guessing the category for you.',
     shots: [
-      { src: '04-category-iterations/01-redrawn-a-plain-list', label: 'A plain list', note: 'Fastest to scan, but the card and its colour disappear.', origin: 'redrawn' },
-      { src: '04-category-iterations/02-redrawn-chips-on-the-timer', label: 'Chips on the timer', origin: 'redrawn' },
-      { src: '04-category-iterations/03-redrawn-tiles', label: 'Tiles', note: 'Everything at once, so no one choice feels like a moment.', origin: 'redrawn' },
-      { src: '04-category-iterations/04-redrawn-a-hand-of-cards', label: 'A hand of cards', origin: 'redrawn' },
-      { src: '04-category-iterations/05-redrawn-a-stack-of-cards', label: 'A stack of cards', origin: 'redrawn' },
-      { src: '04-category-iterations/06-redrawn-one-card-with-arrows', label: 'One card, with arrows', origin: 'redrawn' },
-      { src: '04-category-iterations/07-real-15-sep-the-first-arc', label: 'The first arc', note: 'On the session-flow canvas.', origin: 'real' },
-      { src: '04-category-iterations/08-real-16-sep-the-prototype', label: 'The prototype', note: 'Clickable, the next day.', origin: 'real' },
-      { src: '04-category-iterations/09-rebuilt-just-before-github-tall-cards-glow', label: 'Tall cards, a glow', note: 'No icons and no reflection yet.', origin: 'rebuilt' },
-      { src: '04-category-iterations/10-real-7-oct-first-commit', label: 'The first commit', note: 'On a slightly violet black.', origin: 'real' },
-      { src: '04-category-iterations/11-real-shipped-today', label: 'Shipped', note: 'The same arc on neutral black.', origin: 'real', verdict: 'shipped' },
+      { src: '04-category-iterations/01-a-plain-list', label: 'A plain list', note: 'Fastest to scan, but the card and its colour disappear.' },
+      { src: '04-category-iterations/02-chips-on-the-timer', label: 'Chips on the timer' },
+      { src: '04-category-iterations/03-tiles', label: 'Tiles', note: 'Everything at once, so no one choice feels like a moment.' },
+      { src: '04-category-iterations/04-a-hand-of-cards', label: 'A hand of cards' },
+      { src: '04-category-iterations/05-a-stack-of-cards', label: 'A stack of cards' },
+      { src: '04-category-iterations/06-one-card-with-arrows', label: 'One card, with arrows' },
+      { src: '04-category-iterations/07-the-first-arc', label: 'The first arc', note: 'On the session-flow canvas.' },
+      { src: '04-category-iterations/08-the-prototype', label: 'The prototype', note: 'Clickable, the next day.' },
+      { src: '04-category-iterations/09-tall-cards-glow', label: 'Tall cards, a glow', note: 'No icons and no reflection yet.' },
+      { src: '04-category-iterations/10-first-commit', label: 'The first commit', note: 'On a slightly violet black.' },
+      { src: '04-category-iterations/11-shipped-today', label: 'Shipped', note: 'The same arc on neutral black.', verdict: 'shipped' },
     ],
   },
   {
@@ -134,14 +139,14 @@ export const ITERATIONS: Track[] = [
     intro:
       'At first the length came before the name. The order flipped, so a session is named before it is measured. A keypad read digits like a clock, so 1-3-0 meant 1:30, or 90 minutes, and it had to validate a string. Another version offered the usual lengths as chips, different for each kind of time. Two wheels replaced them.',
     shots: [
-      { src: '05-time-iterations/01-real-15-sep-the-canvas', label: 'Length before name', note: 'A dense ruler, then “Name it”.', origin: 'real' },
-      { src: '05-time-iterations/02-real-16-sep-the-prototype', label: 'The prototype', origin: 'real' },
-      { src: '05-time-iterations/03-real-7-oct-to-today-the-ruler', label: 'The order flipped', note: 'Category, name, then length. Sparse ticks, and Start.', origin: 'real', verdict: 'shipped' },
-      { src: '05-time-iterations/04-real-until-14-oct-tap-the-number-a-keypad', label: 'Tap the number: a keypad', origin: 'real', verdict: 'set aside' },
-      { src: '05-time-iterations/05-real-until-14-oct-keypad-one-digit', label: 'One digit', note: 'Capped at 5 min to 3 h, so one digit said “At least 5 min”.', origin: 'real', verdict: 'set aside' },
-      { src: '05-time-iterations/06-real-until-14-oct-keypad-reads-1-30-as-90-min', label: '1-3-0 reads as 90 min', note: 'Typed like a clock, read as a duration.', origin: 'real', verdict: 'set aside' },
+      { src: '05-time-iterations/01-the-canvas', label: 'Length before name', note: 'A dense ruler, then “Name it”.' },
+      { src: '05-time-iterations/02-the-prototype', label: 'The prototype' },
+      { src: '05-time-iterations/03-the-ruler', label: 'The order flipped', note: 'Category, name, then length. Sparse ticks, and Start.', verdict: 'shipped' },
+      { src: '05-time-iterations/04-tap-the-number-a-keypad', label: 'Tap the number: a keypad', verdict: 'set aside' },
+      { src: '05-time-iterations/05-keypad-one-digit', label: 'One digit', note: 'Capped at 5 min to 3 h, so one digit said “At least 5 min”.', verdict: 'set aside' },
+      { src: '05-time-iterations/06-keypad-reads-1-30-as-90-min', label: '1-3-0 reads as 90 min', note: 'Typed like a clock, read as a duration.', verdict: 'set aside' },
       { src: '05-time-iterations/06b-presets-per-category', label: 'Presets for each kind of time', note: 'The usual lengths as chips, different for each category, and the number to type any other.', verdict: 'set aside' },
-      { src: '05-time-iterations/07-real-from-15-oct-two-wheels', label: 'Two wheels', note: 'Hours and minutes. Nothing to validate.', origin: 'real', verdict: 'shipped' },
+      { src: '05-time-iterations/07-two-wheels', label: 'Two wheels', note: 'Hours and minutes. Nothing to validate.', verdict: 'shipped' },
     ],
   },
   {
@@ -150,14 +155,14 @@ export const ITERATIONS: Track[] = [
     intro:
       'Every round asked the same question of a figure: compared to what? Four treatments were drawn for the week’s figures. A small mark beside each one won; the others said the same thing three times, crowded a quiet page, or gave it two headlines.',
     shots: [
-      { src: '06-data-viz-iterations/08-real-6-oct-figures-0-as-it-was', label: 'As it was', origin: 'real' },
-      { src: '06-data-viz-iterations/09-real-6-oct-figures-1-a-change-not-a-number-set-aside', label: 'A change, not a number', note: 'Said the same kind of thing three times.', origin: 'real', verdict: 'set aside' },
-      { src: '06-data-viz-iterations/10-real-6-oct-figures-2-a-mark-beside-it-chosen', label: 'A mark beside it', note: 'One small drawing per figure.', origin: 'real', verdict: 'chosen' },
-      { src: '06-data-viz-iterations/11-real-6-oct-figures-3-mark-and-change-set-aside', label: 'Mark and change', note: '80pt rows instead of 62, and the busiest thing on a quiet page.', origin: 'real', verdict: 'set aside' },
-      { src: '06-data-viz-iterations/12-real-6-oct-figures-4-one-promoted-set-aside', label: 'One promoted', note: 'Gave the page two headlines.', origin: 'real', verdict: 'set aside' },
-      { src: '06-data-viz-iterations/25-real-15-oct-me-page-a-week-led-full-page', label: 'Me, led by the week', note: 'The whole page drawn three ways.', origin: 'real', tall: true },
-      { src: '06-data-viz-iterations/26-real-15-oct-me-page-b-two-acts-full-page', label: 'Me, in two acts', origin: 'real', tall: true },
-      { src: '06-data-viz-iterations/27-real-15-oct-me-page-c-cumulative-led-full-page', label: 'Me, led by the total', origin: 'real', tall: true },
+      { src: '06-data-viz-iterations/08-figures-0-as-it-was', label: 'As it was' },
+      { src: '06-data-viz-iterations/09-figures-1-a-change-not-a-number', label: 'A change, not a number', note: 'Said the same kind of thing three times.', verdict: 'set aside' },
+      { src: '06-data-viz-iterations/10-figures-2-a-mark-beside-it', label: 'A mark beside it', note: 'One small drawing per figure.', verdict: 'chosen' },
+      { src: '06-data-viz-iterations/11-figures-3-mark-and-change', label: 'Mark and change', note: '80pt rows instead of 62, and the busiest thing on a quiet page.', verdict: 'set aside' },
+      { src: '06-data-viz-iterations/12-figures-4-one-promoted', label: 'One promoted', note: 'Gave the page two headlines.', verdict: 'set aside' },
+      { src: '06-data-viz-iterations/25-me-page-a-week-led-full-page', label: 'Me, led by the week', note: 'The whole page drawn three ways.', tall: true },
+      { src: '06-data-viz-iterations/26-me-page-b-two-acts-full-page', label: 'Me, in two acts', tall: true },
+      { src: '06-data-viz-iterations/27-me-page-c-cumulative-led-full-page', label: 'Me, led by the total', tall: true },
     ],
   },
   {
@@ -166,44 +171,29 @@ export const ITERATIONS: Track[] = [
     intro:
       'A month with dates was the familiar option, but “what about the 14th?” isn’t a question anyone asks a timer. Half a year answered a different question, whether the habit is taking, so it moved to Patterns. On the bars, a gradient everywhere turned into a blob at 11pt.',
     shots: [
-      { src: '06-data-viz-iterations/16-real-6-oct-streak-a-runs-welded-chosen', label: 'Runs joined up', note: 'Five weeks of days.', origin: 'real', verdict: 'chosen' },
-      { src: '06-data-viz-iterations/17-real-6-oct-streak-b-the-month-with-dates-set-aside', label: 'The month, with dates', note: 'Familiar from other apps; the wrong question for a timer.', origin: 'real', verdict: 'set aside' },
-      { src: '06-data-viz-iterations/18-real-6-oct-streak-c-half-a-year-moved-to-patterns', label: 'Half a year', note: 'Whether the habit is taking. A different question.', origin: 'real', verdict: 'moved' },
-      { src: '06-data-viz-iterations/22-real-6-oct-bars-a-flat-colour-detail', label: 'Bars: flat colour', origin: 'real', detail: true },
-      { src: '06-data-viz-iterations/23-real-6-oct-bars-b-gradient-on-the-bar-chosen-detail', label: 'Bars: gradient on the bar', origin: 'real', verdict: 'chosen', detail: true },
-      { src: '06-data-viz-iterations/24-real-6-oct-bars-c-gradient-everywhere-set-aside-detail', label: 'Bars: gradient everywhere', note: 'At 11pt, four stops read as a blob.', origin: 'real', verdict: 'set aside', detail: true },
-      { src: '06-data-viz-iterations/28-real-18-oct-empty-day-b-ghost-figures-detail', label: 'An empty day: ghosts', origin: 'real', detail: true },
-      { src: '06-data-viz-iterations/29-real-18-oct-empty-day-d-real-values-detail', label: 'An empty day: real zeros', note: 'With one line under them.', origin: 'real', detail: true },
+      { src: '06-data-viz-iterations/16-streak-a-runs-welded', label: 'Runs joined up', note: 'Five weeks of days.', verdict: 'chosen' },
+      { src: '06-data-viz-iterations/17-streak-b-the-month-with-dates', label: 'The month, with dates', note: 'Familiar from other apps; the wrong question for a timer.', verdict: 'set aside' },
+      { src: '06-data-viz-iterations/18-streak-c-half-a-year', label: 'Half a year', note: 'Whether the habit is taking. A different question.', verdict: 'moved' },
+      { src: '06-data-viz-iterations/22-bars-a-flat-colour-detail', label: 'Bars: flat colour', detail: true },
+      { src: '06-data-viz-iterations/23-bars-b-gradient-on-the-bar-detail', label: 'Bars: gradient on the bar', verdict: 'chosen', detail: true },
+      { src: '06-data-viz-iterations/24-bars-c-gradient-everywhere-detail', label: 'Bars: gradient everywhere', note: 'At 11pt, four stops read as a blob.', verdict: 'set aside', detail: true },
+      { src: '06-data-viz-iterations/28-empty-day-b-ghost-figures-detail', label: 'An empty day: ghosts', detail: true },
+      { src: '06-data-viz-iterations/29-empty-day-d-real-values-detail', label: 'An empty day: real zeros', note: 'With one line under them.', detail: true },
     ],
   },
 ]
 
-/* ---- Looking back: directions drawn since, never part of the original work ---- */
+/* ---- Other ways it could go: each part designed differently, with its trade-off ---- */
 export const DIRECTIONS: Track[] = [
-  {
-    id: 'live',
-    tab: 'The session, outside the app',
-    intro:
-      'A session that keeps running on the lock screen, in the Dynamic Island and in Android’s status bar. The rules carry over: no pause or stop button anywhere, since ending early stays a hold inside the app; the bar draws down the way the ring does; the end asks how it went. Building it needs an ActivityKit extension on iOS and an ongoing notification on Android.',
-    shots: [
-      { src: '08-notifications/05-new-ios-lock-screen-live-session', label: 'Lock screen, running', note: '“32:14 left of 50 min.”', origin: 'new' },
-      { src: '08-notifications/06-new-ios-dynamic-island-compact', label: 'Dynamic Island, compact', origin: 'new' },
-      { src: '08-notifications/07-new-ios-dynamic-island-expanded', label: 'Dynamic Island, expanded', note: 'No pausing. Ends 20:50.', origin: 'new' },
-      { src: '08-notifications/08-new-ios-dynamic-island-session-ends', label: 'Dynamic Island, the end', note: 'Say how it went.', origin: 'new' },
-      { src: '08-notifications/09-new-ios-lock-screen-session-ended', label: 'Lock screen, ended', origin: 'new' },
-      { src: '08-notifications/10-new-android-ongoing-notification', label: 'Android, ongoing', origin: 'new' },
-      { src: '08-notifications/11-new-android-status-bar-chip', label: 'Android, status bar', origin: 'new' },
-    ],
-  },
   {
     id: 'pick',
     tab: 'Choosing, another way',
     intro: 'Four other ways to pick the kind of time, and what each would trade.',
     shots: [
-      { src: '04-category-iterations/12-new-direction-a-dial', label: 'A dial', note: 'One thumb, one motion, and it looks like a timer. Labels on a curve read badly, and a sixth category has nowhere to go.', origin: 'new' },
-      { src: '04-category-iterations/13-new-direction-words-only', label: 'Words only', note: 'The calmest. The gradient shrinks to a word, so colour stops leading.', origin: 'new' },
-      { src: '04-category-iterations/14-new-direction-pick-by-colour', label: 'Pick by colour', note: 'Colour becomes the whole decision, so you have to remember which is which.', origin: 'new' },
-      { src: '04-category-iterations/15-new-direction-suggested-first', label: 'Suggested first', note: 'One tap for the usual. But guessing for you is what the app stopped doing.', origin: 'new' },
+      { src: '04-category-iterations/12-a-dial', label: 'A dial', note: 'One thumb, one motion, and it looks like a timer. Labels on a curve read badly, and a sixth category has nowhere to go.' },
+      { src: '04-category-iterations/13-words-only', label: 'Words only', note: 'The calmest. The gradient shrinks to a word, so colour stops leading.' },
+      { src: '04-category-iterations/14-pick-by-colour', label: 'Pick by colour', note: 'Colour becomes the whole decision, so you have to remember which is which.' },
+      { src: '04-category-iterations/15-suggested-first', label: 'Suggested first', note: 'One tap for the usual. But guessing for you is what the app stopped doing.' },
     ],
   },
   {
@@ -211,11 +201,11 @@ export const DIRECTIONS: Track[] = [
     tab: 'Setting the time, another way',
     intro: 'Five other ways to set a length, and what each would trade.',
     shots: [
-      { src: '05-time-iterations/08-new-direction-three-lengths', label: 'Three lengths', note: 'No dragging, and the names persuade. Anything odd needs a second screen.', origin: 'new' },
-      { src: '05-time-iterations/09-new-direction-a-stepper', label: 'A stepper', note: 'Plain and accessible. From 25 to 90 is thirteen taps.', origin: 'new' },
-      { src: '05-time-iterations/10-new-direction-a-kitchen-timer', label: 'A kitchen timer', note: 'The most physical. Past an hour it needs a second lap.', origin: 'new' },
-      { src: '05-time-iterations/11-new-direction-until-when', label: 'Until when', note: 'Answers when you’ll be free. The length becomes a side note.', origin: 'new' },
-      { src: '05-time-iterations/12-new-direction-block-out-the-time', label: 'Block out the time', note: 'Sits the session beside the day. Needs calendar access, which the app has never asked for.', origin: 'new' },
+      { src: '05-time-iterations/08-three-lengths', label: 'Three lengths', note: 'No dragging, and the names persuade. Anything odd needs a second screen.' },
+      { src: '05-time-iterations/09-a-stepper', label: 'A stepper', note: 'Plain and accessible. From 25 to 90 is thirteen taps.' },
+      { src: '05-time-iterations/10-a-kitchen-timer', label: 'A kitchen timer', note: 'The most physical. Past an hour it needs a second lap.' },
+      { src: '05-time-iterations/11-until-when', label: 'Until when', note: 'Answers when you’ll be free. The length becomes a side note.' },
+      { src: '05-time-iterations/12-block-out-the-time', label: 'Block out the time', note: 'Sits the session beside the day. Needs calendar access, which the app has never asked for.' },
     ],
   },
   {
@@ -223,10 +213,10 @@ export const DIRECTIONS: Track[] = [
     tab: 'The record, another way',
     intro: 'Four other ways to show where the time went, and what each would trade.',
     shots: [
-      { src: '06-data-viz-iterations/30-new-direction-the-day-as-a-clock', label: 'The day as a clock', note: 'Shows when, not just how much. Short sessions become slivers.', origin: 'new' },
-      { src: '06-data-viz-iterations/31-new-direction-where-it-went-as-a-ring', label: 'Where it went, as a ring', note: 'The mix at a glance. Silent on whether the week beat the last.', origin: 'new' },
-      { src: '06-data-viz-iterations/32-new-direction-said-not-drawn', label: 'Said, not drawn', note: 'Exactly the app’s voice. Nothing to scan, so every visit is reading.', origin: 'new' },
-      { src: '06-data-viz-iterations/33-new-direction-the-week-as-lanes', label: 'The week as lanes', note: 'Time-of-day patterns jump out. Most of it is empty track.', origin: 'new' },
+      { src: '06-data-viz-iterations/30-the-day-as-a-clock', label: 'The day as a clock', note: 'Shows when, not just how much. Short sessions become slivers.' },
+      { src: '06-data-viz-iterations/31-where-it-went-as-a-ring', label: 'Where it went, as a ring', note: 'The mix at a glance. Silent on whether the week beat the last.' },
+      { src: '06-data-viz-iterations/32-said-not-drawn', label: 'Said, not drawn', note: 'Exactly the app’s voice. Nothing to scan, so every visit is reading.' },
+      { src: '06-data-viz-iterations/33-the-week-as-lanes', label: 'The week as lanes', note: 'Time-of-day patterns jump out. Most of it is empty track.' },
     ],
   },
 ]
@@ -247,7 +237,7 @@ export const EDGES: Edge[] = [
   {
     q: 'You leave mid-session',
     a: 'The end is handed to the system when the session starts, so it lands on time with the phone asleep. Open the app and you’re back in the running session.',
-    shot: '08-notifications/01-built-ios-lock-screen-session-ends',
+    shot: '08-notifications/01-ios-lock-screen-session-ends',
   },
   {
     q: 'Nothing is planned yet',

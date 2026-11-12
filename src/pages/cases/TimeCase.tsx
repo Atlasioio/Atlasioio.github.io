@@ -254,7 +254,8 @@ export function TimeCase() {
         <section className={styles.section} aria-label="The key flows">
           <Reveal as="h3" className={styles.h2}>The key flows.</Reveal>
           <Reveal as="p" className={styles.sub} i={1}>
-            Four journeys, each starting from a real situation. Every screen opens full size.
+            The main journeys, each starting from a real situation, and what comes next for a
+            session you leave. Every screen opens full size.
           </Reveal>
           <Reveal i={2}>
             <Gallery tracks={FLOWS} label="Key flows" numbered />
@@ -346,6 +347,17 @@ export function TimeCase() {
           </Reveal>
         </section>
 
+        <section className={styles.section} aria-label="Other ways it could go">
+          <Reveal as="h3" className={styles.h2}>Other ways it could go.</Reveal>
+          <Reveal as="p" className={styles.sub} i={1}>
+            Each step of a session could be designed differently. Here is what each alternative
+            would gain, and what it would cost.
+          </Reveal>
+          <Reveal i={2}>
+            <Gallery tracks={DIRECTIONS} label="Other ways it could go" />
+          </Reveal>
+        </section>
+
         {/* ---- How it's built ---- */}
         <section className={styles.section} aria-label="How it's built">
           <Reveal as="h3" className={styles.h2}>How it’s built.</Reveal>
@@ -380,16 +392,6 @@ export function TimeCase() {
           </section>
         )}
 
-        <section className={styles.section} aria-label="New directions">
-          <Reveal as="h3" className={styles.h2}>If I picked it up again.</Reveal>
-          <Reveal as="p" className={styles.sub} i={1}>
-            Drawn after the app shipped. None of these were part of the original work; each says
-            what it would gain and what it would cost.
-          </Reveal>
-          <Reveal i={2}>
-            <Gallery tracks={DIRECTIONS} label="New directions" />
-          </Reveal>
-        </section>
 
         {/* ---- Close: try it, then the next project ---- */}
         <section className={styles.close} aria-label="Try it">
@@ -497,13 +499,12 @@ const VERDICT: Record<string, string> = {
 }
 
 function Chips({ shot }: { shot: Shot }) {
-  if (!shot.date && !shot.verdict) return null
+  if (!shot.verdict) return null
   return (
     <span className={styles.chips}>
       {shot.verdict && (
         <span className={`${styles.chip} ${styles[`v_${shot.verdict.replace(' ', '_')}`]}`}>{VERDICT[shot.verdict]}</span>
       )}
-      {shot.date && <span className={styles.chip}>{shot.date}</span>}
     </span>
   )
 }
@@ -627,9 +628,9 @@ const QUOTES: [string, 'xl' | 'l' | 'm' | 's', QTone][] = [
 const MOMENTS: [string, string, string, string][] = [
   ['Sunday evening', 'Planning the week.', '“Go for a swim” goes on the list as Move: 30 minutes, every weekend.', '02-todo-flow/05-repeat-on-weekends'],
   ['Sunday, 20:00', 'Sitting down to work.', '“Research case” starts from the list: deep work, 50 minutes, done by 20:50.', '01-session-flow/07-running'],
-  ['Sunday, 20:18', 'The phone goes in a pocket.', 'The session keeps running. At 20:50 the lock screen asks how it went.', '08-notifications/01-built-ios-lock-screen-session-ends'],
+  ['Sunday, 20:18', 'The phone goes in a pocket.', 'The session keeps running. At 20:50 the lock screen asks how it went.', '08-notifications/01-ios-lock-screen-session-ends'],
   ['Friday', '“Where did my week go?”', 'Me opens on the week: 8h 22m, against the week before, and what it went on.', '03-me-flow/04-by-week'],
-  ['Saturday, 09:00', 'The swim comes round.', 'A reminder, only on the days it’s due: “30 min, when you are ready.”', '08-notifications/02-built-ios-lock-screen-todo-reminder'],
+  ['Saturday, 09:00', 'The swim comes round.', 'A reminder, only on the days it’s due: “30 min, when you are ready.”', '08-notifications/02-ios-lock-screen-todo-reminder'],
 ]
 
 /* ---- What it had to be ---- */
