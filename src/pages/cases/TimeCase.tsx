@@ -110,7 +110,7 @@ export function TimeCase() {
             ['Role', 'Solo: research, design and code'],
             ['Timeline', 'Six weeks, from first sketch to shipped'],
             ['Platforms', 'iOS, Android and the web, one codebase'],
-            ['Status', 'Live as an installable web app'],
+            ['Status', 'Live on the web; App Store and Google Play next'],
           ].map(([k, v], i) => (
             <Reveal className={styles.fact} key={k} i={i}>
               <span>{k}</span>

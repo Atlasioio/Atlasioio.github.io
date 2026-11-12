@@ -355,7 +355,7 @@ export const projects: Project[] = [
       },
       {
         heading: 'What I would do differently',
-        body: 'Draw the options before building, not after. The keypad for setting a length shipped, then read 1-3-0 as 90 minutes and had to be replaced by two wheels. The thirteen option sheets all came after the first build; drawn first, they would have caught it.',
+        body: 'Prototype the controls, not just the screens. The keypad for setting a length read digits like a clock, so 1-3-0 meant 90 minutes, and it had to check a typed string. It was built before that showed, and two wheels replaced it. Trying that one control in a clickable prototype would have caught it first.',
       },
       {
         heading: 'What is next',

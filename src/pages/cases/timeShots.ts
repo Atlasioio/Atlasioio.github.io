@@ -307,11 +307,11 @@ export const PROBLEMS: { h: string; quotes: string[]; so: string; tone: 'pink' |
 /* ---- The process, step by step ---- */
 export const TIMELINE: [string, string][] = [
   ['Canvas', 'The whole session flow on one canvas: the arc, the ruler, naming, the session, the rating, the summary.'],
-  ['Prototype', 'A clickable prototype of the same flow.'],
-  ['Option boards', 'Naming, the to-do list and the three figures on Me, each drawn as options.'],
-  ['First build', 'The app in code, built from the canvas.'],
+  ['Option sheets', 'View by view, the current design beside its alternatives and what each would cost: naming, the to-do list, the figures on Me, and more.'],
+  ['Prototype', 'A clickable prototype of the session flow.'],
+  ['First build', 'The app in code, built from the canvas and the sheets.'],
   ['Stop guessing', 'The app stops guessing the category for you.'],
   ['Two wheels', 'Wheels replace the keypad, and Me is drawn three ways.'],
-  ['Option sheets', 'Thirteen sheets, each putting the current screen beside its alternatives and what each would cost.'],
-  ['Shipped', 'Live as an installable web app, 206 commits in.'],
+  ['On the web', 'Live as an installable web app, 206 commits in.'],
+  ['Next: the stores', 'iOS and Android builds for the App Store and Google Play.'],
 ]
