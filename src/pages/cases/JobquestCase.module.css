@@ -254,3 +254,17 @@
   .heroApp { order: 1; position: relative; inset: auto; width: auto; margin: auto var(--j-gutter) -26%; padding-top: 40px; transform: none; }
   .story { padding-top: calc(26vw + 56px); }
 }
+
+/* ---- Wide screens: one centred text column. Titles, headings and running
+   text line up in the middle; visuals keep their full width. ---- */
+@media (min-width: 1100px) {
+  .story > div,
+  .section > .h2,
+  .section > .sub {
+    width: min(100%, var(--column, 900px));
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .story { place-items: stretch; }
+}

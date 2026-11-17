@@ -271,3 +271,17 @@
   /* the pill takes the free space above the device, so the device follows it directly */
   .heroDevices { margin-top: 0; padding-top: 0; }
 }
+
+/* ---- Wide screens: one centred text column. Titles, headings and running
+   text line up in the middle; visuals keep their full width. ---- */
+@media (min-width: 1100px) {
+  .story > div,
+  .section > .h2,
+  .section > .sub {
+    width: min(100%, var(--column, 900px));
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .story { place-items: stretch; }
+}

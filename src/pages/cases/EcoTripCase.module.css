@@ -331,3 +331,20 @@
   .heroPhones .shot:last-child { position: relative; inset: auto; width: min(70vw, 310px); max-width: none; transform: none; margin: 0 0 -46%; }
   .story { padding-top: calc(46vw + 56px); }
 }
+
+/* ---- Wide screens: one centred text column. Titles, headings and running
+   text line up in the middle; visuals keep their full width. ---- */
+@media (min-width: 1100px) {
+  .story > div,
+  .section > .h2,
+  .section > .sub,
+  .section > .principle,
+  .section > .principleSub,
+  .section > .honest {
+    width: min(100%, var(--column, 900px));
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .story { place-items: stretch; }
+}

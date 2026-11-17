@@ -824,3 +824,24 @@
   .looks::-webkit-scrollbar { display: none; }
   .look { flex: 0 0 72%; scroll-snap-align: start; }
 }
+
+/* ---- Wide screens: one centred text column. Titles, headings and running
+   text line up in the middle; visuals keep their full width. ---- */
+@media (min-width: 1100px) {
+  .chapter > *,
+  .story > div,
+  .context > .contextLead,
+  .section > .h2,
+  .section > .sub,
+  .sectionFirst > .h2,
+  .sectionFirst > .sub,
+  .sectionTight > .h2,
+  .sectionTight > .sub,
+  .chapter + .story > div {
+    width: min(100%, var(--column, 900px));
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .story { place-items: stretch; }
+}
