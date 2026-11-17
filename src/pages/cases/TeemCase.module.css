@@ -260,16 +260,18 @@
   .story { padding-top: calc(46vw + 56px); }
 }
 
-/* ---- Wide screens: one centred text column. Titles, headings and running
-   text line up in the middle; visuals keep their full width. ---- */
-@media (min-width: 1100px) {
-  .story > div,
-  .section > .h2,
-  .section > .sub {
-    width: min(100%, var(--column, 900px));
-    max-width: none;
-    margin-left: auto;
-    margin-right: auto;
+/* ---- Wide screens: content in a centred frame (~1400px). Text, headings and
+   text cards stay inside it; mockups and artefacts keep the full width. ---- */
+@media (min-width: 1400px) {
+  .story {
+    padding-left: max(var(--t-gutter), calc((100% - 1400px) / 2 + var(--t-gutter)));
+    padding-right: max(var(--t-gutter), calc((100% - 1400px) / 2 + var(--t-gutter)));
   }
-  .story { place-items: stretch; }
+  .section > .flow,
+  .section > .h2,
+  .section > .sub,
+  .section > .naming {
+    margin-left: max(0px, calc((100% - 1400px) / 2 + var(--t-gutter)));
+    margin-right: max(0px, calc((100% - 1400px) / 2 + var(--t-gutter)));
+  }
 }

@@ -825,23 +825,44 @@
   .look { flex: 0 0 72%; scroll-snap-align: start; }
 }
 
-/* ---- Wide screens: one centred text column. Titles, headings and running
-   text line up in the middle; visuals keep their full width. ---- */
-@media (min-width: 1100px) {
-  .chapter > *,
-  .story > div,
-  .context > .contextLead,
-  .section > .h2,
-  .section > .sub,
-  .sectionFirst > .h2,
-  .sectionFirst > .sub,
-  .sectionTight > .h2,
-  .sectionTight > .sub,
-  .chapter + .story > div {
-    width: min(100%, var(--column, 900px));
-    max-width: none;
-    margin-left: auto;
-    margin-right: auto;
+/* ---- Wide screens: content in a centred frame (~1400px). Text, headings and
+   text cards stay inside it; mockups and artefacts keep the full width. ---- */
+@media (min-width: 1400px) {
+  .facts,
+  .chapter,
+  .context,
+  .story,
+  .chapter + .context,
+  .chapter + .story,
+  .close {
+    padding-left: max(var(--t-gutter), calc((100% - 1400px) / 2 + var(--t-gutter)));
+    padding-right: max(var(--t-gutter), calc((100% - 1400px) / 2 + var(--t-gutter)));
   }
-  .story { place-items: stretch; }
+  .section > .h2,
+  .sectionFirst > .h2,
+  .sectionTight > .h2,
+  .section > .sub,
+  .sectionFirst > .sub,
+  .sectionTight > .sub,
+  .section > .quotes,
+  .sectionFirst > .quotes,
+  .sectionTight > .quotes,
+  .section > .problems,
+  .sectionFirst > .problems,
+  .sectionTight > .problems,
+  .section > .timeline,
+  .sectionFirst > .timeline,
+  .sectionTight > .timeline,
+  .section > .built,
+  .sectionFirst > .built,
+  .sectionTight > .built,
+  .section > .reflection,
+  .sectionFirst > .reflection,
+  .sectionTight > .reflection {
+    margin-left: max(0px, calc((100% - 1400px) / 2 + var(--t-gutter)));
+    margin-right: max(0px, calc((100% - 1400px) / 2 + var(--t-gutter)));
+  }
+  .chapter + .context { padding-top: 48px; }
+  .contextGrid { margin-top: 64px; }
+  .sectionFirst > .quotes { margin-top: 120px; margin-bottom: 64px; }
 }

@@ -419,21 +419,42 @@
 .page h1, .page h2, .page h3, .page h4 { text-wrap: balance; }
 .page p, .page li, .page dd { text-wrap: pretty; }
 
-/* ---- Wide screens: one centred text column. Titles, headings and running
-   text line up in the middle; visuals keep their full width. ---- */
-@media (min-width: 1100px) {
-  .chapter > *,
-  .story > div,
-  .context > .contextLead,
-  .section > .h2,
-  .section > .sub,
-  .sectionFirst > .h2,
-  .sectionFirst > .sub,
-  .chapter + .story > div {
-    width: min(100%, var(--column, 900px));
-    max-width: none;
-    margin-left: auto;
-    margin-right: auto;
+/* ---- Wide screens: content in a centred frame (~1400px). Text, headings and
+   text cards stay inside it; mockups and artefacts keep the full width. ---- */
+@media (min-width: 1400px) {
+  .facts,
+  .chapter,
+  .context,
+  .story,
+  .chapter + .story {
+    padding-left: max(var(--s-gutter), calc((100% - 1400px) / 2 + var(--s-gutter)));
+    padding-right: max(var(--s-gutter), calc((100% - 1400px) / 2 + var(--s-gutter)));
   }
-  .story { place-items: stretch; }
+  .section > .h2,
+  .sectionFirst > .h2,
+  .section > .sub,
+  .sectionFirst > .sub,
+  .section > .chain,
+  .sectionFirst > .chain,
+  .section > .people,
+  .sectionFirst > .people,
+  .section > .tabs,
+  .sectionFirst > .tabs,
+  .section > .writing,
+  .sectionFirst > .writing,
+  .section > .timeline,
+  .sectionFirst > .timeline,
+  .section > .places,
+  .sectionFirst > .places,
+  .section > .findings,
+  .sectionFirst > .findings,
+  .section > .rebuild,
+  .sectionFirst > .rebuild,
+  .section > .reflection,
+  .sectionFirst > .reflection {
+    margin-left: max(0px, calc((100% - 1400px) / 2 + var(--s-gutter)));
+    margin-right: max(0px, calc((100% - 1400px) / 2 + var(--s-gutter)));
+  }
+  .chapter:has(+ .context) { padding-bottom: 48px; }
+  .contextGrid { margin-top: 64px; }
 }
